@@ -648,7 +648,7 @@
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard v1.3<br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard v1.0.0<br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
