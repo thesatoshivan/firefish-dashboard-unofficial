@@ -81,7 +81,30 @@ All settings are saved in `localStorage` and included in JSON exports:
 
 ## Screenshots
 
-_Coming soon._
+<table>
+<tr>
+<td align="center"><strong>Overview</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_uebersicht.png" width="100%"></td>
+<td align="center"><strong>My Loans</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_meine-kredite.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center"><strong>Charts</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_diagramme.png" width="100%"></td>
+<td align="center"><strong>Statistics</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_statistiken.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center"><strong>Stress Test</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_stress-test.png" width="100%"></td>
+<td align="center"><strong>Timeline</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_timeline.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center"><strong>Tools</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_tools.png" width="100%"></td>
+<td align="center"><strong>Calendar</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kalender.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center"><strong>Settings</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_einstellungen.png" width="100%"></td>
+<td></td>
+</tr>
+</table>
+
+<sub>All loans shown in these screenshots are fictional and for demonstration purposes only.</sub>
 
 ---
 
