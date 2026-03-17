@@ -4,7 +4,7 @@
 
 ## v1.1.0
 
-### ✨ New Features
+### New Features
 
 **Roll-Over Chains**
 - New `chainId` field links multiple loans into a roll-over chain
@@ -22,7 +22,7 @@
 - Optional target date and extension interest rate for already matured loans
 - Line chart + detail table with LTV, MC1 price and net P&L
 
-### 📊 Improvements
+### Improvements
 
 **Statistics: Break-even**
 - Break-even average and weighted break-even added to the «Efficiency» section
@@ -34,5 +34,5 @@
 **Mobile**
 - Sidebar footer (version, links) now visible at the bottom of the page on mobile
 
-### 🐛 Bug Fixes
+### Bug Fixes
 - Inactive tool sub-tabs were not hidden correctly
