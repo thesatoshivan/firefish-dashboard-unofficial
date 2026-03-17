@@ -1,6 +1,6 @@
 # Changelog — firefish-dashboard-unofficial
 
-
+---
 
 ## v1.1.0
 
@@ -36,3 +36,4 @@
 
 ### Bug Fixes
 - Inactive tool sub-tabs were not hidden correctly
+
