@@ -182,7 +182,7 @@
       transition: border-color .15s;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
     }
     #ffd-root .card:hover { border-color: var(--border2); }
     #ffd-root .card-title { font-size: 14px; font-weight: 600; color: var(--text); margin: 0 0 .75rem; display: block; }
@@ -251,7 +251,7 @@
     #ffd-root tr:last-child td { border-bottom: none; }
     #ffd-root .chip { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 11px; font-weight: 600; }
     #ffd-root #st-r table { width: max-content; min-width: 100%; }
-    #ffd-root #st-r .ovx { overflow-x: scroll; -webkit-overflow-scrolling: touch; min-width: 0; }
+    #ffd-root #st-r .ovx { overflow-x: auto; -webkit-overflow-scrolling: touch; min-width: 0; }
     #ffd-root #s-st .card { overflow: hidden; min-width: 0; }
     #ffd-root #st-r th:first-child,
     #ffd-root #st-r td:first-child {
@@ -482,7 +482,7 @@
       #ffd-root .mobile-footer-end a { text-decoration: none; color: var(--text3); }
     }
     #ffd-root .tool-tab { display: none; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
-    #ffd-root .tool-tab.on { display: grid; }
+    #ffd-root .tool-tab.on { display: grid; align-items: stretch; }
     /* Inner field grids inside tool cards */
     #ffd-root .tg2 { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
     #ffd-root .tg3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .75rem; }
@@ -633,13 +633,13 @@
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 4h12v1.5H2V4zm0 3.5h12V9H2V7.5zm0 3.5h8v1.5H2V11z"/></svg>
         <span>Meine Kredite</span>
       </button>
-      <button class="nav-item" onclick="d.tab('to',this)">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12 1a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V2a1 1 0 011-1h8zM4 0a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V2a2 2 0 00-2-2H4z"/><path d="M4 2.5a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5v-2zm1 4a.5.5 0 100 1 .5.5 0 000-1zm2.5.5a.5.5 0 111 0 .5.5 0 01-1 0zm2.5-.5a.5.5 0 100 1 .5.5 0 000-1zM5 9.5a.5.5 0 111 0 .5.5 0 01-1 0zm2.5-.5a.5.5 0 100 1 .5.5 0 000-1zm2.5.5a.5.5 0 111 0 .5.5 0 01-1 0zM5 12a.5.5 0 100 1 .5.5 0 000-1zm2.5.5a.5.5 0 111 0 .5.5 0 01-1 0zm2.5-.5a.5.5 0 100 1 .5.5 0 000-1z"/></svg>
-        <span>Tools</span>
+      <button class="nav-item" onclick="d.tab('ch',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1 11a1 1 0 011-1h2a1 1 0 011 1v3a1 1 0 01-1 1H2a1 1 0 01-1-1v-3zm5-4a1 1 0 011-1h2a1 1 0 011 1v7a1 1 0 01-1 1H7a1 1 0 01-1-1V7zm5-5a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V2z"/></svg>
+        <span>Diagramme</span>
       </button>
-      <button class="nav-item" onclick="d.tab('st',this)">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 118 0a8 8 0 010 16z"/><path d="M8 4a.5.5 0 01.5.5v3.793l2.146 2.147a.5.5 0 01-.708.707L7.5 8.793V4.5A.5.5 0 018 4z"/></svg>
-        <span>Stress-Test</span>
+      <button class="nav-item" onclick="d.tab('sx',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 0h1v16H0zm15 0h1v16h-1zm-5 5h1v1h-1zm-2 0h1v1H8zm-2 0h1v1H6zM4 5h1v1H4zm6 2h1v1h-1zm-2 0h1v1H8zm-2 0h1v1H6zm-2 0h1v1H4zm6 2h1v1h-1zm-2 0h1v1H8zm-2 0h1v1H6zm-2 0h1v1H4z"/></svg>
+        <span>Statistiken</span>
       </button>
       <button class="nav-item" onclick="d.tab('ca',this)">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11 6.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1zm-3 0a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1zm-5 3a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1zm3 0a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1z"/><path d="M3.5 0a.5.5 0 01.5.5V1h8V.5a.5.5 0 011 0V1h1a2 2 0 012 2v11a2 2 0 01-2 2H2a2 2 0 01-2-2V3a2 2 0 012-2h1V.5a.5.5 0 01.5-.5zM1 4v10a1 1 0 001 1h12a1 1 0 001-1V4H1z"/></svg>
@@ -649,25 +649,25 @@
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5h6A.5.5 0 0111 4v1H5V4a.5.5 0 01.5-.5zM2.5 5A.5.5 0 002 5.5v1a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-11zm1 3a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h9a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-9zm1 3a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h7a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-7z"/></svg>
         <span>Timeline</span>
       </button>
-      <button class="nav-item" onclick="d.tab('ch',this)">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1 11a1 1 0 011-1h2a1 1 0 011 1v3a1 1 0 01-1 1H2a1 1 0 01-1-1v-3zm5-4a1 1 0 011-1h2a1 1 0 011 1v7a1 1 0 01-1 1H7a1 1 0 01-1-1V7zm5-5a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V2z"/></svg>
-        <span>Diagramme</span>
-      </button>
-      <button class="nav-item" onclick="d.tab('sx',this)">
-        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 0h1v16H0zm15 0h1v16h-1zm-5 5h1v1h-1zm-2 0h1v1H8zm-2 0h1v1H6zM4 5h1v1H4zm6 2h1v1h-1zm-2 0h1v1H8zm-2 0h1v1H6zm-2 0h1v1H4zm6 2h1v1h-1zm-2 0h1v1H8zm-2 0h1v1H6zm-2 0h1v1H4z"/></svg>
-        <span>Statistiken</span>
-      </button>
       <button class="nav-item" onclick="d.tab('ro',this)">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.534 7h3.932a.25.25 0 01.192.41l-1.966 2.36a.25.25 0 01-.384 0l-1.966-2.36a.25.25 0 01.192-.41zm-11 2h3.932a.25.25 0 00.192-.41L2.692 6.23a.25.25 0 00-.384 0L.342 8.59A.25.25 0 00.534 9z"/><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 11-.771-.636A6.002 6.002 0 0115.917 9h-.997A5.002 5.002 0 008 3zM3.083 9a5.002 5.002 0 009.895 1.183.5.5 0 01.98.199A6.003 6.003 0 011.083 9H3.08z"/></svg>
         <span>Roll-Overs</span>
       </button>
-      <div style="flex:1"></div>
-      <button class="nav-item" onclick="d.tab('se',this)" style="border-top:1px solid var(--border);margin-top:4px">
+      <button class="nav-item" onclick="d.tab('st',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 15A7 7 0 108 1a7 7 0 000 14zm0 1A8 8 0 118 0a8 8 0 010 16z"/><path d="M8 4a.5.5 0 01.5.5v3.793l2.146 2.147a.5.5 0 01-.708.707L7.5 8.793V4.5A.5.5 0 018 4z"/></svg>
+        <span>Stress-Test</span>
+      </button>
+      <button class="nav-item" onclick="d.tab('to',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12 1a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V2a1 1 0 011-1h8zM4 0a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V2a2 2 0 00-2-2H4z"/><path d="M4 2.5a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5v-2zm1 4a.5.5 0 100 1 .5.5 0 000-1zm2.5.5a.5.5 0 111 0 .5.5 0 01-1 0zm2.5-.5a.5.5 0 100 1 .5.5 0 000-1zM5 9.5a.5.5 0 111 0 .5.5 0 01-1 0zm2.5-.5a.5.5 0 100 1 .5.5 0 000-1zm2.5.5a.5.5 0 111 0 .5.5 0 01-1 0zM5 12a.5.5 0 100 1 .5.5 0 000-1zm2.5.5a.5.5 0 111 0 .5.5 0 01-1 0zm2.5-.5a.5.5 0 100 1 .5.5 0 000-1z"/></svg>
+        <span>Tools</span>
+      </button>
+      <div class="nav-spacer" style="flex:1"></div>
+      <button class="nav-item" data-nav-fixed onclick="d.tab('se',this)" style="border-top:1px solid var(--border);margin-top:4px">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 2a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM9.05 3a2.5 2.5 0 014.9 0H16v1h-2.05a2.5 2.5 0 01-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM2.05 8a2.5 2.5 0 014.9 0H16v1H6.95a2.5 2.5 0 01-4.9 0H0V8h2.05zM11.5 12a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-2.45 1a2.5 2.5 0 014.9 0H16v1h-2.05a2.5 2.5 0 01-4.9 0H0v-1h9.05z"/></svg>
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard v1.1.0<br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v120" target="_blank" style="text-decoration:none;color:var(--text3)">v1.2.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
@@ -698,13 +698,17 @@
             <span class="hdr-stat-val" id="hdr-act-count">&#8213;</span>
           </div>
           <div class="hdr-stat">
+            <span class="hdr-stat-lbl">N&#228;chste F&#228;lligkeit</span>
+            <span class="hdr-stat-val" id="hdr-next-due">&#8213;</span>
+          </div>
+          <div class="hdr-stat">
             <span class="hdr-stat-lbl">Offene Schuld</span>
             <span class="hdr-stat-val" id="hdr-due-val">&#8213;</span>
             <div class="hdr-stat-tooltip" id="hdr-due-tooltip"></div>
           </div>
           <div class="hdr-stat">
-            <span class="hdr-stat-lbl">N&#228;chste F&#228;lligkeit</span>
-            <span class="hdr-stat-val" id="hdr-next-due">&#8213;</span>
+            <span class="hdr-stat-lbl">Offene Schuld (BTC)</span>
+            <span class="hdr-stat-val" id="hdr-due-btc">&#8213;</span>
           </div>
           <div class="hdr-stat">
             <span class="hdr-stat-lbl">Hinterlegtes Collateral</span>
@@ -744,6 +748,7 @@
     </div>
     <div class="sec on" id="s-ov">
     <div class="alarm-banner" id="alarm-banner"></div>
+    <div id="next-action-widget" style="margin-bottom:.75rem"></div>
       <div class="mg" id="metrics"></div>
       <span class="sh">Gesamtschulden — alle Währungen</span>
       <div class="card"><div id="ov-multi"></div></div>
@@ -757,7 +762,7 @@
           <span>%</span>
         </div>
       </div>
-      <div id="ov-ltv"></div>
+      <div id="ov-ltv" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem"></div>
     </div>
 
     <!-- ── LOANS ── -->
@@ -812,11 +817,11 @@
           <div class="ff"><label>Zinssatz (% p.a.)</label><input type="number" id="fr" placeholder="8" step="0.1"></div>
           <div class="ff"><label>Gebühr (BTC, einmalig)</label><input type="number" id="ffee" placeholder="0" step="0.0001" min="0"></div>
           <div class="ff"><label>Laufzeit (Monate)</label><select id="ft"><option>3</option><option>6</option><option selected>12</option><option>18</option><option>24</option></select></div>
-          <div class="ff"><label>Startdatum</label><input type="date" id="fd"></div>
+          <div class="ff"><label>Startdatum</label><input type="date" id="fd" onchange="d.autoFillBtcStart('fd','fbp','fbp-hint')"></div>
           <div class="ff"><label>Collateral (BTC)</label><input type="number" id="fb" placeholder="0.25" step="0.001"></div>
           <div class="ff"><label>Status</label><select id="fs"><option value="active">Aktiv</option><option value="closed">Abgeschlossen</option></select></div>
           <div class="ff"><label>Währung</label><select id="fc"><option>EUR</option><option>CHF</option><option>CZK</option><option>PLN</option><option>USDC</option><option>USDT</option></select></div>
-          <div class="ff" style="grid-column:span 2"><label>BTC-Preis bei Kreditaufnahme (USD) — für Break-even</label><input type="number" id="fbp" placeholder="z.B. 85000" step="1"></div>
+          <div class="ff" style="grid-column:span 2"><label>BTC-Preis bei Kreditaufnahme (USD) — für Break-even</label><input type="number" id="fbp" placeholder="z.B. 85000" step="1"><span id="fbp-hint" style="display:none;font-size:11px;color:var(--text4);margin-top:3px"></span></div>
           <div class="ff" style="grid-column:span 2"><label>Roll-Over-Kette</label><select id="fchain"><option value="">— Keine Kette —</option></select><span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Vorläufer-Kredit wählen oder neue Kette starten</span></div>
           <div class="ff" style="grid-column:span 2"><label>Notiz</label><textarea id="fnote" rows="2" placeholder="Konditionen, Kontaktperson, Besonderheiten…" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea></div>
         </div>
@@ -1419,7 +1424,7 @@
           <div class="tg3" style="margin-bottom:.75rem">
             <div class="vor-field"><label>Kreditbetrag</label><input type="number" id="rosi-amount" placeholder="10000" oninput="d.rosi()"></div>
             <div class="vor-field"><label>Währung</label>
-              <select id="rosi-ccy" onchange="d.rosi()">
+              <select id="rosi-ccy" onchange="d.rosiCcyChange();d.rosi()">
                 <option>EUR</option><option>CHF</option><option selected>USD</option><option>USDC</option><option>USDT</option>
               </select>
             </div>
@@ -1439,7 +1444,8 @@
               <input type="range" id="rosi-n-sl" min="1" max="20" step="1" value="3" style="width:100%;margin-top:.35rem" oninput="document.getElementById('rosi-n').value=this.value;document.getElementById('rosi-n-lbl').textContent=this.value;d.rosi()">
               <input type="number" id="rosi-n" value="3" min="1" max="20" style="width:60px;margin-top:.3rem" oninput="var v=Math.max(1,Math.min(20,parseInt(this.value)||1));this.value=v;document.getElementById('rosi-n-sl').value=v;document.getElementById('rosi-n-lbl').textContent=v;d.rosi()">
             </div>
-            <div class="vor-field"><label>BTC-Preis (USD)</label><input type="number" id="rosi-btc" placeholder="85000" oninput="d.rosi()"></div>
+            <div class="vor-field"><label id="rosi-btc-lbl">BTC-Preis (USD)</label><input type="number" id="rosi-btc" placeholder="85000" oninput="d.rosi()"></div>
+            <div class="vor-field"><label>Startdatum</label><input type="date" id="rosi-start" oninput="d.rosi()"></div>
           </div>
           <div id="rosi-r" style="display:none">
             <div class="tg3" style="margin-bottom:.75rem" id="rosi-summary"></div>
@@ -1492,6 +1498,11 @@
           <button class="sm" onclick="d.stress()">Aktualisieren</button>
         </div>
         <div id="st-r"></div>
+      </div>
+      <div class="card" style="margin-bottom:1rem">
+        <span class="card-title">BTC-Preis-Heatmap — Liquidationsrisiko pro Kredit</span>
+        <p class="note2" style="margin-bottom:.75rem">Zeigt bei welchem BTC-Preis jeder aktive Kredit die MC1 (73%), MC3 (86%) und Liquidations-Schwelle (95%) erreicht.</p>
+        <div id="ch-heat" style="overflow-x:auto"></div>
       </div>
       <div class="card">
         <span class="card-title">Worst-Case-Simulator — Was passiert bei einem BTC-Einbruch?</span>
@@ -1556,13 +1567,13 @@
           <div class="ff"><label>Gebühr (BTC, einmalig)</label><input type="number" id="ef-fee" placeholder="0" step="0.0001" min="0"></div>
           <div class="ff"><label>Laufzeit (Monate)</label>
             <select id="ef-t"><option>3</option><option>6</option><option>12</option><option>18</option><option>24</option></select></div>
-          <div class="ff"><label>Startdatum</label><input type="date" id="ef-d"></div>
+          <div class="ff"><label>Startdatum</label><input type="date" id="ef-d" onchange="d.autoFillBtcStart('ef-d','ef-bp','ef-bp-hint')"></div>
           <div class="ff"><label>Collateral (BTC)</label><input type="number" id="ef-b" placeholder="0.25" step="0.001"></div>
           <div class="ff"><label>Status</label>
             <select id="ef-s"><option value="active">Aktiv</option><option value="closed">Abgeschlossen</option></select></div>
           <div class="ff"><label>W&#228;hrung</label>
             <select id="ef-c"><option>EUR</option><option>CHF</option><option>CZK</option><option>PLN</option><option>USDC</option><option>USDT</option></select></div>
-          <div class="ff" style="grid-column:span 2"><label>BTC-Preis bei Kreditaufnahme (USD) &#8212; f&#252;r Break-even</label><input type="number" id="ef-bp" placeholder="z.B. 85000" step="1"></div>
+          <div class="ff" style="grid-column:span 2"><label>BTC-Preis bei Kreditaufnahme (USD) &#8212; f&#252;r Break-even</label><input type="number" id="ef-bp" placeholder="z.B. 85000" step="1"><span id="ef-bp-hint" style="display:none;font-size:11px;color:var(--text4);margin-top:3px"></span></div>
           <div class="ff" style="grid-column:span 2"><label>Roll-Over-Kette</label><select id="ef-chain"><option value="">— Keine Kette —</option></select><span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Vorläufer-Kredit wählen oder neue Kette starten</span></div>
           <div class="ff" style="grid-column:span 2"><label>Notiz</label><textarea id="ef-note" rows="2" placeholder="Konditionen, Kontaktperson, Besonderheiten…" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea></div>
         </div>
@@ -1621,6 +1632,20 @@
         </div>
       </div>
 
+      <!-- Row 4b: Zinslast über Zeit -->
+      <div class="card" style="margin-bottom:1rem">
+        <span class="card-title">Monatliche Zinslast — Verlauf über Zeit (USD)</span>
+        <p class="note2" style="margin-bottom:.75rem">Monatliche Zinszahlungen aller aktiven Kredite, gestapelt nach Kredit. Zeigt wann Zinslast aus- oder hinzukommt.</p>
+        <div class="ch-wrap" style="height:260px"><canvas id="ch-zinslast"></canvas></div>
+      </div>
+
+      <!-- Roll-Over Timeline -->
+      <div class="card" style="margin-bottom:1rem">
+        <span class="card-title">Roll-Over-Timeline — Kettenverläufe</span>
+        <p class="note2" style="margin-bottom:.75rem">Aufeinanderfolgende Roll-Overs einer Kette als verbundene Balken. Zinskosten pro Segment annotiert.</p>
+        <div id="ch-ro-timeline" style="overflow-x:auto"></div>
+      </div>
+
       <!-- Row 5: Fälligkeits-Timeline (Gantt) -->
       <div class="card" style="margin-bottom:1rem">
         <span class="card-title">Fälligkeits-Timeline</span>
@@ -1639,18 +1664,11 @@
         </div>
       </div>
 
-      <!-- Row 7: BTC-Preis-Heatmap + Laufzeitverteilung -->
-      <div class="tg2" style="gap:1rem;margin-bottom:1rem">
-        <div class="card">
-          <span class="card-title">BTC-Preis-Heatmap — Liquidationsrisiko pro Kredit</span>
-          <p class="note2" style="margin-bottom:.75rem">Zeigt bei welchem BTC-Preis jeder aktive Kredit die MC1 (73%), MC3 (86%) und Liquidations-Schwelle (95%) erreicht.</p>
-          <div id="ch-heat" style="overflow-x:auto"></div>
-        </div>
-        <div class="card">
-          <span class="card-title">Laufzeitverteilung — Fälligkeiten nach Zeitraum</span>
-          <p class="note2" style="margin-bottom:.75rem">Gruppiert aktive Kredite nach verbleibender Laufzeit.</p>
-          <div class="ch-wrap" style="height:260px"><canvas id="ch-term"></canvas></div>
-        </div>
+      <!-- Row 7: Laufzeitverteilung -->
+      <div class="card">
+        <span class="card-title">Laufzeitverteilung — Fälligkeiten nach Zeitraum</span>
+        <p class="note2" style="margin-bottom:.75rem">Gruppiert aktive Kredite nach verbleibender Laufzeit.</p>
+        <div class="ch-wrap" style="height:260px"><canvas id="ch-term"></canvas></div>
       </div>
     </div>
 
@@ -1685,12 +1703,13 @@
             <select id="se-default-tab">
               <option value="ov">&#220;bersicht</option>
               <option value="lo">Meine Kredite</option>
-              <option value="to">Tools</option>
-              <option value="st">Stress-Test</option>
-              <option value="ca">Kalender</option>
-              <option value="tl">Timeline</option>
               <option value="ch">Diagramme</option>
               <option value="sx">Statistiken</option>
+              <option value="ca">Kalender</option>
+              <option value="tl">Timeline</option>
+              <option value="ro">Roll-Overs</option>
+              <option value="st">Stress-Test</option>
+              <option value="to">Tools</option>
             </select>
           </div>
           <div class="ff">
@@ -1712,6 +1731,15 @@
               <option value="light">Hell</option>
               <option value="dark">Dunkel</option>
             </select>
+          </div>
+        </div>
+        <div style="margin-top:1rem">
+          <label style="font-size:12px;font-weight:600;color:var(--text2)">Men&#252;reihenfolge</label>
+          <p class="note2" style="margin:.25rem 0 .5rem">Per Drag &amp; Drop oder Pfeile verschieben.</p>
+          <div id="se-nav-order" style="display:flex;flex-direction:column;gap:4px"></div>
+          <div style="margin-top:.5rem;display:inline-flex;gap:8px;align-items:center">
+            <button class="sm" onclick="d.seNavOrderReset()">Zur&#252;cksetzen</button>
+            <span id="se-nav-msg" style="display:none;font-size:12px;color:var(--ok)">&#10003; Gespeichert.</span>
           </div>
         </div>
         <div style="margin-top:.75rem">
@@ -1874,13 +1902,30 @@
       </div>
     </div>
 
-    <div class="mobile-footer-end">Firefish Dashboard v1.1.0<br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
+    <div class="mobile-footer-end">Firefish Dashboard v1.0.0<br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
     </div><!-- #ffd-root -->
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     (function(){
     'use strict';
     var R={BTC:85000,EUR:1.08,CHF:1.12,CZK:0.043,PLN:0.25,USDC:1,USDT:1,USD:1,SAT:85000/1e8};
+    /* ── Hardcoded BTC price history (2022-01-01 → 2025-12-31) ──────────────────
+       Approximate monthly-interpolated closing prices, rounded to nearest $100.
+       Stored as int16/100 array: multiply by 100 to get USD.
+       Base date: 2022-01-01 = index 0. Falls back to CoinGecko API if date not covered.
+    ───────────────────────────────────────────────────────────────────────────── */
+    var BTC_HIST_BASE='2022-01-01';
+    var BTC_HIST_END='2025-12-31';
+    var BTC_HIST_PRICES=[0,4769,4686,4602,4519,4436,4353,4270,4187,4204,4222,4239,4257,4274,4292,4310,4222,4134,4046,3958,3870,3782,3694,3704,3715,3726,3737,3748,3759,3769,3863,3956,4049,4142,4235,4328,4421,4393,4365,4336,4308,4280,4252,4223,4167,4112,4056,4000,3944,3888,3832,3844,3855,3866,3877,3889,3900,3911,3901,3891,3881,3871,3861,3851,3841,3846,3851,3857,3862,3867,3872,3877,3921,3965,4009,4053,4097,4141,4185,4260,4334,4409,4483,4557,4632,4706,4698,4690,4682,4674,4665,4657,4649,4587,4526,4464,4403,4341,4279,4218,4194,4171,4148,4125,4102,4079,4056,4044,4031,4019,4007,3994,3982,3970,3940,3910,3881,3851,3821,3792,3762,3732,3702,3672,3643,3613,3583,3553,3461,3369,3277,3184,3092,3000,2908,2913,2918,2923,2929,2934,2939,2944,2978,3011,3045,3079,3112,3146,3179,3152,3125,3098,3071,3044,3018,2991,2936,2881,2826,2771,2716,2661,2606,2528,2450,2372,2294,2216,2138,2060,2068,2077,2085,2094,2102,2110,2119,2099,2079,2059,2039,2019,1999,1978,1999,2019,2039,2060,2080,2100,2120,2152,2183,2214,2245,2277,2308,2339,2308,2277,2245,2214,2183,2151,2120,2155,2190,2224,2259,2294,2329,2364,2365,2367,2369,2370,2372,2374,2375,2385,2394,2403,2412,2422,2431,2440,2399,2359,2318,2277,2236,2196,2155,2133,2112,2091,2069,2048,2026,2005,2003,2000,1998,1996,1993,1991,1989,2024,2060,2095,2130,2166,2201,2237,2195,2153,2111,2069,2026,1984,1942,1942,1943,1943,1943,1943,1943,1943,1945,1947,1949,1951,1953,1955,1957,1955,1953,1951,1949,1947,1945,1943,1945,1947,1948,1950,1952,1954,1956,1973,1991,2009,2026,2044,2062,2079,2075,2071,2066,2062,2058,2054,2049,2058,2067,2076,2085,2093,2102,2111,2049,1987,1925,1862,1800,1738,1676,1668,1661,1653,1645,1637,1630,1622,1625,1629,1632,1636,1639,1643,1646,1656,1666,1676,1687,1697,1707,1717,1717,1717,1718,1718,1719,1719,1719,1710,1701,1692,1682,1673,1664,1655,1659,1663,1667,1671,1675,1679,1683,1679,1674,1669,1664,1660,1655,1663,1671,1678,1686,1694,1702,1710,1718,1773,1829,1884,1940,1995,2051,2107,2134,2162,2189,2216,2244,2271,2299,2312,2324,2337,2350,2362,2375,2388,2374,2361,2348,2334,2321,2308,2294,2278,2262,2246,2229,2213,2197,2180,2221,2261,2302,2342,2382,2423,2463,2442,2421,2400,2378,2357,2336,2315,2305,2294,2284,2274,2264,2253,2243,2271,2299,2327,2356,2384,2412,2440,2487,2534,2582,2629,2676,2723,2771,2774,2778,2782,2786,2790,2794,2797,2805,2812,2819,2826,2833,2840,2847,2864,2880,2896,2913,2929,2946,2962,2974,2985,2997,3009,3021,3032,3044,3005,2965,2926,2886,2847,2807,2768,2790,2812,2835,2857,2879,2902,2924,2927,2931,2934,2938,2941,2945,2949,2911,2873,2835,2797,2759,2721,2683,2684,2685,2685,2686,2687,2688,2688,2700,2711,2722,2734,2745,2756,2767,2761,2754,2748,2741,2735,2728,2722,2711,2701,2690,2680,2669,2658,2648,2674,2699,2725,2751,2777,2802,2828,2860,2891,2922,2954,2985,3016,3048,3054,3060,3066,3072,3078,3084,3090,3081,3073,3064,3055,3046,3037,3029,3022,3016,3009,3003,2996,2990,2983,2975,2966,2957,2949,2940,2932,2923,2923,2923,2923,2923,2923,2923,2923,2929,2936,2942,2948,2954,2961,2967,2963,2959,2955,2951,2947,2943,2939,2891,2843,2795,2747,2699,2652,2604,2604,2604,2604,2604,2604,2605,2605,2603,2601,2600,2598,2596,2595,2593,2596,2599,2603,2606,2609,2612,2615,2621,2627,2633,2639,2645,2651,2657,2652,2647,2642,2637,2632,2627,2622,2633,2644,2656,2667,2678,2690,2701,2715,2728,2742,2755,2769,2783,2796,2804,2812,2820,2828,2836,2844,2852,2924,2995,3067,3138,3210,3282,3353,3367,3381,3395,3409,3423,3437,3451,3459,3466,3474,3481,3489,3496,3504,3542,3581,3619,3658,3696,3735,3773,3768,3764,3759,3754,3749,3745,3740,3745,3749,3754,3759,3764,3768,3773,3829,3884,3940,3996,4051,4107,4163,4161,4159,4156,4154,4152,4150,4148,4159,4171,4182,4193,4204,4215,4227,4246,4266,4286,4306,4326,4345,4365,4345,4326,4306,4286,4266,4246,4227,4254,4281,4308,4335,4362,4389,4416,4393,4369,4346,4323,4300,4276,4253,4210,4167,4124,4080,4037,3994,3951,4008,4065,4122,4178,4235,4292,4349,4335,4322,4308,4294,4280,4267,4253,4333,4413,4493,4574,4654,4734,4814,4866,4919,4971,5024,5076,5129,5181,5255,5330,5404,5478,5552,5627,5701,5778,5854,5931,6008,6085,6161,6238,6367,6496,6625,6754,6883,7012,7142,7087,7031,6976,6921,6866,6811,6756,6730,6704,6678,6652,6625,6599,6573,6653,6732,6812,6892,6971,7051,7130,7146,7162,7177,7193,7209,7224,7240,7118,6995,6873,6751,6628,6506,6384,6398,6413,6427,6442,6456,6471,6486,6469,6453,6436,6420,6403,6387,6370,6326,6282,6238,6195,6151,6107,6063,6073,6082,6091,6101,6110,6120,6129,6210,6292,6373,6454,6535,6616,6697,6716,6735,6754,6772,6791,6810,6829,6818,6808,6797,6787,6777,6766,6756,6783,6809,6836,6863,6890,6916,6943,6884,6825,6765,6706,6647,6587,6528,6470,6412,6354,6296,6238,6180,6122,6154,6187,6220,6252,6285,6317,6350,6257,6164,6072,5979,5886,5793,5701,5713,5725,5737,5749,5761,5772,5784,5927,6070,6212,6355,6497,6640,6782,6769,6755,6742,6729,6715,6702,6689,6607,6525,6443,6361,6279,6197,6115,6109,6103,6097,6091,6085,6079,6073,6051,6029,6007,5984,5962,5940,5918,5990,6063,6136,6208,6281,6354,6426,6351,6275,6199,6124,6048,5973,5897,5869,5840,5812,5784,5756,5727,5699,5719,5739,5759,5779,5799,5819,5839,5909,5980,6050,6120,6190,6261,6331,6366,6401,6435,6470,6505,6540,6574,6530,6485,6441,6396,6351,6307,6262,6311,6360,6409,6457,6506,6555,6604,6653,6702,6751,6800,6848,6897,6946,6988,7029,7070,7111,7153,7194,7235,7292,7350,7407,7465,7522,7580,7637,7817,7998,8178,8358,8538,8719,8899,8923,8948,8973,8997,9022,9046,9071,9180,9290,9400,9510,9620,9729,9839,9811,9784,9756,9728,9700,9673,9645,9691,9736,9782,9828,9874,9920,9966,10039,10113,10186,10260,10333,10407,10480,10346,10211,10077,9943,9809,9674,9540,9512,9484,9456,9427,9399,9371,9343,9413,9482,9456,9696,9817,9822,9835,10225,9693,9507,9254,9472,9461,9454,9454,9654,10050,10001,10409,10454,10132,10220,10616,10369,10391,10486,10474,10264,10209,10135,10372,10473,10242,10065,9769,10134,9779,9660,9657,9651,9645,9647,9744,9577,9788,9661,9751,9757,9613,9578,9564,9665,9831,9616,9656,9626,9151,8869,8421,8472,8438,8607,9427,8621,8727,9061,8993,8653,8622,8069,7858,8292,8366,8110,8398,8434,8258,8402,8272,8684,8421,8407,8384,8608,8749,8740,8691,8723,8441,8265,8237,8255,8516,8253,8316,8387,8355,7839,7916,7631,8261,7961,8341,8529,8373,8459,8365,8403,8494,8448,8507,8518,8752,9344,9370,9398,9468,9463,9374,9500,9427,9418,9650,9689,9589,9432,9475,9683,9704,10327,10298,10480,10412,10280,10412,10351,10377,10348,10311,10651,10559,10682,10964,11170,10731,10776,10902,10946,10894,10779,10560,10398,10460,10564,10585,10581,10470,10152,10431,10556,10574,11027,11027,10866,10570,10608,10542,10559,10674,10456,10489,10467,10328,10211,10099,10538,10608,10735,10695,10704,10730,10836,10717,10569,10884,10960,10799,10821,10921,10827,10891,11125,11599,11754,11742,11909,11985,11776,11868,11920,11794,11785,11730,11739,11997,11876,11831,11763,11792,11940,11805,11795,11784,11577,11331,11255,11421,11506,11414,11500,11748,11668,11647,11929,11869,12015,12332,11831,11736,11741,11741,11620,11288,11428,11248,11693,11543,11348,11012,11177,11126,11257,10836,10882,10823,10924,11122,11172,11071,11065,11019,11115,11207,11152,11396,11549,11604,11593,11532,11536,11680,11643,11709,11565,11570,11524,11267,11200,11331,10902,10966,10965,11218,11436,11405,11858,12057,12222,12239,12348,12473,12136,12331,12167,11288,11067,11499,11518,11303,11077,10821,10644,10719,10866,11054,10834,10759,11008,11101,11165,11455,11411,11291,11003,10832,10960,11010,11059,10658,10150,10390,10133,10333,10231,10472,10601,10305,10166,9973,9455,9559,9426,9220,9296,9154,8661,8513,8472,8683,8830,8737,9050,9133,9090,9080,9037,8631,9129,9344,9208,8933,8921,9041,9064,9269,9200,9251,9027,9025,8816,8643,8785,8623,8551,8813,8836,8864,8855,8747,8766,8725,8736,8785,8790,8722,8847,8761];
+    /* Lookup helper: returns hardcoded price (×10) or null if date not covered */
+    function btcHistLocal(dateISO){
+      if(!dateISO)return null;
+      var baseT=new Date(BTC_HIST_BASE).getTime();
+      var t=new Date(dateISO).getTime();
+      var idx=Math.round((t-baseT)/86400000);
+      if(idx<0||idx>=BTC_HIST_PRICES.length)return null;
+      return BTC_HIST_PRICES[idx]*10;
+    }
     var liveBtc=null,btc24hChange=null,calY=new Date().getFullYear(),calM=new Date().getMonth();
     /* Shared helper: renders currency/value pairs as a compact 2-col grid */
     function cGrid(pairs){
@@ -1893,7 +1938,7 @@
       return cGrid(ccys.filter(function(c){return c!=='BTC'&&c!=='SAT';}).map(function(c){return {c:c,v:frU(usd,c)};}));
     }
     var chD=null,chI=null,dCcy='USD';
-    var chLtv=null,chMcd=null,chCol=null,chCcy=null,chBep=null,chInt2=null,chBtcost=null,chCf=null,chDcol=null,chHeat=null,chTerm=null,chZukunft=null;
+    var chLtv=null,chMcd=null,chCol=null,chCcy=null,chBep=null,chInt2=null,chBtcost=null,chCf=null,chDcol=null,chHeat=null,chTerm=null,chZukunft=null,chZinslast=null;
     var lSort={key:'dl',dir:1};
     var ltvThresh=parseInt(localStorage.getItem('ffd_ltv_thresh'))||80;
     var lFilter='active';
@@ -1924,12 +1969,14 @@
               ltvDisplay: p.ltvDisplay!=null?p.ltvDisplay:73,
               countdownDays: p.countdownDays!=null?p.countdownDays:30,
               hideAmounts: p.hideAmounts||false,
-              hideBreakEven: p.hideBreakEven||false
+              hideBreakEven: p.hideBreakEven||false,
+              navOrder: p.navOrder||null,
+              darkMode: p.darkMode||false
             };
           }
         }
       }catch(e){}
-      return{ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false};
+      return{ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false};
     }
     function saveSettings(cfg){try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(cfg));}catch(e){}}
     var cfg=loadSettings();
@@ -2052,10 +2099,11 @@
           }
         }
         /* Offene Schuld */
-        var dueEl=g('hdr-due-val'),dueTtEl=g('hdr-due-tooltip');
+        var dueEl=g('hdr-due-val'),dueTtEl=g('hdr-due-tooltip'),dueBtcEl=g('hdr-due-btc');
         if(dueEl){
           var aDue=act.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
           dueEl.textContent=aDue>0?('$'+Math.round(aDue).toLocaleString('de-CH')):dash;
+          if(dueBtcEl){dueBtcEl.textContent=aDue>0&&R.BTC>0?('₿'+(aDue/R.BTC).toFixed(4)):dash;}
           if(dueTtEl&&aDue>0){
             var CC2=(['EUR','CHF','USD','USDT','USDC','CZK','PLN']).filter(visC).filter(function(c){return c!=='USD';});
             dueTtEl.innerHTML=CC2.map(function(c){return '<b>'+c+'</b> '+fmt(frU(aDue,c),c);}).join('<br>');
@@ -2081,7 +2129,7 @@
             var nearest=mc1Prices.reduce(function(a,b){return a.price>b.price?a:b;});
             var dist=((R.BTC-nearest.price)/R.BTC*100);
             var col=dist<5?'var(--err)':dist<15?'var(--warn)':'var(--ok)';
-            mc1El.innerHTML='<span style="color:'+col+'">'+dist.toFixed(1)+'%</span> <span style="font-weight:400;font-size:11px;color:var(--text3)">'+nearest.name+'</span>';
+            mc1El.innerHTML='<span style="color:'+col+'">'+dist.toFixed(1)+'%</span> <span style="font-weight:400;font-size:11px;color:var(--text3)">($'+Math.round(nearest.price).toLocaleString('de-CH')+') '+nearest.name+'</span>';
             if(mc1tEl){
               mc1tEl.innerHTML=mc1Prices.slice().sort(function(a,b){return b.price-a.price;}).map(function(x){
                 var d=((R.BTC-x.price)/R.BTC*100);
@@ -2274,6 +2322,7 @@
             (l.note?'<div style="margin-top:.6rem;padding:.45rem .65rem;border-radius:8px;background:var(--bg2);border:1px solid var(--border);font-size:12px;color:var(--text3)"><span style="font-weight:600;color:var(--text2)">&#128172; </span>'+l.note.replace(/</g,'&lt;')+'</div>':'')+
             '</div>';
         }).join(''):'<p class="note2">Keine Kredite über dem LTV-Schwellenwert.</p>';
+        d.renderNextAction();
       },
       loansTable:function(sorted){
         var el=g('loans-list');
@@ -2310,7 +2359,7 @@
             if(l.status==='active'&&l.col>0){var due=dueU(l);liqUSDval=due/(0.95*l.col);var near=R.BTC<liqUSDval*1.1;var col='color:'+(R.BTC<=liqUSDval?'#dc2626':near?'#d97706':'#16a34a');liqCcyStr='<span style="'+col+'">'+fmt(frU(liqUSDval,l.c),l.c)+'</span>';liqUSDstr='<span style="'+col+'">$'+liqUSDval.toLocaleString('de-CH',{maximumFractionDigits:0})+'</span>';}
             var dlStr=l.status==='active'?(dl>0?'<span style="color:'+(dl<30?'#dc2626':dl<60?'#d97706':'var(--text2)')+'">'+dl+' Tage</span>':'<span style="color:#dc2626">F&#228;llig!</span>'):'<span style="color:#9ca3af">&#10003;</span>';
             return '<tr>'+
-              '<td><div class="tbl-name">'+l.name+'</div><div class="tbl-id">'+l.id+'</div></td>'+
+              '<td><div class="tbl-name">'+l.name+(l.chainId?' <span class="badge" title="Roll-Over" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer;font-size:11px;padding:1px 4px;vertical-align:middle" onclick="goRo()">🔗</span>':'')+'</div><div class="tbl-id">'+l.id+'</div></td>'+
               '<td><span class="badge '+(l.status==='active'?'ba':'bc')+'">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span></td>'+
               '<td class="amt">'+fmt(l.amount,l.c)+'</td>'+
               '<td>'+l.rate+'%</td>'+
@@ -2550,7 +2599,7 @@
       closeReset:function(){g('reset-modal-bg').classList.remove('open');},
       confirmReset:function(){
         var mode=g('reset-modal-bg').dataset.mode;
-        var defaultCfg={ccys:['EUR','CHF','USD','USDT','USDC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false};
+        var defaultCfg={ccys:['EUR','CHF','USD','USDT','USDC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,navOrder:null};
         if(mode==='loans'||mode==='all'){
           loans.length=0;
           save();
@@ -2602,6 +2651,9 @@
         var ss=g('ef-s');for(var o=0;o<ss.options.length;o++){if(ss.options[o].value===l.status){ss.selectedIndex=o;break;}}
         var cs=g('ef-c');for(var o=0;o<cs.options.length;o++){if(cs.options[o].value===l.c){cs.selectedIndex=o;break;}}
         g('ef-bp').value=l.btcStart||'';
+        /* Historischen Kurs vorschlagen falls btcStart fehlt */
+        if(!l.btcStart&&l.start){d.autoFillBtcStart('ef-d','ef-bp','ef-bp-hint');}
+        else{var h=g('ef-bp-hint');if(h)h.style.display='none';}
         g('ef-note').value=l.note||'';
         /* populate chain dropdown */
         d.populateChainSelect('ef-chain',i,l.chainId);
@@ -2947,7 +2999,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
       },
       se2Populate:function(){
         var sel=g('se2-loan-sel');if(!sel)return;
-        var act=loans.filter(function(l){return l.status==='active';});
+        var act=loans.filter(function(l){return l.status==='active';})
+          .slice().sort(function(a,b){return aM(a.start,a.term)-aM(b.start,b.term);});
         var cur=sel.value;
         sel.innerHTML='<option value="">\u2014 Kredit w\u00e4hlen \u2014</option>'+
           act.map(function(l){var i=loans.indexOf(l);return '<option value="'+i+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
@@ -2982,7 +3035,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
       },
       nlpPopulate:function(){
         var sel=g('nlp-loan-sel');if(!sel)return;
-        var act=loans.filter(function(l){return l.status==='active';});
+        var act=loans.filter(function(l){return l.status==='active';})
+          .slice().sort(function(a,b){return aM(a.start,a.term)-aM(b.start,b.term);});
         var cur=sel.value;
         sel.innerHTML='<option value="">\u2014 Kredit w\u00e4hlen \u2014</option>'+
           act.map(function(l){var i=loans.indexOf(l);return '<option value="'+i+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
@@ -3062,6 +3116,55 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           return '<div class="ccyc"><span class="ccy-lbl">'+c+'</span><span class="ccy-val">'+fmt(frU(toU(a,f),c),c)+'</span></div>';
         }).join('');
       },
+      renderHeatmap:function(){
+        var heatEl=g('ch-heat');if(!heatEl)return;
+        var act=loans.filter(function(l){return l.status==='active';});
+        if(!act.length){heatEl.innerHTML='<div class="empty" style="text-align:center;padding:2rem">Keine aktiven Kredite.</div>';return;}
+        var heatLoans=act.filter(function(l){return l.col>0;});
+        if(!heatLoans.length){heatEl.innerHTML='<p class="note2" style="text-align:center;padding:2rem">Kein Collateral hinterlegt.</p>';return;}
+        var priceMin=Math.round(R.BTC*0.30/1000)*1000;
+        var priceMax=Math.round(R.BTC*1.50/1000)*1000;
+        var steps=12;
+        var priceStep=Math.round((priceMax-priceMin)/steps/1000)*1000||1000;
+        var prices=[];
+        for(var px=priceMin;px<=priceMax;px+=priceStep)prices.push(px);
+        var labelCols=prices.map(function(p){
+          var k=p>=1000?'$'+Math.round(p/1000)+'k':'$'+p;
+          var isCur=Math.abs(p-R.BTC)<priceStep/2;
+          return '<div style="flex:1;text-align:center;font-size:9px;color:'+(isCur?'var(--accent)':'var(--text4)')+';font-weight:'+(isCur?700:400)+';white-space:nowrap">'+k+(isCur?'◂':'')+' </div>';
+        }).join('');
+        var rows=heatLoans.map(function(l){
+          var due=toU(l.amount,l.c)+intU(l);
+          var cells=prices.map(function(p){
+            var ltv=due/(l.col*p)*100;
+            var bg,fc;
+            if(ltv>=95){bg='#dc2626';fc='#fff';}
+            else if(ltv>=86){bg='#ea580c';fc='#fff';}
+            else if(ltv>=73){bg='#d97706';fc='#fff';}
+            else if(ltv>=60){bg='rgba(249,115,22,.18)';fc='var(--text2)';}
+            else{bg='rgba(22,163,74,.12)';fc='var(--text3)';}
+            var isCur=Math.abs(p-R.BTC)<priceStep/2;
+            return '<div style="flex:1;text-align:center;font-size:9px;padding:3px 1px;background:'+bg+';color:'+fc+';border-left:'+(isCur?'2px solid var(--accent)':'1px solid var(--bg)')+';white-space:nowrap">'+Math.round(ltv)+'%</div>';
+          }).join('');
+          return '<div style="display:flex;align-items:stretch;margin-bottom:2px">'+
+            '<div style="width:90px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text2);padding-right:6px;display:flex;align-items:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+l.name+'</div>'+
+            '<div style="flex:1;display:flex;border-radius:4px;overflow:hidden">'+cells+'</div>'+
+          '</div>';
+        }).join('');
+        var legend='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:.75rem;font-size:10px">'+
+          '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:rgba(22,163,74,.2);display:inline-block"></span>Sicher</span>'+
+          '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:rgba(249,115,22,.18);display:inline-block"></span>Beobachten</span>'+
+          '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#d97706;display:inline-block"></span>MC1 \u226573%</span>'+
+          '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#ea580c;display:inline-block"></span>MC3 \u226586%</span>'+
+          '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#dc2626;display:inline-block"></span>Liq \u226595%</span>'+
+        '</div>';
+        heatEl.innerHTML=
+          '<div style="display:flex;margin-bottom:3px">'+
+            '<div style="width:90px;flex-shrink:0"></div>'+
+            '<div style="flex:1;display:flex">'+labelCols+'</div>'+
+          '</div>'+
+          rows+legend;
+      },
       stress:function(){
         var bp=R.BTC;g('st-btc').textContent='$ '+bp.toLocaleString('de-CH',{maximumFractionDigits:0});
         var el=g('st-r'),act=loans.filter(function(l){return l.status==='active';});
@@ -3123,6 +3226,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           h+='</tr>';
         });
         el.innerHTML=h+'</tbody></table></div>';
+        d.renderHeatmap();
       },
       cal:function(){
         var MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
@@ -3160,57 +3264,101 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
       },
       debtChart:function(ccy){
         if(typeof Chart==='undefined')return;
-        var chGridColor=getComputedStyle(document.getElementById('ffd-root')).getPropertyValue('--border').trim();
+        var _dcCs=getComputedStyle(document.getElementById('ffd-root'));
+        var chGridColor=_dcCs.getPropertyValue('--border').trim();
+        var chTextColor=_dcCs.getPropertyValue('--text3').trim();
         var months=[],now=new Date();
-        /* Build monthly points: 12 months back, current month, 12 months forward */
-        var PAST=12,FUTURE=12;
-        for(var i=-PAST;i<=FUTURE;i++)months.push(new Date(now.getFullYear(),now.getMonth()+i,1));
+        /* Build monthly points: 12 months back, current month, up to latest due + 2 months */
+        var PAST=12;
+        var latestDue=loans.length?new Date(Math.max.apply(null,loans.map(function(l){return aM(l.start,l.term);}))):new Date(now.getFullYear(),now.getMonth()+12,1);
+        var futureEnd=new Date(latestDue.getFullYear(),latestDue.getMonth()+2,1);
+        var futureMonths=Math.max(1,Math.round((futureEnd-new Date(now.getFullYear(),now.getMonth(),1))/(1000*60*60*24*30.44)));
+        for(var i=-PAST;i<=futureMonths;i++)months.push(new Date(now.getFullYear(),now.getMonth()+i,1));
         var ni=PAST; /* index of "today" */
+        /* Fiat debt per month (USD internally, converted to ccy for display) */
         var data=months.map(function(m,mi){
-          var isPast=mi<ni;
           var mY=m.getFullYear(),mM=m.getMonth();
           return frU(loans.reduce(function(s,l){
             var lStart=new Date(l.start);
             var lEnd=aM(l.start,l.term);
-            /* Is loan active during month m? Compare by year+month, not exact date */
             var startY=lStart.getFullYear(),startM=lStart.getMonth();
             var endY=lEnd.getFullYear(),endM=lEnd.getMonth();
             var startedByThisMonth=(startY<mY)||(startY===mY&&startM<=mM);
             var endsAfterThisMonth=(endY>mY)||(endY===mY&&endM>=mM);
             if(!startedByThisMonth||!endsAfterThisMonth)return s;
-            if(isPast){
-              return s+toU(l.amount,l.c)+intU(l);
-            } else {
-              if(l.status==='closed')return s;
-              return s+toU(l.amount,l.c)+intU(l);
-            }
+            if(l.status==='closed'&&mi>ni)return s;
+            return s+toU(l.amount,l.c)+intU(l);
           },0),ccy);
         });
         var lbls=months.map(function(m){return m.toLocaleDateString('de-CH',{month:'short',year:'2-digit'});});
-        var nz=data.filter(function(v){return v>0;});
-        var minY=0;
-        if(chD){chD.destroy();chD=null;}
-        var ctx=g('debt-chart');if(!ctx)return;
-        chD=new Chart(ctx,{type:'line',data:{labels:lbls,datasets:[
-          {data:data.map(function(v,i){return i<=ni?v:null;}),borderColor:'#F97316',backgroundColor:'rgba(249,115,22,.10)',fill:true,tension:0.35,borderWidth:2,spanGaps:false,pointRadius:data.map(function(_,i){return i===ni?5:i<ni?2:0;}),pointBackgroundColor:'#F97316'},
-          {data:data.map(function(v,i){return i>=ni?v:null;}),borderColor:'#F97316',borderDash:[5,4],backgroundColor:'rgba(249,115,22,.04)',fill:true,tension:0.35,borderWidth:1.5,spanGaps:false,pointRadius:data.map(function(_,i){return i===ni?5:i>ni?2:0;}),pointBackgroundColor:'#F97316'}
-        ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-          plugins:{legend:{display:false},tooltip:{callbacks:{label:function(x){return ' '+fmt(x.parsed.y,ccy);},title:function(it){var i=it[0].dataIndex;return lbls[i]+(i===ni?' (heute)':i<ni?' (vergangen)':' (Prognose)');}}}},
-          scales:{y:{min:minY,ticks:{callback:function(v){return fax(v,ccy);},maxTicksLimit:6},grid:{color:chGridColor}},x:{grid:{display:false},ticks:{maxRotation:45,autoSkip:true,maxTicksLimit:10}}}
-        }});
-        var aN=data[ni];
-        /* Peak: highest debt across all history (past+present, not forecast) */
-        var histData=data.slice(0,ni+1);
-        var pk=Math.max.apply(null,histData),pkI=data.indexOf(pk);
-        /* Next reduction and debt-free: search only in future months */
-        var nd=-1,sf=-1;
-        for(var i=ni+1;i<data.length;i++){if(nd<0&&data[i]<aN)nd=i;}
-        for(var i=ni+1;i<data.length;i++){if(sf<0&&data[i]===0)sf=i;}
-        g('debt-stats').innerHTML=
-          '<div class="stat"><span class="stat-lbl">Aktuell offen</span><span class="stat-val">'+fmt(aN,ccy)+'</span></div>'+
-          '<div class="stat"><span class="stat-lbl">Maximum</span><span class="stat-val">'+fmt(pk,ccy)+'<br><span style="font-size:10px;color:var(--text4)">'+lbls[pkI]+'</span></span></div>'+
-          '<div class="stat"><span class="stat-lbl">Nächste Reduktion</span><span class="stat-val">'+(nd>=0?lbls[nd]:'–')+'</span></div>'+
-          '<div class="stat"><span class="stat-lbl">Schuldfrei</span><span class="stat-val">'+(sf>=0?lbls[sf]:'–')+'</span></div>';
+
+        /* Render function — called immediately (current BTC price) then updated with hist prices */
+        var histBtcMap={}; /* ISO → USD price */
+        function renderChart(){
+          /* BTC equivalent per month: past = hist price, present/future = R.BTC */
+          var dataBtc=months.map(function(m,mi){
+            var debtUSD=toU(data[mi],ccy);
+            var iso=m.getFullYear()+'-'+String(m.getMonth()+1).padStart(2,'0')+'-01';
+            var btcPrice=(mi<ni&&histBtcMap[iso])?histBtcMap[iso]:R.BTC;
+            return btcPrice>0?parseFloat((debtUSD/btcPrice).toFixed(6)):0;
+          });
+          if(chD){chD.destroy();chD=null;}
+          var ctx=g('debt-chart');if(!ctx)return;
+          var _dcTodayPlugin={id:'dcToday',afterDraw:function(chart){
+            var meta=chart.getDatasetMeta(0);if(!meta||!meta.data||!meta.data[ni])return;
+            var x=meta.data[ni].x;
+            var yA=chart.scales.y;if(!yA)return;
+            var ctx2=chart.ctx;
+            ctx2.save();ctx2.beginPath();ctx2.moveTo(x,yA.top);ctx2.lineTo(x,yA.bottom);
+            ctx2.strokeStyle='#ef4444';ctx2.lineWidth=2;ctx2.setLineDash([4,3]);ctx2.stroke();ctx2.restore();
+          }};
+          chD=new Chart(ctx,{type:'line',data:{labels:lbls,datasets:[
+            {data:data.map(function(v,i){return i<=ni?v:null;}),borderColor:'#F97316',backgroundColor:'rgba(249,115,22,.10)',fill:true,tension:0.35,borderWidth:2,spanGaps:false,pointRadius:data.map(function(_,i){return i===ni?5:i<ni?2:0;}),pointBackgroundColor:'#F97316',yAxisID:'y'},
+            {data:data.map(function(v,i){return i>=ni?v:null;}),borderColor:'#F97316',borderDash:[5,4],backgroundColor:'rgba(249,115,22,.04)',fill:true,tension:0.35,borderWidth:1.5,spanGaps:false,pointRadius:data.map(function(_,i){return i===ni?5:i>ni?2:0;}),pointBackgroundColor:'#F97316',yAxisID:'y'},
+            {data:dataBtc.map(function(v,i){return i<=ni?v:null;}),borderColor:'#F59E0B',backgroundColor:'transparent',fill:false,tension:0.35,borderWidth:1.5,spanGaps:false,pointRadius:dataBtc.map(function(_,i){return i===ni?4:i<ni?1:0;}),pointBackgroundColor:'#F59E0B',borderDash:[3,2],yAxisID:'yBtc'},
+            {data:dataBtc.map(function(v,i){return i>=ni?v:null;}),borderColor:'#F59E0B',backgroundColor:'transparent',fill:false,tension:0.35,borderWidth:1,spanGaps:false,pointRadius:dataBtc.map(function(_,i){return i===ni?4:i>ni?1:0;}),pointBackgroundColor:'#F59E0B',borderDash:[2,3],yAxisID:'yBtc'}
+          ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+            plugins:{legend:{display:false},tooltip:{callbacks:{
+              label:function(x){
+                if(x.dataset.yAxisID==='yBtc')return ' \u20bf '+x.parsed.y.toFixed(4)+' BTC';
+                return ' '+fmt(x.parsed.y,ccy);
+              },
+              title:function(it){var i=it[0].dataIndex;return lbls[i]+(i===ni?' (heute)':i<ni?' (vergangen)':' (Prognose)');}
+            }}},
+            scales:{
+              y:{min:0,ticks:{color:chTextColor,callback:function(v){return fax(v,ccy);},maxTicksLimit:6},grid:{color:chGridColor},position:'left'},
+              yBtc:{position:'right',ticks:{color:chTextColor,callback:function(v){return v.toFixed(2)+'\u20bf';},maxTicksLimit:6},grid:{display:false},title:{display:true,text:'BTC',font:{size:10},color:chTextColor}},
+              x:{grid:{display:false},ticks:{color:chTextColor,maxRotation:45,autoSkip:true,maxTicksLimit:10}}
+            }
+          },plugins:[_dcTodayPlugin]});
+          var aN=data[ni];
+          var histData=data.slice(0,ni+1);
+          var pk=Math.max.apply(null,histData),pkI=data.indexOf(pk);
+          var nd=-1,sf=-1;
+          for(var i=ni+1;i<data.length;i++){if(nd<0&&data[i]<aN)nd=i;}
+          for(var i=ni+1;i<data.length;i++){if(sf<0&&data[i]===0)sf=i;}
+          g('debt-stats').innerHTML=
+            '<div class="stat"><span class="stat-lbl">Aktuell offen</span><span class="stat-val">'+fmt(aN,ccy)+'</span></div>'+
+            '<div class="stat"><span class="stat-lbl">Maximum</span><span class="stat-val">'+fmt(pk,ccy)+'<br><span style="font-size:10px;color:var(--text4)">'+lbls[pkI]+'</span></span></div>'+
+            '<div class="stat"><span class="stat-lbl">Nächste Reduktion</span><span class="stat-val">'+(nd>=0?lbls[nd]:'–')+'</span></div>'+
+            '<div class="stat"><span class="stat-lbl">Schuldfrei</span><span class="stat-val">'+(sf>=0?lbls[sf]:'–')+'</span></div>';
+        }
+
+        /* Render immediately with current BTC price, then reload with hist prices */
+        renderChart();
+
+        /* Load historical BTC prices for past months */
+        var pastMonths=months.slice(0,ni); /* exclude current month */
+        var done=0;
+        if(!pastMonths.length)return;
+        pastMonths.forEach(function(m){
+          var iso=m.getFullYear()+'-'+String(m.getMonth()+1).padStart(2,'0')+'-01';
+          d.btcHistPrice(iso,function(usd){
+            if(usd)histBtcMap[iso]=usd;
+            done++;
+            if(done===pastMonths.length)renderChart();
+          });
+        });
       },
       ch:function(){
         if(typeof Chart==='undefined')return;
@@ -3240,6 +3388,22 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           var chText2Color=_cs.getPropertyValue('--text2').trim();
           var chTextMain=_cs.getPropertyValue('--text').trim();
           var chCardBg=_cs.getPropertyValue('--card-bg').trim();
+          /* Factory: vertical "Heute" line plugin for Chart.js charts with monthly labels */
+          function makeTodayPlugin(labels){
+            var now_tp=new Date();
+            var todayLbl=new Date(now_tp.getFullYear(),now_tp.getMonth(),1).toLocaleDateString('de-CH',{month:'short',year:'2-digit'});
+            var idx=labels.indexOf(todayLbl);
+            return {id:'todayLine',afterDraw:function(chart){
+              if(idx<0)return;
+              var meta=chart.getDatasetMeta(0);if(!meta||!meta.data||!meta.data[idx])return;
+              var x=meta.data[idx].x;
+              var yA=chart.scales.y||chart.scales.yBtc||Object.values(chart.scales).find(function(s){return s.axis==='y';});
+              if(!yA)return;
+              var ctx2=chart.ctx;
+              ctx2.save();ctx2.beginPath();ctx2.moveTo(x,yA.top);ctx2.lineTo(x,yA.bottom);
+              ctx2.strokeStyle='#ef4444';ctx2.lineWidth=2;ctx2.setLineDash([4,3]);ctx2.stroke();ctx2.restore();
+            }};
+          }
 
           /* ── 1. LTV pro Kredit — historisch ── */
           chLtv=dst(chLtv);
@@ -3467,25 +3631,102 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
                 scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return '$'+Math.round(v);}},grid:{color:chGridColor}}}}});
           }
 
-          /* ── 7. Effektivkosten in BTC ── */
-          chBtcost=dst(chBtcost);
-          var btcostC=mk('ch-btcost');
-          var btcostLoans=all; /* btcStart bereits durch bep-Block befüllt falls vorhanden */
-          if(btcostC&&btcostLoans.length){
-            var btcCosts=btcostLoans.map(function(l){
-              var totalCostUSD=intU(l)+feeU(l);
-              var bs=l.btcStart||(l.start&&window._ffdHistPrices&&window._ffdHistPrices[l.start])||R.BTC;
-              return parseFloat((totalCostUSD/bs).toFixed(8));
+          /* ── 7b. Monatliche Zinslast über Zeit ── */
+          chZinslast=dst(chZinslast);
+          var zinslastC=mk('ch-zinslast');
+          if(zinslastC&&act.length){
+            /* Build months axis: from earliest start to latest maturity + 2 months */
+            var now_zl=new Date();
+            var earliest=new Date(Math.min.apply(null,act.map(function(l){return new Date(l.start);})));
+            var latest=new Date(Math.max.apply(null,act.map(function(l){return aM(l.start,l.term);})));
+            var startM=new Date(now_zl.getFullYear(),now_zl.getMonth(),1);
+            var endM=new Date(latest.getFullYear(),latest.getMonth()+2,1);
+            var months=[];
+            var cur=new Date(startM);
+            while(cur<=endM){months.push(new Date(cur));cur.setMonth(cur.getMonth()+1);}
+            var zlLabels=months.map(function(m){return m.toLocaleDateString('de-CH',{month:'short',year:'2-digit'});});
+            /* Per-loan monthly interest: spread total interest evenly over loan months */
+            var zlDatasets=act.map(function(l,i){
+              var lStart=new Date(l.start);
+              var lEnd=aM(l.start,l.term);
+              var monthlyInt=toU(l.amount*(l.rate/100)/12,l.c);
+              var data=months.map(function(m){
+                var mEnd=new Date(m.getFullYear(),m.getMonth()+1,0);
+                /* Loan active this month? */
+                if(m>=lEnd||mEnd<lStart)return 0;
+                return parseFloat(monthlyInt.toFixed(2));
+              });
+              return {
+                label:l.name,
+                data:data,
+                backgroundColor:COLORS[i%COLORS.length].replace(')',', 0.7)').replace('rgb','rgba').replace('#','').length>7?COLORS[i%COLORS.length]+'b3':COLORS[i%COLORS.length],
+                borderColor:COLORS[i%COLORS.length],
+                borderWidth:1,
+                fill:true
+              };
             });
-            chBtcost=new Chart(btcostC,{type:'bar',
-              data:{labels:btcostLoans.map(function(l){return l.name;}),
-                datasets:[{data:btcCosts,backgroundColor:'rgba(139,92,246,.6)',borderColor:'#8B5CF6',borderWidth:1,borderRadius:4}]},
-              options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
-                tooltip:{callbacks:{label:function(x){return ' '+x.parsed.y+' BTC Gesamtkosten (Zins+Geb\xfchr)';}}}},
-                scales:{y:{ticks:{callback:function(v){return v+' \u20bf';}},grid:{color:chGridColor}},x:{grid:{display:false}}}}});
-          } else if(btcostC){
-            g('ch-btcost').parentElement.innerHTML='<p class="note2" style="text-align:center;padding:2rem">Kein BTC-Startpreis hinterlegt.</p>';
+            /* Fix backgroundColor — use simple rgba from hex */
+            zlDatasets.forEach(function(ds,i){
+              var hex=COLORS[i%COLORS.length];
+              var r=parseInt(hex.slice(1,3),16),gv=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+              ds.backgroundColor='rgba('+r+','+gv+','+b+',0.65)';
+              ds.borderColor=hex;
+            });
+            var zlTodayPlugin=makeTodayPlugin(zlLabels);
+            chZinslast=new Chart(zinslastC,{
+              type:'bar',
+              data:{labels:zlLabels,datasets:zlDatasets},
+              options:{
+                responsive:true,maintainAspectRatio:false,
+                interaction:{mode:'index',intersect:false},
+                plugins:{
+                  legend:{position:'top',labels:{font:{size:11}}},
+                  tooltip:{callbacks:{
+                    label:function(x){return ' '+x.dataset.label+': $'+x.parsed.y.toLocaleString('de-CH',{maximumFractionDigits:0});},
+                    footer:function(items){var sum=items.reduce(function(s,x){return s+x.parsed.y;},0);return sum>0?'Gesamt: $'+Math.round(sum).toLocaleString('de-CH'):'';} 
+                  }}
+                },
+                scales:{
+                  x:{stacked:true,grid:{display:false},ticks:{maxTicksLimit:18,autoSkip:true}},
+                  y:{stacked:true,ticks:{callback:function(v){return '$'+Math.round(v);}},grid:{color:chGridColor}}
+                }
+              },
+              plugins:[zlTodayPlugin]
+            });
           }
+
+          /* ── 7. Effektivkosten in BTC ── */
+          (function(){
+            chBtcost=dst(chBtcost);
+            var btcostC=mk('ch-btcost');
+            if(!btcostC)return;
+            if(!all.length){btcostC.parentElement.innerHTML='<p class="note2" style="text-align:center;padding:2rem">Keine Kredite vorhanden.</p>';return;}
+            var btcostLoans=all;
+            var btcostPrices={};
+            var pending=btcostLoans.filter(function(l){return !l.btcStart&&l.start;});
+            function renderBtcost(){
+              var btcCosts=btcostLoans.map(function(l){
+                var totalCostUSD=intU(l)+feeU(l);
+                var bs=l.btcStart||(l.start&&btcostPrices[l.start])||R.BTC;
+                return parseFloat((totalCostUSD/bs).toFixed(8));
+              });
+              chBtcost=new Chart(btcostC,{type:'bar',
+                data:{labels:btcostLoans.map(function(l){return l.name;}),
+                  datasets:[{data:btcCosts,backgroundColor:'rgba(139,92,246,.6)',borderColor:'#8B5CF6',borderWidth:1,borderRadius:4}]},
+                options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+                  tooltip:{callbacks:{label:function(x){return ' '+x.parsed.y+' BTC Gesamtkosten (Zins+Geb\xfchr)';}}}},
+                  scales:{y:{ticks:{callback:function(v){return v+' \u20bf';}},grid:{color:chGridColor}},x:{grid:{display:false}}}}});
+            }
+            if(!pending.length){renderBtcost();return;}
+            var done=0;
+            pending.forEach(function(l){
+              d.btcHistPrice(l.start,function(usd){
+                if(usd)btcostPrices[l.start]=usd;
+                done++;
+                if(done===pending.length)renderBtcost();
+              });
+            });
+          })();
 
           /* ── 8. Fälligkeits-Gantt ── */
           var ganttEl=g('ch-gantt');
@@ -3493,7 +3734,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             var ganttLoans=all.slice().sort(function(a,b){return new Date(a.start)-new Date(b.start);});
             var now=new Date();
             var minD=new Date(Math.min.apply(null,ganttLoans.map(function(l){return new Date(l.start);})));
-            var maxD=new Date(Math.max.apply(null,ganttLoans.map(function(l){return aM(l.start,l.term);})));
+            var latestDueG=new Date(Math.max.apply(null,ganttLoans.map(function(l){return aM(l.start,l.term);})));
+            var maxD=new Date(latestDueG.getFullYear(),latestDueG.getMonth()+2,1);
             var total=maxD-minD||1;
             /* Build X-axis ticks & gridlines */
             var xTicks=(function(){
@@ -3539,15 +3781,86 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
               '<div style="font-size:10px;color:var(--text4);margin-top:4px">&#9632; Roter Strich = Heute</div>';
           }
 
+          /* ── Roll-Over-Timeline ── */
+          var roTlEl=g('ch-ro-timeline');
+          if(roTlEl){
+            var chains={};
+            all.forEach(function(l){if(l.chainId)chains[l.chainId]=(chains[l.chainId]||[]).concat(l);});
+            var chainIds=Object.keys(chains);
+            if(!chainIds.length){
+              roTlEl.innerHTML='<p class="note2" style="text-align:center;padding:1.5rem">Keine Roll-Over-Ketten vorhanden.</p>';
+            } else {
+              /* Sort each chain by start date */
+              chainIds.forEach(function(cid){chains[cid].sort(function(a,b){return new Date(a.start)-new Date(b.start);});});
+              /* Timeline range */
+              var allChainLoans=chainIds.reduce(function(a,cid){return a.concat(chains[cid]);},[]); 
+              var minDR=new Date(Math.min.apply(null,allChainLoans.map(function(l){return new Date(l.start);})));
+              var latestDueR=new Date(Math.max.apply(null,allChainLoans.map(function(l){return aM(l.start,l.term);})));
+              var maxDR=new Date(latestDueR.getFullYear(),latestDueR.getMonth()+2,1);
+              var totalR=maxDR-minDR||1;
+              var nowR=new Date();
+              var nowPctR=Math.min(100,Math.max(0,((nowR-minDR)/totalR*100))).toFixed(1);
+              /* X-axis ticks */
+              var totalMonthsR=Math.round((maxDR-minDR)/(1000*60*60*24*30.44));
+              var stepR=totalMonthsR<=12?1:totalMonthsR<=24?2:totalMonthsR<=48?3:6;
+              var ticksR='',linesR='';
+              var curR=new Date(Date.UTC(minDR.getUTCFullYear(),minDR.getUTCMonth(),1));
+              while(curR<=new Date(maxDR.getTime()+1)){
+                var pctR=Math.max(0,Math.min(100,((curR-minDR)/totalR*100))).toFixed(2);
+                ticksR+='<div style="position:absolute;left:'+pctR+'%;transform:translateX(-50%);font-size:9px;color:var(--text4);white-space:nowrap">'+curR.toLocaleDateString('de-CH',{month:'short',year:'2-digit'})+'</div>';
+                linesR+='<div style="position:absolute;left:'+pctR+'%;top:0;width:1px;height:100%;background:var(--border);opacity:.4;pointer-events:none"></div>';
+                curR=new Date(Date.UTC(curR.getUTCFullYear(),curR.getUTCMonth()+stepR,1));
+              }
+              var CHAIN_COLORS=['#F97316','#3B82F6','#10B981','#8B5CF6','#EF4444','#F59E0B','#06B6D4','#EC4899'];
+              var html=
+                '<div style="display:flex;align-items:flex-end;gap:8px;margin-bottom:3px">'+
+                  '<div style="width:110px;flex-shrink:0"></div>'+
+                  '<div style="flex:1;position:relative;height:16px">'+ticksR+'</div>'+
+                  '<div style="width:80px;flex-shrink:0;font-size:10px;font-weight:600;color:var(--text4);text-align:right">Kosten</div>'+
+                '</div>'+
+                '<div style="padding:.25rem 0">';
+              chainIds.forEach(function(cid,ci){
+                var clr=CHAIN_COLORS[ci%CHAIN_COLORS.length];
+                var chainLoans=chains[cid];
+                var chainName=chainLoans[0].name.replace(/v\d+$/,'').trim()||'Kette '+(ci+1);
+                var totalCost=chainLoans.reduce(function(s,l){return s+intU(l)+feeU(l);},0);
+                html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'+
+                  '<div style="width:110px;flex-shrink:0;font-size:11px;font-weight:700;color:'+clr+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+chainLoans.length+' Kredite">🔗 '+chainName+'</div>'+
+                  '<div style="flex:1;position:relative;height:26px;background:var(--bg3);border-radius:6px;overflow:hidden">'+
+                    linesR;
+                chainLoans.forEach(function(l,li){
+                  var s=new Date(l.start),e=aM(l.start,l.term);
+                  var left=((s-minDR)/totalR*100).toFixed(1);
+                  var width=Math.max(((e-s)/totalR*100).toFixed(1),0.5);
+                  var isActive=l.status==='active';
+                  var intCost=intU(l);
+                  var gap=li>0?2:0;
+                  html+='<div title="'+l.name+' · '+fmt(l.amount,l.c)+' · Zinsen: '+fmt(intCost,'USD')+'" style="position:absolute;left:calc('+left+'% + '+gap+'px);width:calc('+width+'% - '+gap+'px);height:100%;background:'+clr+';opacity:'+(isActive?1:.55)+';border-radius:3px;display:flex;align-items:center;overflow:hidden;padding:0 4px;z-index:1;box-sizing:border-box">'+
+                    '<span style="font-size:9px;color:#fff;white-space:nowrap;overflow:hidden">'+l.name+'</span>'+
+                  '</div>';
+                });
+                html+='<div style="position:absolute;left:'+nowPctR+'%;top:0;width:2px;height:100%;background:#ef4444;z-index:2"></div>'+
+                  '</div>'+
+                  '<div style="width:80px;flex-shrink:0;font-size:10px;font-weight:600;color:var(--text3);text-align:right">'+fmt(totalCost,'USD')+'</div>'+
+                '</div>';
+              });
+              html+='</div><div style="font-size:10px;color:var(--text4);margin-top:4px">■ Roter Strich = Heute &nbsp;·&nbsp; Gestapfte Balken = einzelne Roll-Overs &nbsp;·&nbsp; Transparenz = abgeschlossen</div>';
+              roTlEl.innerHTML=html;
+            }
+          }
+
           /* ── 9. Cashflow-Vorschau (nächste 12 Monate) ── */
           chCf=dst(chCf);
           var cfC=mk('ch-cf');
           if(cfC){
             var now2=new Date();
+            var cfLatest=act.length?new Date(Math.max.apply(null,act.map(function(l){return aM(l.start,l.term);}))):new Date(now2.getFullYear(),now2.getMonth()+12,1);
+            var cfMax=new Date(cfLatest.getFullYear(),cfLatest.getMonth()+2,1);
             var cfMonths=[],cfLabels=[];
-            for(var i=0;i<12;i++){
-              var m=new Date(now2.getFullYear(),now2.getMonth()+i+1,1);
-              cfMonths.push(m);cfLabels.push(m.toLocaleDateString('de-CH',{month:'short',year:'2-digit'}));
+            var cfCur=new Date(now2.getFullYear(),now2.getMonth()+1,1);
+            while(cfCur<=cfMax){
+              cfMonths.push(new Date(cfCur));cfLabels.push(cfCur.toLocaleDateString('de-CH',{month:'short',year:'2-digit'}));
+              cfCur.setMonth(cfCur.getMonth()+1);
             }
             var cfData=cfMonths.map(function(m){
               return act.reduce(function(sum,l){
@@ -3563,7 +3876,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
               data:{labels:cfLabels,datasets:[{data:cfData,backgroundColor:cfData.map(function(v){return v>0?'rgba(249,115,22,.7)':'rgba(229,231,235,.5)';}),borderColor:cfData.map(function(v){return v>0?'#F97316':'#e5e7eb';}),borderWidth:1,borderRadius:4}]},
               options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
                 tooltip:{callbacks:{label:function(x){return x.parsed.y>0?' Fällig (Kapital+Zinsen): $'+x.parsed.y.toLocaleString('de-CH',{maximumFractionDigits:0}):'  Nichts fällig';}}}},
-                scales:{y:{ticks:{callback:function(v){return v>0?'$'+Math.round(v/1000)+'k':'';}},grid:{color:chGridColor}},x:{grid:{display:false}}}}});
+                scales:{y:{ticks:{callback:function(v){return v>0?'$'+Math.round(v/1000)+'k':'';}},grid:{color:chGridColor}},x:{grid:{display:false}}}},
+              plugins:[makeTodayPlugin(cfLabels)]});
           }
 
           /* ── 10. Schulden vs. Collateral-Wert ── */
@@ -3576,7 +3890,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
               var dcolLoans=loans;
               var oldest3=dcolLoans.reduce(function(e,l){var s=new Date(l.start);return s<e?s:e;},now3);
               var dcStart=new Date(oldest3.getFullYear(),oldest3.getMonth(),1);
-              var dcEnd=new Date(now3.getFullYear(),now3.getMonth()+12,1);
+              var dcLatest=dcolLoans.length?new Date(Math.max.apply(null,dcolLoans.map(function(l){return aM(l.start,l.term);}))):now3;
+              var dcEnd=new Date(dcLatest.getFullYear(),dcLatest.getMonth()+2,1);
 
               /* Alle Monatsdaten sammeln (1. des Monats) */
               var months=[];
@@ -3592,20 +3907,25 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
 
               function renderDcol(){
                 var dcLabels=[],dcDebt=[],dcCol=[],dcDebtBtc=[];
-                months.forEach(function(m){
+                months.forEach(function(m,mi){
                   var iso=m.getFullYear()+'-'+String(m.getMonth()+1).padStart(2,'0')+'-01';
                   var btcPrice=(m<firstOfThisMonth)?(histMap[iso]||R.BTC):R.BTC;
                   dcLabels.push(m.toLocaleDateString('de-CH',{month:'short',year:'2-digit'}));
-                  /* Kredit zählt wenn m zwischen Start und Ende liegt */
                   var debt=dcolLoans.reduce(function(s,l){
                     var lStart=new Date(l.start);
                     var lEnd=aM(l.start,l.term);
-                    return (m>=new Date(lStart.getFullYear(),lStart.getMonth(),1)&&m<=lEnd)?s+toU(l.amount,l.c):s;
+                    var active=m>=new Date(lStart.getFullYear(),lStart.getMonth(),1)&&m<=lEnd;
+                    if(!active)return s;
+                    if(l.status==='closed'&&m>=firstOfThisMonth)return s;
+                    return s+toU(l.amount,l.c)+intU(l);
                   },0);
                   var col=dcolLoans.reduce(function(s,l){
                     var lStart=new Date(l.start);
                     var lEnd=aM(l.start,l.term);
-                    return (m>=new Date(lStart.getFullYear(),lStart.getMonth(),1)&&m<=lEnd)?s+l.col*btcPrice:s;
+                    var active=m>=new Date(lStart.getFullYear(),lStart.getMonth(),1)&&m<=lEnd;
+                    if(!active)return s;
+                    if(l.status==='closed'&&m>=firstOfThisMonth)return s;
+                    return s+l.col*btcPrice;
                   },0);
                   dcDebt.push(debt);
                   dcCol.push(col);
@@ -3619,6 +3939,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
                     {label:'Schulden (BTC)',data:dcDebtBtc,borderColor:'#F59E0B',backgroundColor:'transparent',fill:false,tension:0.3,borderWidth:2,pointRadius:3,borderDash:[5,3],yAxisID:'yBtc'}
                   ]},
                   options:{responsive:true,maintainAspectRatio:false,
+                    interaction:{mode:'index',intersect:false},
                     plugins:{legend:{position:'top',labels:{font:{size:11}}},
                       tooltip:{callbacks:{label:function(x){
                         if(x.dataset.yAxisID==='yBtc')return ' '+x.dataset.label+': '+x.parsed.y.toFixed(6)+' BTC';
@@ -3627,7 +3948,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
                     scales:{
                       y:{position:'left',ticks:{callback:function(v){return '$'+Math.round(v/1000)+'k';}},grid:{color:chGridColor}},
                       yBtc:{position:'right',ticks:{callback:function(v){return v.toFixed(4)+'₿';}},grid:{display:false},title:{display:true,text:'BTC',font:{size:10}}},
-                      x:{grid:{display:false}}}}});
+                      x:{grid:{display:false}}}},
+                  plugins:[makeTodayPlugin(dcLabels)]});
               }
 
               if(!pending){renderDcol();return;}
@@ -3644,66 +3966,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             })();
           }
 
-          /* ── 11. BTC-Preis-Heatmap ── */
-          var heatEl=g('ch-heat');
-          if(heatEl&&act.length){
-            var heatLoans=act.filter(function(l){return l.col>0;});
-            if(heatLoans.length){
-              /* Price points for x-axis: from 0.3×current to 1.5×current */
-              var priceMin=Math.round(R.BTC*0.30/1000)*1000;
-              var priceMax=Math.round(R.BTC*1.50/1000)*1000;
-              var steps=12;
-              var priceStep=Math.round((priceMax-priceMin)/steps/1000)*1000||1000;
-              var prices=[];
-              for(var px=priceMin;px<=priceMax;px+=priceStep)prices.push(px);
-
-              /* Label row */
-              var labelCols=prices.map(function(p){
-                var k=p>=1000?'$'+Math.round(p/1000)+'k':'$'+p;
-                var isCur=Math.abs(p-R.BTC)<priceStep/2;
-                return '<div style="flex:1;text-align:center;font-size:9px;color:'+(isCur?'var(--accent)':'var(--text4)')+';font-weight:'+(isCur?700:400)+';white-space:nowrap">'+k+(isCur?'◂':'')+' </div>';
-              }).join('');
-
-              var rows=heatLoans.map(function(l){
-                var due=toU(l.amount,l.c)+intU(l);
-                var cells=prices.map(function(p){
-                  var ltv=due/(l.col*p)*100;
-                  var bg,fc;
-                  if(ltv>=95){bg='#dc2626';fc='#fff';}
-                  else if(ltv>=86){bg='#ea580c';fc='#fff';}
-                  else if(ltv>=73){bg='#d97706';fc='#fff';}
-                  else if(ltv>=60){bg='rgba(249,115,22,.18)';fc='var(--text2)';}
-                  else{bg='rgba(22,163,74,.12)';fc='var(--text3)';}
-                  var isCur=Math.abs(p-R.BTC)<priceStep/2;
-                  return '<div style="flex:1;text-align:center;font-size:9px;padding:3px 1px;background:'+bg+';color:'+fc+';border-left:'+(isCur?'2px solid var(--accent)':'1px solid var(--bg)')+';white-space:nowrap">'+Math.round(ltv)+'%</div>';
-                }).join('');
-                return '<div style="display:flex;align-items:stretch;margin-bottom:2px">'+
-                  '<div style="width:90px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text2);padding-right:6px;display:flex;align-items:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+l.name+'</div>'+
-                  '<div style="flex:1;display:flex;border-radius:4px;overflow:hidden">'+cells+'</div>'+
-                '</div>';
-              }).join('');
-
-              /* Legend */
-              var legend='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:.75rem;font-size:10px">'+
-                '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:rgba(22,163,74,.2);display:inline-block"></span>Sicher</span>'+
-                '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:rgba(249,115,22,.18);display:inline-block"></span>Beobachten</span>'+
-                '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#d97706;display:inline-block"></span>MC1 ≥73%</span>'+
-                '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#ea580c;display:inline-block"></span>MC3 ≥86%</span>'+
-                '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#dc2626;display:inline-block"></span>Liq ≥95%</span>'+
-              '</div>';
-
-              heatEl.innerHTML=
-                '<div style="display:flex;margin-bottom:3px">'+
-                  '<div style="width:90px;flex-shrink:0"></div>'+
-                  '<div style="flex:1;display:flex">'+labelCols+'</div>'+
-                '</div>'+
-                rows+legend;
-            } else {
-              heatEl.innerHTML='<p class="note2" style="text-align:center;padding:2rem">Kein Collateral hinterlegt.</p>';
-            }
-          }
-
-          /* ── 12. Laufzeitverteilung ── */
+          /* ── 11. Laufzeitverteilung ── */
           chTerm=dst(chTerm);
           var termC=mk('ch-term');
           if(termC&&act.length){
@@ -3806,6 +4069,58 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         } else {
           el.className='alarm-banner';el.innerHTML='';
         }
+        d.renderNextAction();
+      },
+
+      renderNextAction:function(){
+        var el=g('next-action-widget');if(!el)return;
+        var act=loans.filter(function(l){return l.status==='active';});
+        if(!act.length){el.innerHTML='';return;}
+
+        /* Priority 1 — danger LTV */
+        var danger=act.filter(function(l){var ltv=l.col>0?dueU(l)/(l.col*R.BTC):0;return ltv>=(cfg.ltvDanger!=null?cfg.ltvDanger/100:0.86);});
+        if(danger.length){
+          var l=danger[0];var ltv=(dueU(l)/(l.col*R.BTC)*100).toFixed(1);
+          el.innerHTML=d._naCard('🔴','Sofortiger Handlungsbedarf','Collateral nachschiessen oder Kredit zurückzahlen','<b>'+l.name+'</b> hat LTV '+ltv+'% — Liquidationsgefahr!','#dc2626','rgba(220,38,38,.08)');return;
+        }
+        /* Priority 2 — crit LTV */
+        var crit=act.filter(function(l){var ltv=l.col>0?dueU(l)/(l.col*R.BTC):0;return ltv>=(cfg.ltvCrit/100)&&ltv<(cfg.ltvDanger!=null?cfg.ltvDanger/100:0.86);});
+        if(crit.length){
+          var l=crit[0];var ltv=(dueU(l)/(l.col*R.BTC)*100).toFixed(1);
+          el.innerHTML=d._naCard('🟠','Margin Call Warnung','LTV kritisch — Collateral prüfen','<b>'+l.name+'</b> hat LTV '+ltv+'% — MC2 erreicht','#ea580c','rgba(234,88,12,.07)');return;
+        }
+        /* Priority 3 — due within 7 days */
+        var urgent=act.filter(function(l){var d2=dL(l.start,l.term);return d2>=0&&d2<=7;}).sort(function(a,b){return dL(a.start,a.term)-dL(b.start,b.term);});
+        if(urgent.length){
+          var l=urgent[0];var dl=dL(l.start,l.term);
+          el.innerHTML=d._naCard('⏰','Kredit läuft ab','Roll-Over vorbereiten oder zurückzahlen','<b>'+l.name+'</b> — fällig in <b>'+dl+' Tag'+(dl===1?'':'en')+'</b> ('+fmt(frU(dueU(l),l.c),l.c)+')','#d97706','rgba(217,119,6,.07)');return;
+        }
+        /* Priority 4 — due within 30 days */
+        var soon=act.filter(function(l){var d2=dL(l.start,l.term);return d2>=0&&d2<=30;}).sort(function(a,b){return dL(a.start,a.term)-dL(b.start,b.term);});
+        if(soon.length){
+          var l=soon[0];var dl=dL(l.start,l.term);
+          el.innerHTML=d._naCard('📅','Fälligkeit in Kürze','Roll-Over oder Rückzahlung planen','<b>'+l.name+'</b> — fällig in <b>'+dl+' Tagen</b> ('+aM(l.start,l.term).toLocaleDateString('de-CH',{day:'2-digit',month:'short',year:'numeric'})+')','#6366f1','rgba(99,102,241,.06)');return;
+        }
+        /* Priority 5 — warn LTV */
+        var warn=act.filter(function(l){var ltv=l.col>0?dueU(l)/(l.col*R.BTC):0;return ltv>=(cfg.ltvWarn/100)&&ltv<(cfg.ltvCrit/100);});
+        if(warn.length){
+          var l=warn[0];var ltv=(dueU(l)/(l.col*R.BTC)*100).toFixed(1);
+          el.innerHTML=d._naCard('🟡','LTV im Beobachtungsbereich','BTC-Preisentwicklung im Auge behalten','<b>'+l.name+'</b> hat LTV '+ltv+'% — über MC1-Schwelle','#d97706','rgba(217,119,6,.06)');return;
+        }
+        /* All good */
+        var next=act.slice().sort(function(a,b){return dL(a.start,a.term)-dL(b.start,b.term);})[0];
+        var dl=dL(next.start,next.term);
+        el.innerHTML=d._naCard('✅','Alles im grünen Bereich','Nächste Fälligkeit: <b>'+next.name+'</b> in '+dl+' Tagen','Portfolio-LTV und Margin Call-Distanzen sind unkritisch','#16a34a','rgba(22,163,74,.06)');
+      },
+      _naCard:function(icon,title,action,detail,color,bg){
+        return '<div style="display:flex;align-items:center;gap:.85rem;padding:.7rem 1rem;background:'+bg+';border:1px solid '+color+';border-radius:10px;border-left:4px solid '+color+'">'+
+          '<span style="font-size:22px;line-height:1">'+icon+'</span>'+
+          '<div style="flex:1;min-width:0">'+
+            '<div style="font-size:13px;font-weight:700;color:'+color+'">'+title+'</div>'+
+            '<div style="font-size:12px;color:var(--text2);margin-top:1px">'+action+'</div>'+
+            '<div style="font-size:11px;color:var(--text3);margin-top:2px">'+detail+'</div>'+
+          '</div>'+
+        '</div>';
       },
 
       /* ─── Vor-Kredit Tools ─── */
@@ -3827,10 +4142,12 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var disp=document.getElementById('vor-btc-display');
         if(disp)disp.textContent=fmtBtc.toLocaleString('de-CH')+' '+ccy;
         /* Fill all BTC price inputs */
-        ['mkb-btc','szb-btc','mkr-btc','btr-btc','ltvc-btc','alp-btc','bebp','rosi-btc'].forEach(function(id){
+        ['mkb-btc','szb-btc','mkr-btc','btr-btc','ltvc-btc','alp-btc','bebp'].forEach(function(id){
           var el=document.getElementById(id);
           if(el){el.value=fmtBtc;el._vorAutoFilled=true;}
         });
+        /* rosi-btc: convert to rosi's own currency */
+        d.rosiCcyChange();
         /* Convert future BTC price fields to new currency */
         ['mkr-future-btc','btr-future'].forEach(function(id){
           var el=document.getElementById(id);
@@ -3884,16 +4201,19 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         };
         Object.keys(lbls).forEach(function(id){
           var el=document.getElementById(id);
-          if(el)el.textContent=lbls[id];
+          if(el&&lbls[id]!==null)el.textContent=lbls[id];
         });
         /* Clear results and recalculate */
         /* Reconvert gvl-btcstart if raw USD stored */
         var bsEl=document.getElementById('gvl-btcstart');
         if(bsEl&&bsEl._btcStartUSD){bsEl.value=parseFloat(frU(bsEl._btcStartUSD,ccy).toFixed(ccy==='CZK'||ccy==='PLN'?0:2));}
         /* Update btcstart label with currency */
-        /* Update btcstart label text only — don't recreate span to avoid duplicate ID */
         var bsLbl=document.getElementById('gvl-btcstart-lbl');
-        if(bsLbl){var firstNode=bsLbl.firstChild;if(firstNode&&firstNode.nodeType===3)firstNode.nodeValue='Bitcoin-Preis bei Kreditnahme ('+ccy+') ';}
+        if(bsLbl){
+          var dateSpan=document.getElementById('gvl-start-date');
+          bsLbl.textContent='Bitcoin-Preis bei Kreditnahme ('+ccy+') ';
+          if(dateSpan)bsLbl.appendChild(dateSpan);
+        }
         d.mkb();d.szb();d.mkr();d.btr();d.mkk();d.ltvc();d.alp();d.gz();d.nach();d.nlp();d.se2();d.gvl();
       },
       vorGetCcy:function(){
@@ -4028,41 +4348,41 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var term=parseInt(g('rosi-term').value)||12;
         var rate1=parseFloat(g('rosi-rate1').value)||0;
         var rate2=parseFloat(g('rosi-rate2').value)||rate1;
-        var btcP=parseFloat(g('rosi-btc').value)||R.BTC;
+        var btcP=parseFloat(g('rosi-btc').value)||frU(R.BTC,ccy);
+        var btcPusd=toU(btcP,ccy); /* BTC price in USD for fee BTC conversion */
+        var startEl=g('rosi-start');
+        var baseDate=startEl&&startEl.value?new Date(startEl.value):new Date();
         var n=Math.max(1,Math.min(20,parseInt(g('rosi-n').value)||3));
         var el=g('rosi-r');
         if(!amount||!rate1){el.style.display='none';return;}
-        /* Fee: 1.5% p.a. × (term/12) × currentAmount — calculated per roll-over */
+        /* All amounts stay in loan currency (ccy) — no USD conversion for display */
+        function fmtC(v){return fmt(v,ccy);}
         var feeRatePa=0.015;
-        var totalInterest=0,totalFee=0;
-        var originalAmountUSD=toU(amount,ccy);
+        var totalInterest=0,totalFee=0,totalVolume=0;
+        var originalAmount=amount;
         var rows='<thead><tr>'+
           '<th>#</th><th>Bezeichnung</th><th>Laufzeit</th><th>Zinssatz</th>'+
-          '<th>Kreditbetrag</th><th>Zinsen</th><th>Gebühr</th>'+
-          '<th>Fälliger Betrag</th><th>Gesamtkosten</th>'+
+          '<th>Kreditbetrag ('+ccy+')</th><th>Zinsen ('+ccy+')</th><th>Gebühr</th>'+
+          '<th>Fälliger Betrag ('+ccy+')</th><th>Gesamtkosten ('+ccy+')</th>'+
           '</tr></thead><tbody>';
-        var baseDate=new Date();
-        var currentAmount=amount; /* rolls forward each iteration */
+        var currentAmount=amount;
         var feeDisplayEl=g('rosi-fee-display');
+        var feeBtcFirst=0;
         for(var i=0;i<n;i++){
           var rate=i===0?rate1:rate2;
           var interest=currentAmount*(rate/100)*(term/12);
-          var interestUSD=toU(interest,ccy);
-          var currentAmountUSD=toU(currentAmount,ccy);
-          /* Fee: 1.5% p.a. × (term/12) × currentAmount in fiat */
           var feeAmt=currentAmount*feeRatePa*(term/12);
-          var feeUSD=toU(feeAmt,ccy);
-          var feeBtc=btcP>0?feeUSD/btcP:0;
+          var feeBtc=btcPusd>0?toU(feeAmt,ccy)/btcPusd:0;
           var feePct=(feeRatePa*(term/12)*100).toFixed(2);
-          /* Update fee display on first iteration */
+          if(i===0){feeBtcFirst=feeBtc;}
           if(i===0&&feeDisplayEl){
-            feeDisplayEl.textContent=feePct+'% ('+fmt(feeUSD,'USD')+' ≈ '+feeBtc.toFixed(6)+' BTC)';
+            feeDisplayEl.textContent=feePct+'% ('+fmtC(feeAmt)+' ≈ '+feeBtc.toFixed(6)+' BTC)';
           }
-          var dueAmt=currentAmount+interest; /* becomes next loan amount */
-          var dueUSD=toU(dueAmt,ccy);
-          var costUSD=interestUSD+feeUSD;
-          totalInterest+=interestUSD;
-          totalFee+=feeUSD;
+          var dueAmt=currentAmount+interest;
+          var costAmt=interest+feeAmt;
+          totalInterest+=interest;
+          totalFee+=feeAmt;
+          totalVolume+=currentAmount;
           var startD=new Date(baseDate);
           startD.setMonth(startD.getMonth()+i*term);
           var endD=new Date(startD);
@@ -4075,26 +4395,29 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             '<td class="tbl-name">Roll-Over '+(i+1)+'<br><span style="font-size:10px;font-weight:400;color:var(--text4)">'+startStr+' \u2192 '+endStr+'</span></td>'+
             '<td>'+term+' Mt.</td>'+
             '<td>'+rate.toFixed(1)+'%</td>'+
-            '<td class="amt"'+(i>0?' style="color:var(--text3)"':'')+'>'+fmt(currentAmountUSD,'USD')+(i>0?'<br><span style="font-size:10px;color:var(--text4)">\u2934 aus Vorperiode</span>':'')+'</td>'+
-            '<td class="amt">'+fmt(interestUSD,'USD')+'</td>'+
-            '<td class="amt">'+feePct+'%<br><span style="font-size:10px;color:var(--text4)">'+fmt(feeUSD,'USD')+'</span></td>'+
-            '<td class="amt" style="font-weight:700;color:'+(isLast?'var(--accent)':'var(--text)')+'">'+fmt(dueUSD,'USD')+'</td>'+
-            '<td class="amt">'+fmt(costUSD,'USD')+'</td>'+
+            '<td class="amt"'+(i>0?' style="color:var(--text3)"':'')+'>'+fmtC(currentAmount)+(i>0?'<br><span style="font-size:10px;color:var(--text4)">\u2934 aus Vorperiode</span>':'')+'</td>'+
+            '<td class="amt">'+fmtC(interest)+'</td>'+
+            '<td class="amt">'+feePct+'%<br><span style="font-size:10px;color:var(--text4)">'+fmtC(feeAmt)+'</span></td>'+
+            '<td class="amt" style="font-weight:700;color:'+(isLast?'var(--accent)':'var(--text)')+'">'+fmtC(dueAmt)+'</td>'+
+            '<td class="amt">'+fmtC(costAmt)+'</td>'+
           '</tr>';
-          currentAmount=dueAmt; /* carry forward */
+          currentAmount=dueAmt;
         }
         var totalCost=totalInterest+totalFee;
         var totalMonths=n*term;
-        var finalDueUSD=toU(currentAmount,ccy);
-        var effRate=originalAmountUSD>0&&totalMonths>0?(totalCost/originalAmountUSD/(totalMonths/12)*100):0;
-        var capitalGrowth=originalAmountUSD>0?((finalDueUSD-originalAmountUSD)/originalAmountUSD*100):0;
+        var finalDue=currentAmount;
+        var endDate=new Date(baseDate);endDate.setMonth(endDate.getMonth()+totalMonths);
+        var endDateStr=endDate.toLocaleDateString('de-CH',{day:'2-digit',month:'long',year:'numeric'});
+        var effRate=originalAmount>0&&totalMonths>0?(totalCost/originalAmount/(totalMonths/12)*100):0;
+        var capitalGrowth=originalAmount>0?((finalDue-originalAmount)/originalAmount*100):0;
+        var startDateStr=baseDate.toLocaleDateString('de-CH',{day:'2-digit',month:'long',year:'numeric'});
         rows+='<tr style="background:var(--bg2);font-weight:700;border-top:2px solid var(--border)">'+
           '<td colspan="4" style="font-size:12px;color:var(--text4)">Total ('+n+' Roll-Over'+(n!==1?'s':'')+', '+totalMonths+' Monate)</td>'+
-          '<td class="amt" style="color:var(--text3)">'+fmt(originalAmountUSD,'USD')+'<br><span style="font-size:10px;font-weight:400">Startbetrag</span></td>'+
-          '<td class="amt">'+fmt(totalInterest,'USD')+'</td>'+
-          '<td class="amt">'+fmt(totalFee,'USD')+'</td>'+
-          '<td class="amt" style="color:var(--accent)">'+fmt(finalDueUSD,'USD')+'</td>'+
-          '<td class="amt" style="color:var(--accent)">'+fmt(totalCost,'USD')+'</td>'+
+          '<td class="amt" style="color:var(--text3)">'+fmtC(originalAmount)+'<br><span style="font-size:10px;font-weight:400">Startbetrag</span></td>'+
+          '<td class="amt">'+fmtC(totalInterest)+'</td>'+
+          '<td class="amt">'+fmtC(totalFee)+'</td>'+
+          '<td class="amt" style="color:var(--accent)">'+fmtC(finalDue)+'</td>'+
+          '<td class="amt" style="color:var(--accent)">'+fmtC(totalCost)+'</td>'+
         '</tr></tbody>';
         g('rosi-tbl').innerHTML=rows;
         function tile(lbl,val,sub){
@@ -4104,13 +4427,17 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             (sub?'<div style="font-size:11px;color:var(--text3);margin-top:.2rem">'+sub+'</div>':'')+
           '</div>';
         }
+        var feeTile=feeBtcFirst?tile('Geb\u00fchren gesamt',fmtC(totalFee),(feeBtcFirst*n).toFixed(6)+' BTC'):tile('Geb\u00fchren gesamt',fmtC(totalFee),'');
         g('rosi-summary').innerHTML=
+          tile('Startdatum',startDateStr,'')+
+          tile('Enddatum',endDateStr,'')+
           tile('Gesamtlaufzeit',totalMonths+' Monate',n+' Roll-Over'+(n!==1?'s':''))+
-          tile('Startbetrag',fmt(originalAmountUSD,'USD'),'')+
-          tile('Endbetrag (f\u00e4lliger Betrag)',fmt(finalDueUSD,'USD'),'Kapital angewachsen um +'+capitalGrowth.toFixed(1)+'%')+
-          tile('Zinsen gesamt',fmt(totalInterest,'USD'),'')+
-          (feeBtc?tile('Geb\u00fchren gesamt',fmt(totalFee,'USD'),(feeBtc*n).toFixed(6)+' BTC'):'')+
-          tile('Gesamtkosten',fmt(totalCost,'USD'),'Zinsen + Geb\u00fchren')+
+          tile('Startbetrag',fmtC(originalAmount),'')+
+          tile('Endbetrag (f\u00e4lliger Betrag)',fmtC(finalDue),'+'+capitalGrowth.toFixed(1)+'%')+
+          tile('Zinsen gesamt',fmtC(totalInterest),'')+
+          tile('Gesamtvolumen',fmtC(totalVolume),'Summe aller Kreditbetr\u00e4ge')+
+          feeTile+
+          tile('Gesamtkosten',fmtC(totalCost),'Zinsen + Geb\u00fchren')+
           tile('Eff. Jahreszins',effRate.toFixed(2)+'%','\u00fcber gesamte Laufzeit');
         el.style.display='block';
       },
@@ -4518,7 +4845,11 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
       /* ─── Verlängerungsszenarien ─── */
       gvlPopulate:function(){
         var sel=g('gvl-loan-sel');if(!sel)return;
-        var avail=loans.filter(function(l){return l.status==='active'||l.status==='closed';});
+        var act2=loans.filter(function(l){return l.status==='active';})
+          .slice().sort(function(a,b){return aM(a.start,a.term)-aM(b.start,b.term);});
+        var clo2=loans.filter(function(l){return l.status==='closed';})
+          .slice().sort(function(a,b){return aM(b.start,b.term)-aM(a.start,a.term);});
+        var avail=act2.concat(clo2);
         var cur=sel.value;
         sel.innerHTML='<option value="">— Kredit wählen —</option>'+
           avail.map(function(l){var i=loans.indexOf(l);var tag=l.status==='closed'?' ✓':' ●';return '<option value="'+i+'">'+l.name+tag+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
@@ -4643,23 +4974,38 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         save();d.loans();d.ov();
       },
       btcHistPrice:function(dateISO, cb){
-        if(!dateISO){cb(null);return;}
+        if(!dateISO){cb(null,false);return;}
+        /* 1. localStorage cache */
         var CACHE_KEY='ffd_btc_hist_'+dateISO;
         try{
           var cached=localStorage.getItem(CACHE_KEY);
-          if(cached){var p=JSON.parse(cached);if(p&&p.usd){cb(p.usd);return;}}
+          if(cached){var p=JSON.parse(cached);if(p&&p.usd){cb(p.usd,false);return;}}
         }catch(e){}
+        /* 2. Hardcoded local price table (2022–2025, no API needed) */
+        var local=btcHistLocal(dateISO);
+        if(local){
+          try{localStorage.setItem(CACHE_KEY,JSON.stringify({usd:local,ts:Date.now()}));}catch(e){}
+          cb(local,false);return;
+        }
+        /* 3. Fallback: CoinGecko API (for dates outside hardcoded range) */
         var parts=dateISO.split('-');
         var cgDate=parts[2]+'-'+parts[1]+'-'+parts[0];
         fetch('https://api.coingecko.com/api/v3/coins/bitcoin/history?date='+cgDate+'&localization=false')
-          .then(function(r){if(r.status===429){cb(null);return r.json();}return r.json();})
-          .then(function(data){
-            var usd=data&&data.market_data&&data.market_data.current_price&&data.market_data.current_price.usd;
-            if(usd){try{localStorage.setItem(CACHE_KEY,JSON.stringify({usd:usd,ts:Date.now()}));}catch(e){}cb(usd);}
-            else{cb(null);}
+          .then(function(r){
+            if(r.status===429){cb(null,'ratelimit');return null;}
+            if(r.status===401||r.status===403){cb(null,'auth');return null;}
+            if(!r.ok){cb(null,'error');return null;}
+            return r.json();
           })
-          .catch(function(){cb(null);});
+          .then(function(data){
+            if(data===null||data===undefined)return;
+            var usd=data&&data.market_data&&data.market_data.current_price&&data.market_data.current_price.usd;
+            if(usd){try{localStorage.setItem(CACHE_KEY,JSON.stringify({usd:usd,ts:Date.now()}));}catch(e){}cb(usd,false);}
+            else{cb(null,'notfound');}
+          })
+          .catch(function(){cb(null,'error');});
       },
+
       gvlApplyPrice:function(priceUSD){
         var el=g('gvl-btcstart');
         var hint=g('gvl-api-hint');
@@ -4679,7 +5025,13 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           var cached=localStorage.getItem(CACHE_KEY);
           if(cached){var parsed=JSON.parse(cached);if(parsed&&parsed.usd){d.gvlApplyPrice(parsed.usd);return;}}
         }catch(e){}
-        /* Laufenden Request abbrechen */
+        /* 2. Hardcoded local price table */
+        var local=btcHistLocal(dateISO);
+        if(local){
+          try{localStorage.setItem(CACHE_KEY,JSON.stringify({usd:local,ts:Date.now()}));}catch(e){}
+          d.gvlApplyPrice(local);return;
+        }
+        /* 3. Laufenden Request abbrechen, dann CoinGecko */
         if(d._gvlAbort){d._gvlAbort.abort();}
         var ctrl=new AbortController();
         d._gvlAbort=ctrl;
@@ -4728,6 +5080,33 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var feeEl=g('gvl-fee');
         if(feeEl){feeEl._manualFee=true;}
         d.gvl();
+      },
+      autoFillBtcStart:function(dateId,priceId,hintId){
+        var dateEl=g(dateId),priceEl=g(priceId),hintEl=g(hintId);
+        if(!dateEl||!priceEl||!hintEl)return;
+        var iso=dateEl.value;
+        if(!iso){hintEl.style.display='none';return;}
+        hintEl.innerHTML='<span style="font-size:11px;color:var(--text4)">⏳ Lade…</span>';
+        hintEl.style.display='block';
+        d.btcHistPrice(iso,function(usd,err){
+          if(usd){
+            var rounded=Math.round(usd);
+            var dateStr=new Date(iso).toLocaleDateString('de-CH');
+            var btn='<button onclick="var f=document.getElementById(\''
+              +priceId+'\');if(f)f.value='+rounded
+              +';document.getElementById(\''+hintId+'\').style.display=\'none\'"'
+              +' style="font-size:11px;color:#fff;background:var(--ok);border:none;border-radius:4px;cursor:pointer;padding:2px 8px">'
+              +'\u2713 \xdcbernehmen</button>';
+            hintEl.innerHTML=
+              '<div style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:3px">'
+              +'<span style="font-size:11px;color:var(--text3)">Kurs am '+dateStr+': <b style="color:var(--text)">$'
+              +rounded.toLocaleString('de-CH')+'</b></span>'+btn+'</div>';
+          }else{
+            hintEl.innerHTML='<span style="font-size:11px;color:var(--warn)">'
+              +(err==='ratelimit'?'⚠ API-Limit — bitte manuell eintragen':'⚠ Kurs nicht gefunden — bitte manuell eintragen')
+              +'</span>';
+          }
+        });
       },
       gvlFeeReset:function(){
         var feeEl=g('gvl-fee');
@@ -4779,13 +5158,27 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
       },
       extPopulate:function(){
         var sel=g('ext-loan');if(!sel)return;
-        var act=loans.filter(function(l){return l.status==='active';});
+        var act=loans.filter(function(l){return l.status==='active';})
+          .slice().sort(function(a,b){return aM(a.start,a.term)-aM(b.start,b.term);});
         sel.innerHTML='<option value="">— Kredit wählen —</option>'+
           act.map(function(l,i){return '<option value="'+loans.indexOf(l)+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
         /* also populate rosi selector */
         var rsel=g('rosi-loan-sel');if(!rsel)return;
         rsel.innerHTML='<option value="">— Kredit wählen —</option>'+
           act.map(function(l){return '<option value="'+loans.indexOf(l)+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
+      },
+      rosiCcyChange:function(){
+        var ccy=g('rosi-ccy').value||'USD';
+        var btcEl=g('rosi-btc');
+        var lbl=g('rosi-btc-lbl');
+        if(lbl)lbl.textContent='BTC-Preis ('+ccy+')';
+        if(btcEl){
+          /* Convert stored or current BTC price to new currency */
+          var prevUSD=btcEl._btcUSD||R.BTC;
+          btcEl._btcUSD=R.BTC;
+          var newVal=ccy==='BTC'?1:parseFloat(frU(R.BTC,ccy).toFixed(ccy==='CZK'||ccy==='PLN'?0:2));
+          btcEl.value=newVal;
+        }
       },
       rosiFill:function(){
         var idx=parseInt(g('rosi-loan-sel').value);
@@ -4795,6 +5188,10 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         /* set currency */
         var ccySel=g('rosi-ccy');
         for(var i=0;i<ccySel.options.length;i++){if(ccySel.options[i].value===l.c){ccySel.selectedIndex=i;break;}}
+        /* update BTC price label and value to match loan currency */
+        d.rosiCcyChange();
+        /* start date */
+        var startEl=g('rosi-start');if(startEl&&l.start)startEl.value=l.start;
         /* set term */
         var termSel=g('rosi-term');
         for(var i=0;i<termSel.options.length;i++){if(parseInt(termSel.options[i].value)===l.term){termSel.selectedIndex=i;break;}}
@@ -5404,7 +5801,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var st=g('se-default-tab');if(st){for(var i=0;i<st.options.length;i++){if(st.options[i].value===(cfg.defaultTab||'ov')){st.selectedIndex=i;break;}}}
         var sv=g('se-default-view');if(sv){for(var i=0;i<sv.options.length;i++){if(sv.options[i].value===(cfg.defaultView||'grid')){sv.selectedIndex=i;break;}}}
         var sc=g('se-default-ccy');if(sc){for(var i=0;i<sc.options.length;i++){if(sc.options[i].value===(cfg.defaultCcy||'EUR')){sc.selectedIndex=i;break;}}}
-        var scm=g('se-color-mode');if(scm){var isDark=document.getElementById('ffd-root').classList.contains('dark');scm.value=isDark?'dark':'light';}
+        var scm=g('se-color-mode');if(scm){scm.value=(cfg.darkMode||localStorage.getItem('ffd_dark')==='1')?'dark':'light';}
         var shbe=g('se-hide-breakeven');if(shbe)shbe.checked=!!(cfg.hideBreakEven);
         /* Populate LTV thresholds */
         var sw=g('se-ltv-warn');if(sw)sw.value=cfg.ltvWarn!=null?cfg.ltvWarn:73;
@@ -5413,6 +5810,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var sd=g('se-ltv-display');if(sd)sd.value=cfg.ltvDisplay!=null?cfg.ltvDisplay:73;
         /* Populate countdown */
         var scd=g('se-countdown');if(scd)scd.value=cfg.countdownDays!=null?cfg.countdownDays:30;
+        /* Render nav order */
+        d.seNavOrderRender();
       },
       ccyAll:function(){
         document.querySelectorAll('#ccy-toggles input[type=checkbox]').forEach(function(cb){cb.checked=true;});
@@ -5441,9 +5840,13 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           if(wantDark){r.classList.add('dark');localStorage.setItem('ffd_dark','1');}
           else{r.classList.remove('dark');localStorage.setItem('ffd_dark','');}
           var db=g('dark-btn');if(db)db.textContent=wantDark?'☀':'☾';
+          cfg.darkMode=wantDark;
         }
+        /* Save nav order from current list state */
+        cfg.navOrder=d._seNavGetOrder();
         saveSettings(cfg);
         lView=cfg.defaultView;
+        d.applyNavOrder();
         var msg=g('se-display-msg');msg.style.display='inline';setTimeout(function(){msg.style.display='none';},2000);
       },
       seCardSave:function(){
@@ -5466,6 +5869,112 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         saveSettings(cfg);
         d.checkAlarms();d.ov();
         var msg=g('se-ltv-msg');msg.style.display='inline';setTimeout(function(){msg.style.display='none';},2000);
+      },
+      NAV_ITEMS:[
+        {id:'ov', label:'Übersicht'},
+        {id:'lo', label:'Meine Kredite'},
+        {id:'ch', label:'Diagramme'},
+        {id:'sx', label:'Statistiken'},
+        {id:'ca', label:'Kalender'},
+        {id:'tl', label:'Timeline'},
+        {id:'ro', label:'Roll-Overs'},
+        {id:'st', label:'Stress-Test'},
+        {id:'to', label:'Tools'}
+      ],
+      applyNavOrder:function(){
+        var order=cfg.navOrder||d.NAV_ITEMS.map(function(x){return x.id;});
+        var sidebar=document.querySelector('#ffd-root .sidebar');
+        if(!sidebar)return;
+        /* Collect all nav-items (exclude settings + spacer) */
+        var items=Array.from(sidebar.querySelectorAll('.nav-item:not([data-nav-fixed])'));
+        var map={};
+        items.forEach(function(el){
+          var m=el.getAttribute('onclick').match(/'([^']+)'/);
+          if(m)map[m[1]]=el;
+        });
+        /* Re-insert in order */
+        var spacer=sidebar.querySelector('.nav-spacer');
+        order.forEach(function(id){
+          if(map[id])sidebar.insertBefore(map[id],spacer||null);
+        });
+      },
+      seNavOrderRender:function(){
+        var el=g('se-nav-order');if(!el)return;
+        var order=cfg.navOrder||d.NAV_ITEMS.map(function(x){return x.id;});
+        var labelMap={};d.NAV_ITEMS.forEach(function(x){labelMap[x.id]=x.label;});
+        el.innerHTML='';
+        order.forEach(function(id){
+          var row=document.createElement('div');
+          row.dataset.id=id;
+          row.draggable=true;
+          row.style.cssText='display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:grab;user-select:none;font-size:13px;color:var(--text)';
+          /* Handle */
+          var handle=document.createElement('span');
+          handle.style.cssText='color:var(--text4);cursor:grab;font-size:15px;line-height:1';
+          handle.innerHTML='&#9776;';
+          /* Label */
+          var lbl=document.createElement('span');
+          lbl.style.flex='1';
+          lbl.textContent=labelMap[id]||id;
+          /* Up button */
+          var btnUp=document.createElement('button');
+          btnUp.style.cssText='background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:0 4px';
+          btnUp.title='Nach oben';
+          btnUp.innerHTML='&#9650;';
+          btnUp.addEventListener('click',function(){d.seNavOrderMove(id,-1);});
+          /* Down button */
+          var btnDn=document.createElement('button');
+          btnDn.style.cssText='background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:0 4px';
+          btnDn.title='Nach unten';
+          btnDn.innerHTML='&#9660;';
+          btnDn.addEventListener('click',function(){d.seNavOrderMove(id,1);});
+          row.appendChild(handle);
+          row.appendChild(lbl);
+          row.appendChild(btnUp);
+          row.appendChild(btnDn);
+          /* Drag events */
+          row.addEventListener('dragstart',function(e){e.dataTransfer.setData('text/plain',id);e.currentTarget.style.opacity='.4';});
+          row.addEventListener('dragend',function(e){e.currentTarget.style.opacity='1';});
+          row.addEventListener('dragover',function(e){e.preventDefault();row.style.borderColor='var(--accent)';});
+          row.addEventListener('dragleave',function(){row.style.borderColor='var(--border)';});
+          row.addEventListener('drop',function(e){
+            e.preventDefault();row.style.borderColor='var(--border)';
+            var fromId=e.dataTransfer.getData('text/plain');
+            if(fromId===id)return;
+            var cur=d._seNavGetOrder();
+            var fi=cur.indexOf(fromId),ti=cur.indexOf(id);
+            if(fi<0||ti<0)return;
+            cur.splice(fi,1);cur.splice(ti,0,fromId);
+            cfg.navOrder=cur;
+            d.seNavOrderRender();
+          });
+          el.appendChild(row);
+        });
+      },
+      _seNavGetOrder:function(){
+        var rows=document.querySelectorAll('#se-nav-order [data-id]');
+        return Array.from(rows).map(function(r){return r.dataset.id;});
+      },
+      seNavOrderMove:function(id,dir){
+        var order=d._seNavGetOrder();
+        var i=order.indexOf(id);
+        var j=i+dir;
+        if(j<0||j>=order.length)return;
+        var tmp=order[i];order[i]=order[j];order[j]=tmp;
+        cfg.navOrder=order;
+        d.seNavOrderRender();
+      },
+      seNavOrderSave:function(){
+        cfg.navOrder=d._seNavGetOrder();
+        saveSettings(cfg);
+        d.applyNavOrder();
+        var msg=g('se-nav-msg');if(msg){msg.style.display='inline';setTimeout(function(){msg.style.display='none';},2000);}
+      },
+      seNavOrderReset:function(){
+        cfg.navOrder=null;
+        saveSettings(cfg);
+        d.applyNavOrder();
+        d.seNavOrderRender();
       },
       seCountdownSave:function(){
         var days=parseInt(g('se-countdown').value);
@@ -5498,21 +6007,23 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         if(typeof Chart==='undefined'){console.warn('[tl] Chart.js not yet loaded — charts deferred to init()');return;}
         setTimeout(function(){
           d.debtChart(dCcy);
-          var chGridColor=getComputedStyle(document.getElementById('ffd-root')).getPropertyValue('--border').trim();
+          var _tlCs=getComputedStyle(document.getElementById('ffd-root'));
+          var chGridColor=_tlCs.getPropertyValue('--border').trim();
+          var chTextColor=_tlCs.getPropertyValue('--text3').trim();
           var act=loans.filter(function(l){return l.status==='active';});
           if(chI){chI.destroy();chI=null;}
           var c2=g('int-chart');
           if(c2&&act.length)chI=new Chart(c2,{type:'bar',
             data:{labels:act.map(function(l){return l.name;}),datasets:[{data:act.map(function(l){return Math.round(intU(l));}),backgroundColor:'#FDBA74',borderColor:'#F97316',borderWidth:1,borderRadius:4}]},
-            options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return '$'+v.toLocaleString('de-CH');}},grid:{color:chGridColor}},x:{grid:{display:false}}}}
+            options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:chTextColor,callback:function(v){return '$'+v.toLocaleString('de-CH');}},grid:{color:chGridColor}},x:{ticks:{color:chTextColor},grid:{display:false}}}}
           });
         },120);
       }
     };
 
     function init(){
-      /* Restore dark mode */
-      if(localStorage.getItem('ffd_dark')==='1'){document.getElementById('ffd-root').classList.add('dark');var db=g('dark-btn');if(db)db.textContent='☀';}
+      /* Restore dark mode — ffd_dark takes precedence, fallback to cfg.darkMode */
+      if(localStorage.getItem('ffd_dark')==='1'||cfg.darkMode){document.getElementById('ffd-root').classList.add('dark');var db=g('dark-btn');if(db)db.textContent='☀';if(cfg.darkMode)localStorage.setItem('ffd_dark','1');}
       /* Restore sidebar state */
       if(localStorage.getItem('ffd_sidebar_collapsed')==='1'){
         var sb=document.querySelector('#ffd-root .sidebar');var mn=document.querySelector('#ffd-root .main');
@@ -5583,6 +6094,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
     /* Run immediately so alarm banner, pills and overview show on first paint regardless of Chart.js */
     try{syncStatus();pills();d.renderCsw();d.loans();d.checkAlarms();d.ov();}catch(e){console.error('[startup] Fehler beim initialen Render:', e);}
     try{d.updateHdrStats();}catch(e){console.error('[startup] Fehler in updateHdrStats:', e);}
+    try{if(cfg.navOrder)d.applyNavOrder();}catch(e){console.error('[startup] Fehler in applyNavOrder:', e);}
     /* Activate tab from URL hash on load, fallback to cfg.defaultTab */
     (function(){
       var validTabs=['ov','lo','to','st','ca','tl','ch','sx','se','ro'];
