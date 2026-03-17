@@ -42,7 +42,7 @@
       --err: #f87171; --err-bg: #450a0a; --err-border: #991b1b;
       --card-bg: #1e293b; --card-shadow: 0 1px 3px rgba(0,0,0,.3);
     }
-    #ffd-root { background: var(--bg); color: var(--text); border-radius: 12px; overflow: hidden; font-size: 14px; line-height: 1.5; }
+    #ffd-root { background: var(--bg); color: var(--text); border-radius: 0px; overflow: hidden; font-size: 14px; line-height: 1.5; }
 
     /* ── Wrapper ── */
     #ffd-root .w { padding: 1.25rem 1rem 2rem; }
@@ -93,6 +93,7 @@
     #ffd-root.hide-amounts .hdr-stat-tooltip,
     #ffd-root.hide-amounts #ov-multi,
     #ffd-root.hide-amounts #sx-content,
+    #ffd-root.hide-amounts #ro-content,
     #ffd-root.hide-amounts #ch-gantt,
     #ffd-root.hide-amounts .lid,
     #ffd-root.hide-amounts .lid-sub,
@@ -466,6 +467,20 @@
 
     #ffd-root .ov-grp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     /* Tool tab outer grids (card columns) */
+    #ffd-root .mobile-footer-end { display: none; }
+    @media (max-width: 639px) {
+      #ffd-root .mobile-footer-end {
+        display: block;
+        text-align: center;
+        font-size: 10px;
+        color: var(--text4);
+        padding: 1.25rem 1rem 1.5rem;
+        border-top: 1px solid var(--border);
+        margin-top: 1rem;
+        line-height: 1.8;
+      }
+      #ffd-root .mobile-footer-end a { text-decoration: none; color: var(--text3); }
+    }
     #ffd-root .tool-tab { display: none; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
     #ffd-root .tool-tab.on { display: grid; }
     /* Inner field grids inside tool cards */
@@ -642,13 +657,17 @@
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 0h1v16H0zm15 0h1v16h-1zm-5 5h1v1h-1zm-2 0h1v1H8zm-2 0h1v1H6zM4 5h1v1H4zm6 2h1v1h-1zm-2 0h1v1H8zm-2 0h1v1H6zm-2 0h1v1H4zm6 2h1v1h-1zm-2 0h1v1H8zm-2 0h1v1H6zm-2 0h1v1H4z"/></svg>
         <span>Statistiken</span>
       </button>
+      <button class="nav-item" onclick="d.tab('ro',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.534 7h3.932a.25.25 0 01.192.41l-1.966 2.36a.25.25 0 01-.384 0l-1.966-2.36a.25.25 0 01.192-.41zm-11 2h3.932a.25.25 0 00.192-.41L2.692 6.23a.25.25 0 00-.384 0L.342 8.59A.25.25 0 00.534 9z"/><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 11-.771-.636A6.002 6.002 0 0115.917 9h-.997A5.002 5.002 0 008 3zM3.083 9a5.002 5.002 0 009.895 1.183.5.5 0 01.98.199A6.003 6.003 0 011.083 9H3.08z"/></svg>
+        <span>Roll-Overs</span>
+      </button>
       <div style="flex:1"></div>
       <button class="nav-item" onclick="d.tab('se',this)" style="border-top:1px solid var(--border);margin-top:4px">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 2a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM9.05 3a2.5 2.5 0 014.9 0H16v1h-2.05a2.5 2.5 0 01-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM2.05 8a2.5 2.5 0 014.9 0H16v1H6.95a2.5 2.5 0 01-4.9 0H0V8h2.05zM11.5 12a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-2.45 1a2.5 2.5 0 014.9 0H16v1h-2.05a2.5 2.5 0 01-4.9 0H0v-1h9.05z"/></svg>
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard v1.0.0<br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard v1.1.0<br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
@@ -660,7 +679,7 @@
       <div class="main-hdr-row1">
         <div class="pills" id="pills-bar">
           <button class="sm" id="btc-refresh-btn" onclick="d.refreshBtc()" title="Bitcoinkurs aktualisieren" style="font-size:15px;padding:2px 8px">↻</button>
-          <span class="pill">&#8383; <input type="number" id="p-btc" title="BTC/USD bearbeiten" oninput="d.rate()" step="1"></span>
+          <span class="pill">BTC/USD<input type="number" id="p-btc" title="BTC/USD bearbeiten" oninput="d.rate()" step="1"></span>
           <span class="pill">EUR/USD <input type="number" id="p-eur" title="EUR/USD bearbeiten" oninput="d.rate()" step="0.001"></span>
           <span class="pill">CHF/USD <input type="number" id="p-chf" title="CHF/USD bearbeiten" oninput="d.rate()" step="0.001"></span>
           <span class="pill">USDT <b>&#8776; 1.00</b></span>
@@ -720,10 +739,9 @@
       <button class="tab" onclick="d.tab('tl',this)">Timeline</button>
       <button class="tab" onclick="d.tab('ch',this)">Diagramme</button>
       <button class="tab" onclick="d.tab('sx',this)">Statistiken</button>
+      <button class="tab" onclick="d.tab('ro',this)">Roll-Overs</button>
       <button class="tab" onclick="d.tab('se',this)">&#9881; Einstellungen</button>
     </div>
-
-    <!-- ── OVERVIEW ── -->
     <div class="sec on" id="s-ov">
     <div class="alarm-banner" id="alarm-banner"></div>
       <div class="mg" id="metrics"></div>
@@ -799,6 +817,7 @@
           <div class="ff"><label>Status</label><select id="fs"><option value="active">Aktiv</option><option value="closed">Abgeschlossen</option></select></div>
           <div class="ff"><label>Währung</label><select id="fc"><option>EUR</option><option>CHF</option><option>CZK</option><option>PLN</option><option>USDC</option><option>USDT</option></select></div>
           <div class="ff" style="grid-column:span 2"><label>BTC-Preis bei Kreditaufnahme (USD) — für Break-even</label><input type="number" id="fbp" placeholder="z.B. 85000" step="1"></div>
+          <div class="ff" style="grid-column:span 2"><label>Roll-Over-Kette</label><select id="fchain"><option value="">— Keine Kette —</option></select><span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Vorläufer-Kredit wählen oder neue Kette starten</span></div>
           <div class="ff" style="grid-column:span 2"><label>Notiz</label><textarea id="fnote" rows="2" placeholder="Konditionen, Kontaktperson, Besonderheiten…" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea></div>
         </div>
         <div class="fa">
@@ -823,6 +842,8 @@
         <button class="filter-tab" onclick="d.toolTab('wae',this)">W&#228;hrend Kredit</button>
         <button class="filter-tab" onclick="d.toolTab('nach',this)">Nach Kredit</button>
         <button class="filter-tab" onclick="d.toolTab('pow',this)">Powerlaw</button>
+        <button class="filter-tab" onclick="d.toolTab('rosi',this)">Roll-Over Simulation</button>
+        <button class="filter-tab" onclick="d.toolTab('zukunft',this)">Zukunftssimulation</button>
       </div>
 
       <!-- Vor Kredit -->
@@ -1388,6 +1409,76 @@
         </div>
 
       </div>
+
+      <!-- Roll-Over Simulation -->
+      <div class="tool-tab" id="tt-rosi">
+        <div class="card" style="grid-column:1/-1">
+          <span class="card-title">Roll-Over Simulation</span>
+          <p class="note2" style="margin-bottom:.75rem">Simuliere mehrere aufeinanderfolgende Roll-Overs und sieh, was dich das Darlehen über die gesamte Laufzeit kostet.</p>
+          <div class="tr" style="margin-bottom:.75rem"><label>Kredit auswählen (optional)</label><select id="rosi-loan-sel" onchange="d.rosiFill()"><option value="">— Kredit wählen —</option></select></div>
+          <div class="tg3" style="margin-bottom:.75rem">
+            <div class="vor-field"><label>Kreditbetrag</label><input type="number" id="rosi-amount" placeholder="10000" oninput="d.rosi()"></div>
+            <div class="vor-field"><label>Währung</label>
+              <select id="rosi-ccy" onchange="d.rosi()">
+                <option>EUR</option><option>CHF</option><option selected>USD</option><option>USDC</option><option>USDT</option>
+              </select>
+            </div>
+            <div class="vor-field"><label>Laufzeit pro Roll-Over</label>
+              <select id="rosi-term" onchange="d.rosi()">
+                <option value="3">3 Monate</option><option value="6">6 Monate</option>
+                <option value="12" selected>12 Monate</option><option value="18">18 Monate</option><option value="24">24 Monate</option>
+              </select>
+            </div>
+            <div class="vor-field"><label>Zinssatz 1. Kredit (% p.a.)</label><input type="number" id="rosi-rate1" placeholder="10" step="0.1" oninput="d.rosi()"></div>
+            <div class="vor-field"><label>Zinssatz Folge-Roll-Overs (% p.a.)</label><input type="number" id="rosi-rate2" placeholder="10" step="0.1" oninput="d.rosi()"></div>
+            <div class="vor-field"><label>Gebühr pro Roll-Over</label>
+              <div id="rosi-fee-display" style="padding:.4rem .6rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border);font-size:13px;color:var(--text3)">— (wird berechnet)</div>
+              <span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">1.5% p.a. × Laufzeit × Kreditbetrag</span>
+            </div>
+            <div class="vor-field"><label>Anzahl Roll-Overs: <span id="rosi-n-lbl" style="color:var(--accent);font-weight:700">3</span></label>
+              <input type="range" id="rosi-n-sl" min="1" max="20" step="1" value="3" style="width:100%;margin-top:.35rem" oninput="document.getElementById('rosi-n').value=this.value;document.getElementById('rosi-n-lbl').textContent=this.value;d.rosi()">
+              <input type="number" id="rosi-n" value="3" min="1" max="20" style="width:60px;margin-top:.3rem" oninput="var v=Math.max(1,Math.min(20,parseInt(this.value)||1));this.value=v;document.getElementById('rosi-n-sl').value=v;document.getElementById('rosi-n-lbl').textContent=v;d.rosi()">
+            </div>
+            <div class="vor-field"><label>BTC-Preis (USD)</label><input type="number" id="rosi-btc" placeholder="85000" oninput="d.rosi()"></div>
+          </div>
+          <div id="rosi-r" style="display:none">
+            <div class="tg3" style="margin-bottom:.75rem" id="rosi-summary"></div>
+            <div class="ovx"><table class="loans-table" id="rosi-tbl"></table></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zukunftssimulation -->
+      <div class="tool-tab" id="tt-zukunft">
+        <div class="card" style="grid-column:1/-1">
+          <span class="card-title">Zukunftssimulation</span>
+          <p class="note2" style="margin-bottom:.75rem">Wie entwickeln sich Schulden und Collateral-Wert meiner aktiven Kredite bei einem bestimmten BTC-Preis und Datum?</p>
+
+          <div class="tg3" style="margin-bottom:.75rem">
+            <div class="vor-field">
+              <label>Zukünftiger BTC-Preis (USD)</label>
+              <input type="number" id="zk-btc" placeholder="z.B. 150000" oninput="d.zukunft()">
+            </div>
+            <div class="vor-field">
+              <label>Zieldatum <span style="font-weight:400;color:var(--text4)">(optional)</span></label>
+              <input type="date" id="zk-date" onchange="d.zukunft()">
+            </div>
+            <div class="vor-field">
+              <label>Zinssatz Verlängerung (% p.a.) <span style="font-weight:400;color:var(--text4)">(optional)</span></label>
+              <input type="number" id="zk-rate" placeholder="Wie Kredit" step="0.1" oninput="d.zukunft()">
+              <span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Für bereits fällige Kredite zum Zieldatum</span>
+            </div>
+          </div>
+
+          <div id="zk-r" style="display:none">
+            <div class="tg3" style="margin-bottom:1rem" id="zk-summary"></div>
+            <div class="ch-wrap" style="height:280px;margin-bottom:1rem"><canvas id="zk-chart"></canvas></div>
+            <div class="ovx"><table class="loans-table" id="zk-tbl"></table></div>
+          </div>
+          <div id="zk-empty" style="display:none;padding:1rem;color:var(--text4);font-size:13px;text-align:center">Keine aktiven Kredite vorhanden.</div>
+        </div>
+      </div>
+
     </div>
 
     <!-- ── STRESS TEST ── -->
@@ -1472,6 +1563,7 @@
           <div class="ff"><label>W&#228;hrung</label>
             <select id="ef-c"><option>EUR</option><option>CHF</option><option>CZK</option><option>PLN</option><option>USDC</option><option>USDT</option></select></div>
           <div class="ff" style="grid-column:span 2"><label>BTC-Preis bei Kreditaufnahme (USD) &#8212; f&#252;r Break-even</label><input type="number" id="ef-bp" placeholder="z.B. 85000" step="1"></div>
+          <div class="ff" style="grid-column:span 2"><label>Roll-Over-Kette</label><select id="ef-chain"><option value="">— Keine Kette —</option></select><span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Vorläufer-Kredit wählen oder neue Kette starten</span></div>
           <div class="ff" style="grid-column:span 2"><label>Notiz</label><textarea id="ef-note" rows="2" placeholder="Konditionen, Kontaktperson, Besonderheiten…" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea></div>
         </div>
         <div class="modal-actions">
@@ -1564,6 +1656,10 @@
 
     <!-- ── SETTINGS ── -->
     <!-- ── STATISTICS ── -->
+    <div class="sec" id="s-ro">
+      <div id="ro-content"></div>
+    </div>
+
     <div class="sec" id="s-sx">
       <div id="sx-content"></div>
     </div>
@@ -1778,6 +1874,7 @@
       </div>
     </div>
 
+    <div class="mobile-footer-end">Firefish Dashboard v1.1.0<br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
     </div><!-- #ffd-root -->
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -1796,7 +1893,7 @@
       return cGrid(ccys.filter(function(c){return c!=='BTC'&&c!=='SAT';}).map(function(c){return {c:c,v:frU(usd,c)};}));
     }
     var chD=null,chI=null,dCcy='USD';
-    var chLtv=null,chMcd=null,chCol=null,chCcy=null,chBep=null,chInt2=null,chBtcost=null,chCf=null,chDcol=null,chHeat=null,chTerm=null;
+    var chLtv=null,chMcd=null,chCol=null,chCcy=null,chBep=null,chInt2=null,chBtcost=null,chCf=null,chDcol=null,chHeat=null,chTerm=null,chZukunft=null;
     var lSort={key:'dl',dir:1};
     var ltvThresh=parseInt(localStorage.getItem('ffd_ltv_thresh'))||80;
     var lFilter='active';
@@ -1851,6 +1948,17 @@
     function dL(ds,m){return Math.ceil((aM(ds,m)-new Date())/864e5);}
     /* Auto-close loans whose end date has passed */
     function syncStatus(){loans.forEach(function(l){if(l.status==='active'&&dL(l.start,l.term)<=0)l.status='closed';});}
+    window.goRo=function(){
+      /* Try visible nav-item first (desktop sidebar), then mobile tab bar */
+      var all=document.querySelectorAll('#ffd-root .nav-item, #ffd-root .tab');
+      for(var i=0;i<all.length;i++){
+        var oc=all[i].getAttribute('onclick')||'';
+        if(oc.indexOf("'ro'")>=0){
+          d.tab('ro',all[i]);
+          return;
+        }
+      }
+    };
     function uid(){return'FF-'+Math.random().toString(36).slice(2,7).toUpperCase();}
     function lc(v){return v<73?'#16a34a':v<79?'#d97706':v<86?'#ea580c':'#dc2626';}
     function fmt(a,c){
@@ -1882,7 +1990,7 @@
       if(!el)return;
       el.innerHTML=FIATS.filter(visC).map(function(c){
         var price=Math.round(frU(R.BTC,c));
-        return '<span class="pill">&#8383; '+labels[c]+'<input type="number" data-ccy="'+c+'" title="BTC/'+c+' bearbeiten" oninput="d.rateFiat(this)" step="1" value="'+price+'" style="width:80px"></span>';
+        return '<span class="pill">BTC/'+labels[c]+'<input type="number" data-ccy="'+c+'" title="BTC/'+c+' bearbeiten" oninput="d.rateFiat(this)" step="1" value="'+price+'" style="width:80px"></span>';
       }).join('');
     }
     function ccyG(ccys,usd){
@@ -1989,17 +2097,19 @@
         document.querySelectorAll('#ffd-root .nav-item').forEach(function(b){b.classList.remove('on');});
         document.querySelectorAll('#ffd-root .sec').forEach(function(s){s.classList.remove('on');s.style.display='none';});
         /* activate both the clicked element and its twin (tab or nav-item) */
-        var attr=el.getAttribute('onclick');
-        document.querySelectorAll('#ffd-root .tab, #ffd-root .nav-item').forEach(function(b){
-          if(b.getAttribute('onclick')===attr)b.classList.add('on');
-        });
+        if(el){
+          var attr=el.getAttribute('onclick');
+          document.querySelectorAll('#ffd-root .tab, #ffd-root .nav-item').forEach(function(b){
+            if(b.getAttribute('onclick')===attr)b.classList.add('on');
+          });
+        }
         var sec=g('s-'+t);
         sec.classList.add('on');
         sec.style.display=(t==='to')?'flex':'grid';
         /* write hash without triggering scroll */
         try{history.replaceState(null,'','#'+t);}catch(e){location.hash=t;}
         syncStatus();d.checkAlarms();d.updateHdrStats();
-        var fn={ov:d.ov,lo:d.loans,st:d.stress,ca:d.cal,tl:d.tl,ch:d.ch,sx:d.sx,se:d.se,to:d.vorInit,wae:function(){d.nachPopulate();d.nlpPopulate();d.se2Populate();d.gvlPopulate();d.nlpPopulate();}};if(fn[t])fn[t]();
+        var fn={ov:d.ov,lo:d.loans,st:d.stress,ca:d.cal,tl:d.tl,ch:d.ch,sx:d.sx,se:d.se,ro:d.ro,to:d.vorInit,wae:function(){d.nachPopulate();d.nlpPopulate();d.se2Populate();d.gvlPopulate();d.nlpPopulate();},zukunft:function(){var el=g('zk-btc');if(el&&!el.value&&R.BTC)el.value=Math.round(R.BTC);d.zukunft();}};if(fn[t])fn[t]();
       },
       toolTab:function(t,el){
         document.querySelectorAll('#ffd-root .filter-tabs .filter-tab').forEach(function(b){b.classList.remove('on');});
@@ -2118,7 +2228,7 @@
           var beDist=l.col>0?((R.BTC-mc1P)/R.BTC*100).toFixed(1):null;
           var beHtml=l.col>0?'<div style="font-size:11px;color:var(--text4);margin-top:.4rem">MC1 bei $'+Math.round(mc1P).toLocaleString('de-CH')+' ('+(beDist>0?'−'+beDist:'⚠ überschritten')+'% vom aktuellen Preis)</div>':'';
           return '<div class="card">'+
-            '<div class="lh"><span class="lid">'+l.name+' <span class="lid-sub">'+l.id+'</span></span><span class="badge ba">Aktiv</span></div>'+
+            '<div class="lh"><span class="lid">'+l.name+' <span class="lid-sub">'+l.id+'</span></span><div class="fx" style="gap:4px"><span class="badge ba">Aktiv</span>'+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+' </div></div>'+
             /* ② Kernzahlen 3-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr 1fr">'+
               '<div><span class="ll">Betrag</span><span class="lv">'+fmt(l.amount,l.c)+'</span></div>'+
@@ -2313,7 +2423,7 @@
           return '<div class="card">'+
             /* ① Kopfzeile */
             '<div class="lh"><span class="lid">'+l.name+' <span class="lid-sub">'+l.id+'</span></span>'+
-            '<div class="fx"><span class="badge '+(l.status==='active'?'ba':'bc')+'">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span>'+
+            '<div class="fx"><span class="badge '+(l.status==='active'?'ba':'bc')+'">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span>'+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+
             '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openEdit('+i+')">&#9998;</button>'+
             '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+')" title="Duplizieren">&#10064;</button>'+
             '<button class="del" onclick="d.openDel('+i+')">&#10005;</button></div></div>'+
@@ -2408,16 +2518,20 @@
           /* Pre-select default currency */
           var fc=g('fc');if(fc){var dc=cfg.defaultCcy||'EUR';for(var i=0;i<fc.options.length;i++){if(fc.options[i].value===dc){fc.selectedIndex=i;break;}}}
           var fid=g('fid');if(fid)fid.value='';
+          d.populateChainSelect('fchain',null,null);
         }
       },
       addLoan:function(){
         var customId=(g('fid').value||'').trim();
+        var chainSel=g('fchain').value;
+        var chainId=chainSel==='__new__'?uid():chainSel||null;
         loans.push({id:customId||uid(),name:g('fn').value||'Neuer Kredit',
           amount:parseFloat(g('fa').value)||0,c:g('fc').value,rate:parseFloat(g('fr').value)||0,
           feeBtc:parseFloat(g('ffee').value)||0,
           term:parseInt(g('ft').value)||12,start:g('fd').value||new Date().toISOString().split('T')[0],
           col:parseFloat(g('fb').value)||0,status:g('fs').value,
           btcStart:parseFloat(g('fbp').value)||null,
+          chainId:chainId||undefined,
           note:g('fnote').value||''});
         d.togAdd();syncStatus();save();d.loans();d.ov();d.extPopulate();d.checkAlarms();
       },
@@ -2483,13 +2597,14 @@
         g('ef-fee').value=l.feeBtc||0;
         g('ef-b').value=l.col;
         g('ef-d').value=l.start;
-        /* set select values */
         ['ef-t','ef-s','ef-c'].forEach(function(id,_){});
         var ts=g('ef-t');for(var o=0;o<ts.options.length;o++){if(parseInt(ts.options[o].value)===l.term){ts.selectedIndex=o;break;}}
         var ss=g('ef-s');for(var o=0;o<ss.options.length;o++){if(ss.options[o].value===l.status){ss.selectedIndex=o;break;}}
         var cs=g('ef-c');for(var o=0;o<cs.options.length;o++){if(cs.options[o].value===l.c){cs.selectedIndex=o;break;}}
         g('ef-bp').value=l.btcStart||'';
         g('ef-note').value=l.note||'';
+        /* populate chain dropdown */
+        d.populateChainSelect('ef-chain',i,l.chainId);
         g('edit-modal-bg').dataset.idx=i;
         g('edit-modal-bg').classList.add('open');
       },
@@ -2509,6 +2624,17 @@
         l.c=g('ef-c').value;
         l.btcStart=parseFloat(g('ef-bp').value)||null;
         l.note=g('ef-note').value||'';
+        var chainSel=g('ef-chain').value;
+        if(chainSel==='__new__'){
+          var newChainId=uid();
+          l.chainId=newChainId;
+        } else if(chainSel){
+          /* adopt the chainId of the selected predecessor */
+          var pred=loans.find(function(x){return x.id===chainSel;});
+          l.chainId=pred&&pred.chainId?pred.chainId:chainSel;
+        } else {
+          delete l.chainId;
+        }
         syncStatus();save();d.closeEdit();d.loans();d.ov();d.extPopulate();d.checkAlarms();
       },
       /* ─── Duplicate loan ─── */
@@ -2553,7 +2679,7 @@
 
       /* ─── CSV Export ─── */
       exportCSV:function(){
-        var headers=['ID','Bezeichnung','Betrag','Währung','Zinssatz %','Gebühr BTC','Laufzeit Mo','Startdatum','Fälligkeitsdatum','Collateral BTC','Status','Zinsen (CCY)','Gebühr (BTC)','Fälliger Betrag (CCY)','Gebühr (USD)','LTV %','Liq.preis USD/BTC','BTC Startpreis','Notiz'];
+        var headers=['ID','Bezeichnung','Betrag','Währung','Zinssatz %','Gebühr BTC','Laufzeit Mo','Startdatum','Fälligkeitsdatum','Collateral BTC','Status','Zinsen (CCY)','Gebühr (BTC)','Fälliger Betrag (CCY)','Gebühr (USD)','LTV %','Liq.preis USD/BTC','BTC Startpreis','Roll-Over Kette','Notiz'];
         var rows=loans.map(function(l){
           var lU=toU(l.amount,l.c);
           var interest=l.amount*(l.rate/100)*(l.term/12);var feeBtcAmt=l.feeBtc||0;
@@ -2567,7 +2693,7 @@
             q(l.start),q(endDate),q(l.col),q(l.status),
             q(interest.toFixed(2)),q(feeBtcAmt.toFixed(8)),q((l.amount+interest).toFixed(2)),q(feeU(l).toFixed(2)),
             q(ltv?ltv.toFixed(1):''),q(liqP?Math.round(liqP):''),
-            q(l.btcStart||''),q(l.note||'')
+            q(l.btcStart||''),q(l.chainId||''),q(l.note||'')
           ].join(';');
         });
         var csv='\ufeff'+headers.map(function(h){return '"'+h+'"';}).join(';')+'\n'+rows.join('\n');
@@ -2596,7 +2722,7 @@
             hideBreakEven:cfg.hideBreakEven||false,
             darkMode:document.getElementById('ffd-root').classList.contains('dark')
           },
-          loans:loans.map(function(l){return{id:l.id,name:l.name,amount:l.amount,currency:l.c,rate:l.rate,termMonths:l.term,startDate:l.start,collateralBtc:l.col,status:l.status,btcStart:l.btcStart||null,feeBtc:l.feeBtc||0,note:l.note||''};})
+          loans:loans.map(function(l){return{id:l.id,name:l.name,amount:l.amount,currency:l.c,rate:l.rate,termMonths:l.term,startDate:l.start,collateralBtc:l.col,status:l.status,btcStart:l.btcStart||null,feeBtc:l.feeBtc||0,chainId:l.chainId||null,note:l.note||''};})
         };
         var blob=new Blob([JSON.stringify(exportData,null,2)],{type:'application/json'});
         var url=URL.createObjectURL(blob);
@@ -2762,6 +2888,7 @@
                 status:l.status||'active',
                 btcStart:l.btcStart||null,
                 feeBtc:parseFloat(l.feeBtc)||0,
+                chainId:l.chainId||undefined,
                 note:l.note||''
               });
               imported++;
@@ -3700,7 +3827,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var disp=document.getElementById('vor-btc-display');
         if(disp)disp.textContent=fmtBtc.toLocaleString('de-CH')+' '+ccy;
         /* Fill all BTC price inputs */
-        ['mkb-btc','szb-btc','mkr-btc','btr-btc','ltvc-btc','alp-btc','bebp'].forEach(function(id){
+        ['mkb-btc','szb-btc','mkr-btc','btr-btc','ltvc-btc','alp-btc','bebp','rosi-btc'].forEach(function(id){
           var el=document.getElementById(id);
           if(el){el.value=fmtBtc;el._vorAutoFilled=true;}
         });
@@ -3893,6 +4020,307 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         if(g('pl4-ltv'))g('pl4-ltv').textContent=ltv.toFixed(1)+'%';
         if(g('pl4-formula'))g('pl4-formula').textContent='F\u00e4lliger Betrag $'+due.toLocaleString('de-CH',{maximumFractionDigits:0})+' \u00f7 (Bottom Price $'+bottom.toLocaleString('de-CH',{maximumFractionDigits:0})+' \u00d7 0.95)';
       },
+
+      /* ── Roll-Over Simulation ── */
+      rosi:function(){
+        var amount=parseFloat(g('rosi-amount').value)||0;
+        var ccy=g('rosi-ccy').value||'USD';
+        var term=parseInt(g('rosi-term').value)||12;
+        var rate1=parseFloat(g('rosi-rate1').value)||0;
+        var rate2=parseFloat(g('rosi-rate2').value)||rate1;
+        var btcP=parseFloat(g('rosi-btc').value)||R.BTC;
+        var n=Math.max(1,Math.min(20,parseInt(g('rosi-n').value)||3));
+        var el=g('rosi-r');
+        if(!amount||!rate1){el.style.display='none';return;}
+        /* Fee: 1.5% p.a. × (term/12) × currentAmount — calculated per roll-over */
+        var feeRatePa=0.015;
+        var totalInterest=0,totalFee=0;
+        var originalAmountUSD=toU(amount,ccy);
+        var rows='<thead><tr>'+
+          '<th>#</th><th>Bezeichnung</th><th>Laufzeit</th><th>Zinssatz</th>'+
+          '<th>Kreditbetrag</th><th>Zinsen</th><th>Gebühr</th>'+
+          '<th>Fälliger Betrag</th><th>Gesamtkosten</th>'+
+          '</tr></thead><tbody>';
+        var baseDate=new Date();
+        var currentAmount=amount; /* rolls forward each iteration */
+        var feeDisplayEl=g('rosi-fee-display');
+        for(var i=0;i<n;i++){
+          var rate=i===0?rate1:rate2;
+          var interest=currentAmount*(rate/100)*(term/12);
+          var interestUSD=toU(interest,ccy);
+          var currentAmountUSD=toU(currentAmount,ccy);
+          /* Fee: 1.5% p.a. × (term/12) × currentAmount in fiat */
+          var feeAmt=currentAmount*feeRatePa*(term/12);
+          var feeUSD=toU(feeAmt,ccy);
+          var feeBtc=btcP>0?feeUSD/btcP:0;
+          var feePct=(feeRatePa*(term/12)*100).toFixed(2);
+          /* Update fee display on first iteration */
+          if(i===0&&feeDisplayEl){
+            feeDisplayEl.textContent=feePct+'% ('+fmt(feeUSD,'USD')+' ≈ '+feeBtc.toFixed(6)+' BTC)';
+          }
+          var dueAmt=currentAmount+interest; /* becomes next loan amount */
+          var dueUSD=toU(dueAmt,ccy);
+          var costUSD=interestUSD+feeUSD;
+          totalInterest+=interestUSD;
+          totalFee+=feeUSD;
+          var startD=new Date(baseDate);
+          startD.setMonth(startD.getMonth()+i*term);
+          var endD=new Date(startD);
+          endD.setMonth(endD.getMonth()+term);
+          var startStr=startD.toLocaleDateString('de-CH',{month:'short',year:'numeric'});
+          var endStr=endD.toLocaleDateString('de-CH',{month:'short',year:'numeric'});
+          var isLast=i===n-1;
+          rows+='<tr'+(i>0?' style="background:var(--bg2)"':'')+'>'+
+            '<td style="color:var(--text4);font-size:11px">'+(i+1)+'</td>'+
+            '<td class="tbl-name">Roll-Over '+(i+1)+'<br><span style="font-size:10px;font-weight:400;color:var(--text4)">'+startStr+' \u2192 '+endStr+'</span></td>'+
+            '<td>'+term+' Mt.</td>'+
+            '<td>'+rate.toFixed(1)+'%</td>'+
+            '<td class="amt"'+(i>0?' style="color:var(--text3)"':'')+'>'+fmt(currentAmountUSD,'USD')+(i>0?'<br><span style="font-size:10px;color:var(--text4)">\u2934 aus Vorperiode</span>':'')+'</td>'+
+            '<td class="amt">'+fmt(interestUSD,'USD')+'</td>'+
+            '<td class="amt">'+feePct+'%<br><span style="font-size:10px;color:var(--text4)">'+fmt(feeUSD,'USD')+'</span></td>'+
+            '<td class="amt" style="font-weight:700;color:'+(isLast?'var(--accent)':'var(--text)')+'">'+fmt(dueUSD,'USD')+'</td>'+
+            '<td class="amt">'+fmt(costUSD,'USD')+'</td>'+
+          '</tr>';
+          currentAmount=dueAmt; /* carry forward */
+        }
+        var totalCost=totalInterest+totalFee;
+        var totalMonths=n*term;
+        var finalDueUSD=toU(currentAmount,ccy);
+        var effRate=originalAmountUSD>0&&totalMonths>0?(totalCost/originalAmountUSD/(totalMonths/12)*100):0;
+        var capitalGrowth=originalAmountUSD>0?((finalDueUSD-originalAmountUSD)/originalAmountUSD*100):0;
+        rows+='<tr style="background:var(--bg2);font-weight:700;border-top:2px solid var(--border)">'+
+          '<td colspan="4" style="font-size:12px;color:var(--text4)">Total ('+n+' Roll-Over'+(n!==1?'s':'')+', '+totalMonths+' Monate)</td>'+
+          '<td class="amt" style="color:var(--text3)">'+fmt(originalAmountUSD,'USD')+'<br><span style="font-size:10px;font-weight:400">Startbetrag</span></td>'+
+          '<td class="amt">'+fmt(totalInterest,'USD')+'</td>'+
+          '<td class="amt">'+fmt(totalFee,'USD')+'</td>'+
+          '<td class="amt" style="color:var(--accent)">'+fmt(finalDueUSD,'USD')+'</td>'+
+          '<td class="amt" style="color:var(--accent)">'+fmt(totalCost,'USD')+'</td>'+
+        '</tr></tbody>';
+        g('rosi-tbl').innerHTML=rows;
+        function tile(lbl,val,sub){
+          return '<div style="padding:.6rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border)">'+
+            '<div style="font-size:11px;color:var(--text4)">'+lbl+'</div>'+
+            '<div style="font-size:15px;font-weight:700;color:var(--text)">'+val+'</div>'+
+            (sub?'<div style="font-size:11px;color:var(--text3);margin-top:.2rem">'+sub+'</div>':'')+
+          '</div>';
+        }
+        g('rosi-summary').innerHTML=
+          tile('Gesamtlaufzeit',totalMonths+' Monate',n+' Roll-Over'+(n!==1?'s':''))+
+          tile('Startbetrag',fmt(originalAmountUSD,'USD'),'')+
+          tile('Endbetrag (f\u00e4lliger Betrag)',fmt(finalDueUSD,'USD'),'Kapital angewachsen um +'+capitalGrowth.toFixed(1)+'%')+
+          tile('Zinsen gesamt',fmt(totalInterest,'USD'),'')+
+          (feeBtc?tile('Geb\u00fchren gesamt',fmt(totalFee,'USD'),(feeBtc*n).toFixed(6)+' BTC'):'')+
+          tile('Gesamtkosten',fmt(totalCost,'USD'),'Zinsen + Geb\u00fchren')+
+          tile('Eff. Jahreszins',effRate.toFixed(2)+'%','\u00fcber gesamte Laufzeit');
+        el.style.display='block';
+      },
+
+      /* ── Zukunftssimulation ── */
+      zukunft:function(){
+        var act=loans.filter(function(l){return l.status==='active';});
+        var elR=g('zk-r'),elE=g('zk-empty');
+        if(!elR)return;
+        if(!act.length){elR.style.display='none';if(elE)elE.style.display='block';return;}
+        if(elE)elE.style.display='none';
+
+        var futBtc=parseFloat(g('zk-btc').value)||0;
+        if(!futBtc){elR.style.display='none';return;}
+
+        var dateEl=g('zk-date');
+        var futDate=dateEl&&dateEl.value?new Date(dateEl.value):null;
+        var extRate=parseFloat(g('zk-rate').value)||null; /* override rate for matured loans */
+
+        var today=new Date();
+        var _cs=getComputedStyle(document.getElementById('ffd-root'));
+        var chGridColor=_cs.getPropertyValue('--border').trim();
+        var COLORS=['#F97316','#3B82F6','#10B981','#8B5CF6','#EF4444','#F59E0B','#06B6D4','#EC4899'];
+
+        /* ── Per-loan calculations ── */
+        var rows=[];
+        act.forEach(function(l,i){
+          var startD=new Date(l.start);
+          var matD=aM(l.start,l.term);
+          var lU=toU(l.amount,l.c);
+
+          /* At target date: is loan still running or already matured? */
+          var targetD=futDate||matD; /* if no date given, use maturity */
+          var isMatured=targetD>matD;
+
+          var daysToMat=Math.max(0,(matD-today)/86400000);
+          var daysToTarget=futDate?Math.max(0,(targetD-today)/86400000):daysToMat;
+
+          /* Debt at target date */
+          var debtAtTarget;
+          if(!isMatured){
+            /* Loan still active: debt = principal + full interest (bullet loan) */
+            debtAtTarget=lU+intU(l);
+          } else {
+            /* Loan matured before target: roll debt with extRate or original rate */
+            var extraMonths=Math.round((targetD-matD)/86400000/30.4375);
+            var r=extRate!==null?extRate:l.rate;
+            debtAtTarget=(lU+intU(l))*(1+(r/100)*(extraMonths/12));
+          }
+
+          /* Collateral value at target BTC price */
+          var colValueNow=l.col*R.BTC;
+          var colValueFut=l.col*futBtc;
+
+          /* LTV at target */
+          var ltvNow=colValueNow>0?lU/colValueNow*100:null;
+          var ltvFut=colValueFut>0?debtAtTarget/colValueFut*100:null;
+
+          /* MC1 price (73% LTV threshold) */
+          var mc1=l.col>0?debtAtTarget/(0.73*l.col):null;
+
+          /* P&L: collateral value gain minus cost of debt */
+          var colGain=colValueFut-colValueNow;
+          var debtCost=debtAtTarget-lU;
+          var netPnl=colGain-debtCost;
+
+          rows.push({
+            l:l,i:i,
+            lU:lU,
+            debtNow:lU+intU(l),
+            debtFut:debtAtTarget,
+            colNow:colValueNow,
+            colFut:colValueFut,
+            ltvNow:ltvNow,
+            ltvFut:ltvFut,
+            mc1:mc1,
+            netPnl:netPnl,
+            isMatured:isMatured,
+            daysToTarget:daysToTarget
+          });
+        });
+
+        /* ── Summary tiles ── */
+        var totalColNow=rows.reduce(function(s,r){return s+r.colNow;},0);
+        var totalColFut=rows.reduce(function(s,r){return s+r.colFut;},0);
+        var totalDebtNow=rows.reduce(function(s,r){return s+r.debtNow;},0);
+        var totalDebtFut=rows.reduce(function(s,r){return s+r.debtFut;},0);
+        var totalNetPnl=rows.reduce(function(s,r){return s+r.netPnl;},0);
+        var colChange=(totalColNow>0?(totalColFut-totalColNow)/totalColNow*100:0);
+        var btcChange=R.BTC>0?((futBtc-R.BTC)/R.BTC*100):0;
+
+        function tile(lbl,val,sub,color){
+          return '<div style="padding:.6rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border)">'+
+            '<div style="font-size:11px;color:var(--text4)">'+lbl+'</div>'+
+            '<div style="font-size:15px;font-weight:700;color:'+(color||'var(--text)')+'">'+val+'</div>'+
+            (sub?'<div style="font-size:11px;color:var(--text3);margin-top:.2rem">'+sub+'</div>':'')+
+          '</div>';
+        }
+        var dateLabel=futDate?futDate.toLocaleDateString('de-CH',{day:'2-digit',month:'short',year:'numeric'}):'Fälligkeit';
+        g('zk-summary').innerHTML=
+          tile('BTC-Preis','$'+Math.round(R.BTC).toLocaleString('de-CH')+' → $'+Math.round(futBtc).toLocaleString('de-CH'),
+            (btcChange>=0?'▲ +':' ▼ ')+Math.abs(btcChange).toFixed(1)+'%',btcChange>=0?'var(--ok)':'var(--err)')+
+          tile('Collateral-Wert',fmt(totalColFut,'USD'),
+            'Heute: '+fmt(totalColNow,'USD')+' · '+(colChange>=0?'▲ +':' ▼ ')+Math.abs(colChange).toFixed(1)+'%',
+            colChange>=0?'var(--ok)':'var(--err)')+
+          tile('Schulden gesamt',fmt(totalDebtFut,'USD'),'Heute: '+fmt(totalDebtNow,'USD'),'var(--text)')+
+          tile('Netto-Position (Equity)',fmt(totalColFut-totalDebtFut,'USD'),
+            'Heute: '+fmt(totalColNow-totalDebtNow,'USD'),
+            (totalColFut-totalDebtFut)>=0?'var(--ok)':'var(--err)')+
+          tile('Netto P&L',( totalNetPnl>=0?'▲ +':'▼ ')+fmt(Math.abs(totalNetPnl),'USD'),
+            'Wertzuwachs abzgl. Zinskosten',totalNetPnl>=0?'var(--ok)':'var(--err)');
+
+        /* ── Chart: BTC-Preisverlauf → Collateral & Schulden ── */
+        /* Generate price steps from current BTC to futBtc */
+        var steps=40;
+        var pMin=Math.min(R.BTC,futBtc)*0.7;
+        var pMax=Math.max(R.BTC,futBtc)*1.15;
+        var labels=[],colData=[],debtData=[];
+        for(var s=0;s<=steps;s++){
+          var p=pMin+(pMax-pMin)*(s/steps);
+          labels.push('$'+Math.round(p/1000)+'k');
+          colData.push(rows.reduce(function(sum,r){return sum+r.l.col*p;},0));
+          debtData.push(rows.reduce(function(sum,r){return sum+r.debtFut;},0));
+        }
+        /* Mark current and future price positions */
+        var curIdx=Math.round((R.BTC-pMin)/(pMax-pMin)*steps);
+        var futIdx=Math.round((futBtc-pMin)/(pMax-pMin)*steps);
+        curIdx=Math.max(0,Math.min(steps,curIdx));
+        futIdx=Math.max(0,Math.min(steps,futIdx));
+
+        if(chZukunft){chZukunft.destroy();chZukunft=null;}
+        var ctx=g('zk-chart');
+        if(ctx){
+          chZukunft=new Chart(ctx,{
+            type:'line',
+            data:{
+              labels:labels,
+              datasets:[
+                {label:'Collateral-Wert (USD)',data:colData,borderColor:'#10B981',backgroundColor:'rgba(16,185,129,.08)',fill:true,tension:0.3,borderWidth:2,pointRadius:0,pointHoverRadius:4},
+                {label:'Schulden (USD)',data:debtData,borderColor:'#EF4444',backgroundColor:'rgba(239,68,68,.06)',fill:true,tension:0,borderWidth:2,pointRadius:0,pointHoverRadius:4,borderDash:[5,3]}
+              ]
+            },
+            options:{
+              responsive:true,maintainAspectRatio:false,
+              interaction:{mode:'index',intersect:false},
+              plugins:{
+                legend:{display:true,position:'top'},
+                tooltip:{callbacks:{label:function(c){return c.dataset.label+': $'+Math.round(c.raw).toLocaleString('de-CH');}}},
+                annotation:{} /* no dependency, skip */
+              },
+              scales:{
+                y:{ticks:{callback:function(v){return '$'+Math.round(v/1000)+'k';}},grid:{color:chGridColor}},
+                x:{grid:{display:false},ticks:{maxTicksLimit:8,autoSkip:true}}
+              }
+            }
+          });
+        }
+
+        /* ── Table ── */
+        var ltvColor=function(v){return v===null?'':v>=95?'#dc2626':v>=79?'#ea580c':v>=73?'#d97706':'#16a34a';};
+        var tbl='<thead><tr>'+
+          '<th>Kredit</th>'+
+          '<th>Collateral</th>'+
+          '<th>Wert heute</th>'+
+          '<th>Wert bei $'+Math.round(futBtc/1000)+'k</th>'+
+          '<th>Schulden heute</th>'+
+          '<th>Schulden '+dateLabel+'</th>'+
+          '<th>LTV heute</th>'+
+          '<th>LTV '+dateLabel+'</th>'+
+          '<th>MC1-Preis</th>'+
+          '<th>Netto P&amp;L</th>'+
+          '</tr></thead><tbody>';
+
+        rows.forEach(function(r,i){
+          var mc1Warn=r.mc1!==null&&futBtc<=r.mc1*1.1;
+          tbl+='<tr'+(mc1Warn?' style="background:rgba(220,38,38,.06)"':'')+'>'+
+            '<td class="tbl-name">'+r.l.name+
+              (r.isMatured?'<br><span style="font-size:10px;color:var(--warn)">⚠ Fällig vor Zieldatum</span>':'')+'</td>'+
+            '<td class="amt">'+r.l.col.toFixed(4)+' BTC</td>'+
+            '<td class="amt">'+fmt(r.colNow,'USD')+'</td>'+
+            '<td class="amt" style="font-weight:600;color:'+(r.colFut>=r.colNow?'var(--ok)':'var(--err)')+'">'+fmt(r.colFut,'USD')+'</td>'+
+            '<td class="amt">'+fmt(r.debtNow,'USD')+'</td>'+
+            '<td class="amt" style="font-weight:600">'+fmt(r.debtFut,'USD')+'</td>'+
+            '<td class="amt" style="color:'+(r.ltvNow!==null?ltvColor(r.ltvNow):'')+'">'+
+              (r.ltvNow!==null?r.ltvNow.toFixed(1)+'%':'—')+'</td>'+
+            '<td class="amt" style="color:'+(r.ltvFut!==null?ltvColor(r.ltvFut):'')+'">'+
+              (r.ltvFut!==null?r.ltvFut.toFixed(1)+'%':'—')+'</td>'+
+            '<td class="amt" style="color:'+(r.mc1!==null&&futBtc<=r.mc1?'#dc2626':r.mc1!==null&&futBtc<=r.mc1*1.15?'#ea580c':'var(--text3)')+'">'+
+              (r.mc1!==null?'$'+Math.round(r.mc1).toLocaleString('de-CH'):'—')+'</td>'+
+            '<td class="amt" style="font-weight:600;color:'+(r.netPnl>=0?'var(--ok)':'var(--err)')+'">'+
+              (r.netPnl>=0?'▲ +':'▼ ')+fmt(Math.abs(r.netPnl),'USD')+'</td>'+
+          '</tr>';
+        });
+
+        /* Total row */
+        tbl+='<tr style="font-weight:700;border-top:2px solid var(--border);background:var(--bg2)">'+
+          '<td colspan="2" style="font-size:12px;color:var(--text4)">Total ('+rows.length+' Kredite)</td>'+
+          '<td class="amt">'+fmt(totalColNow,'USD')+'</td>'+
+          '<td class="amt" style="color:'+(totalColFut>=totalColNow?'var(--ok)':'var(--err)')+'">'+fmt(totalColFut,'USD')+'</td>'+
+          '<td class="amt">'+fmt(totalDebtNow,'USD')+'</td>'+
+          '<td class="amt">'+fmt(totalDebtFut,'USD')+'</td>'+
+          '<td></td><td></td><td></td>'+
+          '<td class="amt" style="color:'+(totalNetPnl>=0?'var(--ok)':'var(--err)')+'">'+
+            (totalNetPnl>=0?'▲ +':'▼ ')+fmt(Math.abs(totalNetPnl),'USD')+'</td>'+
+        '</tr></tbody>';
+
+        g('zk-tbl').innerHTML=tbl;
+        elR.style.display='block';
+      },
+
 
       /* 1. Maximaler Kreditbetrag */
       mkb:function(){
@@ -4354,6 +4782,26 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var act=loans.filter(function(l){return l.status==='active';});
         sel.innerHTML='<option value="">— Kredit wählen —</option>'+
           act.map(function(l,i){return '<option value="'+loans.indexOf(l)+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
+        /* also populate rosi selector */
+        var rsel=g('rosi-loan-sel');if(!rsel)return;
+        rsel.innerHTML='<option value="">— Kredit wählen —</option>'+
+          act.map(function(l){return '<option value="'+loans.indexOf(l)+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
+      },
+      rosiFill:function(){
+        var idx=parseInt(g('rosi-loan-sel').value);
+        if(isNaN(idx)||!loans[idx])return;
+        var l=loans[idx];
+        g('rosi-amount').value=l.amount;
+        /* set currency */
+        var ccySel=g('rosi-ccy');
+        for(var i=0;i<ccySel.options.length;i++){if(ccySel.options[i].value===l.c){ccySel.selectedIndex=i;break;}}
+        /* set term */
+        var termSel=g('rosi-term');
+        for(var i=0;i<termSel.options.length;i++){if(parseInt(termSel.options[i].value)===l.term){termSel.selectedIndex=i;break;}}
+        /* rate */
+        g('rosi-rate1').value=l.rate;
+        g('rosi-rate2').value=l.rate;
+        d.rosi();
       },
       ext:function(){
         var idx=parseInt(g('ext-loan').value);
@@ -4505,6 +4953,156 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         localStorage.setItem('ffd_ltv_thresh',n);
         d.ov();
       },
+      /* ─── Roll-Over: chain dropdown helper ─── */
+      populateChainSelect:function(elId,excludeIdx,currentChainId){
+        var sel=g(elId);if(!sel)return;
+        sel.innerHTML='<option value="">— Keine Kette —</option><option value="__new__">✦ Neue Kette starten</option>';
+        loans.forEach(function(l,i){
+          if(i===excludeIdx)return;
+          var opt=document.createElement('option');
+          opt.value=l.id;
+          opt.textContent=l.name+' ('+fmt(l.amount,l.c)+')'+(l.chainId?' 🔗':'');
+          /* pre-select if this loan shares the same chainId */
+          if(currentChainId&&l.chainId===currentChainId)opt.selected=true;
+          sel.appendChild(opt);
+        });
+      },
+
+      /* ─── Roll-Over overview ─── */
+      ro:function(){
+        var el=g('ro-content');if(!el)return;
+        /* Group loans by chainId */
+        var chains={};
+        loans.forEach(function(l){
+          if(!l.chainId)return;
+          if(!chains[l.chainId])chains[l.chainId]=[];
+          chains[l.chainId].push(l);
+        });
+        var chainIds=Object.keys(chains);
+        /* Loans without a chain */
+        var standalone=loans.filter(function(l){return !l.chainId;});
+
+        if(!chainIds.length){
+          el.innerHTML='<div class="card" style="text-align:center;padding:2rem">'+
+            '<div style="font-size:32px;margin-bottom:.75rem">🔗</div>'+
+            '<div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:.5rem">Noch keine Roll-Over-Ketten</div>'+
+            '<p class="note2">Verknüpfe Kredite miteinander, indem du bei einem Kredit unter «Roll-Over-Kette» einen Vorgänger-Kredit auswählst.</p>'+
+          '</div>';
+          return;
+        }
+
+        var CHAIN_COLORS=['#F97316','#3b82f6','#8b5cf6','#10b981','#f59e0b','#ec4899','#06b6d4','#84cc16'];
+        var html='';
+
+        chainIds.forEach(function(cid,ci){
+          var members=chains[cid].slice().sort(function(a,b){return new Date(a.start)-new Date(b.start);});
+          var color=CHAIN_COLORS[ci%CHAIN_COLORS.length];
+
+          /* Aggregate totals */
+          var totalInterestUSD=members.reduce(function(s,l){return s+intU(l);},0);
+          var totalFeeUSD=members.reduce(function(s,l){return s+feeU(l);},0);
+          var totalCostUSD=totalInterestUSD+totalFeeUSD;
+          var totalFeeBtc=members.reduce(function(s,l){return s+(l.feeBtc||0);},0);
+          var totalDueUSD=members.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
+          var activeCount=members.filter(function(l){return l.status==='active';}).length;
+          var closedCount=members.length-activeCount;
+          var firstStart=new Date(members[0].start);
+          var lastEnd=aM(members[members.length-1].start,members[members.length-1].term);
+          var totalMonths=Math.round((lastEnd-firstStart)/(1000*60*60*24*30.44));
+          var avgAmount=members.reduce(function(s,l){return s+toU(l.amount,l.c);},0)/members.length;
+          /* Weighted avg rate */
+          var wRateNum=members.reduce(function(s,l){return s+l.rate*toU(l.amount,l.c);},0);
+          var wRateDen=members.reduce(function(s,l){return s+toU(l.amount,l.c);},0);
+          var avgRate=wRateDen>0?wRateNum/wRateDen:0;
+          /* Effective annual rate = totalCostUSD / avgAmount / (totalMonths/12) */
+          var effRate=avgAmount>0&&totalMonths>0?(totalCostUSD/avgAmount/(totalMonths/12)*100):0;
+          /* Chain name = name of first loan */
+          var chainName=members[0].name.replace(/ v\d+$/i,'').replace(/ \(Kopie\)$/i,'');
+
+          html+='<div class="card" style="margin-bottom:1rem;border-left:4px solid '+color+'">';
+          /* Header */
+          html+='<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem">'+
+            '<div style="display:flex;align-items:center;gap:.6rem">'+
+              '<span style="font-size:18px">🔗</span>'+
+              '<div>'+
+                '<div style="font-size:14px;font-weight:700;color:var(--text)">'+chainName+'</div>'+
+                '<div style="font-size:11px;color:var(--text4)">'+
+                  members.length+' Kredit'+(members.length!==1?'e':'')+
+                  (activeCount?' · <span style="color:var(--ok)">'+activeCount+' aktiv</span>':'')+
+                  (closedCount?' · <span style="color:var(--text3)">'+closedCount+' abg.</span>':'')+
+                  ' · '+firstStart.toLocaleDateString('de-CH',{month:'short',year:'numeric'})+' → '+
+                  lastEnd.toLocaleDateString('de-CH',{month:'short',year:'numeric'})+
+                  ' ('+totalMonths+' Monate gesamt)'+
+                '</div>'+
+              '</div>'+
+            '</div>'+
+            '<div style="display:flex;gap:1.5rem;flex-wrap:wrap">'+
+              '<div style="text-align:right"><div style="font-size:10px;color:var(--text4);text-transform:uppercase;letter-spacing:.04em">Gesamtkosten</div><div style="font-size:16px;font-weight:700;color:var(--text)">'+fmt(totalCostUSD,'USD')+'</div></div>'+
+              '<div style="text-align:right"><div style="font-size:10px;color:var(--text4);text-transform:uppercase;letter-spacing:.04em">Eff. Jahreszins</div><div style="font-size:16px;font-weight:700;color:'+color+'">'+effRate.toFixed(2)+'%</div></div>'+
+            '</div>'+
+          '</div>';
+
+          /* Summary tiles */
+          html+='<div class="mg" style="margin-bottom:.75rem">'+
+            '<div class="mc"><span class="mc-lbl">Kumulierter fälliger Betrag</span><span class="mc-val">'+fmt(totalDueUSD,'USD')+'</span><span class="mc-sub">Kapital + alle Zinsen</span></div>'+
+            '<div class="mc"><span class="mc-lbl">Zinsen gesamt</span><span class="mc-val">'+fmt(totalInterestUSD,'USD')+'</span></div>'+
+            '<div class="mc"><span class="mc-lbl">Gebühren gesamt</span><span class="mc-val">'+(totalFeeBtc?totalFeeBtc.toFixed(6)+' BTC':'—')+'</span>'+(totalFeeUSD?'<span class="mc-sub">≈ '+fmt(totalFeeUSD,'USD')+'</span>':'')+'</div>'+
+            '<div class="mc"><span class="mc-lbl">Ø Zinssatz (gewichtet)</span><span class="mc-val">'+avgRate.toFixed(2)+'%</span></div>'+
+            '<div class="mc"><span class="mc-lbl">Ø Kreditbetrag</span><span class="mc-val">'+fmt(avgAmount,'USD')+'</span></div>'+
+          '</div>';
+
+          /* Loan table */
+          html+='<div class="ovx"><table class="loans-table"><thead><tr>'+
+            '<th>#</th><th>Bezeichnung</th><th>Status</th><th>Betrag</th>'+
+            '<th>Zinssatz</th><th>Laufzeit</th><th>Start</th><th>Fälligkeit</th>'+
+            '<th>Zinsen</th><th>Fälliger Betrag</th><th>Gebühr</th><th>Gesamtkosten</th>'+
+          '</tr></thead><tbody>';
+          members.forEach(function(l,mi){
+            var iUSD=intU(l),fUSD=feeU(l),costUSD=iUSD+fUSD,dueUSD=toU(l.amount,l.c)+iUSD;
+            var end=aM(l.start,l.term).toLocaleDateString('de-CH');
+            var isActive=l.status==='active';
+            html+='<tr>'+
+              '<td style="color:var(--text4);font-size:11px">'+(mi+1)+'</td>'+
+              '<td class="tbl-name">'+l.name+'</td>'+
+              '<td><span class="badge '+(isActive?'ba':'bc')+'">'+(isActive?'Aktiv':'Abg.')+'</span></td>'+
+              '<td class="amt">'+fmt(l.amount,l.c)+'</td>'+
+              '<td>'+l.rate+'%</td>'+
+              '<td>'+l.term+' Mt.</td>'+
+              '<td>'+new Date(l.start).toLocaleDateString('de-CH')+'</td>'+
+              '<td>'+end+'</td>'+
+              '<td class="amt">'+fmt(iUSD,'USD')+'</td>'+
+              '<td class="amt" style="font-weight:600">'+fmt(dueUSD,'USD')+'</td>'+
+              '<td class="amt">'+(l.feeBtc?l.feeBtc.toFixed(6)+' BTC':'—')+'</td>'+
+              '<td class="amt" style="font-weight:600">'+fmt(costUSD,'USD')+'</td>'+
+            '</tr>';
+          });
+          /* Totals row */
+          html+='<tr style="background:var(--bg2);font-weight:700;border-top:2px solid var(--border)">'+
+            '<td colspan="8" style="font-size:12px;color:var(--text4)">Total</td>'+
+            '<td class="amt">'+fmt(totalInterestUSD,'USD')+'</td>'+
+            '<td class="amt" style="color:'+color+'">'+fmt(totalDueUSD,'USD')+'</td>'+
+            '<td class="amt">'+(totalFeeBtc?totalFeeBtc.toFixed(6)+' BTC':'—')+'</td>'+
+            '<td class="amt" style="color:'+color+'">'+fmt(totalCostUSD,'USD')+'</td>'+
+          '</tr>';
+          html+='</tbody></table></div>';
+          html+='</div>';
+        });
+
+        /* Standalone loans hint */
+        if(standalone.length){
+          html+='<div class="card" style="background:var(--bg2);border:1px dashed var(--border)">'+
+            '<span class="mc-lbl" style="margin-bottom:.4rem;display:block">'+standalone.length+' Kredit'+(standalone.length!==1?'e':'')+' ohne Roll-Over-Kette</span>'+
+            '<div style="display:flex;flex-wrap:wrap;gap:.4rem">'+
+            standalone.map(function(l){
+              return '<span style="font-size:12px;background:var(--bg3);border-radius:6px;padding:2px 8px;color:var(--text3)">'+l.name+'</span>';
+            }).join('')+
+            '</div>'+
+          '</div>';
+        }
+
+        el.innerHTML='<span class="sh">Roll-Over-Ketten</span>'+html;
+      },
+
       sx:function(){
         var el=g('sx-content');if(!el)return;
         if(!loans.length){
@@ -4738,11 +5336,58 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         html+=tile('F\u00e4llig '+(thisYear+2),dueIn2Years+' Kredit(e)','in zwei Jahren');
         html+='</div>';
 
+        /* ── Break-even ── */
+        var beLoans=loans.filter(function(l){return l.btcStart&&l.btcStart>0&&l.col>0;});
+        /* Simple average: mean of individual break-even prices */
+        var beAvg=beLoans.length?beLoans.reduce(function(s,l){
+          var bep=l.btcStart*(dueU(l)/toU(l.amount,l.c));
+          return s+bep;
+        },0)/beLoans.length:null;
+        /* Weighted by loan volume (USD): each bep weighted by loan amount in USD */
+        var beWNum=beLoans.reduce(function(s,l){
+          var lU=toU(l.amount,l.c);
+          var bep=l.btcStart*(dueU(l)/lU);
+          return s+bep*lU;
+        },0);
+        var beWDen=beLoans.reduce(function(s,l){return s+toU(l.amount,l.c);},0);
+        var beWeighted=beWDen>0?beWNum/beWDen:null;
+        var beReached=beAvg!==null&&R.BTC>=beAvg;
+        var beWReached=beWeighted!==null&&R.BTC>=beWeighted;
+
         html+=section('Effizienz');
         html+='<div class="mc"><span class="mc-lbl">Effektiver Jahreszins</span><span class="mc-val">'+effJahreszinsAll.toFixed(2)+'%</span>'+
           sub3(effJahreszins.toFixed(2)+'%',null,effJahreszinsAll.toFixed(2)+'%')+'</div>';
         html+=tile('G\u00fcnstigster Kredit',cheapest?cheapest.rate.toFixed(2)+'%':dash,cheapest?cheapest.name:'');
         html+=tile('Teuerster Kredit',priciest?priciest.rate.toFixed(2)+'%':dash,priciest?priciest.name:'');
+        if(beAvg!==null){
+          html+='<div class="mc"><span class="mc-lbl">Break-even \u00d8 (einfach)</span>'+
+            '<span class="mc-val" style="color:'+(beReached?'var(--ok)':'var(--warn)')+'">$'+Math.round(beAvg).toLocaleString('de-CH')+'</span>'+
+            '<span class="mc-sub" style="color:'+(beReached?'var(--ok)':'var(--warn)')+'">'+
+              (beReached?'\u2713 Erreicht — Kredite haben sich gelohnt':'\u2715 Noch nicht erreicht')+
+            '</span>'+
+            '<span class="mc-sub">Aktuell $'+Math.round(R.BTC).toLocaleString('de-CH')+
+              (beReached?' · \u25b2 $'+(Math.round(R.BTC-beAvg)).toLocaleString('de-CH')+' \u00fcber Break-even':
+                         ' · noch $'+(Math.round(beAvg-R.BTC)).toLocaleString('de-CH')+' bis Break-even')+
+            '</span>'+
+            '<span class="mc-sub" style="color:var(--text4)">Mittelwert der einzelnen Break-even-Preise</span>'+
+          '</div>';
+        }
+        if(beWeighted!==null){
+          html+='<div class="mc"><span class="mc-lbl">Break-even gewichtet</span>'+
+            '<span class="mc-val" style="color:'+(beWReached?'var(--ok)':'var(--warn)')+'">$'+Math.round(beWeighted).toLocaleString('de-CH')+'</span>'+
+            '<span class="mc-sub" style="color:'+(beWReached?'var(--ok)':'var(--warn)')+'">'+
+              (beWReached?'\u2713 Erreicht — Kredite haben sich gelohnt':'\u2715 Noch nicht erreicht')+
+            '</span>'+
+            '<span class="mc-sub">Aktuell $'+Math.round(R.BTC).toLocaleString('de-CH')+
+              (beWReached?' · \u25b2 $'+(Math.round(R.BTC-beWeighted)).toLocaleString('de-CH')+' \u00fcber Break-even':
+                          ' · noch $'+(Math.round(beWeighted-R.BTC)).toLocaleString('de-CH')+' bis Break-even')+
+            '</span>'+
+            '<span class="mc-sub" style="color:var(--text4)">Gewichtet nach Kreditbetrag in USD</span>'+
+          '</div>';
+        }
+        if(!beLoans.length){
+          html+=tile('Break-even',dash,'Kein BTC-Startpreis hinterlegt','var(--text4)');
+        }
         html+='</div>';
 
         el.innerHTML=html;
@@ -4940,7 +5585,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
     try{d.updateHdrStats();}catch(e){console.error('[startup] Fehler in updateHdrStats:', e);}
     /* Activate tab from URL hash on load, fallback to cfg.defaultTab */
     (function(){
-      var validTabs=['ov','lo','to','st','ca','tl','ch','sx','se'];
+      var validTabs=['ov','lo','to','st','ca','tl','ch','sx','se','ro'];
       var hash=(location.hash||'').replace('#','');
       var target=hash&&validTabs.indexOf(hash)>=0?hash:(cfg.defaultTab||'ov');
       if(target!=='ov'){
