@@ -1,4 +1,7 @@
-# Changelog — Firefish Dashboard
+# Changelog — firefish-dashboard-unofficial
+
+
+
 ## v1.1.0
 
 ### ✨ New Features
