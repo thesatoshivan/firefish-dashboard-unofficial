@@ -12,14 +12,16 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 
 - **Loan overview** — track all active and closed loans with full details (amount, rate, term, collateral, status)
 - **LTV monitoring** — real-time LTV per loan with configurable MC1/MC2/MC3/liquidation thresholds and colour-coded alerts
-- **Collateral health** — portfolio-level collateral value, coverage ratio and margin call price
-- **Break-even analysis** — calculates the BTC price at which a loan becomes profitable, with automatic historical price lookup via CoinGecko
+- **Collateral health** — portfolio-level collateral value, coverage ratio, margin call price and open debt in BTC
+- **Break-even analysis** — calculates the BTC price at which a loan becomes profitable, with automatic historical BTC price lookup and break-even average / weighted break-even statistics
 - **Upcoming maturities** — countdown to due dates with configurable alert window
 - **Multi-currency support** — EUR, CHF, CZK, PLN, USDC, USDT with live exchange rates
-- **Charts & statistics** — LTV history, debt timeline, cash flow, collateral concentration, currency distribution and more
-- **Stress test** — simulate BTC price drops and see which loans get margin called
+- **Roll-over chains** — link loans into roll-over chains, show chain badges on loan cards and analyse them in a dedicated Roll-Overs tab
+- **Built-in tools** — includes Roll-Over Simulation and Future Simulation for modelling extensions, future BTC prices, debt development, LTV and P&L
+- **Charts & statistics** — LTV history, debt timeline, cash flow, collateral concentration, currency distribution, effective cost in BTC and more
+- **Stress test** — simulate BTC price drops with scenarios, a BTC price heatmap and a worst-case simulator
 - **Dark mode** — full dark/light theme with persistent preference
-- **Import / Export** — JSON and CSV (Firefish statement format) with configurable merge strategies
+- **Import / Export** — JSON and CSV (Firefish statement format) with configurable merge strategies, including roll-over chain IDs
 - **No backend required** — all data is stored in browser `localStorage`; the PHP file is a single self-contained page
 
 ---
@@ -44,7 +46,7 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 
 ### Adding a loan
 
-Click **+ Kredit hinzufügen** and fill in the loan details: amount, currency, interest rate, term, start date, collateral and an optional note. The dashboard calculates all derived values automatically.
+Click **+ Kredit hinzufügen** and fill in the loan details: amount, currency, interest rate, term, start date, collateral and an optional note. The dashboard calculates all derived values automatically. If you enter a start date, the form can suggest the historical BTC rate for that day, which you can accept with one click.
 
 ### Exchange rates
 
@@ -52,7 +54,15 @@ BTC/USD, EUR/USD and CHF/USD rates are fetched automatically on load. You can al
 
 ### Break-even
 
-For each loan, you can store the BTC price at the time of borrowing. The dashboard then shows whether the current BTC price has already covered the loan costs. Historical prices can be loaded automatically via the CoinGecko public API.
+For each loan, you can store the BTC price at the time of borrowing. The dashboard then shows whether the current BTC price has already covered the loan costs. Historical prices are resolved with a hybrid lookup: local cache first, then a bundled historical price set for 2022–2025, and only then the CoinGecko public API as fallback.
+
+### Roll-overs
+
+You can link related loans into roll-over chains using a shared chain ID. The dashboard highlights linked loans with a roll-over badge and provides a dedicated **Roll-Overs** tab with chain summaries, detail tables and effective annual rate calculations.
+
+### Tools
+
+The **Tools** area includes a **Roll-Over Simulation** for modelling multiple consecutive extensions with compounding and automatic fee calculation, plus a **Future Simulation** for projecting collateral value, debt, LTV, MC1 price and net P&L at a chosen future BTC price.
 
 ### Import & Export
 
@@ -76,6 +86,7 @@ All settings are saved in `localStorage` and included in JSON exports:
 | LTV thresholds | MC1 / MC2 / MC3 / liquidation percentages |
 | Countdown window | How many days ahead to show upcoming maturities |
 | Hide break-even | Hide the break-even widget on loan cards |
+| Navigation order | Custom order of sidebar navigation items |
 
 ---
 
