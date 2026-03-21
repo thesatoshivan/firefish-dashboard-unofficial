@@ -3,8 +3,60 @@
 
 ---
 
+
+## v1.3.0 (22.03.2026)
+
+### New Features
+
+**Upcoming Maturities — Cumulative Debt (Overview)**
+- New full-width card in the Overview below the four main cards
+- Eight time windows: 7d, 14d, 30d, 60d, 90d, 180d, 1 year, 2 years
+- Main value in USD; sub-line shows other active currencies
+- Colour-coded: red ≤ 7 days, yellow ≤ 14 days
+- Calculation: principal + interest only (no fees)
+
+**Break-even BTC Price in Roll-Over Simulation**
+- New column in the simulation table showing the BTC price at which collateral appreciation covers all costs (interest + fees) for each roll-over
+- Total row shows the break-even across the entire chain, highlighted in accent colour
+
+**Break-even BTC Price in Roll-Overs Tab**
+- Same column added to the per-loan detail table in the Roll-Overs tab
+- Per loan: `btcStart + costUSD / collateralBTC`; falls back to current BTC price if no start price is stored
+- Total row uses the first loan's start price and total collateral across the chain
+
+**Break-even BTC in Header Stats Bar**
+- New stat showing portfolio-wide break-even BTC price (all loans, active and closed)
+- Displays distance in % (green = above break-even, red = below) and the exact price
+- Tooltip lists all loans individually with their break-even price and distance
+- Active loans marked with ●, closed loans with ○
+
+**Liquidation Price in Overview Risk Card**
+- New rightmost tile «Next Liq. Price» in the Risk card
+- Shows the nearest liquidation price (95% LTV) across all active loans with collateral
+- Colour-coded by distance: red < 5%, yellow < 15%
+- Sub-line shows distance in % and the loan name
+
+### Improvements
+
+- **Header stat «Next Maturity»**: fälliger Betrag (due amount) moved to hover tooltip, consistent with other stats
+- **Header stat «Next MC»**: renamed from «Distanz MC1» to «Distanz nächster MC»; label now shows MC1/MC2/MC3/Liq. dynamically based on current LTV of the most critical loan; also shown in tooltip per loan
+- **Overview Risk card «Next MC»**: label updates dynamically (MC1 → MC2 → MC3 → Liq.) as thresholds are breached; distance shown instead of «Puffer»
+- **Statistics tab**: `.mc` tiles now have `border: 1px solid var(--border)` and `border-radius: 12px`
+- **Upcoming Maturities grid**: 8 equal columns `repeat(8, 1fr)` — all time windows same width
+- **Upcoming Maturities currency**: main value always in USD; other currencies in sub-line
+
+### Bug Fixes
+
+- **Alarm banner**: LTV calculation now uses principal + interest only (`toU + intU`), fees excluded — affects all thresholds in `checkAlarms` and `renderNextAction` (13 occurrences corrected)
+- **Overview Risk card «Next MC»**: was always showing MC1 price regardless of current LTV; now correctly advances to next unbreached threshold
+- **Overview Risk card «Next MC»**: was using `dueU()` (includes fees) for LTV calculation; corrected to `toU + intU`
+- **Liquidation banner**: LTV ≥ 95% now correctly triggers «Kredit liquidiert» with separate banner state; MC3 range narrowed to 86–95%
+
+
+---
+
  
-## v1.2.0
+## v1.2.0 (17.03.2026)
  
 ### New Features
  
@@ -56,7 +108,7 @@
 ---
 
 
-## v1.1.0
+## v1.1.0 (17.03.2026)
 
 ### New Features
 
