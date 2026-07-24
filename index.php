@@ -142,7 +142,7 @@
     }
     #ffd-root button:hover { background: var(--bg3); }
     #ffd-root button:focus { outline: none; box-shadow: 0 0 0 2px rgba(249,115,22,.2); }
-    #ffd-root button.sm { padding: 4px 10px; font-size: 12px; }
+    #ffd-root button.sm { padding: 4px 10px; font-size: 12px; border-radius: 10px; }
     #ffd-root button.primary { background: #F97316; color: #fff; border-color: #F97316; font-weight: 500; }
     #ffd-root button.primary:hover { background: #ea6c0b; }
     #ffd-root button.del { color: #dc2626; background: transparent; border-color: transparent; padding: 2px 7px; }
@@ -215,6 +215,7 @@
 
     /* ── Currency grid ── */
     #ffd-root .ccyg { display: grid; grid-template-columns: repeat(auto-fit,minmax(0,1fr)); gap: 6px; margin: .5rem 0 0; }
+    #ffd-root .due-windows-grid { display: grid; grid-template-columns: repeat(8,1fr); gap: 8px; }
     #ffd-root .ccyc { background: var(--bg2); border-radius: 8px; padding: .5rem .75rem; }
     #ffd-root .ccy-lbl { font-size: 10px; color: var(--text4); margin: 0 0 2px; display: block; }
     #ffd-root .ccy-val { font-size: 13px; font-weight: 600; color: var(--text); display: block; }
@@ -453,7 +454,13 @@
     #ffd-root .hdr-stat:hover .hdr-stat-tooltip { display: block; }
     #ffd-root .hdr-stat:has(.hdr-stat-tooltip) .hdr-stat-lbl::after { content: ' \B7\B7\B7'; font-size: 9px; color: var(--text4); vertical-align: middle; margin-left: 2px; letter-spacing: 1px; }
     #ffd-root .hdr-stat:has(.hdr-stat-tooltip):hover .hdr-stat-lbl::after { color: var(--accent); }
-    #ffd-root .alarm-banner { display: none; padding: .65rem 1rem; border-radius: 8px; margin: 0 0 .75rem; font-size: 13px; font-weight: 600; gap: 8px; align-items: center; flex-wrap: wrap; }
+    #ffd-root .alarm-banner { display: none; padding: 3px 10px; border-radius: 10px; margin: 0 0 0 auto; font-size: 11px; font-weight: 600; align-items: center; overflow: hidden; white-space: nowrap; flex: 0 1 auto; max-width: 100%; }
+    #ffd-root .ffd-notices { display: flex; flex-direction: column; gap: 6px; padding: .5rem .75rem 0; }
+    #ffd-root .ffd-notice { display: flex; align-items: center; gap: 8px; padding: .55rem .85rem; border-radius: 8px; font-size: 12px; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); color: var(--text2); }
+    #ffd-root .ffd-notice.warn { background: var(--warn-bg); border-color: var(--warn-border); color: var(--warn); }
+    #ffd-root .alarm-banner-inner { display: inline-block; padding-right: 4rem; }
+    #ffd-root .alarm-banner-inner.marquee { animation: ffd-marquee 18s linear infinite; }
+    @keyframes ffd-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     #ffd-root .cd-chip { display: flex; align-items: center; gap: 8px; padding: .6rem 1rem; border-radius: 10px; font-size: 13px; border: 1px solid var(--border); background: var(--bg2); flex: 1; min-width: 180px; }
     #ffd-root .cd-chip.urgent { background: var(--err-bg); border-color: var(--err-border); }
     #ffd-root .cd-chip.warn { background: var(--warn-bg); border-color: var(--warn-border); }
@@ -467,6 +474,7 @@
     #ffd-root .main-title { font-size: 17px; font-weight: 700; color: var(--text); }
 
     #ffd-root .ov-grp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    #ffd-root .ov-due-card { grid-column: span 2; }
     /* Tool tab outer grids (card columns) */
     #ffd-root .mobile-footer-end { display: none; }
     @media (max-width: 639px) {
@@ -542,6 +550,9 @@
       /* ── Overview grids ── */
       #ffd-root .ov-grp-grid { grid-template-columns: 1fr; }
       #ffd-root .grp-inner   { grid-template-columns: 1fr 1fr; }
+      #ffd-root .due-windows-grid { grid-template-columns: 1fr; }
+      #ffd-root .ccyg { grid-template-columns: 1fr; }
+      #ffd-root .ov-due-card { grid-column: span 1; }
 
       /* ── General card / metric grids ── */
       #ffd-root .mg { grid-template-columns: 1fr; }
@@ -663,12 +674,16 @@
         <span>Tools</span>
       </button>
       <div class="nav-spacer" style="flex:1"></div>
+      <button class="nav-item" onclick="d.tab('bk',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm.93 8.588-.077.079c-.149.127-.37.179-.63.179-.519 0-.898-.26-.898-.618 0-.337.253-.557.76-.64l.845-.126v1.126zm2.007-1.3c0 1.155-.909 1.985-2.183 1.985-.483 0-.932-.097-1.27-.276l.124-.64c.333.177.719.267 1.108.267.627 0 1.016-.3 1.016-.782 0-.434-.297-.675-.935-.918-.839-.313-1.366-.74-1.366-1.487 0-.765.634-1.338 1.573-1.42V5.5h.563v.486c.396.033.666.127.857.24l-.148.603c-.198-.104-.497-.228-.879-.228-.582 0-.829.294-.829.607 0 .373.27.563.993.843.907.341 1.376.79 1.376 1.585zM5.5 9.5h-1v-5h1v5z"/></svg>
+        <span>Portfolio</span>
+      </button>
       <button class="nav-item" data-nav-fixed onclick="d.tab('se',this)" style="border-top:1px solid var(--border);margin-top:4px">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 2a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM9.05 3a2.5 2.5 0 014.9 0H16v1h-2.05a2.5 2.5 0 01-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM2.05 8a2.5 2.5 0 014.9 0H16v1H6.95a2.5 2.5 0 01-4.9 0H0V8h2.05zM11.5 12a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-2.45 1a2.5 2.5 0 014.9 0H16v1h-2.05a2.5 2.5 0 01-4.9 0H0v-1h9.05z"/></svg>
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v130-22032026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.3.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v140-beta-24072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.4.0-beta</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
@@ -678,15 +693,16 @@
     <!-- Header: Pills + Actions (Row 1) · Stats bar (Row 2) -->
     <div class="main-hdr">
       <div class="main-hdr-row1">
-        <div class="pills" id="pills-bar">
+        <div class="pills" id="pills-bar" style="flex-shrink:0">
           <button class="sm" id="btc-refresh-btn" onclick="d.refreshBtc()" title="Bitcoinkurs aktualisieren" style="font-size:15px;padding:2px 8px">↻</button>
-          <span class="pill">BTC/USD<input type="number" id="p-btc" title="BTC/USD bearbeiten" oninput="d.rate()" step="1"></span>
-          <span class="pill">EUR/USD <input type="number" id="p-eur" title="EUR/USD bearbeiten" oninput="d.rate()" step="0.001"></span>
-          <span class="pill">CHF/USD <input type="number" id="p-chf" title="CHF/USD bearbeiten" oninput="d.rate()" step="0.001"></span>
+          <span class="pill">BTC/USD<input type="number" id="p-btc" title="BTC/USD bearbeiten" oninput="d.rate()" onblur="d.rateBlur()" step="1"></span>
+          <span class="pill">EUR/USD <input type="number" id="p-eur" title="EUR/USD bearbeiten" oninput="d.rate()" onblur="d.rateBlur()" step="0.001"></span>
+          <span class="pill">CHF/USD <input type="number" id="p-chf" title="CHF/USD bearbeiten" oninput="d.rate()" onblur="d.rateBlur()" step="0.001"></span>
           <span class="pill">USDT <b>&#8776; 1.00</b></span>
           <span id="pills-btc-fiats" class="pills"></span>
         </div>
-        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <div id="alarm-banner" class="alarm-banner"></div>
+        <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;flex-wrap:nowrap">
           <span id="cg-ratelimit-msg" style="display:none;font-size:11px;font-weight:600;color:var(--warn);background:var(--warn-bg);border:1px solid var(--warn-border);border-radius:8px;padding:3px 10px;white-space:nowrap">⚠ CoinGecko Rate-Limit — Bitte in einigen Minuten neu laden.</span>
           <button class="sm" onclick="d.toggleDark()" id="dark-btn" title="Dunkelmodus">&#9790;</button>
           <button class="sm" onclick="d.toggleHideAmounts()" id="hide-btn" title="Betr&#228;ge ausblenden">&#128065;</button>
@@ -751,10 +767,10 @@
       <button class="tab" onclick="d.tab('ch',this)">Diagramme</button>
       <button class="tab" onclick="d.tab('sx',this)">Statistiken</button>
       <button class="tab" onclick="d.tab('ro',this)">Roll-Overs</button>
+      <button class="tab" onclick="d.tab('bk',this)">&#8383; Portfolio</button>
       <button class="tab" onclick="d.tab('se',this)">&#9881; Einstellungen</button>
     </div>
     <div class="sec on" id="s-ov">
-    <div class="alarm-banner" id="alarm-banner"></div>
     <div id="next-action-widget" style="margin-bottom:.75rem"></div>
       <div class="mg" id="metrics"></div>
       <span class="sh">Gesamtschulden — alle Währungen</span>
@@ -769,7 +785,7 @@
           <span>%</span>
         </div>
       </div>
-      <div id="ov-ltv" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem"></div>
+      <div id="ov-ltv" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:1rem"></div>
     </div>
 
     <!-- ── LOANS ── -->
@@ -1127,6 +1143,8 @@
               </div>
             </div>
             <div class="vor-field"><label>Collateral (BTC)</label><input type="number" id="tc2" placeholder="0.25" step="0.001" oninput="d.ltv()"></div>
+            <div class="vor-field"><label>Zinssatz % p.a.</label><input type="number" id="tlr" placeholder="10" step="0.1" oninput="d.ltv()"></div>
+            <div class="vor-field"><label>Laufzeit (Monate)</label><input type="number" id="tlt" placeholder="12" step="1" oninput="d.ltv()"></div>
           </div>
           <div id="ltv-r" style="display:none;margin-top:.75rem">
             <div class="tg2" style="gap:.5rem">
@@ -1147,15 +1165,15 @@
                 <div class="rv err" id="rliq" style="font-size:14px;font-weight:700">–</div>
               </div>
               <div style="padding:.6rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border)">
-                <div style="font-size:11px;color:var(--text4)">MC 1 (73%) — BTC/USD</div>
+                <div style="font-size:11px;color:var(--text4)" id="rmc1-lbl">MC 1 (73%) — BTC/USD</div>
                 <div class="rv wrn" id="rmc1" style="font-size:14px;font-weight:700">–</div>
               </div>
               <div style="padding:.6rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border)">
-                <div style="font-size:11px;color:var(--text4)">MC 2 (79%) — BTC/USD</div>
+                <div style="font-size:11px;color:var(--text4)" id="rmc2-lbl">MC 2 (79%) — BTC/USD</div>
                 <div class="rv wrn" id="rmc2" style="font-size:14px;font-weight:700">–</div>
               </div>
               <div style="padding:.6rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border);grid-column:span 2">
-                <div style="font-size:11px;color:var(--text4)">MC 3 (86%) — BTC/USD</div>
+                <div style="font-size:11px;color:var(--text4)" id="rmc3-lbl">MC 3 (86%) — BTC/USD</div>
                 <div class="rv err" id="rmc3" style="font-size:14px;font-weight:700">–</div>
               </div>
             </div>
@@ -1228,7 +1246,7 @@
           <div class="rb" id="cn-r" style="display:none">
             <div class="rr"><span class="rl">Aktueller LTV</span><span class="rv" id="cnltv">–</span></div>
             <div class="rr"><span class="rl">Nachschuss f&#252;r 50% LTV</span><span class="rv ok" id="cn50">–</span></div>
-            <div class="rr"><span class="rl">Nachschuss um MC 1 (73%) zu vermeiden</span><span class="rv" id="cn75">–</span></div>
+            <div class="rr"><span class="rl" id="cn75-lbl">Nachschuss um MC 1 (73%) zu vermeiden</span><span class="rv" id="cn75">–</span></div>
             <div class="rr"><span class="rl">Nachschuss um Liquidation zu vermeiden</span><span class="rv wrn" id="cn95">–</span></div>
           </div>
         </div>
@@ -1508,7 +1526,7 @@
       </div>
       <div class="card" style="margin-bottom:1rem">
         <span class="card-title">BTC-Preis-Heatmap — Liquidationsrisiko pro Kredit</span>
-        <p class="note2" style="margin-bottom:.75rem">Zeigt bei welchem BTC-Preis jeder aktive Kredit die MC1 (73%), MC3 (86%) und Liquidations-Schwelle (95%) erreicht.</p>
+        <p class="note2" style="margin-bottom:.75rem"><span id="heat-desc">Zeigt bei welchem BTC-Preis jeder aktive Kredit die MC1-, MC3- und Liquidations-Schwelle (95%) erreicht.</span></p>
         <div id="ch-heat" style="overflow-x:auto"></div>
       </div>
       <div class="card">
@@ -1603,7 +1621,7 @@
           <div class="ch-wrap" style="height:240px"><canvas id="ch-ltv"></canvas></div>
         </div>
         <div class="card">
-          <span class="card-title">Margin-Call-Distanz (% BTC-Preisfall bis MC1 73%)</span>
+          <span class="card-title" id="ch-mcd-title">Margin-Call-Distanz (% BTC-Preisfall bis MC1)</span>
           <div class="ch-wrap" style="height:220px"><canvas id="ch-mcd"></canvas></div>
         </div>
       </div>
@@ -1689,6 +1707,10 @@
       <div id="sx-content"></div>
     </div>
 
+    <div class="sec" id="s-bk">
+      <div id="bk-content"></div>
+    </div>
+
     <div class="sec" id="s-se">
       <span class="sh">Einstellungen</span>
       <div class="card" style="margin-bottom:1rem">
@@ -1717,6 +1739,7 @@
               <option value="ro">Roll-Overs</option>
               <option value="st">Stress-Test</option>
               <option value="to">Tools</option>
+              <option value="bk">Portfolio</option>
             </select>
           </div>
           <div class="ff">
@@ -1909,7 +1932,7 @@
       </div>
     </div>
 
-    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v130-22032026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.3.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
+    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v140-beta-24072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.4.0-beta</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
     </div><!-- #ffd-root -->
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -1921,6 +1944,16 @@
        Stored as int16/100 array: multiply by 100 to get USD.
        Base date: 2022-01-01 = index 0. Falls back to CoinGecko API if date not covered.
     ───────────────────────────────────────────────────────────────────────────── */
+    function _ffdSetBanner(el,text){
+      el.innerHTML='<span class="alarm-banner-inner" id="_ffd_bi">'+text+'</span>';
+      requestAnimationFrame(function(){
+        var sp=document.getElementById('_ffd_bi');
+        if(sp&&sp.scrollWidth>el.clientWidth*1.05){
+          sp.innerHTML=text+'      '+text;
+          sp.classList.add('marquee');
+        }
+      });
+    }
     var BTC_HIST_BASE='2022-01-01';
     var BTC_HIST_END='2025-12-31';
     var BTC_HIST_PRICES=[0,4769,4686,4602,4519,4436,4353,4270,4187,4204,4222,4239,4257,4274,4292,4310,4222,4134,4046,3958,3870,3782,3694,3704,3715,3726,3737,3748,3759,3769,3863,3956,4049,4142,4235,4328,4421,4393,4365,4336,4308,4280,4252,4223,4167,4112,4056,4000,3944,3888,3832,3844,3855,3866,3877,3889,3900,3911,3901,3891,3881,3871,3861,3851,3841,3846,3851,3857,3862,3867,3872,3877,3921,3965,4009,4053,4097,4141,4185,4260,4334,4409,4483,4557,4632,4706,4698,4690,4682,4674,4665,4657,4649,4587,4526,4464,4403,4341,4279,4218,4194,4171,4148,4125,4102,4079,4056,4044,4031,4019,4007,3994,3982,3970,3940,3910,3881,3851,3821,3792,3762,3732,3702,3672,3643,3613,3583,3553,3461,3369,3277,3184,3092,3000,2908,2913,2918,2923,2929,2934,2939,2944,2978,3011,3045,3079,3112,3146,3179,3152,3125,3098,3071,3044,3018,2991,2936,2881,2826,2771,2716,2661,2606,2528,2450,2372,2294,2216,2138,2060,2068,2077,2085,2094,2102,2110,2119,2099,2079,2059,2039,2019,1999,1978,1999,2019,2039,2060,2080,2100,2120,2152,2183,2214,2245,2277,2308,2339,2308,2277,2245,2214,2183,2151,2120,2155,2190,2224,2259,2294,2329,2364,2365,2367,2369,2370,2372,2374,2375,2385,2394,2403,2412,2422,2431,2440,2399,2359,2318,2277,2236,2196,2155,2133,2112,2091,2069,2048,2026,2005,2003,2000,1998,1996,1993,1991,1989,2024,2060,2095,2130,2166,2201,2237,2195,2153,2111,2069,2026,1984,1942,1942,1943,1943,1943,1943,1943,1943,1945,1947,1949,1951,1953,1955,1957,1955,1953,1951,1949,1947,1945,1943,1945,1947,1948,1950,1952,1954,1956,1973,1991,2009,2026,2044,2062,2079,2075,2071,2066,2062,2058,2054,2049,2058,2067,2076,2085,2093,2102,2111,2049,1987,1925,1862,1800,1738,1676,1668,1661,1653,1645,1637,1630,1622,1625,1629,1632,1636,1639,1643,1646,1656,1666,1676,1687,1697,1707,1717,1717,1717,1718,1718,1719,1719,1719,1710,1701,1692,1682,1673,1664,1655,1659,1663,1667,1671,1675,1679,1683,1679,1674,1669,1664,1660,1655,1663,1671,1678,1686,1694,1702,1710,1718,1773,1829,1884,1940,1995,2051,2107,2134,2162,2189,2216,2244,2271,2299,2312,2324,2337,2350,2362,2375,2388,2374,2361,2348,2334,2321,2308,2294,2278,2262,2246,2229,2213,2197,2180,2221,2261,2302,2342,2382,2423,2463,2442,2421,2400,2378,2357,2336,2315,2305,2294,2284,2274,2264,2253,2243,2271,2299,2327,2356,2384,2412,2440,2487,2534,2582,2629,2676,2723,2771,2774,2778,2782,2786,2790,2794,2797,2805,2812,2819,2826,2833,2840,2847,2864,2880,2896,2913,2929,2946,2962,2974,2985,2997,3009,3021,3032,3044,3005,2965,2926,2886,2847,2807,2768,2790,2812,2835,2857,2879,2902,2924,2927,2931,2934,2938,2941,2945,2949,2911,2873,2835,2797,2759,2721,2683,2684,2685,2685,2686,2687,2688,2688,2700,2711,2722,2734,2745,2756,2767,2761,2754,2748,2741,2735,2728,2722,2711,2701,2690,2680,2669,2658,2648,2674,2699,2725,2751,2777,2802,2828,2860,2891,2922,2954,2985,3016,3048,3054,3060,3066,3072,3078,3084,3090,3081,3073,3064,3055,3046,3037,3029,3022,3016,3009,3003,2996,2990,2983,2975,2966,2957,2949,2940,2932,2923,2923,2923,2923,2923,2923,2923,2923,2929,2936,2942,2948,2954,2961,2967,2963,2959,2955,2951,2947,2943,2939,2891,2843,2795,2747,2699,2652,2604,2604,2604,2604,2604,2604,2605,2605,2603,2601,2600,2598,2596,2595,2593,2596,2599,2603,2606,2609,2612,2615,2621,2627,2633,2639,2645,2651,2657,2652,2647,2642,2637,2632,2627,2622,2633,2644,2656,2667,2678,2690,2701,2715,2728,2742,2755,2769,2783,2796,2804,2812,2820,2828,2836,2844,2852,2924,2995,3067,3138,3210,3282,3353,3367,3381,3395,3409,3423,3437,3451,3459,3466,3474,3481,3489,3496,3504,3542,3581,3619,3658,3696,3735,3773,3768,3764,3759,3754,3749,3745,3740,3745,3749,3754,3759,3764,3768,3773,3829,3884,3940,3996,4051,4107,4163,4161,4159,4156,4154,4152,4150,4148,4159,4171,4182,4193,4204,4215,4227,4246,4266,4286,4306,4326,4345,4365,4345,4326,4306,4286,4266,4246,4227,4254,4281,4308,4335,4362,4389,4416,4393,4369,4346,4323,4300,4276,4253,4210,4167,4124,4080,4037,3994,3951,4008,4065,4122,4178,4235,4292,4349,4335,4322,4308,4294,4280,4267,4253,4333,4413,4493,4574,4654,4734,4814,4866,4919,4971,5024,5076,5129,5181,5255,5330,5404,5478,5552,5627,5701,5778,5854,5931,6008,6085,6161,6238,6367,6496,6625,6754,6883,7012,7142,7087,7031,6976,6921,6866,6811,6756,6730,6704,6678,6652,6625,6599,6573,6653,6732,6812,6892,6971,7051,7130,7146,7162,7177,7193,7209,7224,7240,7118,6995,6873,6751,6628,6506,6384,6398,6413,6427,6442,6456,6471,6486,6469,6453,6436,6420,6403,6387,6370,6326,6282,6238,6195,6151,6107,6063,6073,6082,6091,6101,6110,6120,6129,6210,6292,6373,6454,6535,6616,6697,6716,6735,6754,6772,6791,6810,6829,6818,6808,6797,6787,6777,6766,6756,6783,6809,6836,6863,6890,6916,6943,6884,6825,6765,6706,6647,6587,6528,6470,6412,6354,6296,6238,6180,6122,6154,6187,6220,6252,6285,6317,6350,6257,6164,6072,5979,5886,5793,5701,5713,5725,5737,5749,5761,5772,5784,5927,6070,6212,6355,6497,6640,6782,6769,6755,6742,6729,6715,6702,6689,6607,6525,6443,6361,6279,6197,6115,6109,6103,6097,6091,6085,6079,6073,6051,6029,6007,5984,5962,5940,5918,5990,6063,6136,6208,6281,6354,6426,6351,6275,6199,6124,6048,5973,5897,5869,5840,5812,5784,5756,5727,5699,5719,5739,5759,5779,5799,5819,5839,5909,5980,6050,6120,6190,6261,6331,6366,6401,6435,6470,6505,6540,6574,6530,6485,6441,6396,6351,6307,6262,6311,6360,6409,6457,6506,6555,6604,6653,6702,6751,6800,6848,6897,6946,6988,7029,7070,7111,7153,7194,7235,7292,7350,7407,7465,7522,7580,7637,7817,7998,8178,8358,8538,8719,8899,8923,8948,8973,8997,9022,9046,9071,9180,9290,9400,9510,9620,9729,9839,9811,9784,9756,9728,9700,9673,9645,9691,9736,9782,9828,9874,9920,9966,10039,10113,10186,10260,10333,10407,10480,10346,10211,10077,9943,9809,9674,9540,9512,9484,9456,9427,9399,9371,9343,9413,9482,9456,9696,9817,9822,9835,10225,9693,9507,9254,9472,9461,9454,9454,9654,10050,10001,10409,10454,10132,10220,10616,10369,10391,10486,10474,10264,10209,10135,10372,10473,10242,10065,9769,10134,9779,9660,9657,9651,9645,9647,9744,9577,9788,9661,9751,9757,9613,9578,9564,9665,9831,9616,9656,9626,9151,8869,8421,8472,8438,8607,9427,8621,8727,9061,8993,8653,8622,8069,7858,8292,8366,8110,8398,8434,8258,8402,8272,8684,8421,8407,8384,8608,8749,8740,8691,8723,8441,8265,8237,8255,8516,8253,8316,8387,8355,7839,7916,7631,8261,7961,8341,8529,8373,8459,8365,8403,8494,8448,8507,8518,8752,9344,9370,9398,9468,9463,9374,9500,9427,9418,9650,9689,9589,9432,9475,9683,9704,10327,10298,10480,10412,10280,10412,10351,10377,10348,10311,10651,10559,10682,10964,11170,10731,10776,10902,10946,10894,10779,10560,10398,10460,10564,10585,10581,10470,10152,10431,10556,10574,11027,11027,10866,10570,10608,10542,10559,10674,10456,10489,10467,10328,10211,10099,10538,10608,10735,10695,10704,10730,10836,10717,10569,10884,10960,10799,10821,10921,10827,10891,11125,11599,11754,11742,11909,11985,11776,11868,11920,11794,11785,11730,11739,11997,11876,11831,11763,11792,11940,11805,11795,11784,11577,11331,11255,11421,11506,11414,11500,11748,11668,11647,11929,11869,12015,12332,11831,11736,11741,11741,11620,11288,11428,11248,11693,11543,11348,11012,11177,11126,11257,10836,10882,10823,10924,11122,11172,11071,11065,11019,11115,11207,11152,11396,11549,11604,11593,11532,11536,11680,11643,11709,11565,11570,11524,11267,11200,11331,10902,10966,10965,11218,11436,11405,11858,12057,12222,12239,12348,12473,12136,12331,12167,11288,11067,11499,11518,11303,11077,10821,10644,10719,10866,11054,10834,10759,11008,11101,11165,11455,11411,11291,11003,10832,10960,11010,11059,10658,10150,10390,10133,10333,10231,10472,10601,10305,10166,9973,9455,9559,9426,9220,9296,9154,8661,8513,8472,8683,8830,8737,9050,9133,9090,9080,9037,8631,9129,9344,9208,8933,8921,9041,9064,9269,9200,9251,9027,9025,8816,8643,8785,8623,8551,8813,8836,8864,8855,8747,8766,8725,8736,8785,8790,8722,8847,8761];
@@ -1947,17 +1980,271 @@
     var chD=null,chI=null,dCcy='USD';
     var chLtv=null,chMcd=null,chCol=null,chCcy=null,chBep=null,chInt2=null,chBtcost=null,chCf=null,chDcol=null,chHeat=null,chTerm=null,chZukunft=null,chZinslast=null;
     var lSort={key:'dl',dir:1};
-    var ltvThresh=parseInt(localStorage.getItem('ffd_ltv_thresh'))||80;
+    var ltvThresh=73; /* overwritten from cfg.ltvDisplay once settings load */
     var lFilter='active';
     var lCcyFilter='all';
     var lView='grid';
+    /* ── Notices (storage/data problems the user must know about) ───────────── */
+    var pendingNotices=[];
+    function ffdNotice(msg,kind){
+      var root=document.getElementById('ffd-root');
+      if(!root){pendingNotices.push([msg,kind]);return;}
+      var box=document.getElementById('ffd-notice-box');
+      if(!box){
+        box=document.createElement('div');
+        box.id='ffd-notice-box';
+        box.className='ffd-notices';
+        root.insertBefore(box,root.firstChild);
+      }
+      var n=document.createElement('div');
+      n.className='ffd-notice'+(kind==='warn'?' warn':'');
+      var txt=document.createElement('span');
+      txt.textContent=msg;
+      var cl=document.createElement('button');
+      cl.className='sm';cl.textContent='×';cl.style.marginLeft='auto';
+      cl.onclick=function(){n.remove();};
+      n.appendChild(txt);n.appendChild(cl);
+      box.appendChild(n);
+    }
+    function flushNotices(){
+      if(!pendingNotices.length)return;
+      var p=pendingNotices.slice();pendingNotices=[];
+      p.forEach(function(x){ffdNotice(x[0],x[1]);});
+    }
+    /* Persistence is blocked only for the key whose stored value is unreadable —
+       never for the whole app, or one corrupt ledger would silently discard
+       every later loan and settings change. */
+    var storeBlocked={};
+    var storeWarned={};
+    function backupRaw(key,raw){
+      try{
+        /* One backup per key is enough — re-backing up on every page load would
+           fill the origin quota with copies of the same broken value. */
+        for(var i=0;i<localStorage.length;i++){
+          if(String(localStorage.key(i)).indexOf(key+'_backup_')===0)return true;
+        }
+        localStorage.setItem(key+'_backup_'+new Date().getTime(),raw);
+        return true;
+      }catch(e){return false;}
+    }
+    function storeWrite(key,value,what){
+      if(storeBlocked[key]){
+        if(!storeWarned[key]){
+          storeWarned[key]=true;
+          ffdNotice('Änderungen an "'+what+'" werden nicht gespeichert, solange die vorhandenen Daten unlesbar sind. Bitte über Einstellungen → Zurücksetzen bereinigen oder einen Export einspielen.','warn');
+        }
+        return false;
+      }
+      try{localStorage.setItem(key,value);return true;}
+      catch(e){
+        ffdNotice('Speichern fehlgeschlagen ('+what+'): '+(e&&e.name==='QuotaExceededError'?'Speicher voll':'Browser verweigert das Speichern')+'. Änderungen gehen beim Neuladen verloren — bitte exportieren.','warn');
+        return false;
+      }
+    }
+    /* Let the user break out of a write lock deliberately (reset / import). */
+    function storeUnblock(key){delete storeBlocked[key];delete storeWarned[key];}
+    /* ── CSV parsing ─────────────────────────────────────────────────────────
+       A plain split() breaks on quoted fields: a note containing the delimiter
+       shifts every following column. This walks the line and honours RFC-4180
+       style quoting ("" escapes a quote inside a quoted field). */
+    /* Split a CSV document into records, honouring newlines inside quoted
+       fields — splitting on '\n' first truncated any multi-line note and
+       silently dropped the remainder as a short row. */
+    function splitCsvRecords(text){
+      var out=[],cur='',inQ=false;
+      for(var i=0;i<text.length;i++){
+        var ch=text[i];
+        if(ch==='"'){
+          if(inQ&&text[i+1]==='"'){cur+='""';i++;continue;}
+          inQ=!inQ;cur+=ch;continue;
+        }
+        if(ch==='\n'&&!inQ){out.push(cur);cur='';continue;}
+        cur+=ch;
+      }
+      if(cur.length)out.push(cur);
+      return out;
+    }
+    function splitCsvLine(line,delim){
+      var out=[],cur='',inQ=false;
+      for(var i=0;i<line.length;i++){
+        var ch=line[i];
+        if(inQ){
+          if(ch==='"'){
+            if(line[i+1]==='"'){cur+='"';i++;}
+            else inQ=false;
+          } else cur+=ch;
+        } else {
+          if(ch==='"')inQ=true;
+          else if(ch===delim){out.push(cur);cur='';}
+          else cur+=ch;
+        }
+      }
+      out.push(cur);
+      return out;
+    }
+    /* Locale-tolerant number parsing. The hard part is that a single separator
+       is ambiguous: "10,000" is ten thousand, but "0,234" is a fraction of a
+       bitcoin. A group is only read as a thousands separator when the leading
+       group is 1-3 digits, is not "0", and every following group is exactly 3
+       digits. Pass plainDecimal=true for BTC columns, where a grouping
+       separator never occurs and misreading 0.234 as 234 would be disastrous. */
+    function csvNum(v,plainDecimal){
+      if(v==null)return 0;
+      if(typeof v==='number')return isFinite(v)?v:0;
+      var raw=String(v).trim();
+      if(!raw)return 0;
+      var neg=/^\s*[-\u2212]/.test(raw);
+      var s=raw.replace(/[^0-9.,]/g,'');
+      if(!s)return 0;
+      var lastC=s.lastIndexOf(','),lastD=s.lastIndexOf('.');
+      var dec=null;
+      if(lastC>=0&&lastD>=0){
+        /* Both present: the rightmost one is the decimal mark, the other groups */
+        dec=lastC>lastD?',':'.';
+        s=s.split(dec===','?'.':',').join('');
+      } else if(lastC>=0||lastD>=0){
+        var only=lastC>=0?',':'.';
+        var parts=s.split(only);
+        var grouped=!plainDecimal&&parts.length>1&&
+          /^\d{1,3}$/.test(parts[0])&&parts[0]!=='0'&&
+          parts.slice(1).every(function(x){return /^\d{3}$/.test(x);});
+        if(grouped)s=parts.join('');
+        else dec=only;
+      }
+      if(dec===',')s=s.split(',').join('.');
+      /* Malformed leftovers: keep only the last separator as the decimal mark */
+      var bits=s.split('.');
+      if(bits.length>2)s=bits.slice(0,-1).join('')+'.'+bits[bits.length-1];
+      var n=parseFloat(s);
+      if(!isFinite(n))return 0;
+      return neg?-Math.abs(n):n;
+    }
+    /* ── Record normalisation — never let unvalidated data reach the renderer ── */
+    function nStr(v){return typeof v==='string'?v:(v==null?'':String(v));}
+    function nNum(v,def){var n=typeof v==='number'?v:parseFloat(v);return isFinite(n)?n:(def||0);}
+    /* Normalise a date to YYYY-MM-DD, or null if it is not a real calendar
+       date. Inventing today's date (the previous behaviour) silently moved a
+       loan's whole schedule; a day-first guess like 03/15/2024 even produced
+       the structurally invalid "2024-15-03", which no later load could repair. */
+    function normDate(v){
+      var t=nStr(v).trim();
+      if(!t)return null;
+      var y,mo,da,m;
+      if((m=/^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(t))){y=+m[1];mo=+m[2];da=+m[3];}
+      else if((m=/^(\d{1,2})[.\/](\d{1,2})[.\/](\d{4})$/.exec(t))){da=+m[1];mo=+m[2];y=+m[3];}
+      else return null;
+      if(mo<1||mo>12||da<1||da>31)return null;
+      var dt=new Date(y,mo-1,da);
+      if(dt.getFullYear()!==y||dt.getMonth()!==mo-1||dt.getDate()!==da)return null;
+      return y+'-'+('0'+mo).slice(-2)+'-'+('0'+da).slice(-2);
+    }
+    function normLoan(l){
+      if(!l||typeof l!=='object')return null;
+      var amount=nNum(l.amount,0),term=Math.round(nNum(l.term!=null?l.term:l.termMonths,12));
+      var col=nNum(l.col!=null?l.col:l.collateralBtc,0),rate=nNum(l.rate,0);
+      var start=normDate(nStr(l.start||l.startDate));
+      if(!start)return null;
+      if(!(amount>=0)||!isFinite(amount))amount=0;
+      if(!(term>0)||!isFinite(term))term=12;
+      if(!(col>=0)||!isFinite(col))col=0;
+      if(!(rate>=0)||!isFinite(rate))rate=0;
+      var c=nStr(l.c||l.currency||'EUR');
+      if(ALL_CCYS.indexOf(c)<0)c='EUR';
+      return {
+        id:nStr(l.id)||uid(),
+        name:nStr(l.name)||'Kredit',
+        amount:amount,c:c,rate:rate,term:term,
+        start:start,
+        col:col,
+        status:l.status==='closed'?'closed':'active',
+        btcStart:l.btcStart!=null&&isFinite(nNum(l.btcStart,0))&&nNum(l.btcStart,0)>0?nNum(l.btcStart,0):null,
+        feeBtc:Math.max(0,nNum(l.feeBtc,0)),
+        chainId:l.chainId?nStr(l.chainId):null,
+        note:nStr(l.note)
+      };
+    }
+    /* Effect of one transaction on the BTC balance. For a 'fee' entry the BTC
+       amount already IS the fee, so the separate fee field must not be
+       subtracted a second time. */
+    function txDelta(t){
+      var sign=(t.type==='buy'||t.type==='transfer_in'||t.type==='mining')?1:
+               (t.type==='sell'||t.type==='transfer_out'||t.type==='fee')?-1:0;
+      var extraFee=t.type==='fee'?0:(t.fee||0);
+      return sign*t.btc-extraFee;
+    }
+    var TX_TYPES=['buy','sell','transfer_in','transfer_out','mining','fee'];
+    function normTx(t){
+      if(!t||typeof t!=='object')return null;
+      var btc=nNum(t.btc,0);
+      if(!(btc>0)||!isFinite(btc))return null;
+      var date=nStr(t.date);
+      if(!/^\d{4}-\d{2}-\d{2}/.test(date))return null;
+      return {
+        id:nStr(t.id)||('tx'+new Date().getTime()+Math.random().toString(36).slice(2,6)),
+        date:date,
+        type:TX_TYPES.indexOf(t.type)>=0?t.type:'buy',
+        btc:btc,
+        price:Math.max(0,nNum(t.price,0)),
+        fee:Math.max(0,nNum(t.fee,0)),
+        note:nStr(t.note)
+      };
+    }
     var STORE_KEY='ffd_loans';
-    function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(loans));}catch(e){}}
-    function load(){try{var s=localStorage.getItem(STORE_KEY);if(s){var p=JSON.parse(s);if(Array.isArray(p)){loans=p;return;}}}catch(e){}loans=[];}
-    load();
-    load();
-    var loans=loans;
+    function save(){storeWrite(STORE_KEY,JSON.stringify(loans),'Kredite');}
+    function load(){
+      var s=null;
+      try{s=localStorage.getItem(STORE_KEY);}catch(e){}
+      if(!s){loans=[];return;}
+      var p=null;
+      try{p=JSON.parse(s);}catch(e){p=null;}
+      if(!Array.isArray(p)){
+        /* Unreadable data: preserve it, tell the user, and stop all writes so the
+           next save() cannot destroy a still-recoverable value. */
+        storeBlocked[STORE_KEY]=true;
+        var kept=backupRaw(STORE_KEY,s);
+        ffdNotice('Die gespeicherten Kreditdaten konnten nicht gelesen werden. '+(kept?'Eine Sicherungskopie liegt im Browser-Speicher (ffd_loans_backup_…). ':'')+'Es wird nichts überschrieben — bitte Daten aus einem Export wiederherstellen.','warn');
+        loans=[];
+        return;
+      }
+      loans=p.map(normLoan).filter(Boolean);
+      if(loans.length<p.length){
+        /* Records we cannot interpret are kept out of the UI, but the stored
+           value must survive so the user can export or repair it. */
+        var lost=p.length-loans.length;
+        storeBlocked[STORE_KEY]=true;
+        backupRaw(STORE_KEY,s);
+        ffdNotice(lost+' gespeicherte(r) Kredit(e) konnten nicht gelesen werden (z. B. ungültiges Startdatum). Sie werden nicht angezeigt, und es wird vorerst nichts überschrieben — eine Sicherungskopie liegt im Browser-Speicher.','warn');
+      }
+    }
+    var TX_KEY='ffd_txs';
+    var txs=[];
+    function saveTxs(){storeWrite(TX_KEY,JSON.stringify(txs),'Transaktionen');}
+    function loadTxs(){
+      var s=null;
+      try{s=localStorage.getItem(TX_KEY);}catch(e){}
+      if(!s){txs=[];return;}
+      var p=null;
+      try{p=JSON.parse(s);}catch(e){p=null;}
+      if(!Array.isArray(p)){
+        storeBlocked[TX_KEY]=true;
+        var kept=backupRaw(TX_KEY,s);
+        ffdNotice('Die gespeicherten Transaktionen konnten nicht gelesen werden. '+(kept?'Eine Sicherungskopie liegt im Browser-Speicher (ffd_txs_backup_…). ':'')+'Es wird nichts überschrieben.','warn');
+        txs=[];
+        return;
+      }
+      txs=p.map(normTx).filter(Boolean);
+      if(txs.length<p.length){
+        var lostTx=p.length-txs.length;
+        storeBlocked[TX_KEY]=true;
+        backupRaw(TX_KEY,s);
+        ffdNotice(lostTx+' gespeicherte Transaktion(en) konnten nicht gelesen werden. Sie werden nicht angezeigt, und der Verlauf wird vorerst nicht überschrieben.','warn');
+      }
+    }
     var ALL_CCYS=['EUR','CHF','USD','USDT','USDC','CZK','PLN','BTC','SAT'];
+    function uid(){return'FF-'+Math.random().toString(36).slice(2,7).toUpperCase();}
+    load();
+    loadTxs();
+    var loans=loans;
     var SETTINGS_KEY='ffd_settings';
     function loadSettings(){
       try{
@@ -1978,30 +2265,109 @@
               hideAmounts: p.hideAmounts||false,
               hideBreakEven: p.hideBreakEven||false,
               navOrder: p.navOrder||null,
-              darkMode: p.darkMode||false
+              darkMode: p.darkMode||false,
+              btcReserve: p.btcReserve!=null?p.btcReserve:0,
+              btcReserveManual: p.btcReserveManual||false
             };
           }
         }
       }catch(e){}
-      return{ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false};
+      return{ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false,btcReserve:0,btcReserveManual:false};
     }
-    function saveSettings(cfg){try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(cfg));}catch(e){}}
+    function saveSettings(cfg){storeWrite(SETTINGS_KEY,JSON.stringify(cfg),'Einstellungen');}
     var cfg=loadSettings();
     function visC(c){return cfg.ccys.indexOf(c)>=0;}
     /* Apply cfg defaults */
-    ltvThresh=cfg.ltvDisplay||73;
+    ltvThresh=cfg.ltvDisplay!=null?cfg.ltvDisplay:73;
     lView=cfg.defaultView||'grid';
 
     function g(id){return document.getElementById(id);}
+    /* Resolve a loan from a handler argument. Handlers used to carry only the
+       array index, which goes stale as soon as an import or delete reorders
+       `loans` — the price suggestion then wrote to the wrong loan. */
+    function lRef(i,id){
+      if(id){
+        var m=loans.filter(function(x){return x.id===id;});
+        if(m.length===1)return m[0];
+      }
+      return loans[i]||null;
+    }
+    /* Show an "empty" note for a chart WITHOUT removing its <canvas> — wiping
+       the parent's innerHTML used to delete the canvas permanently. */
+    function emptyChart(canvas,msg){
+      if(!canvas)return;
+      canvas.style.display='none';
+      var note=canvas.parentElement&&canvas.parentElement.querySelector('.chart-empty');
+      if(!note){
+        note=document.createElement('p');
+        note.className='note2 chart-empty';
+        note.style.cssText='text-align:center;padding:2rem';
+        if(canvas.parentElement)canvas.parentElement.appendChild(note);
+      }
+      note.textContent=msg;
+      note.style.display='block';
+    }
+    function chartReady(canvas){
+      if(!canvas)return;
+      canvas.style.display='';
+      var note=canvas.parentElement&&canvas.parentElement.querySelector('.chart-empty');
+      if(note)note.style.display='none';
+    }
+    /* HTML-escape — every user-controlled string must pass through this before
+       being concatenated into innerHTML. */
+    function esc(v){
+      return String(v==null?'':v)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+    /* Escape for use inside a single-quoted JS string in an inline handler
+       (which itself sits inside a double-quoted HTML attribute). The value is
+       first escaped for JavaScript, then HTML-escaped: the parser decodes the
+       entities back to exactly the JS-escaped text, so an entity that was
+       already in the data (e.g. &#39;) can no longer turn into a real quote. */
+    function escJs(v){
+      var js=String(v==null?'':v)
+        .replace(/\\/g,'\\\\')
+        .replace(/'/g,"\\'")
+        .replace(/[\r\n\u2028\u2029]/g,'');
+      return esc(js);
+    }
     function toU(a,c){return a*(R[c]||1);}
     function frU(u,c){return c==='BTC'?u/R.BTC:c==='SAT'?(u/R.BTC)*1e8:u/(R[c]||1);}
     function intU(l){return toU(l.amount*(l.rate/100)*(l.term/12),l.c);}
     function feeU(l){return (l.feeBtc||0)*R.BTC;}
     function dueU(l){return toU(l.amount,l.c)+intU(l)+feeU(l);}
-    function aM(ds,m){var d=new Date(ds);d.setMonth(d.getMonth()+m);return d;}
-    function dL(ds,m){return Math.ceil((aM(ds,m)-new Date())/864e5);}
+    /* Debt basis for every LTV/margin-call calculation: principal + interest,
+       fees excluded (see changelog v1.3.0). */
+    function ltvU(l){return toU(l.amount,l.c)+intU(l);}
+    function ltvPct(l){return l.col>0?(ltvU(l)/(l.col*R.BTC))*100:null;}
+    /* Configured thresholds as fractions */
+    function tW(){return (cfg.ltvWarn!=null?cfg.ltvWarn:73)/100;}
+    function tC(){return (cfg.ltvCrit!=null?cfg.ltvCrit:79)/100;}
+    function tD(){return (cfg.ltvDanger!=null?cfg.ltvDanger:86)/100;}
+    /* Parse a date-only string as LOCAL midnight — new Date('YYYY-MM-DD') is
+       parsed as UTC and shifts the day for users west of UTC. */
+    function pD(ds){
+      if(ds instanceof Date)return new Date(ds.getTime());
+      var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(ds==null?'':ds));
+      if(m)return new Date(+m[1],+m[2]-1,+m[3]);
+      var d=new Date(ds);
+      return isNaN(d.getTime())?new Date(NaN):d;
+    }
+    /* Add months, clamping to the last day of the target month —
+       31.08. + 6 months is the end of February, not the 3rd of March. */
+    function aM(ds,m){
+      var d=pD(ds);
+      if(isNaN(d.getTime()))return new Date(NaN);
+      var day=d.getDate();
+      var t=new Date(d.getFullYear(),d.getMonth()+m,1);
+      var dim=new Date(t.getFullYear(),t.getMonth()+1,0).getDate();
+      t.setDate(day<dim?day:dim);
+      return t;
+    }
+    function dL(ds,m){var e=aM(ds,m);if(isNaN(e.getTime()))return 0;var n=new Date();return Math.ceil((e-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);}
     /* Auto-close loans whose end date has passed */
-    function syncStatus(){loans.forEach(function(l){if(l.status==='active'&&dL(l.start,l.term)<=0)l.status='closed';});}
+    function syncStatus(){loans.forEach(function(l){if(l.status==='active'&&dL(l.start,l.term)<0)l.status='closed';});}
     window.goRo=function(){
       /* Try visible nav-item first (desktop sidebar), then mobile tab bar */
       var all=document.querySelectorAll('#ffd-root .nav-item, #ffd-root .tab');
@@ -2013,14 +2379,13 @@
         }
       }
     };
-    function uid(){return'FF-'+Math.random().toString(36).slice(2,7).toUpperCase();}
-    function lc(v){return v<73?'#16a34a':v<79?'#d97706':v<86?'#ea580c':'#dc2626';}
+    function lc(v){return v<(cfg.ltvWarn!=null?cfg.ltvWarn:73)?'#16a34a':v<(cfg.ltvCrit!=null?cfg.ltvCrit:79)?'#d97706':v<(cfg.ltvDanger!=null?cfg.ltvDanger:86)?'#ea580c':'#dc2626';}
     function fmt(a,c){
       if(c==='BTC')return a.toFixed(8)+' BTC';
       if(c==='SAT')return a.toLocaleString('de-CH',{maximumFractionDigits:0})+' sats';
       if(c==='CZK')return 'Kč '+a.toLocaleString('de-CH',{maximumFractionDigits:0});
       if(c==='PLN')return 'zł '+a.toLocaleString('de-CH',{maximumFractionDigits:0});
-      var s={EUR:'€',CHF:'Fr.',USD:'$',USDC:'USDC ',USDT:'USDT '}[c]||c+' ';
+      var s={EUR:'€',CHF:'Fr.',USD:'$',USDC:'USDC ',USDT:'USDT '}[c]||esc(c)+' ';
       return s+a.toLocaleString('de-CH',{minimumFractionDigits:0,maximumFractionDigits:0});
     }
     function fax(v,c){
@@ -2032,33 +2397,67 @@
       return s+v.toLocaleString('de-CH',{maximumFractionDigits:0});
     }
     function pills(){
+      /* Never rewrite the field the user is currently typing into — doing so
+         resets the caret and makes the rate pills untypeable. */
+      var af=document.activeElement;
       var pbtc=g('p-btc');
-      console.log('[pills] R.BTC =', R.BTC, '| liveBtc =', liveBtc, '| p-btc element =', pbtc, '| all p-btc =', document.querySelectorAll('#p-btc').length);
-      if(pbtc) pbtc.value=Math.round(R.BTC);
-      g('p-eur').value=R.EUR.toFixed(4);
-      g('p-chf').value=R.CHF.toFixed(4);
+      if(pbtc&&pbtc!==af) pbtc.value=Math.round(R.BTC);
+      var peur=g('p-eur');if(peur&&peur!==af)peur.value=R.EUR.toFixed(4);
+      var pchf=g('p-chf');if(pchf&&pchf!==af)pchf.value=R.CHF.toFixed(4);
       /* BTC price in visible fiat currencies — editable */
       var FIATS=['EUR','CHF','CZK','PLN'];
       var labels={EUR:'€',CHF:'Fr.',USD:'$',CZK:'Kč',PLN:'zł'};
       var el=g('pills-btc-fiats');
       if(!el)return;
+      /* If one of these inputs has focus, update the others in place instead of
+         rebuilding the markup (which would drop focus mid-edit). */
+      if(el.contains(af)){
+        el.querySelectorAll('input[data-ccy]').forEach(function(inp){
+          if(inp!==af)inp.value=Math.round(frU(R.BTC,inp.dataset.ccy));
+        });
+        return;
+      }
       el.innerHTML=FIATS.filter(visC).map(function(c){
         var price=Math.round(frU(R.BTC,c));
-        return '<span class="pill">BTC/'+labels[c]+'<input type="number" data-ccy="'+c+'" title="BTC/'+c+' bearbeiten" oninput="d.rateFiat(this)" step="1" value="'+price+'" style="width:80px"></span>';
+        return '<span class="pill">BTC/'+labels[c]+'<input type="number" data-ccy="'+c+'" title="BTC/'+c+' bearbeiten" oninput="d.rateFiat(this)" onblur="d.rateBlur()" step="1" value="'+price+'" style="width:80px"></span>';
       }).join('');
     }
     function ccyG(ccys,usd){
       return '<div class="ccyg">'+ccys.filter(visC).map(function(c){return '<div class="ccyc"><span class="ccy-lbl">'+c+'</span><span class="ccy-val">'+fmt(frU(usd,c),c)+'</span></div>';}).join('')+'</div>';
     }
 
+    /* Re-render the tab that is currently open. Called after a rate change. */
+    function renderActiveTab(){
+      var at=document.querySelector('#ffd-root .tab.on, #ffd-root .nav-item.on');
+      if(!at)return;
+      var m=(at.getAttribute('onclick')||'').match(/'([^']+)'/);
+      if(!m)return;
+      var fn={ov:d.ov,lo:d.loans,st:d.stress,tl:d.tl,ca:d.cal,ch:d.ch,sx:d.sx,ro:d.ro,bk:d.bk,
+        to:function(){d.vorFillAll();d.nachPopulate();d.nlpPopulate();d.se2Populate();d.gvlPopulate();}};
+      if(fn[m[1]])fn[m[1]]();
+    }
+    /* Rate inputs fire on every keystroke; defer the expensive re-render so a
+       half-typed price (8 → 85 → 850 …) cannot flash a false liquidation alarm. */
+    var _rateT=null;
+    var manualRateAt=0;
+    function rateRerender(){
+      if(_rateT)clearTimeout(_rateT);
+      _rateT=setTimeout(function(){
+        _rateT=null;
+        pills();d.checkAlarms();d.updateHdrStats();renderActiveTab();
+      },400);
+    }
     window.d={
       rate:function(){
         var b=parseFloat(g('p-btc').value),e=parseFloat(g('p-eur').value),c=parseFloat(g('p-chf').value);
         if(b>0){R.BTC=b;R.SAT=b/1e8;}if(e>0)R.EUR=e;if(c>0)R.CHF=c;
-        pills();d.checkAlarms();
-        var at=document.querySelector('#ffd-root .tab.on');
-        if(at){var t=at.getAttribute('onclick').match(/'([^']+)'/)[1];if(t==='ov')d.ov();if(t==='st')d.stress();if(t==='tl')d.tl();if(t==='lo')d.loans();}
+        manualRateAt=new Date().getTime();
+        rateRerender();
       },
+      /* Leaving a rate field re-syncs it with the value actually in use —
+         otherwise a field cleared with Ctrl+A/Delete stayed blank for the rest
+         of the session while every calculation still used the old rate. */
+      rateBlur:function(){setTimeout(function(){pills();},0);},
       rateFiat:function(input){
         var c=input.dataset.ccy;
         var v=parseFloat(input.value);
@@ -2066,19 +2465,21 @@
         /* Convert fiat BTC price back to USD */
         R.BTC=toU(v,c);
         R.SAT=R.BTC/1e8;
-        g('p-btc').value=Math.round(R.BTC);
+        manualRateAt=new Date().getTime();
+        var pb=g('p-btc');if(pb&&pb!==document.activeElement)pb.value=Math.round(R.BTC);
         /* Update other fiat inputs without re-rendering whole pills */
         document.querySelectorAll('#pills-btc-fiats input[data-ccy]').forEach(function(inp){
           if(inp.dataset.ccy!==c)inp.value=Math.round(frU(R.BTC,inp.dataset.ccy));
         });
-        d.checkAlarms();
-        var at=document.querySelector('#ffd-root .tab.on');
-        if(at){var t=at.getAttribute('onclick').match(/'([^']+)'/)[1];if(t==='ov')d.ov();if(t==='st')d.stress();if(t==='tl')d.tl();if(t==='lo')d.loans();}
+        rateRerender();
       },
       live:function(){if(liveBtc){R.BTC=liveBtc;R.SAT=liveBtc/1e8;pills();d.ov();}},
       updateHdrStats:function(){
         var act=loans.filter(function(l){return l.status==='active';});
         var dash='–';
+        /* Clear every tooltip first — each is only refilled when its stat has a
+           value, so a stale one would otherwise keep showing old figures. */
+        ['hdr-bep-tooltip','hdr-col-tooltip','hdr-due-tooltip','hdr-mc1-tooltip','hdr-next-due-tooltip'].forEach(function(id){var t=g(id);if(t)t.innerHTML='';});
         /* Active count */
         var acEl=g('hdr-act-count');
         if(acEl)acEl.textContent=act.length+'';
@@ -2093,7 +2494,7 @@
             var ndAmt=toU(nd.amount,nd.c)+intU(nd);
             var ndAmtStr=fmt(frU(ndAmt,'USD'),'USD');
             ndEl.innerHTML='<span style="color:'+col+'">'+days+'d</span>'+
-              ' <span style="font-weight:400;font-size:11px;color:var(--text3)">'+nd.name+'</span>';
+              ' <span style="font-weight:400;font-size:11px;color:var(--text3)">'+esc(nd.name)+'</span>';
             var ndTtEl=g('hdr-next-due-tooltip');
             if(ndTtEl)ndTtEl.innerHTML='<span style="color:'+col+'">Fälliger Betrag: '+ndAmtStr+'</span>';
           } else { ndEl.textContent=dash; }
@@ -2162,11 +2563,11 @@
             var col=nearest.dist<0?'var(--err)':nearest.dist<5?'var(--err)':nearest.dist<15?'var(--warn)':'var(--ok)';
             mc1El.innerHTML=
               '<span style="color:'+col+'">'+nearest.dist.toFixed(1)+'%</span>'+
-              ' <span style="font-weight:400;font-size:11px;color:var(--text3)">'+nearest.lbl+' ($'+Math.round(nearest.price).toLocaleString('de-CH')+') '+nearest.name+'</span>';
+              ' <span style="font-weight:400;font-size:11px;color:var(--text3)">'+nearest.lbl+' ($'+Math.round(nearest.price).toLocaleString('de-CH')+') '+esc(nearest.name)+'</span>';
             if(mc1tEl){
               mc1tEl.innerHTML=loanItems.slice().sort(function(a,b){return a.dist-b.dist;}).map(function(x){
                 var c=x.dist<0?'var(--err)':x.dist<5?'var(--err)':x.dist<15?'var(--warn)':'var(--ok)';
-                return '<b>'+x.name+'</b> → '+x.lbl+' <span style="color:'+c+'">'+x.dist.toFixed(1)+'%</span> ($'+Math.round(x.price).toLocaleString('de-CH')+')';
+                return '<b>'+esc(x.name)+'</b> → '+x.lbl+' <span style="color:'+c+'">'+x.dist.toFixed(1)+'%</span> ($'+Math.round(x.price).toLocaleString('de-CH')+')';
               }).join('<br>');
             }
           } else { mc1El.textContent=dash; }
@@ -2198,7 +2599,7 @@
                 var d=((R.BTC-x.bep)/R.BTC*100);
                 var c=d>=0?'var(--ok)':'var(--err)';
                 var badge=x.status==='active'?'<span style="color:var(--ok);font-size:10px">&#9679;</span> ':'<span style="color:var(--text4);font-size:10px">&#9675;</span> ';
-                return badge+'<b>'+x.name+'</b> <span style="color:'+c+'">'+(d>=0?'+':'')+d.toFixed(1)+'%</span> ($'+Math.round(x.bep).toLocaleString('de-CH')+')';
+                return badge+'<b>'+esc(x.name)+'</b> <span style="color:'+c+'">'+(d>=0?'+':'')+d.toFixed(1)+'%</span> ($'+Math.round(x.bep).toLocaleString('de-CH')+')';
               }).join('<br>');
             }
           } else { bepEl.textContent=dash; }
@@ -2217,11 +2618,11 @@
         }
         var sec=g('s-'+t);
         sec.classList.add('on');
-        sec.style.display=(t==='to')?'flex':'grid';
+        sec.style.display=(t==='to')?'flex':(t==='bk'?'block':'grid');
         /* write hash without triggering scroll */
         try{history.replaceState(null,'','#'+t);}catch(e){location.hash=t;}
         syncStatus();d.checkAlarms();d.updateHdrStats();
-        var fn={ov:d.ov,lo:d.loans,st:d.stress,ca:d.cal,tl:d.tl,ch:d.ch,sx:d.sx,se:d.se,ro:d.ro,to:d.vorInit,wae:function(){d.nachPopulate();d.nlpPopulate();d.se2Populate();d.gvlPopulate();d.nlpPopulate();},zukunft:function(){var el=g('zk-btc');if(el&&!el.value&&R.BTC)el.value=Math.round(R.BTC);d.zukunft();}};if(fn[t])fn[t]();
+        var fn={ov:d.ov,lo:d.loans,st:d.stress,ca:d.cal,tl:d.tl,ch:d.ch,sx:d.sx,se:d.se,ro:d.ro,to:d.vorInit,bk:d.bk,wae:function(){d.nachPopulate();d.nlpPopulate();d.se2Populate();d.gvlPopulate();d.nlpPopulate();},zukunft:function(){var el=g('zk-btc');if(el&&!el.value&&R.BTC)el.value=Math.round(R.BTC);d.zukunft();}};if(fn[t])fn[t]();
       },
       toolTab:function(t,el){
         document.querySelectorAll('#ffd-root .filter-tabs .filter-tab').forEach(function(b){b.classList.remove('on');});
@@ -2242,7 +2643,7 @@
         var colVal=aC*R.BTC;
         var aDue=act.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
         var portLtv=colVal>0?(aDue/colVal*100):0;
-        var portLtvColor=portLtv>=95?'#dc2626':portLtv>=79?'#ea580c':portLtv>=73?'#d97706':'#16a34a';
+        var portLtvColor=portLtv>=95?'#dc2626':lc(portLtv);
         /* Next due loan */
         var nextDue=act.length?act.slice().sort(function(a,b){return dL(a.start,a.term)-dL(b.start,b.term);})[0]:null;
         /* MC price */
@@ -2297,10 +2698,10 @@
           var ccyDue=ccyLoans.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
           var ccyCol=ccyLoans.reduce(function(s,l){return s+l.col;},0)*R.BTC;
           var ltv=ccyCol>0?(ccyDue/ccyCol*100):0;
-          var col=ltv>=95?'var(--err)':ltv>=79?'#ea580c':ltv>=73?'var(--warn)':'var(--ok)';
+          var col=ltv>=95?'var(--err)':ltv>=(cfg.ltvCrit||79)?'#ea580c':ltv>=(cfg.ltvWarn||73)?'var(--warn)':'var(--ok)';
           return '<b>'+c+'</b> <span style="color:'+col+'">'+ltv.toFixed(1)+'%</span>';
         }).filter(Boolean);
-        var ltvSub=empty?'&nbsp;':(portLtv<73?'✓ Sicher':portLtv<79?'⚠ Beobachten':portLtv<86?'⚠ MC2':portLtv<95?'⚠ MC3':'⚠ Kritisch');
+        var ltvSub=empty?'&nbsp;':(portLtv<(cfg.ltvWarn||73)?'✓ Sicher':portLtv<(cfg.ltvCrit||79)?'⚠ Beobachten':portLtv<(cfg.ltvDanger||86)?'⚠ MC2':portLtv<95?'⚠ MC3':'⚠ Kritisch');
         if(ccyLtvParts.length>1)ltvSub+=' &middot; '+ccyLtvParts.join(' &middot; ');
         function grpCard(title,tiles,cols){
           return '<div class="card" style="padding:.75rem;display:flex;flex-direction:column">'+
@@ -2326,7 +2727,7 @@
           (nearestLiq?
             '<div class="mc" style="margin:0"><span class="mc-lbl">Nächster Liq.-Preis</span>'+
             '<span class="mc-val"><span style="color:'+(nearestLiq.dist<0?'#dc2626':nearestLiq.dist<5?'#dc2626':nearestLiq.dist<15?'#d97706':'inherit')+'">$'+Math.round(nearestLiq.price).toLocaleString('de-CH')+'</span></span>'+
-            '<span class="mc-sub">'+nearestLiq.dist.toFixed(1)+'% Abstand · '+nearestLiq.name+'</span>'+
+            '<span class="mc-sub">'+nearestLiq.dist.toFixed(1)+'% Abstand · '+esc(nearestLiq.name)+'</span>'+
             '</div>'
           :'');
         var grpKosten=
@@ -2339,7 +2740,7 @@
           var dl=dL(l.start,l.term);
           var col=dl<=7?'var(--err)':dl<=14?'var(--warn)':'var(--text)';
           return '<div class="mc" style="margin:0">'+
-            '<span class="mc-lbl">'+l.name+'</span>'+
+            '<span class="mc-lbl">'+esc(l.name)+'</span>'+
             '<span class="mc-val" style="color:'+col+'">'+dl+' Tage</span>'+
             '<span class="mc-sub">F\u00e4llig: '+fmt(frU(dueU(l),l.c),l.c)+'</span>'+
             '<span class="mc-sub">'+aM(l.start,l.term).toLocaleDateString('de-CH',{day:'2-digit',month:'short',year:'numeric'})+'</span>'+
@@ -2370,9 +2771,9 @@
           '</div>';
         }).join('');
         var dueTilesHtml=
-          '<div class="card" style="padding:.75rem;display:flex;flex-direction:column;grid-column:span 2">'+
+          '<div class="card ov-due-card" style="padding:.75rem;display:flex;flex-direction:column">'+
             '<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);padding-bottom:.4rem;border-bottom:1px solid var(--border);margin-bottom:.6rem">Kommende Fälligkeiten — Kumulierte Schulden</div>'+
-            '<div style="display:grid;grid-template-columns:repeat(8,1fr);gap:8px">'+grpDue+'</div>'+
+            '<div class="due-windows-grid">'+grpDue+'</div>'+
           '</div>';
         g('metrics').innerHTML=
           '<div class="ov-grp-grid">'+
@@ -2387,18 +2788,18 @@
           '<p class="note2" style="margin-bottom:.5rem">Aktive Schulden:</p>'+ccyG(CC,aDue)+
           '<p class="note2" style="margin:.75rem 0 .5rem">Gesamtschulden:</p>'+ccyG(CC,tU);
         var inp=g('ltv-thresh-input');if(inp&&inp.value==='')inp.value=ltvThresh;
-        var filtered_ltv=act.filter(function(l){if(!l.col)return false;var due=dueU(l);return(due/(l.col*R.BTC))*100>=ltvThresh;});
+        var filtered_ltv=act.filter(function(l){if(!l.col)return false;return ltvPct(l)>=ltvThresh;});
         g('ov-ltv').innerHTML=filtered_ltv.length?filtered_ltv.map(function(l){
-          var cU=l.col*R.BTC,lU=toU(l.amount,l.c),due3=dueU(l),ltv=(due3/cU)*100,w=Math.min(ltv,100),dl=dL(l.start,l.term);
+          var cU=l.col*R.BTC,lU=toU(l.amount,l.c),due3=ltvU(l),ltv=(due3/cU)*100,w=Math.min(ltv,100),dl=dL(l.start,l.term);
           var interest=l.amount*(l.rate/100)*(l.term/12);
           var end=aM(l.start,l.term).toLocaleDateString('de-CH');
-          var started=new Date(l.start),now2=new Date(),totalMs=aM(l.start,l.term)-started;
+          var started=pD(l.start),now2=new Date(),totalMs=aM(l.start,l.term)-started;
           var pct=totalMs>0?Math.min(100,Math.max(0,((now2-started)/totalMs*100))).toFixed(1):100;
-          var mc1P=due3/(0.73*l.col);
+          var mc1P=due3/(tW()*l.col);
           var beDist=l.col>0?((R.BTC-mc1P)/R.BTC*100).toFixed(1):null;
-          var beHtml=l.col>0?'<div style="font-size:11px;color:var(--text4);margin-top:.4rem">MC1 bei $'+Math.round(mc1P).toLocaleString('de-CH')+' ('+(beDist>0?'−'+beDist:'⚠ überschritten')+'% vom aktuellen Preis)</div>':'';
+          var beHtml=l.col>0?'<div style="font-size:11px;color:var(--text4);margin-top:.4rem">MC1 bei $'+Math.round(mc1P).toLocaleString('de-CH')+' ('+(beDist>0?'−'+beDist+'% vom aktuellen Preis':'⚠ überschritten')+')</div>':'';
           return '<div class="card">'+
-            '<div class="lh"><span class="lid">'+l.name+' <span class="lid-sub">'+l.id+'</span></span><div class="fx" style="gap:4px"><span class="badge ba">Aktiv</span>'+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+' </div></div>'+
+            '<div class="lh"><span class="lid">'+esc(l.name)+' <span class="lid-sub">'+esc(l.id)+'</span></span><div class="fx" style="gap:4px"><span class="badge ba">Aktiv</span>'+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+' </div></div>'+
             /* ② Kernzahlen 3-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr 1fr">'+
               '<div><span class="ll">Betrag</span><span class="lv">'+fmt(l.amount,l.c)+'</span></div>'+
@@ -2407,14 +2808,14 @@
             '</div>'+
             /* ③ Zeitinfo 2-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
-              '<div><span class="ll">Start</span><span class="lv">'+new Date(l.start).toLocaleDateString('de-CH')+'</span></div>'+
+              '<div><span class="ll">Start</span><span class="lv">'+pD(l.start).toLocaleDateString('de-CH')+'</span></div>'+
               '<div><span class="ll">F\u00e4llig</span><span class="lv">'+end+'</span></div>'+
               '<div><span class="ll">Laufzeit</span><span class="lv">'+l.term+' Monate</span></div>'+
             '</div>'+
             /* ④ Collateral & Risiko 2-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
               '<div><span class="ll">Collateral</span><span class="lv">'+l.col.toFixed(8)+' BTC</span></div>'+
-              (l.status==='active'&&l.col>0?(function(){var due=dueU(l);var liqUSD=due/(0.95*l.col);var near=R.BTC<liqUSD*1.1;return '<div><span class="ll">Liquidationspreis</span><span class="lv" style="color:'+(R.BTC<=liqUSD?'#dc2626':near?'#d97706':'#16a34a')+'">'+fmt(frU(liqUSD,l.c),l.c)+''+(R.BTC<=liqUSD?' ⚠ Liquidiert':near?' ⚠ Nahe':'')+'</span></div>';})():'')+
+              (l.status==='active'&&l.col>0?(function(){var due=ltvU(l);var liqUSD=due/(0.95*l.col);var near=R.BTC<liqUSD*1.1;return '<div><span class="ll">Liquidationspreis</span><span class="lv" style="color:'+(R.BTC<=liqUSD?'#dc2626':near?'#d97706':'#16a34a')+'">'+fmt(frU(liqUSD,l.c),l.c)+''+(R.BTC<=liqUSD?' ⚠ Liquidiert':near?' ⚠ Nahe':'')+'</span></div>';})():'')+
               '<div><span class="ll">Geb\u00fchr</span><span class="lv">'+(l.feeBtc?l.feeBtc+' BTC (\u2248 $'+feeU(l).toLocaleString('de-CH',{maximumFractionDigits:0})+')':'–')+'</span></div>'+
             '</div>'+
             /* ⑤ Fortschrittsbalken */
@@ -2441,7 +2842,7 @@
             '<p class="note" style="margin:.5rem 0">'+['EUR','CHF','USD','USDT','BTC'].filter(function(c){return c!==l.c&&visC(c);}).map(function(c){return '<b>'+c+'</b> '+fmt(frU(lU,c),c);}).join(' \u00b7 ')+'</p>'+
             /* ⑧ Break-even */
             beHtml+
-            (l.note?'<div style="margin-top:.6rem;padding:.45rem .65rem;border-radius:8px;background:var(--bg2);border:1px solid var(--border);font-size:12px;color:var(--text3)"><span style="font-weight:600;color:var(--text2)">&#128172; </span>'+l.note.replace(/</g,'&lt;')+'</div>':'')+
+            (l.note?'<div style="margin-top:.6rem;padding:.45rem .65rem;border-radius:8px;background:var(--bg2);border:1px solid var(--border);font-size:12px;color:var(--text3)"><span style="font-weight:600;color:var(--text2)">&#128172; </span>'+esc(l.note)+'</div>':'')+
             '</div>';
         }).join(''):'<p class="note2">Keine Kredite über dem LTV-Schwellenwert.</p>';
         d.renderNextAction();
@@ -2472,16 +2873,16 @@
             var dl=dL(l.start,l.term),end=aM(l.start,l.term).toLocaleDateString('de-CH');
             var lU=toU(l.amount,l.c);
             var interest=l.amount*(l.rate/100)*(l.term/12);
-            var ltv=l.col>0?(dueU(l)/(l.col*R.BTC))*100:null;
+            var ltv=ltvPct(l);
             var liqUSDval=0,liqCcyStr='–',liqUSDstr='–';
             var interestStr=fmt(interest,l.c);
             var feeStr=l.feeBtc>0?l.feeBtc+' BTC':'–';
             var dueAmount=l.amount+interest+(l.feeBtc||0)*(R.BTC/(R[l.c]||1));
             var dueStr=fmt(dueAmount,l.c);
-            if(l.status==='active'&&l.col>0){var due=dueU(l);liqUSDval=due/(0.95*l.col);var near=R.BTC<liqUSDval*1.1;var col='color:'+(R.BTC<=liqUSDval?'#dc2626':near?'#d97706':'#16a34a');liqCcyStr='<span style="'+col+'">'+fmt(frU(liqUSDval,l.c),l.c)+'</span>';liqUSDstr='<span style="'+col+'">$'+liqUSDval.toLocaleString('de-CH',{maximumFractionDigits:0})+'</span>';}
+            if(l.status==='active'&&l.col>0){var due=ltvU(l);liqUSDval=due/(0.95*l.col);var near=R.BTC<liqUSDval*1.1;var col='color:'+(R.BTC<=liqUSDval?'#dc2626':near?'#d97706':'#16a34a');liqCcyStr='<span style="'+col+'">'+fmt(frU(liqUSDval,l.c),l.c)+'</span>';liqUSDstr='<span style="'+col+'">$'+liqUSDval.toLocaleString('de-CH',{maximumFractionDigits:0})+'</span>';}
             var dlStr=l.status==='active'?(dl>0?'<span style="color:'+(dl<30?'#dc2626':dl<60?'#d97706':'var(--text2)')+'">'+dl+' Tage</span>':'<span style="color:#dc2626">F&#228;llig!</span>'):'<span style="color:#9ca3af">&#10003;</span>';
             return '<tr>'+
-              '<td><div class="tbl-name">'+l.name+(l.chainId?' <span class="badge" title="Roll-Over" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer;font-size:11px;padding:1px 4px;vertical-align:middle" onclick="goRo()">🔗</span>':'')+'</div><div class="tbl-id">'+l.id+'</div></td>'+
+              '<td><div class="tbl-name">'+esc(l.name)+(l.chainId?' <span class="badge" title="Roll-Over" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer;font-size:11px;padding:1px 4px;vertical-align:middle" onclick="goRo()">🔗</span>':'')+'</div><div class="tbl-id">'+esc(l.id)+'</div></td>'+
               '<td><span class="badge '+(l.status==='active'?'ba':'bc')+'">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span></td>'+
               '<td class="amt">'+fmt(l.amount,l.c)+'</td>'+
               '<td>'+l.rate+'%</td>'+
@@ -2495,9 +2896,9 @@
               '<td class="amt">'+liqCcyStr+'</td>'+
               '<td class="amt">'+liqUSDstr+'</td>'+
               '<td><div class="tbl-actions">'+
-                '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openEdit('+i+')">&#9998;</button>'+
-                '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+')" title="Duplizieren">&#10064;</button>'+
-                '<button class="del" onclick="d.openDel('+i+')">&#10005;</button>'+
+                '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openEdit('+i+',\''+escJs(l.id)+'\')">&#9998;</button>'+
+                '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+',\''+escJs(l.id)+'\')" title="Duplizieren">&#10064;</button>'+
+                '<button class="del" onclick="d.openDel('+i+',\''+escJs(l.id)+'\')">&#10005;</button>'+
               '</div></td>'+
             '</tr>';
           }).join('')+
@@ -2547,12 +2948,12 @@
           else if(lSort.key==='rate')v=a.rate-b.rate;
           else if(lSort.key==='term')v=a.term-b.term;
           else if(lSort.key==='dl')v=dL(a.start,a.term)-dL(b.start,b.term);
-          else if(lSort.key==='ltv'){var la=a.col>0?(dueU(a)/(a.col*R.BTC)):0,lb2=b.col>0?(dueU(b)/(b.col*R.BTC)):0;v=la-lb2;}
+          else if(lSort.key==='ltv'){var la=a.col>0?(ltvU(a)/(a.col*R.BTC)):0,lb2=b.col>0?(ltvU(b)/(b.col*R.BTC)):0;v=la-lb2;}
           else if(lSort.key==='status')v=a.status.localeCompare(b.status);
           else if(lSort.key==='interest')v=intU(a)-intU(b);
           else if(lSort.key==='due')v=dueU(a)-dueU(b);
           else if(lSort.key==='col')v=a.col-b.col;
-          else if(lSort.key==='liq'){var la2=a.col>0?dueU(a)/(0.95*a.col):0,lb3=b.col>0?dueU(b)/(0.95*b.col):0;v=la2-lb3;}
+          else if(lSort.key==='liq'){var la2=a.col>0?ltvU(a)/(0.95*a.col):0,lb3=b.col>0?ltvU(b)/(0.95*b.col):0;v=la2-lb3;}
           else if(lSort.key==='fee')v=feeU(a)-feeU(b);
           return v*lSort.dir;
         });
@@ -2562,7 +2963,7 @@
         el.innerHTML=sorted.map(function(l){
           var i=l._i;
           var dl=dL(l.start,l.term),end=aM(l.start,l.term).toLocaleDateString('de-CH');
-          var pct=l.status==='closed'?100:Math.min(100,Math.round((new Date()-new Date(l.start))/(864e5*l.term*30)*100));
+          var pct=l.status==='closed'?100:(function(){var st=pD(l.start),en=aM(l.start,l.term),tot=en-st;return tot>0?Math.min(100,Math.max(0,Math.round((new Date()-st)/tot*100))):100;})();
           var interest=l.amount*(l.rate/100)*(l.term/12),lU=toU(l.amount,l.c);
           /* Break-even */
           var btcAtStart=l.btcStart||null;
@@ -2581,23 +2982,23 @@
             '</div>';
           } else {
             var bsWid='bsw-'+l.id;
-            beHtml='<div id="'+bsWid+'" style="margin-top:.6rem;padding:.5rem .65rem;border-radius:8px;background:var(--bg2);border:1px solid var(--border)">'+
+            beHtml='<div id="'+esc(bsWid)+'" style="margin-top:.6rem;padding:.5rem .65rem;border-radius:8px;background:var(--bg2);border:1px solid var(--border)">'+
               '<div style="display:flex;align-items:center;gap:8px;flex-wrap: wrap;">'+
                 '<span style="font-size:14px">📊</span>'+
                 '<span style="font-size:11px;color:var(--text3)">Kein BTC-Startpreis hinterlegt</span>'+
-                '<button onclick="d.loadHistBtc('+i+',\''+l.id+'\',\''+l.start+'\')" style="font-size:11px;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:4px;cursor:pointer;padding:1px 7px">Historischen Preis laden</button>'+
+                '<button onclick="d.loadHistBtc('+i+',\''+escJs(l.id)+'\',\''+escJs(l.start)+'\',this)" style="font-size:11px;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:4px;cursor:pointer;padding:1px 7px">Historischen Preis laden</button>'+
               '</div>'+
-              '<div id="'+bsWid+'-suggest" style="display:none;margin-top:.5rem"></div>'+
+              '<div id="'+esc(bsWid)+'-suggest" style="display:none;margin-top:.5rem"></div>'+
             '</div>';
             setTimeout(function(li,ls,wid){return function(){d.loadHistBtc_auto(li,ls,wid);};}(i,l.start,bsWid),0);
           }
           return '<div class="card">'+
             /* ① Kopfzeile */
-            '<div class="lh"><span class="lid">'+l.name+' <span class="lid-sub">'+l.id+'</span></span>'+
+            '<div class="lh"><span class="lid">'+esc(l.name)+' <span class="lid-sub">'+esc(l.id)+'</span></span>'+
             '<div class="fx"><span class="badge '+(l.status==='active'?'ba':'bc')+'">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span>'+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+
-            '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openEdit('+i+')">&#9998;</button>'+
-            '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+')" title="Duplizieren">&#10064;</button>'+
-            '<button class="del" onclick="d.openDel('+i+')">&#10005;</button></div></div>'+
+            '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openEdit('+i+',\''+escJs(l.id)+'\')">&#9998;</button>'+
+            '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+',\''+escJs(l.id)+'\')" title="Duplizieren">&#10064;</button>'+
+            '<button class="del" onclick="d.openDel('+i+',\''+escJs(l.id)+'\')">&#10005;</button></div></div>'+
             /* ② Kernzahlen 3-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr 1fr">'+
               '<div><span class="ll">Betrag</span><span class="lv">'+fmt(l.amount,l.c)+'</span></div>'+
@@ -2606,14 +3007,14 @@
             '</div>'+
             /* ③ Zeitinfo 2-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
-              '<div><span class="ll">Start</span><span class="lv">'+new Date(l.start).toLocaleDateString('de-CH')+'</span></div>'+
+              '<div><span class="ll">Start</span><span class="lv">'+pD(l.start).toLocaleDateString('de-CH')+'</span></div>'+
               '<div><span class="ll">Fällig</span><span class="lv">'+end+'</span></div>'+
               '<div><span class="ll">Laufzeit</span><span class="lv">'+l.term+' Monate</span></div>'+
             '</div>'+
             /* ④ Collateral & Risiko 2-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
               '<div><span class="ll">Collateral</span><span class="lv">'+l.col.toFixed(8)+' BTC</span></div>'+
-              (l.status==='active'&&l.col>0?(function(){var due=dueU(l);var liqUSD=due/(0.95*l.col);var near=R.BTC<liqUSD*1.1;return '<div><span class="ll">Liquidationspreis</span><span class="lv" style="color:'+(R.BTC<=liqUSD?'#dc2626':near?'#d97706':'#16a34a')+'">'+fmt(frU(liqUSD,l.c),l.c)+''+(R.BTC<=liqUSD?' ⚠ Liquidiert':near?' ⚠ Nahe':'')+'</span></div>';})():'')+
+              (l.status==='active'&&l.col>0?(function(){var due=ltvU(l);var liqUSD=due/(0.95*l.col);var near=R.BTC<liqUSD*1.1;return '<div><span class="ll">Liquidationspreis</span><span class="lv" style="color:'+(R.BTC<=liqUSD?'#dc2626':near?'#d97706':'#16a34a')+'">'+fmt(frU(liqUSD,l.c),l.c)+''+(R.BTC<=liqUSD?' ⚠ Liquidiert':near?' ⚠ Nahe':'')+'</span></div>';})():'')+
               '<div><span class="ll">Gebühr</span><span class="lv">'+(l.feeBtc?l.feeBtc+' BTC (≈ $'+feeU(l).toLocaleString('de-CH',{maximumFractionDigits:0})+')':'–')+'</span></div>'+
             '</div>'+
             /* ⑤ Fortschrittsbalken */
@@ -2640,7 +3041,7 @@
             '<p class="note" style="margin:.5rem 0">'+['EUR','CHF','USD','USDT','BTC'].filter(function(c){return c!==l.c&&visC(c);}).map(function(c){return '<b>'+c+'</b> '+fmt(frU(lU,c),c);}).join(' · ')+'</p>'+
             /* ⑧ Break-even */
             beHtml+
-            (l.note?'<div style="margin-top:.6rem;padding:.45rem .65rem;border-radius:8px;background:var(--bg2);border:1px solid var(--border);font-size:12px;color:var(--text3)"><span style="font-weight:600;color:var(--text2)">&#128172; </span>'+l.note.replace(/</g,'&lt;')+'</div>':'')+
+            (l.note?'<div style="margin-top:.6rem;padding:.45rem .65rem;border-radius:8px;background:var(--bg2);border:1px solid var(--border);font-size:12px;color:var(--text3)"><span style="font-weight:600;color:var(--text2)">&#128172; </span>'+esc(l.note)+'</div>':'')+
             '</div>';
         }).join('');
       },
@@ -2711,7 +3112,7 @@
         var descs={
           loans:'Alle '+loans.length+' hinterlegten Kredite werden unwiderruflich gel\u00f6scht. Einstellungen bleiben erhalten.',
           settings:'Alle Einstellungen (W\u00e4hrungen, LTV-Schwellen, Darstellung) werden auf die Standardwerte zur\u00fcckgesetzt. Kredite bleiben erhalten.',
-          all:'Alle '+loans.length+' Kredite werden gel\u00f6scht und alle Einstellungen auf die Standardwerte zur\u00fcckgesetzt.'
+          all:'Alle '+loans.length+' Kredite'+(txs.length?' und '+txs.length+' Transaktion(en)':'')+' werden gel\u00f6scht und alle Einstellungen auf die Standardwerte zur\u00fcckgesetzt.'
         };
         g('reset-modal-title').textContent=titles[mode]||'Zur\u00fccksetzen';
         g('reset-modal-desc').textContent=descs[mode]||'';
@@ -2721,10 +3122,17 @@
       closeReset:function(){g('reset-modal-bg').classList.remove('open');},
       confirmReset:function(){
         var mode=g('reset-modal-bg').dataset.mode;
-        var defaultCfg={ccys:['EUR','CHF','USD','USDT','USDC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,navOrder:null};
+        var defaultCfg={ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false,btcReserve:0,btcReserveManual:false};
         if(mode==='loans'||mode==='all'){
+          /* An explicit reset is the user's way out of a write lock */
+          storeUnblock(STORE_KEY);
           loans.length=0;
           save();
+        }
+        if(mode==='all'){
+          storeUnblock(TX_KEY);
+          txs.length=0;
+          saveTxs();
         }
         if(mode==='settings'||mode==='all'){
           Object.assign(cfg,defaultCfg);
@@ -2745,22 +3153,27 @@
         d.closeReset();
         syncStatus();d.loans();d.ov();d.checkAlarms();d.extPopulate();d.vorInit();d.plInit();
       },
-      openDel:function(i){
-        var l=loans[i];
+      openDel:function(i,id){
+        var l=lRef(i,id);
+        if(!l)return;
         g('del-modal-name').textContent=l.name+' ('+fmt(l.amount,l.c)+', '+l.rate+'% p.a.)';
         g('del-modal-bg').dataset.idx=i;
+        g('del-modal-bg').dataset.lid=l.id||'';
         g('del-modal-bg').classList.add('open');
       },
       closeDel:function(){g('del-modal-bg').classList.remove('open');},
       confirmDel:function(){
-        var i=parseInt(g('del-modal-bg').dataset.idx);
+        var l=lRef(parseInt(g('del-modal-bg').dataset.idx),g('del-modal-bg').dataset.lid);
+        var i=loans.indexOf(l);
+        if(i<0){d.closeDel();return;}
         loans.splice(i,1);
         save();
         d.closeDel();
         d.loans();d.ov();d.extPopulate();d.checkAlarms();
       },
-      openEdit:function(i){
-        var l=loans[i];
+      openEdit:function(i,id){
+        var l=lRef(i,id);
+        if(!l)return;
         g('ef-n').value=l.name;
         g('ef-id').value=l.id||'';
         g('ef-a').value=l.amount;
@@ -2780,19 +3193,31 @@
         /* populate chain dropdown */
         d.populateChainSelect('ef-chain',i,l.chainId);
         g('edit-modal-bg').dataset.idx=i;
+        g('edit-modal-bg').dataset.lid=l.id||'';
         g('edit-modal-bg').classList.add('open');
       },
       closeEdit:function(){g('edit-modal-bg').classList.remove('open');},
       saveEdit:function(){
-        var i=parseInt(g('edit-modal-bg').dataset.idx);
+        var i=loans.indexOf(lRef(parseInt(g('edit-modal-bg').dataset.idx),g('edit-modal-bg').dataset.lid));
+        if(i<0){d.closeEdit();return;}
         var l=loans[i];
-        var newId=(g('ef-id').value||'').trim();if(newId&&newId!==l.id){l.id=newId;}
+        var newId=(g('ef-id').value||'').trim();
+        if(newId&&newId!==l.id){
+          /* Reject a duplicate id — the id-based handlers rely on uniqueness */
+          if(loans.some(function(x){return x!==l&&x.id===newId;})){alert('Diese ID ist bereits vergeben.');return;}
+          l.id=newId;
+        }
+        /* 0 is a legitimate value for amount, rate and collateral, so these
+           cannot use `||` — a released collateral could never be set to 0. */
+        var num=function(id,fallback){var v=parseFloat(g(id).value);return isFinite(v)&&v>=0?v:fallback;};
         l.name=g('ef-n').value||l.name;
-        l.amount=parseFloat(g('ef-a').value)||l.amount;
-        l.rate=parseFloat(g('ef-r').value)||l.rate;
-        l.feeBtc=parseFloat(g('ef-fee').value)||0;
-        l.col=parseFloat(g('ef-b').value)||l.col;
-        l.start=g('ef-d').value||l.start;
+        l.amount=num('ef-a',l.amount);
+        l.rate=num('ef-r',l.rate);
+        l.feeBtc=num('ef-fee',0);
+        l.col=num('ef-b',l.col);
+        var newStart=normDate(g('ef-d').value);
+        if(g('ef-d').value&&!newStart){alert('Bitte ein gültiges Startdatum eingeben.');return;}
+        l.start=newStart||l.start;
         l.term=parseInt(g('ef-t').value)||l.term;
         l.status=g('ef-s').value;
         l.c=g('ef-c').value;
@@ -2803,23 +3228,31 @@
           var newChainId=uid();
           l.chainId=newChainId;
         } else if(chainSel){
-          /* adopt the chainId of the selected predecessor */
+          /* Adopt the predecessor's chain — if it has none yet, create one and
+             tag the predecessor too, otherwise the "chain" would contain only
+             this loan and the selection would not survive a re-open. */
           var pred=loans.find(function(x){return x.id===chainSel;});
-          l.chainId=pred&&pred.chainId?pred.chainId:chainSel;
+          if(pred&&pred.chainId){l.chainId=pred.chainId;}
+          else if(pred){var cid=uid();pred.chainId=cid;l.chainId=cid;}
+          else {l.chainId=chainSel;}
         } else {
           delete l.chainId;
         }
         syncStatus();save();d.closeEdit();d.loans();d.ov();d.extPopulate();d.checkAlarms();
       },
       /* ─── Duplicate loan ─── */
-      dupLoan:function(i){
-        var src=loans[i];
+      dupLoan:function(i,id){
+        var src=lRef(i,id);
+        if(!src)return;
         var copy=Object.assign({},src,{
           id:uid(),
           name:src.name+' (Kopie)',
-          status:'active'
+          status:'active',
+          /* A copy is a draft, not a member of the original's roll-over chain */
+          chainId:null
         });
         loans.push(copy);
+        syncStatus();
         save();d.loans();d.ov();d.extPopulate();
         /* Flash the new card briefly */
         setTimeout(function(){
@@ -2844,7 +3277,7 @@
           return '<div class="'+chipCls+'">'+
             '<span class="cd-days" style="color:'+color+'">'+dl+'<span style="font-size:10px;font-weight:500;margin-left:2px">Tage</span></span>'+
             '<div class="cd-info">'+
-              '<span class="cd-name" style="color:'+color+'">'+l.name+'</span>'+
+              '<span class="cd-name" style="color:'+color+'">'+esc(l.name)+'</span>'+
               '<span class="cd-meta">'+fmt(l.amount,l.c)+' · '+aM(l.start,l.term).toLocaleDateString('de-CH')+'</span>'+
             '</div>'+
           '</div>';
@@ -2858,8 +3291,9 @@
           var lU=toU(l.amount,l.c);
           var interest=l.amount*(l.rate/100)*(l.term/12);var feeBtcAmt=l.feeBtc||0;
           var due=dueU(l);
-          var liqP=l.col>0?due/(0.95*l.col):null;
-          var ltv=l.col>0?(due/(l.col*R.BTC)*100):null;
+          var ltvBase=ltvU(l);
+          var liqP=l.col>0?ltvBase/(0.95*l.col):null;
+          var ltv=ltvPct(l);
           var endDate=aM(l.start,l.term).toLocaleDateString('de-CH');
           function q(v){v=String(v===null||v===undefined?'':v);return '"'+v.replace(/"/g,'""')+'"';}
           return [
@@ -2894,9 +3328,12 @@
             countdownDays:cfg.countdownDays!=null?cfg.countdownDays:30,
             hideAmounts:cfg.hideAmounts||false,
             hideBreakEven:cfg.hideBreakEven||false,
-            darkMode:document.getElementById('ffd-root').classList.contains('dark')
+            darkMode:document.getElementById('ffd-root').classList.contains('dark'),
+            btcReserve:cfg.btcReserve||0,
+            btcReserveManual:cfg.btcReserveManual||false
           },
-          loans:loans.map(function(l){return{id:l.id,name:l.name,amount:l.amount,currency:l.c,rate:l.rate,termMonths:l.term,startDate:l.start,collateralBtc:l.col,status:l.status,btcStart:l.btcStart||null,feeBtc:l.feeBtc||0,chainId:l.chainId||null,note:l.note||''};})
+          loans:loans.map(function(l){return{id:l.id,name:l.name,amount:l.amount,currency:l.c,rate:l.rate,termMonths:l.term,startDate:l.start,collateralBtc:l.col,status:l.status,btcStart:l.btcStart||null,feeBtc:l.feeBtc||0,chainId:l.chainId||null,note:l.note||''};}),
+          transactions:txs
         };
         var blob=new Blob([JSON.stringify(exportData,null,2)],{type:'application/json'});
         var url=URL.createObjectURL(blob);
@@ -2938,67 +3375,89 @@
           var msg=g('import-msg');
           try{
             var text=e.target.result.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
-            var lines=text.trim().split('\n');
+            var lines=splitCsvRecords(text.trim());
             if(lines.length<2)throw new Error('CSV ist leer oder hat keine Daten');
             /* Parse header */
-            var hdr=lines[0].split(',').map(function(h){return h.trim().toLowerCase();});
-            var col=function(name){var i=hdr.indexOf(name);return i;};
-            var iId=col('loan id');
-            var iStart=col('start date (dd.mm.yyyy)');
-            var iMaturity=col('maturity date (dd.mm.yyyy)');
-            var iRate=col('interest rate (% p.a.)');
-            var iCcy=col('currency');
-            var iAmount=col('loan amount');
+            /* Delimiter detection — Firefish exports use ',', this app's own
+               export uses ';'. Pick whichever appears more often in the header. */
+            var delim=(lines[0].split(';').length>lines[0].split(',').length)?';':',';
+            var hdr=splitCsvLine(lines[0],delim).map(function(h){return h.trim().toLowerCase();});
+            /* Accept both the Firefish column names and this app's own export */
+            var col=function(){
+              for(var a=0;a<arguments.length;a++){
+                var i=hdr.indexOf(arguments[a]);
+                if(i>=0)return i;
+              }
+              return -1;
+            };
+            var iId=col('loan id','id');
+            var iStart=col('start date (dd.mm.yyyy)','startdatum');
+            var iMaturity=col('maturity date (dd.mm.yyyy)','fälligkeitsdatum','falligkeitsdatum');
+            var iRate=col('interest rate (% p.a.)','zinssatz %');
+            var iCcy=col('currency','währung','wahrung');
+            var iAmount=col('loan amount','betrag');
             var iStatus=col('status');
             var iOrigFee=col('origination fee (sat)');
-            var iCol=col('collateral sum (btc)');
-            var iNote=col('note');
-            if(iId<0||iStart<0||iAmount<0)throw new Error('CSV-Format nicht erkannt. Bitte Firefish-Export verwenden.');
-            /* Helper: parse dd.m.yyyy or dd.mm.yyyy → yyyy-mm-dd */
+            var iFeeBtc=col('gebühr btc','gebuhr btc');
+            var iTerm=col('laufzeit mo');
+            var iCol=col('collateral sum (btc)','collateral btc');
+            var iNote=col('note','notiz');
+            var iName=col('bezeichnung');
+            var iChain=col('roll-over kette');
+            var iBtcStart=col('btc startpreis');
+            if(iId<0||iStart<0||iAmount<0)throw new Error('CSV-Format nicht erkannt. Bitte Firefish-Export oder einen Export dieses Dashboards verwenden.');
+            /* Helper: parse dd.m.yyyy, dd.mm.yyyy or yyyy-mm-dd → yyyy-mm-dd */
             function parseDate(s){
               if(!s||!s.trim())return null;
-              var parts=s.trim().split('.');
+              s=s.trim();
+              if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s;
+              var parts=s.split('.');
               if(parts.length!==3)return null;
               var d=parts[0].padStart(2,'0'),m=parts[1].padStart(2,'0'),y=parts[2];
+              if(!/^\d{4}$/.test(y))return null;
               return y+'-'+m+'-'+d;
             }
             /* Helper: calculate termMonths from start + maturity */
             function calcTerm(startStr,endStr){
-              var s=new Date(startStr),e=new Date(endStr);
+              var s=pD(startStr),e=pD(endStr);
               if(isNaN(s)||isNaN(e))return 12;
               var months=(e.getFullYear()-s.getFullYear())*12+(e.getMonth()-s.getMonth());
               return Math.max(1,Math.round(months));
             }
             /* Helper: sat → BTC */
             function satToBtc(satStr){
-              var v=parseInt(satStr)||0;
-              return v/1e8;
+              return csvNum(satStr)/1e8;
             }
             var imported=0,skipped=0,invalid=0;
             if(strat==='replace')loans.length=0;
             var existingIds=loans.map(function(l){return l.id;});
             for(var i=1;i<lines.length;i++){
-              var row=lines[i].split(',');
-              if(row.length<5)continue;
+              if(!lines[i].trim())continue;
+              var row=splitCsvLine(lines[i],delim);
+              if(row.length<5){invalid++;continue;}
               var id=(row[iId]||'').trim();
               var startRaw=iStart>=0?(row[iStart]||'').trim():'';
               var maturityRaw=iMaturity>=0?(row[iMaturity]||'').trim():'';
               var startDate=parseDate(startRaw);
               var maturityDate=parseDate(maturityRaw);
-              var amount=parseFloat(row[iAmount])||0;
+              var ccyPre=(iCcy>=0?(row[iCcy]||'').trim():'EUR')||'EUR';
+              var amount=csvNum(row[iAmount],ccyPre==='BTC'||ccyPre==='SAT');
               if(!id||!startDate||!amount){invalid++;continue;}
               if(strat==='skip'&&existingIds.indexOf(id)>=0){skipped++;continue;}
-              var ccy=(iCcy>=0?(row[iCcy]||'').trim():'EUR')||'EUR';
-              var rate=parseFloat(iRate>=0?row[iRate]:0)||0;
-              var term=calcTerm(startDate,maturityDate);
+              var ccy=ccyPre;
+              var rate=iRate>=0?csvNum(row[iRate],true):0;
+              /* Prefer an explicit term column, else derive it from the dates */
+              var term=iTerm>=0&&csvNum(row[iTerm])>0?Math.round(csvNum(row[iTerm])):calcTerm(startDate,maturityDate);
               var statusRaw=iStatus>=0?(row[iStatus]||'').trim().toUpperCase():'ACTIVE';
-              var status=statusRaw==='CLOSED'?'closed':'active';
-              var origFeeBtc=iOrigFee>=0?satToBtc(row[iOrigFee]):0;
-              var colBtc=parseFloat(iCol>=0?row[iCol]:0)||0;
+              /* Anything that is not explicitly running counts as closed —
+                 REPAID/FINISHED used to be imported as active loans. */
+              var status=(statusRaw==='ACTIVE'||statusRaw==='OPEN'||statusRaw==='RUNNING'||statusRaw==='')?'active':'closed';
+              var feeBtcVal=iFeeBtc>=0?csvNum(row[iFeeBtc],true):(iOrigFee>=0?satToBtc(row[iOrigFee]):0);
+              var colBtc=iCol>=0?csvNum(row[iCol],true):0;
               var note=iNote>=0?(row[iNote]||'').trim():'';
-              /* Loan name: currency + formatted amount */
-              var name=ccy+' '+parseFloat(amount).toLocaleString('de-CH',{maximumFractionDigits:0});
-              loans.push({
+              /* Loan name: use the exported one, else currency + amount */
+              var name=(iName>=0?(row[iName]||'').trim():'')||(ccy+' '+amount.toLocaleString('de-CH',{maximumFractionDigits:0}));
+              var rec=normLoan({
                 id:id,
                 name:name,
                 amount:amount,
@@ -3008,10 +3467,16 @@
                 start:startDate,
                 col:colBtc,
                 status:status,
-                btcStart:null,
-                feeBtc:origFeeBtc,
+                btcStart:iBtcStart>=0?csvNum(row[iBtcStart])||null:null,
+                feeBtc:feeBtcVal,
+                chainId:iChain>=0?((row[iChain]||'').trim()||null):null,
                 note:note
               });
+              if(!rec){invalid++;continue;}
+              /* Never create duplicate ids on merge */
+              if(existingIds.indexOf(rec.id)>=0)rec.id=uid();
+              existingIds.push(rec.id);
+              loans.push(rec);
               imported++;
             }
             var stratLabel={'merge':'zusammengef\u00fchrt','skip':'importiert ('+skipped+' Duplikat(e) \u00fcbersprungen)','replace':'ersetzt'}[strat];
@@ -3047,47 +3512,78 @@
               loans.length=0;
             }
             var existingIds=loans.map(function(l){return l.id;});
+            var rejected=0;
             loanArr.forEach(function(l){
-              if(!l.name||!l.amount||(!(l.startDate)&&!(l.start)))return;
-              var newId=l.id||uid();
-              if(strat==='skip'&&existingIds.indexOf(newId)>=0){skipped++;return;}
-              loans.push({
-                id:newId,
-                name:l.name,amount:parseFloat(l.amount)||0,
-                c:l.currency||l.c||'EUR',
-                rate:parseFloat(l.rate)||0,
-                term:parseInt(l.termMonths||l.term)||12,
-                start:l.startDate||l.start,
-                col:parseFloat(l.collateralBtc||l.col)||0,
-                status:l.status||'active',
-                btcStart:l.btcStart||null,
-                feeBtc:parseFloat(l.feeBtc)||0,
-                chainId:l.chainId||undefined,
-                note:l.note||''
-              });
+              if(!l||typeof l!=='object'||(!(l.startDate)&&!(l.start))){rejected++;return;}
+              /* Coerce and validate every field — unvalidated records break the
+                 renderer permanently once they are persisted. */
+              var rec=normLoan(l);
+              if(!rec){rejected++;return;}
+              if(strat==='skip'&&existingIds.indexOf(rec.id)>=0){skipped++;return;}
+              /* Merge must not create duplicate ids — id-keyed lookups (chains,
+                 delete, price suggestion) would resolve ambiguously. */
+              if(existingIds.indexOf(rec.id)>=0)rec.id=uid();
+              existingIds.push(rec.id);
+              loans.push(rec);
               imported++;
             });
             var settingsNote='';
-            if(importedSettings&&Array.isArray(importedSettings.preferredCurrencies)&&importedSettings.preferredCurrencies.length){
-              cfg.ccys=importedSettings.preferredCurrencies;
-              if(importedSettings.defaultTab)cfg.defaultTab=importedSettings.defaultTab;
-              if(importedSettings.defaultView)cfg.defaultView=importedSettings.defaultView;
-              if(importedSettings.defaultCcy)cfg.defaultCcy=importedSettings.defaultCcy;
-              if(importedSettings.ltvWarn!=null)cfg.ltvWarn=importedSettings.ltvWarn;
-              if(importedSettings.ltvCrit!=null)cfg.ltvCrit=importedSettings.ltvCrit;
-              if(importedSettings.ltvDanger!=null)cfg.ltvDanger=importedSettings.ltvDanger;
-              if(importedSettings.ltvDisplay!=null){cfg.ltvDisplay=importedSettings.ltvDisplay;ltvThresh=cfg.ltvDisplay;}
-              if(importedSettings.countdownDays!=null)cfg.countdownDays=importedSettings.countdownDays;
-              if(importedSettings.hideAmounts!=null)cfg.hideAmounts=importedSettings.hideAmounts;
-              if(importedSettings.hideBreakEven!=null)cfg.hideBreakEven=importedSettings.hideBreakEven;
-              if(importedSettings.darkMode!=null){var r=document.getElementById('ffd-root');if(importedSettings.darkMode){r.classList.add('dark');localStorage.setItem('ffd_dark','1');}else{r.classList.remove('dark');localStorage.setItem('ffd_dark','');}var db=g('dark-btn');if(db)db.textContent=importedSettings.darkMode?'☀':'☾';}
+            if(importedSettings&&typeof importedSettings==='object'){
+              if(Array.isArray(importedSettings.preferredCurrencies)){
+                var ccys=importedSettings.preferredCurrencies.filter(function(c){return ALL_CCYS.indexOf(c)>=0;});
+                if(ccys.length)cfg.ccys=ccys;
+              }
+              var numSet=function(key,min,max){
+                var v=nNum(importedSettings[key],NaN);
+                if(isFinite(v)&&v>=min&&v<=max)cfg[key]=v;
+              };
+              if(importedSettings.defaultTab)cfg.defaultTab=nStr(importedSettings.defaultTab);
+              if(importedSettings.defaultView==='grid'||importedSettings.defaultView==='list')cfg.defaultView=importedSettings.defaultView;
+              if(ALL_CCYS.indexOf(importedSettings.defaultCcy)>=0)cfg.defaultCcy=importedSettings.defaultCcy;
+              numSet('ltvWarn',1,94);numSet('ltvCrit',1,94);numSet('ltvDanger',1,94);
+              /* Unordered thresholds make the alarm buckets unsatisfiable, so a
+                 loan in the danger zone would raise no banner at all. */
+              if(!(cfg.ltvWarn<cfg.ltvCrit&&cfg.ltvCrit<cfg.ltvDanger)){
+                cfg.ltvWarn=73;cfg.ltvCrit=79;cfg.ltvDanger=86;
+                settingsNote+=' · LTV-Schwellen waren ungültig und wurden auf die Standardwerte gesetzt.';
+              }
+              if(importedSettings.ltvDisplay!=null){numSet('ltvDisplay',0,100);ltvThresh=cfg.ltvDisplay;}
+              numSet('countdownDays',1,3650);numSet('btcReserve',-1e9,1e9);
+              if(importedSettings.btcReserveManual!=null)cfg.btcReserveManual=!!importedSettings.btcReserveManual;
+              if(importedSettings.hideAmounts!=null)cfg.hideAmounts=!!importedSettings.hideAmounts;
+              if(importedSettings.hideBreakEven!=null)cfg.hideBreakEven=!!importedSettings.hideBreakEven;
+              if(importedSettings.darkMode!=null){cfg.darkMode=!!importedSettings.darkMode;var r=document.getElementById('ffd-root');if(cfg.darkMode){r.classList.add('dark');localStorage.setItem('ffd_dark','1');}else{r.classList.remove('dark');localStorage.setItem('ffd_dark','');}var db=g('dark-btn');if(db)db.textContent=cfg.darkMode?'☀':'☾';}
               saveSettings(cfg);
               lView=cfg.defaultView||'grid';
               d.renderCsw();
-              settingsNote=' · Einstellungen importiert.';
+              settingsNote=' · Einstellungen importiert.'+settingsNote;
+            }
+            /* Transactions are independent of the settings block and follow the
+               chosen merge strategy, like loans do. */
+            if(strat==='replace'&&!(parsed&&Array.isArray(parsed.transactions))&&txs.length){txs.length=0;saveTxs();d.bkRecalcReserve();}
+            var txNote='';
+            if(parsed&&Array.isArray(parsed.transactions)){
+              var incoming=parsed.transactions.map(normTx).filter(Boolean);
+              var txBefore=txs.length;
+              var txAdded=0;
+              if(strat==='replace'){txs=incoming;txAdded=incoming.length;}
+              else{
+                var txIds=txs.map(function(t){return t.id;});
+                incoming.forEach(function(t){
+                  if(txIds.indexOf(t.id)>=0){if(strat==='skip')return;t.id=t.id+'-'+uid();}
+                  txIds.push(t.id);txs.push(t);txAdded++;
+                });
+              }
+              txs.sort(function(a,b){return pD(a.date)-pD(b.date);});
+              saveTxs();
+              d.bkRecalcReserve();
+              if(g('bk-content')&&g('bk-content').innerHTML)d.bk();
+              txNote=' · '+txAdded+' Transaktion(en)'+(incoming.length!==parsed.transactions.length?' ('+(parsed.transactions.length-incoming.length)+' ungültig)':'')+'.';
             }
             var stratLabel={'merge':'zusammengeführt','skip':'importiert ('+skipped+' Duplikat(e) übersprungen)','replace':'ersetzt'}[strat];
-            syncStatus();save();d.loans();d.extPopulate();d.checkAlarms();
+            if(rejected)settingsNote+=' · '+rejected+' ungültige(r) Datensatz/Datensätze übersprungen.';
+            settingsNote+=txNote;
+            syncStatus();save();d.loans();d.extPopulate();d.checkAlarms();d.ov();d.updateHdrStats();
             msg.style.display='block';
             msg.style.background='var(--ok-bg)';msg.style.color='var(--ok)';msg.style.border='1px solid var(--ok-border)';
             msg.textContent='✓ '+imported+' Kredit(e) '+stratLabel+'.'+settingsNote;
@@ -3104,19 +3600,30 @@
       ltv:function(){
         var l=parseFloat(g('tl').value),col=parseFloat(g('tc2').value),c=g('tc').value;
         if(!l||!col){g('ltv-r').style.display='none';return;}
-        var lU=toU(l,c),cU=col*R.BTC,ltv=(lU/cU)*100;
-function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g('bet')?g('bet').value:12)||12;var intU=toU(parseFloat(g('tl').value)||0,g('tc').value)*(r/100)*(tm/12);return((lU+intU)/(t/100))/col;}
+        /* Rate and term come from this card's own fields — they used to be read
+           from the break-even calculator next to it, so editing that card moved
+           these margin-call prices for no visible reason. */
+        var lRate=parseFloat(g('tlr')?g('tlr').value:0)||0;
+        var lTerm=parseInt(g('tlt')?g('tlt').value:0)||12;
+        var lU=toU(l,c),cU=col*R.BTC;
+        var intUv=lU*(lRate/100)*(lTerm/12);
+        /* LTV includes interest, like every other LTV in the app */
+        var ltv=((lU+intUv)/cU)*100;
+        function mc(t){return((lU+intUv)/(t/100))/col;}
         g('ltv-r').style.display='block';
         g('rcol-usd').textContent=fmt(cU,'USD');
         g('rcol-ccy').textContent=fmt(frU(cU,c),c);
         g('rltv').innerHTML='<span style="color:'+lc(ltv)+'">'+ltv.toFixed(2)+'%</span>';
-        g('rmc1').textContent='$ '+mc(73).toLocaleString('de-CH',{maximumFractionDigits:0});
-        g('rmc2').textContent='$ '+mc(79).toLocaleString('de-CH',{maximumFractionDigits:0});
-        g('rmc3').textContent='$ '+mc(86).toLocaleString('de-CH',{maximumFractionDigits:0});
+        [['rmc1-lbl',cfg.ltvWarn!=null?cfg.ltvWarn:73,1],['rmc2-lbl',cfg.ltvCrit!=null?cfg.ltvCrit:79,2],['rmc3-lbl',cfg.ltvDanger!=null?cfg.ltvDanger:86,3]].forEach(function(x){
+          var el=g(x[0]);if(el)el.textContent='MC '+x[2]+' ('+x[1]+'%) — BTC/USD';
+        });
+        g('rmc1').textContent='$ '+mc(cfg.ltvWarn!=null?cfg.ltvWarn:73).toLocaleString('de-CH',{maximumFractionDigits:0});
+        g('rmc2').textContent='$ '+mc(cfg.ltvCrit!=null?cfg.ltvCrit:79).toLocaleString('de-CH',{maximumFractionDigits:0});
+        g('rmc3').textContent='$ '+mc(cfg.ltvDanger!=null?cfg.ltvDanger:86).toLocaleString('de-CH',{maximumFractionDigits:0});
         g('rliq').textContent='$ '+mc(95).toLocaleString('de-CH',{maximumFractionDigits:0});
         var w=g('ltv-w');
-        if(ltv>=86){w.style.display='block';w.innerHTML='<span class="err">⚠ Kritisch: LTV nahe Liquidation!</span>';}
-        else if(ltv>=73){w.style.display='block';w.innerHTML='<span class="wrn">⚠ Margin Call Zone.</span>';}
+        if(ltv>=(cfg.ltvDanger||86)){w.style.display='block';w.innerHTML='<span class="err">⚠ Kritisch: LTV nahe Liquidation!</span>';}
+        else if(ltv>=(cfg.ltvWarn||73)){w.style.display='block';w.innerHTML='<span class="wrn">⚠ Margin Call Zone.</span>';}
         else w.style.display='none';
       },
       se2Populate:function(){
@@ -3125,7 +3632,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           .slice().sort(function(a,b){return aM(a.start,a.term)-aM(b.start,b.term);});
         var cur=sel.value;
         sel.innerHTML='<option value="">\u2014 Kredit w\u00e4hlen \u2014</option>'+
-          act.map(function(l){var i=loans.indexOf(l);return '<option value="'+i+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
+          act.map(function(l){var i=loans.indexOf(l);return '<option value="'+i+'">'+esc(l.name)+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
         if(cur)sel.value=cur;
       },
       se2Fill:function(){
@@ -3161,7 +3668,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           .slice().sort(function(a,b){return aM(a.start,a.term)-aM(b.start,b.term);});
         var cur=sel.value;
         sel.innerHTML='<option value="">\u2014 Kredit w\u00e4hlen \u2014</option>'+
-          act.map(function(l){var i=loans.indexOf(l);return '<option value="'+i+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
+          act.map(function(l){var i=loans.indexOf(l);return '<option value="'+i+'">'+esc(l.name)+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
         if(cur)sel.value=cur;
       },
       nlpFill:function(){
@@ -3192,7 +3699,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var act=loans.filter(function(l){return l.status==='active';});
         var cur=sel.value;
         sel.innerHTML='<option value="">\u2014 Kredit w\u00e4hlen \u2014</option>'+
-          act.map(function(l){var i=loans.indexOf(l);return '<option value="'+i+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
+          act.map(function(l){var i=loans.indexOf(l);return '<option value="'+i+'">'+esc(l.name)+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
         if(cur)sel.value=cur;
       },
       nachFill:function(){
@@ -3211,9 +3718,13 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         function nb(t){return Math.max(0,(lU/(t/100))/R.BTC-col);}
         g('cn-r').style.display='block';
         g('cnltv').innerHTML='<span style="color:'+lc(ltv)+'">'+ltv.toFixed(2)+'%</span>';
+        /* Target a hair below each threshold — topping up to exactly the
+           trigger value would set off the very margin call being avoided. */
+        var mc1t=(cfg.ltvWarn!=null?cfg.ltvWarn:73)-0.5;
         g('cn50').textContent=nb(50)>0?'+ '+nb(50).toFixed(8)+' BTC':'✓ Bereits ausreichend';
-        g('cn75').textContent=nb(75)>0?'+ '+nb(75).toFixed(8)+' BTC':'✓ Kein Nachschuss nötig';
-        g('cn95').textContent=nb(95)>0?'+ '+nb(95).toFixed(8)+' BTC':'✓ Kein Nachschuss nötig';
+        g('cn75').textContent=nb(mc1t)>0?'+ '+nb(mc1t).toFixed(8)+' BTC':'✓ Kein Nachschuss nötig';
+        g('cn95').textContent=nb(94.5)>0?'+ '+nb(94.5).toFixed(8)+' BTC':'✓ Kein Nachschuss nötig';
+        var mc1lbl=g('cn75-lbl');if(mc1lbl)mc1lbl.textContent='Nachschuss um MC 1 ('+(cfg.ltvWarn!=null?cfg.ltvWarn:73)+'%) zu vermeiden';
       },
       be:function(){
         var l=parseFloat(g('bel').value),r=parseFloat(g('ber').value),t=parseInt(g('bet').value),bp=parseFloat(g('bebp').value),c=g('bec').value;
@@ -3239,6 +3750,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         }).join('');
       },
       renderHeatmap:function(){
+        var hd=g('heat-desc');
+        if(hd)hd.textContent='Zeigt bei welchem BTC-Preis jeder aktive Kredit die MC1- ('+(cfg.ltvWarn!=null?cfg.ltvWarn:73)+'%), MC3- ('+(cfg.ltvDanger!=null?cfg.ltvDanger:86)+'%) und Liquidations-Schwelle (95%) erreicht.';
         var heatEl=g('ch-heat');if(!heatEl)return;
         var act=loans.filter(function(l){return l.status==='active';});
         if(!act.length){heatEl.innerHTML='<div class="empty" style="text-align:center;padding:2rem">Keine aktiven Kredite.</div>';return;}
@@ -3261,15 +3774,15 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             var ltv=due/(l.col*p)*100;
             var bg,fc;
             if(ltv>=95){bg='#dc2626';fc='#fff';}
-            else if(ltv>=86){bg='#ea580c';fc='#fff';}
-            else if(ltv>=73){bg='#d97706';fc='#fff';}
+            else if(ltv>=(cfg.ltvDanger||86)){bg='#ea580c';fc='#fff';}
+            else if(ltv>=(cfg.ltvWarn||73)){bg='#d97706';fc='#fff';}
             else if(ltv>=60){bg='rgba(249,115,22,.18)';fc='var(--text2)';}
             else{bg='rgba(22,163,74,.12)';fc='var(--text3)';}
             var isCur=Math.abs(p-R.BTC)<priceStep/2;
             return '<div style="flex:1;text-align:center;font-size:9px;padding:3px 1px;background:'+bg+';color:'+fc+';border-left:'+(isCur?'2px solid var(--accent)':'1px solid var(--bg)')+';white-space:nowrap">'+Math.round(ltv)+'%</div>';
           }).join('');
           return '<div style="display:flex;align-items:stretch;margin-bottom:2px">'+
-            '<div style="width:90px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text2);padding-right:6px;display:flex;align-items:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+l.name+'</div>'+
+            '<div style="width:90px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text2);padding-right:6px;display:flex;align-items:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+esc(l.name)+'</div>'+
             '<div style="flex:1;display:flex;border-radius:4px;overflow:hidden">'+cells+'</div>'+
           '</div>';
         }).join('');
@@ -3300,8 +3813,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var h='<div class="ovx"><table><thead><tr>'+
           '<th style="min-width:90px">Szenario</th>';
         act.forEach(function(l){
-          h+='<th style="min-width:130px">'+l.name+
-            '<br><span style="font-weight:400;color:var(--text4);font-size:10px">'+l.c+' · '+l.col+' BTC</span>'+
+          h+='<th style="min-width:130px">'+esc(l.name)+
+            '<br><span style="font-weight:400;color:var(--text4);font-size:10px">'+esc(l.c)+' · '+l.col+' BTC</span>'+
           '</th>';
         });
         h+='</tr></thead><tbody>';
@@ -3314,9 +3827,9 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         h+='</tr>';
         /* ── MC / Liquidation trigger prices ── */
         var mcRows=[
-          {label:'MC 1 (73%)',thresh:73,color:'#d97706'},
-          {label:'MC 2 (79%)',thresh:79,color:'#ea580c'},
-          {label:'MC 3 (86%)',thresh:86,color:'#dc2626'},
+          {label:'MC 1 ('+(cfg.ltvWarn!=null?cfg.ltvWarn:73)+'%)',thresh:(cfg.ltvWarn!=null?cfg.ltvWarn:73),color:'#d97706'},
+          {label:'MC 2 ('+(cfg.ltvCrit!=null?cfg.ltvCrit:79)+'%)',thresh:(cfg.ltvCrit!=null?cfg.ltvCrit:79),color:'#ea580c'},
+          {label:'MC 3 ('+(cfg.ltvDanger!=null?cfg.ltvDanger:86)+'%)',thresh:(cfg.ltvDanger!=null?cfg.ltvDanger:86),color:'#dc2626'},
           {label:'Liquidation (95%)',thresh:95,color:'#7c3aed'},
         ];
         mcRows.forEach(function(mc){
@@ -3341,7 +3854,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             p+'%<br><span style="font-size:10px;font-weight:400;color:var(--text3)">$'+Math.round(pp).toLocaleString('de-CH')+'</span></td>';
           act.forEach(function(l){
             var v=l.col>0?stDue(l)/(l.col*pp)*100:0;
-            var lb=v>=95?'LIQ':v>=86?'MC3':v>=79?'MC2':v>=73?'MC1':'OK';
+            var lb=v>=95?'LIQ':v>=(cfg.ltvDanger||86)?'MC3':v>=(cfg.ltvCrit||79)?'MC2':v>=(cfg.ltvWarn||73)?'MC1':'OK';
             var ok=lb==='OK';
             h+='<td><span class="chip" style="background:'+lc(v)+'22;color:'+lc(v)+'">'+(ok?v.toFixed(0)+'%':v.toFixed(0)+'% '+lb)+'</span></td>';
           });
@@ -3358,20 +3871,20 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         DN.forEach(function(dn){var h=document.createElement('div');h.className='ch';h.textContent=dn;grid.appendChild(h);});
         var first=new Date(calY,calM,1),sd=(first.getDay()+6)%7,dim=new Date(calY,calM+1,0).getDate(),today=new Date();
         var evts={};
-        loans.forEach(function(l){var e=aM(l.start,l.term);if(e.getFullYear()===calY&&e.getMonth()===calM){var dd=e.getDate();if(!evts[dd])evts[dd]=[];evts[dd].push({name:l.name,urg:dL(l.start,l.term)<=14});}});
+        loans.forEach(function(l){var e=aM(l.start,l.term);if(e.getFullYear()===calY&&e.getMonth()===calM){var dd=e.getDate();if(!evts[dd])evts[dd]=[];evts[dd].push({name:l.name,urg:(function(){var n=dL(l.start,l.term);return l.status==='active'&&n>=0&&n<=14;})()});}});
         for(var i=0;i<sd;i++){var e=document.createElement('div');e.className='cd';grid.appendChild(e);}
         for(var day=1;day<=dim;day++){
           var cell=document.createElement('div');cell.className='cd';
           if(today.getFullYear()===calY&&today.getMonth()===calM&&today.getDate()===day)cell.classList.add('today');
           cell.innerHTML='<span class="cdn">'+day+'</span>';
-          if(evts[day])evts[day].forEach(function(ev){cell.innerHTML+='<span class="ce'+(ev.urg?' due':'')+'">'+ev.name+'</span>';});
+          if(evts[day])evts[day].forEach(function(ev){cell.innerHTML+='<span class="ce'+(ev.urg?' due':'')+'">'+esc(ev.name)+'</span>';});
           grid.appendChild(cell);
         }
         var up=loans.filter(function(l){return l.status==='active';}).map(function(l){return Object.assign({},l,{days:dL(l.start,l.term),end:aM(l.start,l.term)});}).filter(function(l){return l.days>0;}).sort(function(a,b){return a.days-b.days;});
         g('upcoming').innerHTML=up.length?up.map(function(l){
           var lU=toU(l.amount,l.c);
           return '<div class="card" style="padding:.75rem 1rem">'+
-            '<div class="fxsb"><span style="font-size:13px;font-weight:600;color:var(--text)">'+l.name+' <span style="font-weight:400;color:#9ca3af">'+l.c+'</span></span>'+
+            '<div class="fxsb"><span style="font-size:13px;font-weight:600;color:var(--text)">'+esc(l.name)+' <span style="font-weight:400;color:#9ca3af">'+esc(l.c)+'</span></span>'+
             '<span style="font-size:12px;color:'+(l.days<14?'#dc2626':l.days<30?'#d97706':'#6b7280')+';font-weight:600">'+(l.days<14?'⚠ ':'')+l.days+' Tage — '+l.end.toLocaleDateString('de-CH')+'</span></div>'+
             '<p class="note2 amt" style="margin-top:3px">'+fmt(l.amount,l.c)+' · '+l.rate+'% p.a. · '+l.col+' BTC</p>'+
             '<p class="note amt" style="margin-top:2px">= '+fmt(lU,'USD')+' / '+fmt(frU(lU,'CHF'),'CHF')+' / '+fmt(frU(lU,'EUR'),'EUR')+'</p>'+
@@ -3401,14 +3914,14 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var data=months.map(function(m,mi){
           var mY=m.getFullYear(),mM=m.getMonth();
           return frU(loans.reduce(function(s,l){
-            var lStart=new Date(l.start);
+            var lStart=pD(l.start);
             var lEnd=aM(l.start,l.term);
             var startY=lStart.getFullYear(),startM=lStart.getMonth();
             var endY=lEnd.getFullYear(),endM=lEnd.getMonth();
             var startedByThisMonth=(startY<mY)||(startY===mY&&startM<=mM);
             var endsAfterThisMonth=(endY>mY)||(endY===mY&&endM>=mM);
             if(!startedByThisMonth||!endsAfterThisMonth)return s;
-            if(l.status==='closed'&&mi>ni)return s;
+            if(l.status==='closed'&&mi>=ni)return s;
             return s+toU(l.amount,l.c)+intU(l);
           },0),ccy);
         });
@@ -3482,13 +3995,30 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           });
         });
       },
+      /* Toggle the charts tab's empty state WITHOUT replacing the section's
+         markup — doing that deleted every <canvas> in it, so the charts never
+         came back after the first loan was added (until a full page reload). */
+      chEmpty:function(on){
+        var sec=g('ch-content')||g('s-ch');
+        if(!sec)return;
+        var note=g('ch-empty-note');
+        if(!note){
+          note=document.createElement('div');
+          note.id='ch-empty-note';
+          note.className='empty';
+          note.style.cssText='padding:2rem;text-align:center';
+          note.textContent='Noch keine Kredite vorhanden. Diagramme werden nach dem Erfassen von Krediten angezeigt.';
+          sec.appendChild(note);
+        }
+        note.style.display=on?'block':'none';
+        Array.prototype.forEach.call(sec.children,function(ch){
+          if(ch!==note)ch.style.display=on?'none':'';
+        });
+      },
       ch:function(){
         if(typeof Chart==='undefined')return;
-        if(!loans.length){
-          var ce=g('ch-content')||g('s-ch');
-          if(ce)ce.innerHTML='<div class="empty" style="padding:2rem;text-align:center">Noch keine Kredite vorhanden. Diagramme werden nach dem Erfassen von Krediten angezeigt.</div>';
-          return;
-        }
+        if(!loans.length){d.chEmpty(true);return;}
+        d.chEmpty(false);
         /* Apply dark-mode aware defaults to all Chart.js instances */
         (function(){
           var cs=getComputedStyle(document.getElementById('ffd-root'));
@@ -3511,6 +4041,26 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           var chTextMain=_cs.getPropertyValue('--text').trim();
           var chCardBg=_cs.getPropertyValue('--card-bg').trim();
           /* Factory: vertical "Heute" line plugin for Chart.js charts with monthly labels */
+          /* Horizontal reference line — the annotation plugin the previous
+             config relied on is not loaded, so draw it directly. */
+          function hLinePlugin(yVal,color,label){
+            return {id:'hLine'+Math.round(yVal),afterDraw:function(chart){
+              var yA=chart.scales.y;
+              if(!yA||!isFinite(yVal))return;
+              if(yVal<yA.min||yVal>yA.max)return;
+              var y=yA.getPixelForValue(yVal),xA=chart.scales.x;
+              if(!xA)return;
+              var ctx2=chart.ctx;
+              ctx2.save();
+              ctx2.beginPath();ctx2.moveTo(xA.left,y);ctx2.lineTo(xA.right,y);
+              ctx2.strokeStyle=color;ctx2.lineWidth=2;ctx2.setLineDash([6,3]);ctx2.stroke();
+              if(label){
+                ctx2.setLineDash([]);ctx2.fillStyle=color;ctx2.font='10px sans-serif';ctx2.textAlign='right';
+                ctx2.fillText(label,xA.right-4,y-4);
+              }
+              ctx2.restore();
+            }};
+          }
           function makeTodayPlugin(labels){
             var now_tp=new Date();
             var todayLbl=new Date(now_tp.getFullYear(),now_tp.getMonth(),1).toLocaleDateString('de-CH',{month:'short',year:'2-digit'});
@@ -3527,21 +4077,27 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             }};
           }
 
+          var mcdT=g('ch-mcd-title');
+          if(mcdT)mcdT.textContent='Margin-Call-Distanz (% BTC-Preisfall bis MC1 '+(cfg.ltvWarn!=null?cfg.ltvWarn:73)+'%)';
           /* ── 1. LTV pro Kredit — historisch ── */
           chLtv=dst(chLtv);
           var ltvSelEl=g('ch-ltv-sel');
           if(ltvSelEl&&act.length){
-            /* Loan selector buttons */
-            if(!ltvSelEl.dataset.built){
-              ltvSelEl.dataset.built='1';
-              ltvSelEl.innerHTML=act.map(function(l,i){
-                return '<button class="sm'+(i===0?' on':'')+'" data-li="'+i+'" onclick="window._ltvSel='+i+';d.ch();" style="font-size:11px;padding:2px 8px">'+l.name+'</button>';
-              }).join('');
-            }
+            /* Loan selector buttons — rebuilt on every render so added,
+               closed or deleted loans cannot shift the selection */
+            var selId=window._ltvSelId;
+            if(!selId||!act.some(function(l){return l.id===selId;}))selId=act[0].id;
+            window._ltvSelId=selId;
+            ltvSelEl.innerHTML=act.map(function(l){
+              return '<button class="sm'+(l.id===selId?' on':'')+'" data-lid="'+esc(l.id)+'" onclick="window._ltvSelId=this.dataset.lid;d.ch();" style="font-size:11px;padding:2px 8px">'+esc(l.name)+'</button>';
+            }).join('');
           }
-          var selIdx=window._ltvSel||0;
+          var selIdx=Math.max(0,act.findIndex(function(l){return l.id===window._ltvSelId;}));
           var ltvC=mk('ch-ltv');
-          if(ltvC&&act.length&&act[selIdx]){
+          if(ltvC&&act.length&&act[selIdx]&&!(act[selIdx].col>0)){
+            emptyChart(ltvC,'Für diesen Kredit ist kein Collateral hinterlegt — es gibt keinen LTV-Verlauf.');
+          } else if(ltvC&&act.length&&act[selIdx]){
+            chartReady(ltvC);
             var l=act[selIdx];
             d.fetchBtcHistory(function(hist){
               chLtv=dst(chLtv);
@@ -3552,17 +4108,17 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
                   var dt=new Date();dt.setDate(dt.getDate()-dd);
                   var key=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
                   var hp=hist[key];
-                  if(hp&&new Date(l.start)<=dt){
-                    var dueHist=dueU(l);pts.push(parseFloat((dueHist/(l.col*hp)*100).toFixed(1)));
+                  if(hp&&pD(l.start)<=dt){
+                    var dueHist=ltvU(l);pts.push(parseFloat((dueHist/(l.col*hp)*100).toFixed(1)));
                     lbls.push(dd===0?'Heute':dt.toLocaleDateString('de-CH',{day:'2-digit',month:'2-digit'}));
                   }
                 }
               }
               /* Always add current point */
-              if(!pts.length){var dueNow=dueU(l);pts=[parseFloat((dueNow/(l.col*R.BTC)*100).toFixed(1))];lbls=['Heute'];}
-              var ptColors=pts.map(function(v){return v>=95?'#dc2626':v>=79?'#ea580c':v>=73?'#d97706':'#16a34a';});
+              if(!pts.length&&l.col>0){pts=[parseFloat((ltvU(l)/(l.col*R.BTC)*100).toFixed(1))];lbls=['Heute'];}
+              var ptColors=pts.map(function(v){return lc(v);});
               chLtv=new Chart(ltvC,{type:'line',
-                data:{labels:lbls,datasets:[{data:pts,borderColor:'#F97316',backgroundColor:'rgba(249,115,22,.08)',fill:true,tension:0.3,borderWidth:2,pointRadius:0,pointHoverRadius:4,segment:{borderColor:function(ctx){var v=pts[ctx.p1DataIndex];return v>=95?'#dc2626':v>=79?'#ea580c':v>=73?'#d97706':'#16a34a';}}}]},
+                data:{labels:lbls,datasets:[{data:pts,borderColor:'#F97316',backgroundColor:'rgba(249,115,22,.08)',fill:true,tension:0.3,borderWidth:2,pointRadius:0,pointHoverRadius:4,segment:{borderColor:function(ctx){return lc(pts[ctx.p1DataIndex]);}}}]},
                 options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
                   tooltip:{callbacks:{label:function(x){return ' LTV: '+x.parsed.y+'%';}}}},
                   scales:{y:{min:0,max:Math.max(100,Math.ceil(Math.max.apply(null,pts)/10)*10),
@@ -3580,7 +4136,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           if(mcdC&&act.length){
             var mcdData=act.map(function(l){
               if(!l.col)return {name:l.name,val:0};
-              var mc1Price=(toU(l.amount,l.c)+intU(l))/0.73/l.col;
+              var mc1Price=ltvU(l)/tW()/l.col;
               var dist=((R.BTC-mc1Price)/R.BTC*100);
               return {name:l.name,val:parseFloat(Math.max(0,dist).toFixed(1))};
             }).sort(function(a,b){return a.val-b.val;});
@@ -3601,7 +4157,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             var colTotal=act.reduce(function(s,l){return s+l.col;},0);
             chCol=new Chart(colC,{type:'doughnut',
               data:{labels:act.map(function(l){return l.name;}),
-                datasets:[{data:act.map(function(l){return l.col;}),backgroundColor:COLORS,borderWidth:2,borderColor:chCardBg}]},
+                datasets:[{data:act.map(function(l){return l.col;}),backgroundColor:act.map(function(_,i){return COLORS[i%COLORS.length];}),borderWidth:2,borderColor:chCardBg}]},
               options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:30,bottom:30,left:30,right:30}},plugins:{
                 legend:{position:'right',labels:{font:{size:11},padding:8,generateLabels:function(chart){
                   return chart.data.labels.map(function(label,i){
@@ -3647,7 +4203,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             var ccyKeys=Object.keys(ccyMap);
             var ccyTotal=ccyKeys.reduce(function(s,k){return s+ccyMap[k];},0);
             chCcy=new Chart(ccyC,{type:'doughnut',
-              data:{labels:ccyKeys,datasets:[{data:ccyKeys.map(function(k){return Math.round(ccyMap[k]);}),backgroundColor:COLORS,borderWidth:2,borderColor:chCardBg}]},
+              data:{labels:ccyKeys,datasets:[{data:ccyKeys.map(function(k){return Math.round(ccyMap[k]);}),backgroundColor:ccyKeys.map(function(_,i){return COLORS[i%COLORS.length];}),borderWidth:2,borderColor:chCardBg}]},
               options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:30,bottom:30,left:30,right:30}},plugins:{
                 legend:{position:'right',labels:{font:{size:11},padding:8,generateLabels:function(chart){
                   return chart.data.labels.map(function(label,i){
@@ -3696,10 +4252,11 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             function bsFor(l){return l.btcStart||(l.start&&histPrices[l.start])||R.BTC;}
             function renderBep(){
               if(!bepC||!all.length){
-                if(bepC)g('ch-bep').parentElement.innerHTML='<p class="note2" style="text-align:center;padding:2rem">Keine Kredite vorhanden.</p>';
+                if(bepC)emptyChart(bepC,'Keine Kredite vorhanden.');
                 return;
               }
               chBep=dst(chBep);
+              chartReady(bepC);
               var bepLabels=all.map(function(l){return l.name+(!l.btcStart?' *':'');});
               var startVals=all.map(function(l){return bsFor(l);});
               var bepVals=all.map(function(l){
@@ -3714,8 +4271,9 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
                   ]},
                 options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:11}}},
                   tooltip:{callbacks:{label:function(x){return ' '+x.dataset.label+': $'+x.parsed.y.toLocaleString('de-CH',{maximumFractionDigits:0});}}}},
-                  scales:{y:{ticks:{callback:function(v){return '$'+Math.round(v/1000)+'k';}},grid:{color:chGridColor}},x:{grid:{display:false}}},
-                  annotation:{annotations:{cur:{type:'line',yMin:R.BTC,yMax:R.BTC,borderColor:'#16a34a',borderWidth:2,borderDash:[6,3],label:{content:'Aktuell $'+Math.round(R.BTC/1000)+'k',display:true,position:'end',font:{size:10}}}}}}});
+                  scales:{y:{suggestedMax:(function(){var vs=bepVals.concat(startVals,[R.BTC]).filter(function(v){return typeof v==='number'&&isFinite(v);});return vs.length?Math.max.apply(null,vs)*1.05:undefined;})(),ticks:{callback:function(v){return '$'+Math.round(v/1000)+'k';}},grid:{color:chGridColor}},x:{grid:{display:false}}}
+                },
+                plugins:[hLinePlugin(R.BTC,'#16a34a','Aktuell $'+Math.round(R.BTC/1000)+'k')]});
             }
             if(!pending.length){renderBep();return;}
             /* Temporäre Map für historische Preise — btcStart am Loan-Objekt bleibt unverändert */
@@ -3738,7 +4296,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             var totalInt=act.map(function(l){return parseFloat(intU(l).toFixed(0));});
             var totalFee=act.map(function(l){return parseFloat(feeU(l).toFixed(0));});
             var accruedInt=act.map(function(l){
-              var pct=Math.min(1,Math.max(0,(nowI-new Date(l.start))/(l.term*30*864e5)));
+              var pct=(function(){var st=pD(l.start),tot=aM(l.start,l.term)-st;return tot>0?Math.min(1,Math.max(0,(nowI-st)/tot)):1;})();
               return parseFloat((intU(l)*pct).toFixed(0));
             });
             chInt2=new Chart(intC,{type:'bar',
@@ -3759,7 +4317,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           if(zinslastC&&act.length){
             /* Build months axis: from earliest start to latest maturity + 2 months */
             var now_zl=new Date();
-            var earliest=new Date(Math.min.apply(null,act.map(function(l){return new Date(l.start);})));
+            var earliest=new Date(Math.min.apply(null,act.map(function(l){return pD(l.start);})));
             var latest=new Date(Math.max.apply(null,act.map(function(l){return aM(l.start,l.term);})));
             var startM=new Date(now_zl.getFullYear(),now_zl.getMonth(),1);
             var endM=new Date(latest.getFullYear(),latest.getMonth()+2,1);
@@ -3769,7 +4327,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             var zlLabels=months.map(function(m){return m.toLocaleDateString('de-CH',{month:'short',year:'2-digit'});});
             /* Per-loan monthly interest: spread total interest evenly over loan months */
             var zlDatasets=act.map(function(l,i){
-              var lStart=new Date(l.start);
+              var lStart=pD(l.start);
               var lEnd=aM(l.start,l.term);
               var monthlyInt=toU(l.amount*(l.rate/100)/12,l.c);
               var data=months.map(function(m){
@@ -3822,16 +4380,20 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             chBtcost=dst(chBtcost);
             var btcostC=mk('ch-btcost');
             if(!btcostC)return;
-            if(!all.length){btcostC.parentElement.innerHTML='<p class="note2" style="text-align:center;padding:2rem">Keine Kredite vorhanden.</p>';return;}
+            if(!all.length){emptyChart(btcostC,'Keine Kredite vorhanden.');return;}
+            chartReady(btcostC);
             var btcostLoans=all;
             var btcostPrices={};
             var pending=btcostLoans.filter(function(l){return !l.btcStart&&l.start;});
             function renderBtcost(){
               var btcCosts=btcostLoans.map(function(l){
-                var totalCostUSD=intU(l)+feeU(l);
                 var bs=l.btcStart||(l.start&&btcostPrices[l.start])||R.BTC;
-                return parseFloat((totalCostUSD/bs).toFixed(8));
+                /* The fee is denominated in BTC — converting it to USD at
+                   today's price and back at the start price would inflate it
+                   whenever BTC has risen. Count it as the BTC amount it is. */
+                return parseFloat((intU(l)/bs+(l.feeBtc||0)).toFixed(8));
               });
+              chBtcost=dst(chBtcost);
               chBtcost=new Chart(btcostC,{type:'bar',
                 data:{labels:btcostLoans.map(function(l){return l.name;}),
                   datasets:[{data:btcCosts,backgroundColor:'rgba(139,92,246,.6)',borderColor:'#8B5CF6',borderWidth:1,borderRadius:4}]},
@@ -3855,7 +4417,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           if(ganttEl&&all.length){
             var ganttLoans=all.slice().sort(function(a,b){return new Date(a.start)-new Date(b.start);});
             var now=new Date();
-            var minD=new Date(Math.min.apply(null,ganttLoans.map(function(l){return new Date(l.start);})));
+            var minD=new Date(Math.min.apply(null,ganttLoans.map(function(l){return pD(l.start);})));
             var latestDueG=new Date(Math.max.apply(null,ganttLoans.map(function(l){return aM(l.start,l.term);})));
             var maxD=new Date(latestDueG.getFullYear(),latestDueG.getMonth()+2,1);
             var total=maxD-minD||1;
@@ -3864,13 +4426,13 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
               var totalMonths=Math.round((maxD-minD)/(1000*60*60*24*30.44));
               var step=totalMonths<=6?1:totalMonths<=12?1:totalMonths<=24?2:totalMonths<=48?3:6;
               var ticks=[],lines=[];
-              var cur=new Date(Date.UTC(minD.getUTCFullYear(),minD.getUTCMonth(),1));
+              var cur=new Date(minD.getFullYear(),minD.getMonth(),1);
               while(cur<=new Date(maxD.getTime()+1)){
                 var pct=Math.max(0,Math.min(100,((cur-minD)/total*100))).toFixed(2);
                 var lbl=cur.toLocaleDateString('de-CH',{month:'short',year:'2-digit'});
                 ticks.push('<div style="position:absolute;left:'+pct+'%;transform:translateX(-50%);font-size:9px;color:var(--text4);white-space:nowrap">'+lbl+'</div>');
                 lines.push('<div style="position:absolute;left:'+pct+'%;top:0;width:1px;height:100%;background:var(--border);opacity:.4;pointer-events:none"></div>');
-                cur=new Date(Date.UTC(cur.getUTCFullYear(),cur.getUTCMonth()+step,1));
+                cur=new Date(cur.getFullYear(),cur.getMonth()+step,1);
               }
               return {ticks:ticks.join(''),lines:lines.join('')};
             })();
@@ -3883,12 +4445,12 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
               '</div>'+
               '<div style="padding:.25rem 0">'+
               ganttLoans.map(function(l){
-                var s=new Date(l.start),e=aM(l.start,l.term);
+                var s=pD(l.start),e=aM(l.start,l.term);
                 var left=((s-minD)/total*100).toFixed(1);
                 var width=Math.max(((e-s)/total*100).toFixed(1),1);
-                var clr=l.status==='closed'?'#9ca3af':l.col>0&&((dueU(l))/(l.col*R.BTC))>=0.73?'#ea580c':'#F97316';
+                var clr=l.status==='closed'?'#9ca3af':l.col>0&&(ltvU(l)/(l.col*R.BTC))>=tW()?'#ea580c':'#F97316';
                 return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">'+
-                  '<div style="width:90px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+l.name+'</div>'+
+                  '<div style="width:90px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(l.name)+'</div>'+
                   '<div style="flex:1;position:relative;height:22px;background:var(--bg3);border-radius:4px;overflow:hidden">'+
                     xTicks.lines+
                     '<div style="position:absolute;left:'+left+'%;width:'+width+'%;height:100%;background:'+clr+';border-radius:4px;opacity:'+(l.status==='closed'?.5:1)+';display:flex;align-items:center;padding:0 6px;overflow:hidden;z-index:1">'+
@@ -3916,7 +4478,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
               chainIds.forEach(function(cid){chains[cid].sort(function(a,b){return new Date(a.start)-new Date(b.start);});});
               /* Timeline range */
               var allChainLoans=chainIds.reduce(function(a,cid){return a.concat(chains[cid]);},[]); 
-              var minDR=new Date(Math.min.apply(null,allChainLoans.map(function(l){return new Date(l.start);})));
+              var minDR=new Date(Math.min.apply(null,allChainLoans.map(function(l){return pD(l.start);})));
               var latestDueR=new Date(Math.max.apply(null,allChainLoans.map(function(l){return aM(l.start,l.term);})));
               var maxDR=new Date(latestDueR.getFullYear(),latestDueR.getMonth()+2,1);
               var totalR=maxDR-minDR||1;
@@ -3926,12 +4488,12 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
               var totalMonthsR=Math.round((maxDR-minDR)/(1000*60*60*24*30.44));
               var stepR=totalMonthsR<=12?1:totalMonthsR<=24?2:totalMonthsR<=48?3:6;
               var ticksR='',linesR='';
-              var curR=new Date(Date.UTC(minDR.getUTCFullYear(),minDR.getUTCMonth(),1));
+              var curR=new Date(minDR.getFullYear(),minDR.getMonth(),1);
               while(curR<=new Date(maxDR.getTime()+1)){
                 var pctR=Math.max(0,Math.min(100,((curR-minDR)/totalR*100))).toFixed(2);
                 ticksR+='<div style="position:absolute;left:'+pctR+'%;transform:translateX(-50%);font-size:9px;color:var(--text4);white-space:nowrap">'+curR.toLocaleDateString('de-CH',{month:'short',year:'2-digit'})+'</div>';
                 linesR+='<div style="position:absolute;left:'+pctR+'%;top:0;width:1px;height:100%;background:var(--border);opacity:.4;pointer-events:none"></div>';
-                curR=new Date(Date.UTC(curR.getUTCFullYear(),curR.getUTCMonth()+stepR,1));
+                curR=new Date(curR.getFullYear(),curR.getMonth()+stepR,1);
               }
               var CHAIN_COLORS=['#F97316','#3B82F6','#10B981','#8B5CF6','#EF4444','#F59E0B','#06B6D4','#EC4899'];
               var html=
@@ -3947,18 +4509,18 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
                 var chainName=chainLoans[0].name.replace(/v\d+$/,'').trim()||'Kette '+(ci+1);
                 var totalCost=chainLoans.reduce(function(s,l){return s+intU(l)+feeU(l);},0);
                 html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'+
-                  '<div style="width:110px;flex-shrink:0;font-size:11px;font-weight:700;color:'+clr+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+chainLoans.length+' Kredite">🔗 '+chainName+'</div>'+
+                  '<div style="width:110px;flex-shrink:0;font-size:11px;font-weight:700;color:'+clr+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+chainLoans.length+' Kredite">🔗 '+esc(chainName)+'</div>'+
                   '<div style="flex:1;position:relative;height:26px;background:var(--bg3);border-radius:6px;overflow:hidden">'+
                     linesR;
                 chainLoans.forEach(function(l,li){
-                  var s=new Date(l.start),e=aM(l.start,l.term);
+                  var s=pD(l.start),e=aM(l.start,l.term);
                   var left=((s-minDR)/totalR*100).toFixed(1);
                   var width=Math.max(((e-s)/totalR*100).toFixed(1),0.5);
                   var isActive=l.status==='active';
                   var intCost=intU(l);
                   var gap=li>0?2:0;
-                  html+='<div title="'+l.name+' · '+fmt(l.amount,l.c)+' · Zinsen: '+fmt(intCost,'USD')+'" style="position:absolute;left:calc('+left+'% + '+gap+'px);width:calc('+width+'% - '+gap+'px);height:100%;background:'+clr+';opacity:'+(isActive?1:.55)+';border-radius:3px;display:flex;align-items:center;overflow:hidden;padding:0 4px;z-index:1;box-sizing:border-box">'+
-                    '<span style="font-size:9px;color:#fff;white-space:nowrap;overflow:hidden">'+l.name+'</span>'+
+                  html+='<div title="'+esc(l.name)+' · '+fmt(l.amount,l.c)+' · Zinsen: '+fmt(intCost,'USD')+'" style="position:absolute;left:calc('+left+'% + '+gap+'px);width:calc('+width+'% - '+gap+'px);height:100%;background:'+clr+';opacity:'+(isActive?1:.55)+';border-radius:3px;display:flex;align-items:center;overflow:hidden;padding:0 4px;z-index:1;box-sizing:border-box">'+
+                    '<span style="font-size:9px;color:#fff;white-space:nowrap;overflow:hidden">'+esc(l.name)+'</span>'+
                   '</div>';
                 });
                 html+='<div style="position:absolute;left:'+nowPctR+'%;top:0;width:2px;height:100%;background:#ef4444;z-index:2"></div>'+
@@ -3979,7 +4541,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             var cfLatest=act.length?new Date(Math.max.apply(null,act.map(function(l){return aM(l.start,l.term);}))):new Date(now2.getFullYear(),now2.getMonth()+12,1);
             var cfMax=new Date(cfLatest.getFullYear(),cfLatest.getMonth()+2,1);
             var cfMonths=[],cfLabels=[];
-            var cfCur=new Date(now2.getFullYear(),now2.getMonth()+1,1);
+            var cfCur=new Date(now2.getFullYear(),now2.getMonth(),1);
             while(cfCur<=cfMax){
               cfMonths.push(new Date(cfCur));cfLabels.push(cfCur.toLocaleDateString('de-CH',{month:'short',year:'2-digit'}));
               cfCur.setMonth(cfCur.getMonth()+1);
@@ -3989,7 +4551,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
                 var end=aM(l.start,l.term);
                 /* Does this loan end in month m? */
                 if(end.getFullYear()===m.getFullYear()&&end.getMonth()===m.getMonth()){
-                  return sum+dueU(l);
+                  return sum+toU(l.amount,l.c)+intU(l);
                 }
                 return sum;
               },0);
@@ -4010,7 +4572,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
               var now3=new Date();
               /* Alle Kredite (aktiv + abgeschlossen) für historischen Verlauf */
               var dcolLoans=loans;
-              var oldest3=dcolLoans.reduce(function(e,l){var s=new Date(l.start);return s<e?s:e;},now3);
+              var oldest3=dcolLoans.reduce(function(e,l){var s=pD(l.start);return s<e?s:e;},now3);
               var dcStart=new Date(oldest3.getFullYear(),oldest3.getMonth(),1);
               var dcLatest=dcolLoans.length?new Date(Math.max.apply(null,dcolLoans.map(function(l){return aM(l.start,l.term);}))):now3;
               var dcEnd=new Date(dcLatest.getFullYear(),dcLatest.getMonth()+2,1);
@@ -4034,7 +4596,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
                   var btcPrice=(m<firstOfThisMonth)?(histMap[iso]||R.BTC):R.BTC;
                   dcLabels.push(m.toLocaleDateString('de-CH',{month:'short',year:'2-digit'}));
                   var debt=dcolLoans.reduce(function(s,l){
-                    var lStart=new Date(l.start);
+                    var lStart=pD(l.start);
                     var lEnd=aM(l.start,l.term);
                     var active=m>=new Date(lStart.getFullYear(),lStart.getMonth(),1)&&m<=lEnd;
                     if(!active)return s;
@@ -4042,7 +4604,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
                     return s+toU(l.amount,l.c)+intU(l);
                   },0);
                   var col=dcolLoans.reduce(function(s,l){
-                    var lStart=new Date(l.start);
+                    var lStart=pD(l.start);
                     var lEnd=aM(l.start,l.term);
                     var active=m>=new Date(lStart.getFullYear(),lStart.getMonth(),1)&&m<=lEnd;
                     if(!active)return s;
@@ -4182,16 +4744,16 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var el=g('alarm-banner');if(!el)return;
         if(liqd.length){
           el.className='alarm-banner crit show';
-          el.innerHTML='&#128308; LIQUIDIERT: '+liqd.map(function(l){var due=toU(l.amount,l.c)+intU(l);return l.name+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Kredit wurde liquidiert!';
+          _ffdSetBanner(el,'&#128308; LIQUIDIERT: '+liqd.map(function(l){var due=toU(l.amount,l.c)+intU(l);return esc(l.name)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Kredit wurde liquidiert!');
         } else if(danger.length){
           el.className='alarm-banner crit show';
-          el.innerHTML='&#128308; GEFAHR MC3: '+danger.map(function(l){var due=toU(l.amount,l.c)+intU(l);return l.name+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Liquidationsgefahr!';
+          _ffdSetBanner(el,'&#128308; GEFAHR MC3: '+danger.map(function(l){var due=toU(l.amount,l.c)+intU(l);return esc(l.name)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Liquidationsgefahr!');
         } else if(crit.length){
           el.className='alarm-banner crit show';
-          el.innerHTML='&#9888; KRITISCH MC2: '+crit.map(function(l){var due=toU(l.amount,l.c)+intU(l);return l.name+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Margin Call!';
+          _ffdSetBanner(el,'&#9888; KRITISCH MC2: '+crit.map(function(l){var due=toU(l.amount,l.c)+intU(l);return esc(l.name)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Margin Call!');
         } else if(warn.length){
           el.className='alarm-banner warn show';
-          el.innerHTML='&#9888; Warnung MC1: '+warn.map(function(l){var due=toU(l.amount,l.c)+intU(l);return l.name+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — LTV \u00fcber '+cfg.ltvWarn+'%';
+          _ffdSetBanner(el,'&#9888; Warnung MC1: '+warn.map(function(l){var due=toU(l.amount,l.c)+intU(l);return esc(l.name)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — LTV \u00fcber '+cfg.ltvWarn+'%');
         } else {
           el.className='alarm-banner';el.innerHTML='';
         }
@@ -4207,42 +4769,42 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var liqd=act.filter(function(l){var ltv=l.col>0?(toU(l.amount,l.c)+intU(l))/(l.col*R.BTC):0;return ltv>=0.95;});
         if(liqd.length){
           var l=liqd[0];var ltv=((toU(l.amount,l.c)+intU(l))/(l.col*R.BTC)*100).toFixed(1);
-          el.innerHTML=d._naCard('🔴','Kredit liquidiert','Der Kredit wurde durch Firefish liquidiert','<b>'+l.name+'</b> hat LTV '+ltv+'% — Liquidation erfolgt!','#dc2626','rgba(220,38,38,.08)');return;
+          el.innerHTML=d._naCard('🔴','Kredit liquidiert','Der Kredit wurde durch Firefish liquidiert','<b>'+esc(l.name)+'</b> hat LTV '+ltv+'% — Liquidation erfolgt!','#dc2626','rgba(220,38,38,.08)');return;
         }
         /* Priority 2 — danger LTV */
         var danger=act.filter(function(l){var ltv=l.col>0?(toU(l.amount,l.c)+intU(l))/(l.col*R.BTC):0;return ltv>=(cfg.ltvDanger!=null?cfg.ltvDanger/100:0.86)&&ltv<0.95;});
         if(danger.length){
           var l=danger[0];var ltv=((toU(l.amount,l.c)+intU(l))/(l.col*R.BTC)*100).toFixed(1);
-          el.innerHTML=d._naCard('🔴','Sofortiger Handlungsbedarf','Collateral nachschiessen oder Kredit zurückzahlen','<b>'+l.name+'</b> hat LTV '+ltv+'% — Liquidationsgefahr!','#dc2626','rgba(220,38,38,.08)');return;
+          el.innerHTML=d._naCard('🔴','Sofortiger Handlungsbedarf','Collateral nachschiessen oder Kredit zurückzahlen','<b>'+esc(l.name)+'</b> hat LTV '+ltv+'% — Liquidationsgefahr!','#dc2626','rgba(220,38,38,.08)');return;
         }
         /* Priority 3 — crit LTV */
         var crit=act.filter(function(l){var ltv=l.col>0?(toU(l.amount,l.c)+intU(l))/(l.col*R.BTC):0;return ltv>=(cfg.ltvCrit/100)&&ltv<(cfg.ltvDanger!=null?cfg.ltvDanger/100:0.86);});
         if(crit.length){
           var l=crit[0];var ltv=((toU(l.amount,l.c)+intU(l))/(l.col*R.BTC)*100).toFixed(1);
-          el.innerHTML=d._naCard('🟠','Margin Call Warnung','LTV kritisch — Collateral prüfen','<b>'+l.name+'</b> hat LTV '+ltv+'% — MC2 erreicht','#ea580c','rgba(234,88,12,.07)');return;
+          el.innerHTML=d._naCard('🟠','Margin Call Warnung','LTV kritisch — Collateral prüfen','<b>'+esc(l.name)+'</b> hat LTV '+ltv+'% — MC2 erreicht','#ea580c','rgba(234,88,12,.07)');return;
         }
         /* Priority 3 — due within 7 days */
         var urgent=act.filter(function(l){var d2=dL(l.start,l.term);return d2>=0&&d2<=7;}).sort(function(a,b){return dL(a.start,a.term)-dL(b.start,b.term);});
         if(urgent.length){
           var l=urgent[0];var dl=dL(l.start,l.term);
-          el.innerHTML=d._naCard('⏰','Kredit läuft ab','Roll-Over vorbereiten oder zurückzahlen','<b>'+l.name+'</b> — fällig in <b>'+dl+' Tag'+(dl===1?'':'en')+'</b> ('+fmt(frU(dueU(l),l.c),l.c)+')','#d97706','rgba(217,119,6,.07)');return;
+          el.innerHTML=d._naCard('⏰','Kredit läuft ab','Roll-Over vorbereiten oder zurückzahlen','<b>'+esc(l.name)+'</b> — fällig in <b>'+dl+' Tag'+(dl===1?'':'en')+'</b> ('+fmt(frU(dueU(l),l.c),l.c)+')','#d97706','rgba(217,119,6,.07)');return;
         }
         /* Priority 4 — due within 30 days */
         var soon=act.filter(function(l){var d2=dL(l.start,l.term);return d2>=0&&d2<=30;}).sort(function(a,b){return dL(a.start,a.term)-dL(b.start,b.term);});
         if(soon.length){
           var l=soon[0];var dl=dL(l.start,l.term);
-          el.innerHTML=d._naCard('📅','Fälligkeit in Kürze','Roll-Over oder Rückzahlung planen','<b>'+l.name+'</b> — fällig in <b>'+dl+' Tagen</b> ('+aM(l.start,l.term).toLocaleDateString('de-CH',{day:'2-digit',month:'short',year:'numeric'})+')','#6366f1','rgba(99,102,241,.06)');return;
+          el.innerHTML=d._naCard('📅','Fälligkeit in Kürze','Roll-Over oder Rückzahlung planen','<b>'+esc(l.name)+'</b> — fällig in <b>'+dl+' Tagen</b> ('+aM(l.start,l.term).toLocaleDateString('de-CH',{day:'2-digit',month:'short',year:'numeric'})+')','#6366f1','rgba(99,102,241,.06)');return;
         }
         /* Priority 5 — warn LTV */
         var warn=act.filter(function(l){var ltv=l.col>0?(toU(l.amount,l.c)+intU(l))/(l.col*R.BTC):0;return ltv>=(cfg.ltvWarn/100)&&ltv<(cfg.ltvCrit/100);});
         if(warn.length){
           var l=warn[0];var ltv=((toU(l.amount,l.c)+intU(l))/(l.col*R.BTC)*100).toFixed(1);
-          el.innerHTML=d._naCard('🟡','LTV im Beobachtungsbereich','BTC-Preisentwicklung im Auge behalten','<b>'+l.name+'</b> hat LTV '+ltv+'% — über MC1-Schwelle','#d97706','rgba(217,119,6,.06)');return;
+          el.innerHTML=d._naCard('🟡','LTV im Beobachtungsbereich','BTC-Preisentwicklung im Auge behalten','<b>'+esc(l.name)+'</b> hat LTV '+ltv+'% — über MC1-Schwelle','#d97706','rgba(217,119,6,.06)');return;
         }
         /* All good */
         var next=act.slice().sort(function(a,b){return dL(a.start,a.term)-dL(b.start,b.term);})[0];
         var dl=dL(next.start,next.term);
-        el.innerHTML=d._naCard('✅','Alles im grünen Bereich','Nächste Fälligkeit: <b>'+next.name+'</b> in '+dl+' Tagen','Portfolio-LTV und Margin Call-Distanzen sind unkritisch','#16a34a','rgba(22,163,74,.06)');
+        el.innerHTML=d._naCard('✅','Alles im grünen Bereich','Nächste Fälligkeit: <b>'+esc(next.name)+'</b> in '+dl+' Tagen','Portfolio-LTV und Margin Call-Distanzen sind unkritisch','#16a34a','rgba(22,163,74,.06)');
       },
       _naCard:function(icon,title,action,detail,color,bg){
         return '<div style="display:flex;align-items:center;gap:.85rem;padding:.7rem 1rem;background:'+bg+';border:1px solid '+color+';border-radius:10px;border-left:4px solid '+color+'">'+
@@ -4483,7 +5045,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var btcP=parseFloat(g('rosi-btc').value)||frU(R.BTC,ccy);
         var btcPusd=toU(btcP,ccy); /* BTC price in USD for fee BTC conversion */
         var startEl=g('rosi-start');
-        var baseDate=startEl&&startEl.value?new Date(startEl.value):new Date();
+        var baseDate=startEl&&startEl.value?pD(startEl.value):new Date();
         var n=Math.max(1,Math.min(20,parseInt(g('rosi-n').value)||3));
         var el=g('rosi-r');
         if(!amount||!rate1){el.style.display='none';return;}
@@ -4502,7 +5064,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           '</tr></thead><tbody>';
         var currentAmount=amount;
         var feeDisplayEl=g('rosi-fee-display');
-        var feeBtcFirst=0;
+        var feeBtcFirst=0,totalFeeBtcSim=0;
         for(var i=0;i<n;i++){
           var rate=i===0?rate1:rate2;
           var interest=currentAmount*(rate/100)*(term/12);
@@ -4510,6 +5072,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           var feeBtc=btcPusd>0?toU(feeAmt,ccy)/btcPusd:0;
           var feePct=(feeRatePa*(term/12)*100).toFixed(2);
           if(i===0){feeBtcFirst=feeBtc;}
+          totalFeeBtcSim+=feeBtc;
           if(i===0&&feeDisplayEl){
             feeDisplayEl.textContent=feePct+'% ('+fmtC(feeAmt)+' ≈ '+feeBtc.toFixed(6)+' BTC)';
           }
@@ -4518,10 +5081,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           totalInterest+=interest;
           totalFee+=feeAmt;
           totalVolume+=currentAmount;
-          var startD=new Date(baseDate);
-          startD.setMonth(startD.getMonth()+i*term);
-          var endD=new Date(startD);
-          endD.setMonth(endD.getMonth()+term);
+          var startD=aM(baseDate,i*term);
+          var endD=aM(startD,term);
           var startStr=startD.toLocaleDateString('de-CH',{month:'short',year:'numeric'});
           var endStr=endD.toLocaleDateString('de-CH',{month:'short',year:'numeric'});
           var isLast=i===n-1;
@@ -4542,9 +5103,9 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var totalCost=totalInterest+totalFee;
         var totalMonths=n*term;
         var finalDue=currentAmount;
-        var endDate=new Date(baseDate);endDate.setMonth(endDate.getMonth()+totalMonths);
+        var endDate=aM(baseDate,totalMonths);
         var endDateStr=endDate.toLocaleDateString('de-CH',{day:'2-digit',month:'long',year:'numeric'});
-        var effRate=originalAmount>0&&totalMonths>0?(totalCost/originalAmount/(totalMonths/12)*100):0;
+        var effRate=originalAmount>0&&totalMonths>0?((Math.pow(1+totalCost/originalAmount,12/totalMonths)-1)*100):0;
         var capitalGrowth=originalAmount>0?((finalDue-originalAmount)/originalAmount*100):0;
         var startDateStr=baseDate.toLocaleDateString('de-CH',{day:'2-digit',month:'long',year:'numeric'});
         rows+='<tr style="background:var(--bg2);font-weight:700;border-top:2px solid var(--border)">'+
@@ -4564,7 +5125,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             (sub?'<div style="font-size:11px;color:var(--text3);margin-top:.2rem">'+sub+'</div>':'')+
           '</div>';
         }
-        var feeTile=feeBtcFirst?tile('Geb\u00fchren gesamt',fmtC(totalFee),(feeBtcFirst*n).toFixed(6)+' BTC'):tile('Geb\u00fchren gesamt',fmtC(totalFee),'');
+        var feeTile=feeBtcFirst?tile('Geb\u00fchren gesamt',fmtC(totalFee),totalFeeBtcSim.toFixed(6)+' BTC'):tile('Geb\u00fchren gesamt',fmtC(totalFee),'');
         g('rosi-summary').innerHTML=
           tile('Startdatum',startDateStr,'')+
           tile('Enddatum',endDateStr,'')+
@@ -4591,7 +5152,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         if(!futBtc){elR.style.display='none';return;}
 
         var dateEl=g('zk-date');
-        var futDate=dateEl&&dateEl.value?new Date(dateEl.value):null;
+        var futDate=dateEl&&dateEl.value?pD(dateEl.value):null;
         var extRate=parseFloat(g('zk-rate').value)||null; /* override rate for matured loans */
 
         var today=new Date();
@@ -4602,7 +5163,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         /* ── Per-loan calculations ── */
         var rows=[];
         act.forEach(function(l,i){
-          var startD=new Date(l.start);
+          var startD=pD(l.start);
           var matD=aM(l.start,l.term);
           var lU=toU(l.amount,l.c);
 
@@ -4630,11 +5191,11 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           var colValueFut=l.col*futBtc;
 
           /* LTV at target */
-          var ltvNow=colValueNow>0?lU/colValueNow*100:null;
+          var ltvNow=colValueNow>0?ltvU(l)/colValueNow*100:null;
           var ltvFut=colValueFut>0?debtAtTarget/colValueFut*100:null;
 
           /* MC1 price (73% LTV threshold) */
-          var mc1=l.col>0?debtAtTarget/(0.73*l.col):null;
+          var mc1=l.col>0?debtAtTarget/(tW()*l.col):null;
 
           /* P&L: collateral value gain minus cost of debt */
           var colGain=colValueFut-colValueNow;
@@ -4734,7 +5295,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         }
 
         /* ── Table ── */
-        var ltvColor=function(v){return v===null?'':v>=95?'#dc2626':v>=79?'#ea580c':v>=73?'#d97706':'#16a34a';};
+        var ltvColor=function(v){return v===null?'':lc(v);};
         var tbl='<thead><tr>'+
           '<th>Kredit</th>'+
           '<th>Collateral</th>'+
@@ -4989,7 +5550,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var avail=act2.concat(clo2);
         var cur=sel.value;
         sel.innerHTML='<option value="">— Kredit wählen —</option>'+
-          avail.map(function(l){var i=loans.indexOf(l);var tag=l.status==='closed'?' ✓':' ●';return '<option value="'+i+'">'+l.name+tag+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
+          avail.map(function(l){var i=loans.indexOf(l);var tag=l.status==='closed'?' ✓':' ●';return '<option value="'+i+'">'+esc(l.name)+tag+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
         if(cur)sel.value=cur;
       },
       gvlFill:function(){
@@ -5011,7 +5572,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         el.value='';el.disabled=false;el.placeholder='80000';el._btcStartUSD=null;
         /* Startdatum anzeigen */
         var ds=g('gvl-start-date');
-        if(ds)ds.textContent=l.start?('('+new Date(l.start).toLocaleDateString('de-CH')+')'):'';
+        if(ds)ds.textContent=l.start?('('+pD(l.start).toLocaleDateString('de-CH')+')'):'';
         if(l.btcStart&&l.btcStart>0){
           /* Gespeicherter Wert vorhanden — l.btcStart ist immer USD */
           el._btcStartUSD=l.btcStart;
@@ -5035,7 +5596,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           /* GVL: Startdatum des Kredits */
           dates[l.start]=1;
           /* Dcol-Chart: alle vergangenen Monatsersten ab Kreditstart */
-          var s=new Date(l.start);
+          var s=pD(l.start);
           var mStart=new Date(s.getFullYear(),s.getMonth(),1);
           for(var m=new Date(mStart);m<firstOfThisMonth;m=new Date(m.getFullYear(),m.getMonth()+1,1)){
             var iso=m.getFullYear()+'-'+String(m.getMonth()+1).padStart(2,'0')+'-01';
@@ -5053,6 +5614,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         /* Auto-load historic price silently on card render */
         var sugEl=g(wid+'-suggest');
         if(!sugEl||!startDate)return;
+        var lid=String(wid||'').replace(/^bsw-/,'');
         d.btcHistPrice(startDate,function(usd){
           if(!usd){
             sugEl.style.display='block';
@@ -5060,25 +5622,25 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
               '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
                 '<span style="font-size:11px;color:var(--warn)">&#9888; Historischer Preis konnte nicht geladen werden (CoinGecko Rate-Limit). Bitte manuell eintragen:</span>'+
                 '<input id="bsw-manual-'+i+'" type="number" placeholder="z.B. 85000" step="1" style="width:110px;font-size:11px;padding:2px 6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">'+
-                '<button onclick="d.applyManualBtc('+i+')" style="font-size:11px;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:4px;cursor:pointer;padding:2px 7px">Speichern</button>'+
+                '<button onclick="d.applyManualBtc('+i+',\''+escJs(lid)+'\')" style="font-size:11px;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:4px;cursor:pointer;padding:2px 7px">Speichern</button>'+
               '</div>';
             return;
           }
           sugEl.style.display='block';
           sugEl.innerHTML=
             '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
-              '<span style="font-size:11px;color:var(--text3)">Historischer Preis am '+new Date(startDate).toLocaleDateString('de-CH')+': <b style="color:var(--text)">$'+Math.round(usd).toLocaleString('de-CH')+'</b></span>'+
-              '<button onclick="d.applyHistBtc('+i+','+Math.round(usd)+')" style="font-size:11px;color:#fff;background:var(--ok);border:none;border-radius:4px;cursor:pointer;padding:2px 8px">&#10003; Übernehmen</button>'+
+              '<span style="font-size:11px;color:var(--text3)">Historischer Preis am '+pD(startDate).toLocaleDateString('de-CH')+': <b style="color:var(--text)">$'+Math.round(usd).toLocaleString('de-CH')+'</b></span>'+
+              '<button onclick="d.applyHistBtc('+i+','+Math.round(usd)+',\''+escJs(lid)+'\')" style="font-size:11px;color:#fff;background:var(--ok);border:none;border-radius:4px;cursor:pointer;padding:2px 8px">&#10003; Übernehmen</button>'+
               '<span style="font-size:11px;color:var(--text4)">oder eigener Preis:</span>'+
               '<input id="bsw-manual-'+i+'" type="number" placeholder="z.B. '+Math.round(usd)+'" step="1" style="width:110px;font-size:11px;padding:2px 6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">'+
-              '<button onclick="d.applyManualBtc('+i+')" style="font-size:11px;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:4px;cursor:pointer;padding:2px 7px">Speichern</button>'+
+              '<button onclick="d.applyManualBtc('+i+',\''+escJs(lid)+'\')" style="font-size:11px;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:4px;cursor:pointer;padding:2px 7px">Speichern</button>'+
             '</div>';
         });
       },
-      loadHistBtc:function(i,lid,startDate){
+      loadHistBtc:function(i,lid,startDate,btnEl){
         /* Manual trigger — same as auto but shows loading state */
         var wid='bsw-'+lid;
-        var btn=event&&event.target;
+        var btn=btnEl||null;
         if(btn){btn.textContent='Laden…';btn.disabled=true;}
         d.btcHistPrice(startDate,function(usd){
           if(btn){btn.textContent='Historischen Preis laden';btn.disabled=false;}
@@ -5090,7 +5652,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
                 '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
                   '<span style="font-size:11px;color:var(--warn)">&#9888; Historischer Preis konnte nicht geladen werden (CoinGecko Rate-Limit). Bitte manuell eintragen:</span>'+
                   '<input id="bsw-manual-'+i+'" type="number" placeholder="z.B. 85000" step="1" style="width:110px;font-size:11px;padding:2px 6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">'+
-                  '<button onclick="d.applyManualBtc('+i+')" style="font-size:11px;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:4px;cursor:pointer;padding:2px 7px">Speichern</button>'+
+                  '<button onclick="d.applyManualBtc('+i+',\''+escJs(lid)+'\')" style="font-size:11px;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:4px;cursor:pointer;padding:2px 7px">Speichern</button>'+
                 '</div>';
             }
             return;
@@ -5098,26 +5660,31 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           d.loadHistBtc_auto(i,startDate,wid);
         });
       },
-      applyHistBtc:function(i,usd){
-        loans[i].btcStart=usd;
+      applyHistBtc:function(i,usd,id){
+        var l=lRef(i,id);
+        if(!l)return;
+        l.btcStart=usd;
         save();d.loans();d.ov();
       },
-      applyManualBtc:function(i){
+      applyManualBtc:function(i,id){
         var inp=g('bsw-manual-'+i);
-        if(!inp)return;
+        var l=lRef(i,id);
+        if(!inp||!l)return;
         var val=parseFloat(inp.value);
         if(!val||val<=0)return;
-        loans[i].btcStart=val;
+        l.btcStart=val;
         save();d.loans();d.ov();
       },
       btcHistPrice:function(dateISO, cb){
         if(!dateISO){cb(null,false);return;}
         /* 1. localStorage cache */
         var CACHE_KEY='ffd_btc_hist_'+dateISO;
+        var cachedUsd=null;
         try{
           var cached=localStorage.getItem(CACHE_KEY);
-          if(cached){var p=JSON.parse(cached);if(p&&p.usd){cb(p.usd,false);return;}}
+          if(cached){var pc=JSON.parse(cached);if(pc&&pc.usd){cachedUsd=pc.usd;}}
         }catch(e){}
+        if(cachedUsd){try{cb(cachedUsd,false);}catch(e){console.error('[btcHistPrice] callback:',e);}return;}
         /* 2. Hardcoded local price table (2022–2025, no API needed) */
         var local=btcHistLocal(dateISO);
         if(local){
@@ -5127,20 +5694,31 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         /* 3. Fallback: CoinGecko API (for dates outside hardcoded range) */
         var parts=dateISO.split('-');
         var cgDate=parts[2]+'-'+parts[1]+'-'+parts[0];
+        /* Call the callback at most once — the old .catch() sat behind the
+           success handler, so an exception thrown inside cb() triggered a
+           second, contradicting call. */
+        var done=false;
+        function once(v,err){if(done)return;done=true;try{cb(v,err);}catch(e){console.error('[btcHistPrice] callback:',e);}}
+        var retry=arguments.length>2?arguments[2]:0;
         fetch('https://api.coingecko.com/api/v3/coins/bitcoin/history?date='+cgDate+'&localization=false')
           .then(function(r){
-            if(r.status===429){cb(null,'ratelimit');return null;}
-            if(r.status===401||r.status===403){cb(null,'auth');return null;}
-            if(!r.ok){cb(null,'error');return null;}
+            if(r.status===429){
+              /* Back off and retry, like gvlFetchHistoric already does */
+              if(retry<3){done=true;setTimeout(function(){d.btcHistPrice(dateISO,cb,retry+1);},Math.pow(2,retry)*5000);return null;}
+              once(null,'ratelimit');return null;
+            }
+            if(r.status===401||r.status===403){once(null,'auth');return null;}
+            if(!r.ok){once(null,'error');return null;}
             return r.json();
           })
           .then(function(data){
-            if(data===null||data===undefined)return;
+            if(done)return;               /* a retry was scheduled */
+            if(data===null||data===undefined){once(null,'notfound');return;}
             var usd=data&&data.market_data&&data.market_data.current_price&&data.market_data.current_price.usd;
-            if(usd){try{localStorage.setItem(CACHE_KEY,JSON.stringify({usd:usd,ts:Date.now()}));}catch(e){}cb(usd,false);}
-            else{cb(null,'notfound');}
+            if(usd){try{localStorage.setItem(CACHE_KEY,JSON.stringify({usd:usd,ts:new Date().getTime()}));}catch(e){}once(usd,false);}
+            else{once(null,'notfound');}
           })
-          .catch(function(){cb(null,'error');});
+          .catch(function(){once(null,'error');});
       },
 
       gvlApplyPrice:function(priceUSD){
@@ -5228,7 +5806,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         d.btcHistPrice(iso,function(usd,err){
           if(usd){
             var rounded=Math.round(usd);
-            var dateStr=new Date(iso).toLocaleDateString('de-CH');
+            var dateStr=pD(iso).toLocaleDateString('de-CH');
             var btn='<button onclick="var f=document.getElementById(\''
               +priceId+'\');if(f)f.value='+rounded
               +';document.getElementById(\''+hintId+'\').style.display=\'none\'"'
@@ -5298,11 +5876,11 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var act=loans.filter(function(l){return l.status==='active';})
           .slice().sort(function(a,b){return aM(a.start,a.term)-aM(b.start,b.term);});
         sel.innerHTML='<option value="">— Kredit wählen —</option>'+
-          act.map(function(l,i){return '<option value="'+loans.indexOf(l)+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
+          act.map(function(l,i){return '<option value="'+loans.indexOf(l)+'">'+esc(l.name)+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
         /* also populate rosi selector */
         var rsel=g('rosi-loan-sel');if(!rsel)return;
         rsel.innerHTML='<option value="">— Kredit wählen —</option>'+
-          act.map(function(l){return '<option value="'+loans.indexOf(l)+'">'+l.name+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
+          act.map(function(l){return '<option value="'+loans.indexOf(l)+'">'+esc(l.name)+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
       },
       rosiCcyChange:function(){
         var ccy=g('rosi-ccy').value||'USD';
@@ -5368,8 +5946,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           var base=frU(due,l.c);
           var addInterest=base*(rate/100)*(mo/12);
           var addUSD=toU(addInterest,l.c);
-          var newEnd=new Date(endDate);
-          newEnd.setMonth(newEnd.getMonth()+mo);
+          var newEnd=aM(endDate,mo);
           return '<div class="card" style="border:1px solid var(--border);box-shadow:none;padding:.75rem">'+
             '<div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:.4rem">+'+mo+' Monate</div>'+
             '<div style="font-size:12px;color:var(--text2);margin-bottom:2px">Zusatzkosten: <b>'+fmt(addInterest,l.c)+'</b></div>'+
@@ -5404,13 +5981,13 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           var curLtv=(due/(l.col*R.BTC))*100;
           var simLtv=(due/(l.col*simBtc))*100;
           /* MC trigger prices (BTC/USD) — all use due (Kapital + Zinsen) */
-          var mc1P=due/0.73/l.col;
-          var mc2P=due/0.79/l.col;
-          var mc3P=due/0.86/l.col;
+          var mc1P=due/tW()/l.col;
+          var mc2P=due/tC()/l.col;
+          var mc3P=due/tD()/l.col;
           var liqP=due/(0.95*l.col);
           /* Status based on simulated price vs trigger prices */
           var status=simBtc<=liqP?'liq':simBtc<=mc3P?'mc3':simBtc<=mc2P?'mc2':simBtc<=mc1P?'mc1':'safe';
-          var statusLabel={'liq':'⚠️ Liquidiert','mc3':'⚠️ MC3 erreicht (86%)','mc2':'⚠️ MC2 erreicht (79%)','mc1':'⚠️ MC1 erreicht (73%)','safe':'✓ Sicher'}[status];
+          var statusLabel={'liq':'⚠️ Liquidiert','mc3':'⚠️ MC3 erreicht ('+(cfg.ltvDanger!=null?cfg.ltvDanger:86)+'%)','mc2':'⚠️ MC2 erreicht ('+(cfg.ltvCrit!=null?cfg.ltvCrit:79)+'%)','mc1':'⚠️ MC1 erreicht ('+(cfg.ltvWarn!=null?cfg.ltvWarn:73)+'%)','safe':'✓ Sicher'}[status];
           var statusColor={'liq':'#dc2626','mc3':'#dc2626','mc2':'#ea580c','mc1':'#d97706','safe':'#16a34a'}[status];
           /* Next threshold the sim price is approaching */
           var nextThreshP=simBtc>mc1P?mc1P:simBtc>mc2P?mc2P:simBtc>mc3P?mc3P:liqP;
@@ -5420,7 +5997,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             /* Header row */
             '<div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem .85rem;border-bottom:1px solid var(--border)">'+
               '<div>'+
-                '<b style="font-size:13px;color:var(--text)">'+l.name+'</b>'+
+                '<b style="font-size:13px;color:var(--text)">'+esc(l.name)+'</b>'+
                 '<span style="font-size:11px;color:var(--text4);margin-left:6px">'+fmt(l.amount,l.c)+' · '+l.col+' BTC</span>'+
               '</div>'+
               '<div style="text-align:right">'+
@@ -5484,7 +6061,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var n=parseInt(v);
         if(isNaN(n)||n<0||n>100)return;
         ltvThresh=n;
-        localStorage.setItem('ffd_ltv_thresh',n);
+        cfg.ltvDisplay=n;
+        saveSettings(cfg);
         d.ov();
       },
       /* ─── Roll-Over: chain dropdown helper ─── */
@@ -5540,16 +6118,21 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           var totalDueUSD=members.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
           var activeCount=members.filter(function(l){return l.status==='active';}).length;
           var closedCount=members.length-activeCount;
-          var firstStart=new Date(members[0].start);
-          var lastEnd=aM(members[members.length-1].start,members[members.length-1].term);
-          var totalMonths=Math.round((lastEnd-firstStart)/(1000*60*60*24*30.44));
+          var firstStart=pD(members[0].start);
+          /* The chain ends with the latest maturity, not with the loan that
+             started last — a long first loan can outlive a short later one. */
+          var lastEnd=members.reduce(function(mx,l){
+            var e=aM(l.start,l.term);
+            return (mx===null||e>mx)?e:mx;
+          },null);
+          var totalMonths=Math.max(1,Math.round((lastEnd-firstStart)/(1000*60*60*24*30.44)));
           var avgAmount=members.reduce(function(s,l){return s+toU(l.amount,l.c);},0)/members.length;
           /* Weighted avg rate */
           var wRateNum=members.reduce(function(s,l){return s+l.rate*toU(l.amount,l.c);},0);
           var wRateDen=members.reduce(function(s,l){return s+toU(l.amount,l.c);},0);
           var avgRate=wRateDen>0?wRateNum/wRateDen:0;
-          /* Effective annual rate = totalCostUSD / avgAmount / (totalMonths/12) */
-          var effRate=avgAmount>0&&totalMonths>0?(totalCostUSD/avgAmount/(totalMonths/12)*100):0;
+          /* Effective annual rate, compounded over the chain's real runtime */
+          var effRate=avgAmount>0&&totalMonths>0?((Math.pow(1+totalCostUSD/avgAmount,12/totalMonths)-1)*100):0;
           /* Chain name = name of first loan */
           var chainName=members[0].name.replace(/ v\d+$/i,'').replace(/ \(Kopie\)$/i,'');
 
@@ -5559,7 +6142,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             '<div style="display:flex;align-items:center;gap:.6rem">'+
               '<span style="font-size:18px">🔗</span>'+
               '<div>'+
-                '<div style="font-size:14px;font-weight:700;color:var(--text)">'+chainName+'</div>'+
+                '<div style="font-size:14px;font-weight:700;color:var(--text)">'+esc(chainName)+'</div>'+
                 '<div style="font-size:11px;color:var(--text4)">'+
                   members.length+' Kredit'+(members.length!==1?'e':'')+
                   (activeCount?' · <span style="color:var(--ok)">'+activeCount+' aktiv</span>':'')+
@@ -5601,12 +6184,12 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             var lBep=lColBtc>0?(lBtcStart+costUSD/lColBtc):null;
             html+='<tr>'+
               '<td style="color:var(--text4);font-size:11px">'+(mi+1)+'</td>'+
-              '<td class="tbl-name">'+l.name+'</td>'+
+              '<td class="tbl-name">'+esc(l.name)+'</td>'+
               '<td><span class="badge '+(isActive?'ba':'bc')+'">'+(isActive?'Aktiv':'Abg.')+'</span></td>'+
               '<td class="amt">'+fmt(l.amount,l.c)+'</td>'+
               '<td>'+l.rate+'%</td>'+
               '<td>'+l.term+' Mt.</td>'+
-              '<td>'+new Date(l.start).toLocaleDateString('de-CH')+'</td>'+
+              '<td>'+pD(l.start).toLocaleDateString('de-CH')+'</td>'+
               '<td>'+end+'</td>'+
               '<td class="amt">'+fmt(iUSD,'USD')+'</td>'+
               '<td class="amt" style="font-weight:600">'+fmt(dueUSD,'USD')+'</td>'+
@@ -5616,10 +6199,16 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             '</tr>';
           });
           /* Totals row */
-          /* Break-even total: first loan's btcStart + totalCostUSD / totalColBtc */
-          var totalColBtc=members.reduce(function(s,l){return s+(l.col||0);},0);
-          var firstBtcStart=members[0].btcStart||R.BTC;
-          var totalBep=totalColBtc>0?(firstBtcStart+totalCostUSD/totalColBtc):null;
+          /* Break-even total: a roll-over re-pledges the SAME bitcoin each
+             period, so the chain's collateral is the largest single pledge —
+             summing the members would divide the cost several times over and
+             understate the break-even price. */
+          var totalColBtc=members.reduce(function(mx,l){return Math.max(mx,l.col||0);},0);
+          /* Without a stored start price there is no meaningful chain
+             break-even — falling back to spot would produce a "target" that
+             just tracks the current price. */
+          var firstBtcStart=members[0].btcStart||null;
+          var totalBep=(firstBtcStart&&totalColBtc>0)?(firstBtcStart+totalCostUSD/totalColBtc):null;
           html+='<tr style="background:var(--bg2);font-weight:700;border-top:2px solid var(--border)">'+
             '<td colspan="8" style="font-size:12px;color:var(--text4)">Total</td>'+
             '<td class="amt">'+fmt(totalInterestUSD,'USD')+'</td>'+
@@ -5638,7 +6227,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
             '<span class="mc-lbl" style="margin-bottom:.4rem;display:block">'+standalone.length+' Kredit'+(standalone.length!==1?'e':'')+' ohne Roll-Over-Kette</span>'+
             '<div style="display:flex;flex-wrap:wrap;gap:.4rem">'+
             standalone.map(function(l){
-              return '<span style="font-size:12px;background:var(--bg3);border-radius:6px;padding:2px 8px;color:var(--text3)">'+l.name+'</span>';
+              return '<span style="font-size:12px;background:var(--bg3);border-radius:6px;padding:2px 8px;color:var(--text3)">'+esc(l.name)+'</span>';
             }).join('')+
             '</div>'+
           '</div>';
@@ -5674,6 +6263,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var totalInterestPaid=clo.reduce(function(s,l){return s+intU(l);},0);
         var totalInterestOut=act.reduce(function(s,l){return s+intU(l);},0);
         var totalFeePaid=loans.reduce(function(s,l){return s+feeU(l);},0);
+        var totalFeeActive=loans.filter(function(l){return l.status==='active';}).reduce(function(s,l){return s+feeU(l);},0);
         var totalFeeOutBtc=0; // not used anymore
         var totalFeePaidBtc=loans.reduce(function(s,l){return s+(l.feeBtc||0);},0);
         var totalFeeOut=0; // fees are always paid upfront
@@ -5684,7 +6274,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var allC=loans.reduce(function(s,l){return s+l.col;},0);
         var ltvArr=act.filter(function(l){return l.col>0;}).map(function(l){
           var due=toU(l.amount,l.c)+intU(l);
-          var mc1Price=due/(0.73*l.col);
+          var mc1Price=due/(tW()*l.col);
           return {name:l.name,ltv:due/(l.col*R.BTC)*100,puffer:((R.BTC-mc1Price)/R.BTC)*100};
         });
         var avgLtv=ltvArr.length?ltvArr.reduce(function(s,x){return s+x.ltv;},0)/ltvArr.length:0;
@@ -5694,15 +6284,15 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
 
         /* ── Zeit & Fälligkeiten ── */
         var thisYear=today.getFullYear();
-        var dueThisYear=loans.filter(function(l){return aM(l.start,l.term).getFullYear()===thisYear;}).length;
-        var dueNextYear=loans.filter(function(l){return aM(l.start,l.term).getFullYear()===thisYear+1;}).length;
-        var dueIn2Years=loans.filter(function(l){return aM(l.start,l.term).getFullYear()===thisYear+2;}).length;
-        var due7=loans.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=7;}).length;
-        var due14=loans.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=14;}).length;
-        var due30=loans.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=30;}).length;
-        var due90=loans.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=90;}).length;
-        var due180=loans.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=180;}).length;
-        var due365=loans.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=365;}).length;
+        var dueThisYear=act.filter(function(l){return aM(l.start,l.term).getFullYear()===thisYear;}).length;
+        var dueNextYear=act.filter(function(l){return aM(l.start,l.term).getFullYear()===thisYear+1;}).length;
+        var dueIn2Years=act.filter(function(l){return aM(l.start,l.term).getFullYear()===thisYear+2;}).length;
+        var due7=act.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=7;}).length;
+        var due14=act.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=14;}).length;
+        var due30=act.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=30;}).length;
+        var due90=act.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=90;}).length;
+        var due180=act.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=180;}).length;
+        var due365=act.filter(function(l){var d=(aM(l.start,l.term)-today)/86400000;return d>=0&&d<=365;}).length;
         /* Colour helper: colour based on the bucket's own urgency */
         function dueColor(n,days){
           if(!n)return null;
@@ -5713,7 +6303,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           return null;                     /* >90d: no special colour */
         }
         var avgTerm=loans.length?loans.reduce(function(s,l){return s+l.term;},0)/loans.length:0;
-        var dates=loans.map(function(l){return new Date(l.start);}).filter(function(x){return !isNaN(x);});
+        var dates=loans.map(function(l){return pD(l.start);}).filter(function(x){return !isNaN(x);});
         var oldest=dates.length?new Date(Math.min.apply(null,dates)):null;
         var newest=dates.length?new Date(Math.max.apply(null,dates)):null;
 
@@ -5748,7 +6338,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var avgAmtClo=clo.length?cloVolume/clo.length:0;
         /* Gesamte Zinsen effektiv (aufgelaufen) */
         var totalInterestEver=clo.reduce(function(s,l){return s+intU(l);},0)+act.reduce(function(s,l){
-          var start=new Date(l.start),end=aM(l.start,l.term),now5=new Date();
+          var start=pD(l.start),end=aM(l.start,l.term),now5=new Date();
           var elapsed=Math.max(0,Math.min(now5-start,end-start));
           var total=Math.max(end-start,1);
           return s+intU(l)*(elapsed/total);
@@ -5844,7 +6434,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         html+='<div class="mc"><span class="mc-lbl">Zinsen / Volumen</span><span class="mc-val">'+zinsBelastungAll.toFixed(1)+'%</span>'+
           sub3(zinsBelastung.toFixed(1)+'%',clo.length?zinsBelastungClo.toFixed(1)+'%':dash,zinsBelastungAll.toFixed(1)+'%')+'</div>';
         html+='<div class="mc"><span class="mc-lbl">Geb\u00fchren bezahlt (alle)</span><span class="mc-val">'+totalFeePaidBtc.toFixed(8)+' BTC</span><span class="mc-sub" style="font-size:10px;line-height:1.4">'+feePaidGrid+'</span></div>';
-        html+=tile('Gesamtkosten (Zins+Geb\u00fchr)',fmt(totalInterestOut+totalFeePaid,'USD'),'aktive Kredite');
+        html+=tile('Gesamtkosten (Zins+Geb\u00fchr)',fmt(totalInterestOut+totalFeeActive,'USD'),'aktive Kredite');
         html+='</div>';
 
         html+=section('Laufzeit');
@@ -5863,9 +6453,9 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
           (btcValGrid?'<span class="mc-sub" style="margin-top:.35rem">'+btcValGrid+'</span>':'')+
         '</div>';
         html+=tile('\u00d8 LTV aktive Kredite',avgLtv.toFixed(1)+'%','',lc(avgLtv));
-        html+=tile('H\u00f6chster LTV',maxLtv?maxLtv.ltv.toFixed(1)+'%':dash,maxLtv?maxLtv.name:'',maxLtv?lc(maxLtv.ltv):'');
-        html+=tile('Niedrigster LTV',minLtv?minLtv.ltv.toFixed(1)+'%':dash,minLtv?minLtv.name:'',minLtv?lc(minLtv.ltv):'');
-        html+=tile('\u00d8 Puffer bis MC1',avgPuffer.toFixed(1)+'%','bis 73% LTV-Schwelle',avgPuffer<10?'#dc2626':avgPuffer<20?'#d97706':'#16a34a');
+        html+=tile('H\u00f6chster LTV',maxLtv?maxLtv.ltv.toFixed(1)+'%':dash,maxLtv?esc(maxLtv.name):'',maxLtv?lc(maxLtv.ltv):'');
+        html+=tile('Niedrigster LTV',minLtv?minLtv.ltv.toFixed(1)+'%':dash,minLtv?esc(minLtv.name):'',minLtv?lc(minLtv.ltv):'');
+        html+=tile('\u00d8 Puffer bis MC1',avgPuffer.toFixed(1)+'%','bis '+(cfg.ltvWarn!=null?cfg.ltvWarn:73)+'% LTV-Schwelle',avgPuffer<10?'#dc2626':avgPuffer<20?'#d97706':'#16a34a');
         html+='</div>';
 
         html+=section('F\u00e4lligkeiten');
@@ -5901,8 +6491,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         html+=section('Effizienz');
         html+='<div class="mc"><span class="mc-lbl">Effektiver Jahreszins</span><span class="mc-val">'+effJahreszinsAll.toFixed(2)+'%</span>'+
           sub3(effJahreszins.toFixed(2)+'%',null,effJahreszinsAll.toFixed(2)+'%')+'</div>';
-        html+=tile('G\u00fcnstigster Kredit',cheapest?cheapest.rate.toFixed(2)+'%':dash,cheapest?cheapest.name:'');
-        html+=tile('Teuerster Kredit',priciest?priciest.rate.toFixed(2)+'%':dash,priciest?priciest.name:'');
+        html+=tile('G\u00fcnstigster Kredit',cheapest?cheapest.rate.toFixed(2)+'%':dash,cheapest?esc(cheapest.name):'');
+        html+=tile('Teuerster Kredit',priciest?priciest.rate.toFixed(2)+'%':dash,priciest?esc(priciest.name):'');
         if(beAvg!==null){
           html+='<div class="mc"><span class="mc-lbl">Break-even \u00d8 (einfach)</span>'+
             '<span class="mc-val" style="color:'+(beReached?'var(--ok)':'var(--warn)')+'">$'+Math.round(beAvg).toLocaleString('de-CH')+'</span>'+
@@ -6009,6 +6599,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         var danger=parseInt(g('se-ltv-danger').value);
         var disp=parseInt(g('se-ltv-display').value);
         if(isNaN(w)||isNaN(c)||isNaN(danger)||isNaN(disp)){alert('Bitte gültige Zahlen eingeben.');return;}
+        if(w<1||danger>94){alert('Die Schwellen müssen zwischen 1% und 94% liegen (Liquidation liegt bei 95%).');return;}
+        if(disp<0||disp>100){alert('Der Anzeige-Filter muss zwischen 0% und 100% liegen.');return;}
         if(w>=c){alert('MC1-Schwelle muss kleiner als MC2-Schwelle sein.');return;}
         if(c>=danger){alert('MC2-Schwelle muss kleiner als MC3-Schwelle sein.');return;}
         cfg.ltvWarn=w;cfg.ltvCrit=c;cfg.ltvDanger=danger;cfg.ltvDisplay=disp;
@@ -6026,10 +6618,21 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         {id:'tl', label:'Timeline'},
         {id:'ro', label:'Roll-Overs'},
         {id:'st', label:'Stress-Test'},
-        {id:'to', label:'Tools'}
+        {id:'to', label:'Tools'},
+        {id:'bk', label:'Portfolio'}
       ],
       applyNavOrder:function(){
         var order=cfg.navOrder||d.NAV_ITEMS.map(function(x){return x.id;});
+        /* Ensure all known NAV_ITEMS appear — add missing ones after their predecessor */
+        d.NAV_ITEMS.forEach(function(item,i){
+          if(order.indexOf(item.id)<0){
+            /* Insert after predecessor if possible, otherwise at end */
+            var prevId=i>0?d.NAV_ITEMS[i-1].id:null;
+            var prevIdx=prevId?order.indexOf(prevId):-1;
+            if(prevIdx>=0)order.splice(prevIdx+1,0,item.id);
+            else order.push(item.id);
+          }
+        });
         var sidebar=document.querySelector('#ffd-root .sidebar');
         if(!sidebar)return;
         /* Collect all nav-items (exclude settings + spacer) */
@@ -6123,6 +6726,295 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         d.applyNavOrder();
         d.seNavOrderRender();
       },
+      bk:function(){
+        var el=g('bk-content');if(!el)return;
+        var act=loans.filter(function(l){return l.status==='active';});
+        var btcReserve=cfg.btcReserve||0;
+        var txBal=d.bkTxBalance();
+        var aC=act.reduce(function(s,l){return s+l.col;},0);
+        var aDue=act.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
+        var totalBTC=btcReserve+aC;
+        var totalBTCvalUSD=totalBTC*R.BTC;
+        var collateralShare=totalBTC>0?(aC/totalBTC*100):0;
+        var reserveShare=totalBTC>0?(btcReserve/totalBTC*100):0;
+        var netWorthUSD=totalBTCvalUSD-aDue;
+        var stackLTV=totalBTCvalUSD>0?(aDue/totalBTCvalUSD*100):0;
+        var monthlyInt=act.reduce(function(s,l){return s+toU(l.amount*(l.rate/100)/12,l.c);},0);
+        var CC2=(['EUR','CHF','USD','USDT','USDC','CZK','PLN','BTC']).filter(visC);
+        var CC3=CC2.filter(function(c){return c!=='BTC';});
+        var CC4=CC2.filter(function(c){return c!=='USD';});
+        function tile(lbl,val,sub,col){
+          return '<div class="mc">'+
+            '<span class="mc-lbl">'+lbl+'</span>'+
+            '<span class="mc-val"'+(col?' style="color:'+col+'"':'')+'>'+val+'</span>'+
+            (sub?'<span class="mc-sub" style="font-size:10px;line-height:1.5">'+sub+'</span>':'')+
+          '</div>';
+        }
+        var sLtvCol=stackLTV>=(cfg.ltvDanger||86)?'var(--err)':stackLTV>=(cfg.ltvWarn||73)?'var(--warn)':'var(--ok)';
+        /* MC1-Reserve: extra BTC needed from cold storage to bring all loans back to MC1 */
+        var mc1ReserveBTC=0;
+        act.forEach(function(l){
+          if(!l.col)return;
+          var due=toU(l.amount,l.c)+intU(l);
+          var mc1Price=due/(tW()*l.col);
+          if(R.BTC<mc1Price){mc1ReserveBTC+=Math.max(0,due/(tW()*R.BTC)-l.col);}
+        });
+        /* Liquidity buffer: months of interest covered by cold storage */
+        var liquidityMonths=(monthlyInt>0&&btcReserve>0)?Math.floor(btcReserve*R.BTC/monthlyInt):null;
+        /* Hebel-Faktor: Gesamtschulden / Netto-Vermögen */
+        var leverage=netWorthUSD>0?(aDue/netWorthUSD):null;
+        /* Zinslast in % des Stack-Werts: Jahreszinsen / totalBTCvalUSD */
+        var annualInt=monthlyInt*12;
+        var intPctStack=totalBTCvalUSD>0?(annualInt/totalBTCvalUSD*100):null;
+        /* Rebalancing to target LTV */
+        var targetLTV=(cfg.ltvWarn||73)/100;
+        var targetCol=R.BTC>0?aDue/(targetLTV*R.BTC):0;
+        var rebalDelta=aC-targetCol;
+        /* Scenario table */
+        var scenarios=[
+          {lbl:'\u221250%',factor:0.5,col:'#dc2626'},
+          {lbl:'\u221230%',factor:0.7,col:'#ea580c'},
+          {lbl:'\u221220%',factor:0.8,col:'#d97706'},
+          {lbl:'\u221210%',factor:0.9,col:'#ca8a04'},
+          {lbl:'Aktuell',factor:1,col:'var(--text)'},
+          {lbl:'+10%',factor:1.1,col:'#16a34a'},
+          {lbl:'+20%',factor:1.2,col:'#15803d'},
+          {lbl:'+50%',factor:1.5,col:'#166534'}
+        ];
+        var scRows='<table class="loans-table"><thead><tr>'+
+          '<th>Szenario</th><th>BTC-Preis</th><th>Stack-Wert</th><th>Netto-Wert</th><th>Stack-LTV</th><th>Portfolio-LTV</th>'+
+        '</tr></thead><tbody>';
+        scenarios.forEach(function(sc){
+          var p=R.BTC*sc.factor;
+          var colVal=aC*p;
+          var stackVal=totalBTC*p;
+          var net=stackVal-aDue;
+          var sLtv=stackVal>0?(aDue/stackVal*100):0;
+          var pLtv=colVal>0?(aDue/colVal*100):0;
+          var netCol=net<0?'color:#dc2626':'color:#16a34a';
+          scRows+='<tr'+(sc.factor===1?' style="background:var(--bg2);font-weight:700"':'')+'>'+
+            '<td style="color:'+sc.col+';font-weight:600">'+sc.lbl+'</td>'+
+            '<td class="amt">$'+Math.round(p).toLocaleString('de-CH')+'</td>'+
+            '<td class="amt">$'+Math.round(stackVal).toLocaleString('de-CH')+'</td>'+
+            '<td class="amt" style="'+netCol+'">$'+Math.round(net).toLocaleString('de-CH')+'</td>'+
+            '<td class="amt" style="color:'+(sLtv>=95?'#dc2626':lc(sLtv))+'">'+sLtv.toFixed(1)+'%</td>'+
+            '<td class="amt" style="color:'+(pLtv>=95?'#dc2626':lc(pLtv))+'">'+pLtv.toFixed(1)+'%</td>'+
+          '</tr>';
+        });
+        scRows+='</tbody></table>';
+        var html=
+          '<span class="sh">Portfolio \u2014 Gesamt\u00fcbersicht</span>'+
+          '<div class="mg" style="margin-bottom:1.25rem">'+
+            /* Vermögen */
+            tile('Gesamt-BTC',totalBTC.toFixed(8)+' \u20bf',usdGrid(CC3,totalBTCvalUSD))+
+            tile('Cold Storage / Reserve',(btcReserve>0?btcReserve.toFixed(8)+' \u20bf':'—'),(btcReserve>0?usdGrid(CC3,btcReserve*R.BTC)+' ('+reserveShare.toFixed(1)+'% des Stacks)':'Bitcoin-Stack eingeben \u2193'))+
+            tile('Hinterlegtes Collateral',(aC>0?aC.toFixed(8)+' \u20bf':'—'),(aC>0?usdGrid(CC3,aC*R.BTC)+' ('+collateralShare.toFixed(1)+'%)':''))+
+            /* Schulden & Kosten */
+            tile('Offene Schulden',(aDue>0?fmt(frU(aDue,'USD'),'USD'):'—'),(aDue>0?usdGrid(CC4,aDue):''))+
+            tile('Monatl. Zinslast',(monthlyInt>0?usdGrid(CC3,monthlyInt):'—'),'laufende Zinskosten')+
+            tile('Zinslast / Stack',(intPctStack!==null?intPctStack.toFixed(2)+'% p.a.':'—'),(intPctStack!==null?'Jahreszinsen relativ zum Gesamtportfolio-Wert':''),(intPctStack!==null?(intPctStack>=10?'var(--err)':intPctStack>=5?'var(--warn)':'var(--ok)'):null))+
+            /* Ergebnis */
+            tile('Netto-Verm\u00f6gen',fmt(frU(netWorthUSD,'USD'),'USD'),usdGrid(CC4,netWorthUSD),(netWorthUSD<0?'var(--err)':'var(--ok)'))+
+            tile('Stack-LTV',(totalBTCvalUSD>0?stackLTV.toFixed(1)+'%':'—'),'Schulden \u00f7 Gesamtportfolio',sLtvCol)+
+            tile('Hebel-Faktor',(leverage!==null?leverage.toFixed(2)+'\u00d7':'—'),(leverage!==null?(leverage<1?'\u2713 Ungehebelt':leverage<2?'Moderat':leverage<5?'Hoch':'\u26a0 Sehr hoch'):'Kein Eigenkapital'),(leverage!==null?(leverage>=5?'var(--err)':leverage>=2?'var(--warn)':'var(--ok)'):null))+
+            tile('Liquidit\u00e4ts-Puffer',(liquidityMonths!==null?liquidityMonths+' Monate':'—'),(btcReserve>0?'Cold Storage deckt Zinsen':'Kein Reserve eingegeben'))+
+          '</div>'+
+          '<span class="sh">Risiko &amp; Handlungsbedarf</span>'+
+          '<div class="mg" style="margin-bottom:1.25rem">'+
+            tile('MC1-Reserve',(mc1ReserveBTC>0.000001?mc1ReserveBTC.toFixed(6)+' \u20bf':'✓ Alle MC1 sicher'),(mc1ReserveBTC>0.000001?'BTC aus Cold Storage um alle MC1 abzuwenden':''),(mc1ReserveBTC>0.000001?'var(--warn)':'var(--ok)'))+
+            tile('Rebalancing',(Math.abs(rebalDelta)>0.000001?(rebalDelta>0?'\u2212'+rebalDelta.toFixed(6)+' \u20bf freigeben':'+'+Math.abs(rebalDelta).toFixed(6)+' \u20bf hinzuf\u00fcgen'):'✓ Kein Handlungsbedarf'),'f\u00fcr Ziel-LTV '+(cfg.ltvWarn||73)+'%',(rebalDelta<-0.000001?'var(--warn)':rebalDelta>0.000001?'var(--ok)':null))+
+          '</div>'+
+          '<span class="sh">Szenarien \u2014 BTC-Preisver\u00e4nderung</span>'+
+          '<div class="card" style="margin-bottom:1.25rem;overflow-x:auto">'+scRows+'</div>'+
+          '<span class="sh">Exit-Strategie</span>'+
+          '<div class="card" style="margin-bottom:1.25rem">'+
+            '<p class="note2" style="margin-bottom:.75rem">Bei welchem BTC-Preis kannst du alle Kredite zur\u00fcckzahlen und trotzdem eine gew\u00fcnschte Reserve behalten?</p>'+
+            '<div class="fg">'+
+              '<div class="ff"><label>Gew\u00fcnschte Reserve nach Exit (BTC)</label>'+
+                '<input type="number" id="bk-exit-keep" min="0" step="0.001" placeholder="z.B. 0.1" oninput="d.bkCalcExit()">'+
+              '</div>'+
+            '</div>'+
+            '<div id="bk-exit-result" style="margin-top:.75rem"></div>'+
+          '</div>'+
+          '<span class="sh">Transaktionen</span>'+
+          '<div class="card" style="margin-bottom:1rem">'+
+            '<span class="card-title">Neue Transaktion</span>'+
+            '<div class="fg" style="margin-top:.75rem">'+
+              '<div class="ff"><label>Datum</label><input type="date" id="bk-tx-date"></div>'+
+              '<div class="ff"><label>Typ</label><select id="bk-tx-type">'+
+                '<option value="buy">&#128722; Kauf</option>'+
+                '<option value="sell">&#128200; Verkauf</option>'+
+                '<option value="transfer_in">&#8594; Transfer eingehend</option>'+
+                '<option value="transfer_out">&#8592; Transfer ausgehend</option>'+
+                '<option value="mining">&#9935; Mining</option>'+
+                '<option value="fee">&#128181; Geb\u00fchr</option>'+
+              '</select></div>'+
+              '<div class="ff"><label>BTC-Betrag</label><input type="number" id="bk-tx-btc" min="0" step="0.00000001" placeholder="0.01"></div>'+
+              '<div class="ff"><label>Preis (USD/BTC)</label><input type="number" id="bk-tx-price" min="0" step="1" placeholder="optional"></div>'+
+              '<div class="ff"><label>Geb\u00fchr (BTC)</label><input type="number" id="bk-tx-fee" min="0" step="0.00000001" placeholder="0.00000000"></div>'+
+              '<div class="ff"><label>Notiz</label><input type="text" id="bk-tx-note" placeholder="optional"></div>'+
+            '</div>'+
+            '<div style="margin-top:.75rem;display:flex;gap:8px;align-items:center">'+
+              '<button class="sm primary" id="bk-tx-submit-btn" onclick="d.bkTxAdd()">&#43; Hinzuf\u00fcgen</button>'+
+              '<button class="sm" id="bk-tx-cancel-btn" style="display:none" onclick="d.bkTxEditCancel()">Abbrechen</button>'+
+              '<input type="hidden" id="bk-tx-edit-id">'+
+            '</div>'+
+          '</div>'+
+          (txs.length?'<div class="card" style="margin-bottom:1rem;overflow-x:auto">'+
+            '<table class="loans-table"><thead><tr>'+
+            '<th>Datum</th><th>Typ</th><th>BTC</th><th>Preis (USD)</th><th>Geb\u00fchr (BTC)</th><th>Notiz</th><th></th>'+
+            '</tr></thead><tbody>'+
+            (function(){
+              var typeLabel={buy:'&#128722; Kauf',sell:'&#128200; Verkauf',transfer_in:'&#8594; Eingang',transfer_out:'&#8592; Ausgang',mining:'&#9935; Mining',fee:'&#128181; Geb\u00fchr'};
+              var typeCol={buy:'var(--ok)',sell:'var(--err)',transfer_in:'var(--accent)',transfer_out:'var(--warn)',mining:'#f59e0b',fee:'var(--text4)'};
+              var runBal=0;
+              return txs.map(function(t){
+                var signed=(t.type==='buy'||t.type==='transfer_in'||t.type==='mining')?t.btc:-t.btc;
+                runBal+=txDelta(t);
+                return '<tr>'+
+                  '<td>'+esc(t.date)+'</td>'+
+                  '<td style="color:'+(typeCol[t.type]||'var(--text)')+'">'+(typeLabel[t.type]||esc(t.type))+'</td>'+
+                  '<td class="amt" style="color:'+(typeCol[t.type]||'var(--text)')+'">'+(signed>=0?'+':'\u2212')+t.btc.toFixed(8)+'</td>'+
+                  '<td class="amt">'+(t.price?'$'+Math.round(t.price).toLocaleString('de-CH'):'—')+'</td>'+
+                  '<td class="amt">'+(t.type==='fee'?'<span style="color:var(--text4)" title="Der BTC-Betrag ist bereits die Geb\u00fchr">—</span>':(t.fee?t.fee.toFixed(8):'—'))+'</td>'+
+                  '<td style="font-size:11px;color:var(--text3)">'+esc(t.note)+'</td>'+
+                  '<td style="white-space:nowrap">'+
+                    '<button class="sm" style="padding:2px 7px;font-size:11px;margin-right:3px" data-txid="'+esc(t.id)+'" onclick="d.bkTxEdit(this.dataset.txid)">&#9998;</button>'+
+                    '<button class="sm" style="padding:2px 7px;font-size:11px" data-txid="'+esc(t.id)+'" onclick="d.bkTxDel(this.dataset.txid)">×</button>'+
+                  '</td>'+
+                '</tr>';
+              }).join('')+
+              '<tr style="background:var(--bg2);font-weight:700;border-top:2px solid var(--border)">'+
+              '<td colspan="2">Saldo</td>'+
+              '<td class="amt" style="color:'+(runBal>=0?'var(--ok)':'var(--err)')+'">'+runBal.toFixed(8)+' \u20bf</td>'+
+              '<td colspan="4"></td></tr>';
+            })()+
+            '</tbody></table></div>':'<p class="note2" style="margin-bottom:1.25rem">Noch keine Transaktionen erfasst.</p>')+
+          '<span class="sh">Einstellungen</span>'+
+          '<div class="card" style="margin-bottom:1rem">'+
+            '<span class="card-title">&#8383; Bitcoin-Stack eingeben</span>'+
+            '<p class="note2" style="margin-bottom:.75rem">Gib deinen Bitcoin-Bestand ausserhalb der Kredite ein (Cold Storage, Exchange etc.). Der Saldo wird automatisch aus deinen Transaktionen berechnet — du kannst ihn hier auch manuell überschreiben.</p>'+
+            (cfg.btcReserveManual?'<p class="note2" style="margin-bottom:.75rem;color:var(--warn)">⚠ Manuell überschrieben — Transaktionen ändern diesen Wert nicht mehr. Ledger-Saldo: '+txBal.toFixed(8)+' ₿ <button class="sm" style="margin-left:6px" onclick="d.bkReserveAuto()">Aus Transaktionen übernehmen</button></p>':'')+
+            (txBal<0?'<p class="note2" style="margin-bottom:.75rem;color:var(--err)">⚠ Der Ledger-Saldo ist negativ ('+txBal.toFixed(8)+' ₿) — bitte die erfassten Transaktionen prüfen.</p>':'')+
+            '<div class="fg" style="margin-top:.75rem">'+
+              '<div class="ff">'+
+                '<label>Bitcoin ausserhalb Kredite (BTC)</label>'+
+                '<input type="number" id="bk-reserve" step="0.00000001" placeholder="z.B. 0.5" value="'+(cfg.btcReserve||'')+'">'+
+              '</div>'+
+            '</div>'+
+            '<div style="margin-top:.75rem">'+
+              '<button class="sm primary" onclick="d.bkSave()">&#10003; Speichern</button>'+
+              '<span id="bk-save-msg" style="display:none;margin-left:.75rem;font-size:12px;color:var(--ok)">&#10003; Gespeichert.</span>'+
+            '</div>'+
+          '</div>';
+        el.innerHTML=html;
+        d.bkCalcExit();
+      },
+      bkCalcExit:function(){
+        var el=g('bk-exit-result');if(!el)return;
+        var act=loans.filter(function(l){return l.status==='active';});
+        var aDue=act.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
+        var keepEl=g('bk-exit-keep');
+        var keep=keepEl?parseFloat(keepEl.value)||0:0;
+        var btcReserve=cfg.btcReserve||0;
+        var aC=act.reduce(function(s,l){return s+l.col;},0);
+        var totalBTC=btcReserve+aC;
+        var sellable=totalBTC-keep;
+        if(sellable<=0.000001){
+          el.innerHTML='<span style="color:var(--warn)">Reserve-Wunsch \u00fcbersteigt Gesamt-BTC ('+totalBTC.toFixed(6)+' \u20bf).</span>';
+          return;
+        }
+        if(aDue<=0){el.innerHTML='<span style="color:var(--ok)">\u2713 Keine offenen Schulden.</span>';return;}
+        var exitP=aDue/sellable;
+        var distPct=((R.BTC-exitP)/R.BTC*100);
+        var col=exitP>R.BTC?'var(--err)':distPct<10?'var(--warn)':'var(--ok)';
+        el.innerHTML=
+          '<div class="mg">'+
+            '<div class="mc"><span class="mc-lbl">Ben\u00f6tigter Exit-Preis</span>'+
+            '<span class="mc-val" style="color:'+col+'">$'+Math.round(exitP).toLocaleString('de-CH')+'</span>'+
+            '<span class="mc-sub">'+(exitP>R.BTC?'\u26a0 \u00dcber aktuellem Kurs':distPct.toFixed(1)+'% Abstand zum aktuellen Kurs')+'</span></div>'+
+            '<div class="mc"><span class="mc-lbl">Zu verkaufende BTC</span>'+
+            '<span class="mc-val">'+sellable.toFixed(6)+' \u20bf</span>'+
+            '<span class="mc-sub">\u2248 $'+Math.round(sellable*exitP).toLocaleString('de-CH')+'</span></div>'+
+            '<div class="mc"><span class="mc-lbl">Verbleibende Reserve</span>'+
+            '<span class="mc-val">'+keep.toFixed(6)+' \u20bf</span>'+
+            '<span class="mc-sub">\u2248 $'+Math.round(keep*exitP).toLocaleString('de-CH')+' bei Exit-Preis</span></div>'+
+          '</div>';
+      },
+      bkSave:function(){
+        var v=parseFloat(g('bk-reserve').value)||0;
+        cfg.btcReserve=v;
+        cfg.btcReserveManual=Math.abs(v-d.bkTxBalance())>1e-8;
+        saveSettings(cfg);
+        var msg=g('bk-save-msg');
+        if(msg){msg.style.display='inline';setTimeout(function(){msg.style.display='none';},2000);}
+        d.bk();
+      },
+      bkTxAdd:function(){
+        var date=g('bk-tx-date').value;
+        var type=g('bk-tx-type').value;
+        var btc=parseFloat(g('bk-tx-btc').value);
+        var price=parseFloat(g('bk-tx-price').value)||0;
+        var fee=parseFloat(g('bk-tx-fee').value)||0;
+        var note=(g('bk-tx-note').value||'').trim();
+        if(!date||!type||!btc||btc<=0){alert('Datum, Typ und BTC-Betrag sind Pflichtfelder.');return;}
+        var eidEl=g('bk-tx-edit-id');var editId=eidEl?eidEl.value:'';
+        if(editId){
+          var tx=txs.find(function(t){return t.id===editId;});
+          if(tx){tx.date=date;tx.type=type;tx.btc=btc;tx.price=price;tx.fee=fee;tx.note=note;}
+        } else {
+          txs.push({id:'tx'+new Date().getTime()+Math.random().toString(36).slice(2,6),date:date,type:type,btc:btc,price:price,fee:fee,note:note});
+        }
+        txs.sort(function(a,b){return pD(a.date)-pD(b.date);});
+        saveTxs();
+        d.bkRecalcReserve();
+        d.bk();
+      },
+      bkTxEdit:function(id){
+        var tx=txs.find(function(t){return t.id===id;});
+        if(!tx)return;
+        var f=g('bk-tx-date');if(f)f.value=tx.date;
+        var ty=g('bk-tx-type');if(ty)ty.value=tx.type;
+        var b=g('bk-tx-btc');if(b)b.value=tx.btc;
+        var p=g('bk-tx-price');if(p)p.value=tx.price||'';
+        var fe=g('bk-tx-fee');if(fe)fe.value=tx.fee||'';
+        var n=g('bk-tx-note');if(n)n.value=tx.note||'';
+        var eid=g('bk-tx-edit-id');if(eid)eid.value=id;
+        var btn=g('bk-tx-submit-btn');if(btn)btn.textContent='✓ Speichern';
+        var cancel=g('bk-tx-cancel-btn');if(cancel)cancel.style.display='inline';
+        var form=g('bk-tx-date');if(form)form.scrollIntoView({behavior:'smooth',block:'center'});
+      },
+      bkTxEditCancel:function(){
+        var eid=g('bk-tx-edit-id');if(eid)eid.value='';
+        var btn=g('bk-tx-submit-btn');if(btn)btn.textContent='+ Hinzufügen';
+        var cancel=g('bk-tx-cancel-btn');if(cancel)cancel.style.display='none';
+        ['bk-tx-date','bk-tx-btc','bk-tx-price','bk-tx-fee','bk-tx-note'].forEach(function(id){var el=g(id);if(el)el.value='';});
+        var ty=g('bk-tx-type');if(ty)ty.selectedIndex=0;
+      },
+      bkTxDel:function(id){
+        txs=txs.filter(function(t){return t.id!==id;});
+        saveTxs();
+        d.bkRecalcReserve();
+        d.bk();
+      },
+      bkRecalcReserve:function(){
+        /* A manually saved reserve wins — the card promises it can be
+           overridden, so recording a transaction must not silently reset it. */
+        if(cfg.btcReserveManual)return;
+        cfg.btcReserve=d.bkTxBalance();
+        saveSettings(cfg);
+      },
+      /* Ledger balance, unclamped — a negative result is a data-entry error the
+         user needs to see, not something to hide behind Math.max(0,…). */
+      bkTxBalance:function(){
+        return parseFloat(txs.reduce(function(s,t){return s+txDelta(t);},0).toFixed(8));
+      },
+      bkReserveAuto:function(){
+        cfg.btcReserveManual=false;
+        cfg.btcReserve=d.bkTxBalance();
+        saveSettings(cfg);
+        d.bk();
+      },
       seCountdownSave:function(){
         var days=parseInt(g('se-countdown').value);
         if(isNaN(days)||days<1){alert('Bitte eine gültige Anzahl Tage eingeben.');return;}
@@ -6146,8 +7038,8 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
         g('tl-list').innerHTML='<div class="tl">'+sorted.map(function(l){
           var dl=dL(l.start,l.term),end=aM(l.start,l.term).toLocaleDateString('de-CH'),dot=l.status==='closed'?'done':dl<30?'soon':'',lU=toU(l.amount,l.c);
           return '<div class="ti"><div class="dot '+dot+'"></div>'+
-            '<span class="tdate">'+new Date(l.start).toLocaleDateString('de-CH')+' → '+end+'</span>'+
-            '<span class="tlabel">'+l.name+' <span class="badge '+(l.status==='active'?'ba':'bc')+'" style="margin-left:6px">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span></span>'+
+            '<span class="tdate">'+pD(l.start).toLocaleDateString('de-CH')+' → '+end+'</span>'+
+            '<span class="tlabel">'+esc(l.name)+' <span class="badge '+(l.status==='active'?'ba':'bc')+'" style="margin-left:6px">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span></span>'+
             '<span class="tsub amt">'+fmt(l.amount,l.c)+' · '+l.rate+'% · '+l.term+' Mo'+(l.status==='active'&&dl>0?' · noch <b>'+dl+' Tage</b>':'')+'</span>'+
             '<span class="note" style="margin-top:2px">= '+fmt(lU,'USD')+' / '+fmt(frU(lU,'CHF'),'CHF')+' / '+fmt(frU(lU,'EUR'),'EUR')+'</span></div>';
         }).join('')+'</div>';
@@ -6180,7 +7072,11 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
       if(cfg.hideAmounts){document.getElementById('ffd-root').classList.add('hide-amounts');}
       /* Apply default view button state */
       (function(){var gb=g('view-grid-btn'),lb=g('view-list-btn');if(lView==='list'){if(gb)gb.classList.remove('on');if(lb)lb.classList.add('on');}})();
-      syncStatus();save();pills();d.renderCsw();d.checkAlarms();d.extPopulate();d.vorInit();d.plInit();d.ov();
+      flushNotices();
+      /* Safe to persist unconditionally: storeWrite() refuses to write while
+         the stored data is unreadable, so this cannot destroy a backup. */
+      syncStatus();save();
+      pills();d.renderCsw();d.checkAlarms();d.extPopulate();d.vorInit();d.plInit();d.ov();
       /* Re-render active tab now that Chart.js is available — fixes tabs that bail early on typeof Chart */
       (function(){
         var at=document.querySelector('#ffd-root .tab.on, #ffd-root .nav-item.on');
@@ -6194,27 +7090,41 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
       function hideCgRateLimit(){var rl=g('cg-ratelimit-msg');if(rl)rl.style.display='none';}
       var btn=g('btc-refresh-btn');
       if(btn){btn.disabled=true;btn.textContent='⟳';}
+      var startedAt=new Date().getTime();
       try{
-        var res=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,eur,chf,pln&include_24hr_change=true');
-        console.log('[CoinGecko] HTTP status:', res.status);
-        var data=await res.json();
-        console.log('[CoinGecko] Response:', JSON.stringify(data).slice(0,200));
-        if(data&&data.bitcoin&&data.bitcoin.usd){
-          liveBtc=data.bitcoin.usd;R.BTC=data.bitcoin.usd;R.SAT=data.bitcoin.usd/1e8;
-          if(data.bitcoin.eur)R.EUR=data.bitcoin.usd/data.bitcoin.eur;
-          if(data.bitcoin.chf)R.CHF=data.bitcoin.usd/data.bitcoin.chf;
-          if(data.bitcoin.pln)R.PLN=data.bitcoin.usd/data.bitcoin.pln;
-          if(data.bitcoin.usd_24h_change!=null)btc24hChange=data.bitcoin.usd_24h_change;
-          console.log('[CoinGecko] BTC price loaded:', liveBtc);
-        } else {
-          console.warn('[CoinGecko] Unexpected response structure — no bitcoin.usd found');
-        }
-      }catch(e){console.error('[CoinGecko] Fetch error:', e);}
-      if(!liveBtc){showCgRateLimit();}else{hideCgRateLimit();}
-      pills();d.ov();d.checkAlarms();d.vorFillAll();d.nachPopulate();d.nlpPopulate();d.se2Populate();d.gvlPopulate();d.updateHdrStats();
-      (function(){var at=document.querySelector('#ffd-root .tab.on, #ffd-root .nav-item.on');if(at){var m=at.getAttribute('onclick').match(/'([^']+)'/);if(m){var t=m[1];var fn={tl:d.tl,ch:d.ch,sx:d.sx,st:d.stress};if(fn[t])fn[t]();}}})();
-      setTimeout(function(){d.prefetchHistPrices();},3000);
-      if(btn){btn.textContent='↻';btn.disabled=false;}
+        try{
+          var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
+          var killer=ctrl?setTimeout(function(){ctrl.abort();},15000):null;
+          var res=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,eur,chf,pln&include_24hr_change=true',ctrl?{signal:ctrl.signal}:undefined);
+          if(killer)clearTimeout(killer);
+          var data=await res.json();
+          if(data&&data.bitcoin&&data.bitcoin.usd){
+            /* Discard the response if the user entered a rate while it was in
+               flight — otherwise their input is overwritten seconds later. */
+            if(manualRateAt>startedAt){
+              /* Keep the fetched price available for the live-rate button and
+                 the rate-limit banner, just don't overwrite the manual entry */
+              liveBtc=data.bitcoin.usd;
+              console.info('[CoinGecko] Kursübernahme verworfen — manueller Kurs ist neuer');
+            } else {
+              liveBtc=data.bitcoin.usd;R.BTC=data.bitcoin.usd;R.SAT=data.bitcoin.usd/1e8;
+              if(data.bitcoin.eur)R.EUR=data.bitcoin.usd/data.bitcoin.eur;
+              if(data.bitcoin.chf)R.CHF=data.bitcoin.usd/data.bitcoin.chf;
+              if(data.bitcoin.pln)R.PLN=data.bitcoin.usd/data.bitcoin.pln;
+              if(data.bitcoin.usd_24h_change!=null)btc24hChange=data.bitcoin.usd_24h_change;
+            }
+          } else {
+            console.warn('[CoinGecko] Unerwartete Antwortstruktur — kein bitcoin.usd');
+          }
+        }catch(e){console.error('[CoinGecko] Fetch-Fehler:', e);}
+        if(!liveBtc){showCgRateLimit();}else{hideCgRateLimit();}
+        if(!d._prefetched){d._prefetched=true;setTimeout(function(){d.prefetchHistPrices();},3000);}
+        pills();d.ov();d.checkAlarms();d.vorFillAll();d.nachPopulate();d.nlpPopulate();d.se2Populate();d.gvlPopulate();d.updateHdrStats();
+        renderActiveTab();
+      } finally {
+        /* Must run even if a re-render throws, or the button stays disabled */
+        if(btn){btn.textContent='↻';btn.disabled=false;}
+      }
     };
 
     if(typeof Chart!=='undefined'){
@@ -6244,7 +7154,7 @@ function mc(t){var r=parseFloat(g('ber')?g('ber').value:0)||0;var tm=parseInt(g(
     try{if(cfg.navOrder)d.applyNavOrder();}catch(e){console.error('[startup] Fehler in applyNavOrder:', e);}
     /* Activate tab from URL hash on load, fallback to cfg.defaultTab */
     (function(){
-      var validTabs=['ov','lo','to','st','ca','tl','ch','sx','se','ro'];
+      var validTabs=['ov','lo','to','st','ca','tl','ch','sx','se','ro','bk'];
       var hash=(location.hash||'').replace('#','');
       var target=hash&&validTabs.indexOf(hash)>=0?hash:(cfg.defaultTab||'ov');
       if(target!=='ov'){
