@@ -4,6 +4,98 @@
 ---
 
 
+## v1.4.0 (24.07.2026)
+
+### New Features
+
+**New «Portfolio» Tab (₿)**
+- Shows the entire Bitcoin position, not just the loans: total stack, cold storage vs. pledged collateral, open debt, monthly interest and interest as a share of the stack
+- Net worth, stack LTV, leverage factor (✓ Ungehebelt / Moderat / Hoch / ⚠ Sehr hoch) and a liquidity buffer showing how many months of interest the cold storage covers
+- «MC1-Reserve» — how much BTC would be needed to bring every loan back below MC1 — and a rebalancing hint for the target LTV
+- Scenario table from −50 % to +50 % BTC price with stack value, net worth and both LTVs
+- Exit calculator: the BTC price at which all loans can be repaid while keeping a reserve of your choice
+
+**Transaction Ledger (Portfolio)**
+- Record BTC transactions — Kauf, Verkauf, Transfers, Mining, Gebühr — with date, amount, optional price, fee and note
+- Entries can be edited and deleted; the table shows a running balance
+- The BTC reserve is derived from the ledger automatically; entering a different value by hand switches it to manual, and «Aus Transaktionen übernehmen» switches it back
+- Transactions are included in JSON export and import
+
+**Alarm Banner in the Header**
+- The LTV alarm moved from the Overview into the header and is now visible on every tab; long texts scroll automatically
+
+### Improvements
+
+- **Configurable LTV thresholds** are now respected everywhere — colour bands, MC1 prices, the calculator and heatmap labels, the statistics and Portfolio tiles, the future simulation and the worst-case simulator used fixed 73/79/86 regardless of the settings
+- **CSV import** handles quoted fields, both `,` and `;` as separator, and thousands separators — an amount like `10.000,50` was previously imported as 10
+- **CSV export** can be imported again; name, fee, term, roll-over chain and BTC start price survive the round-trip
+- **Navigation order**: entries missing from a saved custom order (such as the new Portfolio tab) are inserted instead of disappearing
+- **Historic prices** are retried automatically when CoinGecko's rate limit is hit, and are fetched once per session instead of on every refresh
+- **Settings**: the Portfolio tab can be chosen as the start tab, and LTV thresholds are checked for a sane range and order — importing unordered thresholds no longer silences the alarms
+- **Mobile**: maturity and currency grids collapse to one column; no more horizontal overflow on the Overview
+
+### Security
+
+- **Fixed a cross-site scripting vulnerability.** Loan names, IDs, currencies and notes were rendered without escaping, so a crafted name — typed in or arriving in a shared JSON/CSV file — could execute code with access to all locally stored data. Every user-supplied text is now escaped
+
+### Bug Fixes
+
+**Data safety**
+- Unreadable stored data is no longer overwritten with an empty list on the next page load; it is backed up and reported instead
+- Failed saves (full storage, private browsing) are now reported instead of silently pretending success
+- Damaged import files no longer break the dashboard permanently — invalid records are rejected and counted in the import message
+- Transactions are no longer dropped when an import file contains no settings, and follow the chosen merge strategy
+- Merging imports no longer creates duplicate loan IDs
+
+**Calculations**
+- LTV excluded the BTC fee in the alarms but included it in the loan list, LTV sorting, CSV export, the LTV chart and the timeline — the same loan showed 55.0 % or 57.5 % depending on where you looked
+- The LTV calculator reported an LTV without interest and took its interest rate and term from the break-even calculator next to it; it now has its own rate and term fields
+- The «Zukunftssimulation» reported today's LTV without interest, so it disagreed with the loan card for the same loan
+- The stress test, its heatmap legend and the worst-case simulator printed fixed 73/79/86 prices and labels regardless of the configured thresholds
+- The collateral top-up calculator suggested exactly the amount that triggers the margin call it was meant to avoid
+- A loan was closed automatically on the morning of the day it was due; it now stays active until the day has passed
+- The cash-flow chart skipped the current month, so a loan due in a few days appeared nowhere
+- Adding months overflowed month ends: 31.08. + 6 Monate produced the 3rd of March instead of the end of February
+- Dates were interpreted in UTC but displayed locally, shifting every date by a day west of UTC — combined with the auto-close rule this closed still-active loans a day early
+- Roll-over chains ended at the loan that started last instead of the latest maturity, understating the runtime and overstating the effective rate up to threefold
+- The chain break-even divided the cost by the collateral of all members, although a roll-over re-pledges the same bitcoin; without a stored BTC start price it now shows «—» instead of a figure that merely tracked the current price
+- The roll-over simulation's effective annual rate ignored its own compounding, and the total fee in BTC was extrapolated from the first period
+- The effective cost in BTC counted the fee at today's price instead of the amount actually paid
+- «Gesamtkosten — aktive Kredite» included fees of closed loans; the maturity counters included loans repaid early
+- Loan progress was based on 30-day months, so a loan could show «100 % vergangen» and «noch 5 Tage» at once
+- A `Gebühr` transaction was deducted twice when both the amount and the fee field were filled
+- A manually entered BTC reserve was silently reset as soon as a transaction was recorded
+
+**Interface**
+- Opening the Diagramme tab with no loans left every chart blank for the rest of the session, even after adding a loan
+- Collateral, amount and interest rate could not be edited to 0 — the old value was silently kept
+- Assigning a roll-over predecessor left the predecessor untagged, so the chain contained only one loan and the selection was lost on reopening
+- Duplicate loan IDs are rejected instead of quietly breaking edit and delete
+- The calendar marked long-past maturities in red as if they were due, and included closed loans
+- A rate field cleared with the keyboard stayed empty for the rest of the session while calculations kept using the old rate
+- Header tooltips kept showing old figures after the underlying loans were closed
+- Multi-line notes no longer truncate a CSV import, and rows the parser cannot use are reported instead of dropped silently
+- Stored loans that cannot be read (for example an invalid start date) are reported and preserved instead of disappearing
+- In the LTV chart, selecting a loan could show a different one after loans were added or deleted, and new loans never appeared in the selector
+- Editing, deleting or applying a historic price could hit the wrong loan after an import or deletion
+- The «Aktuell» reference line in the break-even chart never appeared
+- Duplicating a loan silently added the copy to the original's roll-over chain
+- Reloading on the Portfolio tab fell back to the default tab
+- The Overview LTV filter was not remembered
+- «Einstellungen zurücksetzen» did not restore all defaults
+- Entering a value in the Portfolio reserve field was impossible — it cleared itself on every keystroke
+- Editing a rate in the header cleared the field while typing and could flash a false «Kredit liquidiert» warning
+- Transactions are now shown with a minus sign for outgoing amounts, and a negative balance is flagged instead of hidden
+- The MC1 note on loan cards was garbled once the threshold was breached
+- Charts with more than eight loans or currencies used colours that did not match their legend
+- The refresh button could stay disabled permanently, and a manually entered rate could be overwritten by a late-arriving price
+- JSON export now contains the transactions
+- Version numbers in the footer were out of date, and the Portfolio settings card showed its title twice
+
+
+---
+
+
 ## v1.3.0 (22.03.2026)
 
 ### New Features
@@ -142,4 +234,3 @@
 
 ### Bug Fixes
 - Inactive tool sub-tabs were not hidden correctly
-
