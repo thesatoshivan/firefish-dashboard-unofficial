@@ -683,7 +683,7 @@
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v140-beta-24072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.4.0-beta</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v150-24072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.5.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
@@ -1648,7 +1648,7 @@
       <!-- Row 4: Zinskosten-Vergleich + Effektivkosten in BTC -->
       <div class="tg2" style="gap:1rem;margin-bottom:1rem">
         <div class="card">
-          <span class="card-title">Zinskosten gesamt vs. bisher aufgelaufen (USD)</span>
+          <span class="card-title" id="ch-t-int">Zinskosten gesamt vs. bisher aufgelaufen (USD)</span>
           <div class="ch-wrap" style="height:220px"><canvas id="ch-int"></canvas></div>
         </div>
         <div class="card">
@@ -1659,7 +1659,7 @@
 
       <!-- Row 4b: Zinslast über Zeit -->
       <div class="card" style="margin-bottom:1rem">
-        <span class="card-title">Monatliche Zinslast — Verlauf über Zeit (USD)</span>
+        <span class="card-title" id="ch-t-mint">Monatliche Zinslast — Verlauf über Zeit (USD)</span>
         <p class="note2" style="margin-bottom:.75rem">Monatliche Zinszahlungen aller aktiven Kredite, gestapelt nach Kredit. Zeigt wann Zinslast aus- oder hinzukommt.</p>
         <div class="ch-wrap" style="height:260px"><canvas id="ch-zinslast"></canvas></div>
       </div>
@@ -1680,11 +1680,11 @@
       <!-- Row 6: Cashflow-Vorschau + Schulden vs. Collateral -->
       <div class="tg2" style="gap:1rem;margin-bottom:1rem">
         <div class="card">
-          <span class="card-title">Fällige Gesamtbeträge nächste 12 Monate — Kapital + Zinsen (USD)</span>
+          <span class="card-title" id="ch-t-cf">Fällige Gesamtbeträge nächste 12 Monate — Kapital + Zinsen (USD)</span>
           <div class="ch-wrap" style="height:220px"><canvas id="ch-cf"></canvas></div>
         </div>
         <div class="card">
-          <span class="card-title">Schulden vs. Collateral-Wert (USD, 12 Monate)</span>
+          <span class="card-title" id="ch-t-dcol">Schulden vs. Collateral-Wert (USD, 12 Monate)</span>
           <div class="ch-wrap" style="height:220px"><canvas id="ch-dcol"></canvas></div>
         </div>
       </div>
@@ -1717,6 +1717,11 @@
         <span class="card-title">Bevorzugte W&#228;hrungen</span>
         <p class="note2" style="margin-bottom:.75rem">Nur ausgew&#228;hlte W&#228;hrungen werden in Kreditkarten, Charts und Umrechnungen angezeigt.</p>
         <div style="display:flex;flex-wrap:wrap;gap:8px" id="ccy-toggles"></div>
+        <div class="ff" style="margin-top:1rem;max-width:320px">
+          <label>Hauptw&#228;hrung</label>
+          <select id="se-main-ccy"></select>
+          <span class="note2" style="margin-top:4px;display:block">Wird in allen Anzeigen als prim&#228;re W&#228;hrung verwendet &#8212; Kennzahlen, Diagramme und Rechner. Ausw&#228;hlbar sind nur oben aktivierte W&#228;hrungen.</span>
+        </div>
         <div style="margin-top:1rem;display:flex;gap:8px">
           <button class="sm" onclick="d.ccyAll()">Alle ausw&#228;hlen</button>
           <button class="sm primary" onclick="d.ccySave()">&#10003; Speichern</button>
@@ -1932,7 +1937,7 @@
       </div>
     </div>
 
-    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v140-beta-24072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.4.0-beta</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
+    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v150-24072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.5.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
     </div><!-- #ffd-root -->
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -1974,10 +1979,22 @@
         pairs.map(function(p){return '<div><span style="color:var(--text4);font-weight:600">'+p.c+'</span> '+p.v.toLocaleString('de-CH',{maximumFractionDigits:0})+'</div>';}).join('')+
       '</div>';
     }
+    /* Currency breakdown of a USD amount. The main currency comes first,
+       because in several tiles this grid is the only place the amount is
+       shown at all. */
     function usdGrid(ccys,usd){
-      return cGrid(ccys.filter(function(c){return c!=='BTC'&&c!=='SAT';}).map(function(c){return {c:c,v:frU(usd,c)};}));
+      var m=(typeof cfg!=='undefined')?mainC():'USD';
+      var list=ccys.filter(function(c){return c!=='BTC'&&c!=='SAT';});
+      if(list.indexOf(m)>=0)list=[m].concat(list.filter(function(c){return c!==m;}));
+      return cGrid(list.map(function(c){return {c:c,v:frU(usd,c)};}));
     }
-    var chD=null,chI=null,dCcy='USD';
+    /* Same, but without the main currency — for sub-lines under a headline
+       that already states the amount in the main currency. */
+    function usdGridSub(ccys,usd){
+      var m=(typeof cfg!=='undefined')?mainC():'USD';
+      return cGrid(ccys.filter(function(c){return c!=='BTC'&&c!=='SAT'&&c!==m;}).map(function(c){return {c:c,v:frU(usd,c)};}));
+    }
+    var chD=null,chI=null,dCcy=null; /* resolved from cfg.mainCcy on first use */
     var chLtv=null,chMcd=null,chCol=null,chCcy=null,chBep=null,chInt2=null,chBtcost=null,chCf=null,chDcol=null,chHeat=null,chTerm=null,chZukunft=null,chZinslast=null;
     var lSort={key:'dl',dir:1};
     var ltvThresh=73; /* overwritten from cfg.ltvDisplay once settings load */
@@ -2267,12 +2284,13 @@
               navOrder: p.navOrder||null,
               darkMode: p.darkMode||false,
               btcReserve: p.btcReserve!=null?p.btcReserve:0,
-              btcReserveManual: p.btcReserveManual||false
+              btcReserveManual: p.btcReserveManual||false,
+              mainCcy: p.mainCcy||'USD'
             };
           }
         }
       }catch(e){}
-      return{ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false,btcReserve:0,btcReserveManual:false};
+      return{ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false,btcReserve:0,btcReserveManual:false,mainCcy:'USD'};
     }
     function saveSettings(cfg){storeWrite(SETTINGS_KEY,JSON.stringify(cfg),'Einstellungen');}
     var cfg=loadSettings();
@@ -2422,6 +2440,26 @@
         return '<span class="pill">BTC/'+labels[c]+'<input type="number" data-ccy="'+c+'" title="BTC/'+c+' bearbeiten" oninput="d.rateFiat(this)" onblur="d.rateBlur()" step="1" value="'+price+'" style="width:80px"></span>';
       }).join('');
     }
+    /* ── Main display currency ───────────────────────────────────────────────
+       All internal maths stays in USD; these helpers render a USD amount in
+       whatever the user picked as their main display currency. */
+    function mainC(){
+      var m=cfg&&cfg.mainCcy;
+      return (m&&ALL_CCYS.indexOf(m)>=0&&cfg.ccys.indexOf(m)>=0)?m:'USD';
+    }
+    function csym(c){
+      return {EUR:'€',CHF:'Fr.',USD:'$',USDC:'USDC ',USDT:'USDT ',CZK:'Kč ',PLN:'zł '}[c]||(c+' ');
+    }
+    function fmtU(usd){var c=mainC();return fmt(frU(usd,c),c);}
+    function faxU(usd){var c=mainC();return fax(frU(usd,c),c);}
+    /* A BTC price given in USD, rendered in the main currency */
+    function pU(usd){
+      var c=mainC(),v=frU(usd,c);
+      if(!isFinite(v))return '–';
+      if(c==='BTC')return v.toFixed(8)+' ₿';
+      if(c==='SAT')return Math.round(v).toLocaleString('de-CH')+' sats';
+      return csym(c)+Math.round(v).toLocaleString('de-CH');
+    }
     function ccyG(ccys,usd){
       return '<div class="ccyg">'+ccys.filter(visC).map(function(c){return '<div class="ccyc"><span class="ccy-lbl">'+c+'</span><span class="ccy-val">'+fmt(frU(usd,c),c)+'</span></div>';}).join('')+'</div>';
     }
@@ -2492,7 +2530,7 @@
             var days=dL(nd.start,nd.term);
             var col=days<=7?'var(--err)':days<=30?'var(--warn)':'var(--text)';
             var ndAmt=toU(nd.amount,nd.c)+intU(nd);
-            var ndAmtStr=fmt(frU(ndAmt,'USD'),'USD');
+            var ndAmtStr=fmtU(ndAmt);
             ndEl.innerHTML='<span style="color:'+col+'">'+days+'d</span>'+
               ' <span style="font-weight:400;font-size:11px;color:var(--text3)">'+esc(nd.name)+'</span>';
             var ndTtEl=g('hdr-next-due-tooltip');
@@ -2505,9 +2543,9 @@
           var aC=act.reduce(function(s,l){return s+l.col;},0);
           var colUSD=aC*R.BTC;
           if(cbEl)cbEl.textContent=aC>0?(aC.toFixed(6)+' ₿'):dash;
-          cvEl.textContent=colUSD>0?('$'+Math.round(colUSD).toLocaleString('de-CH')):dash;
+          cvEl.textContent=colUSD>0?(''+pU(Math.round(colUSD))):dash;
           if(ctEl&&colUSD>0){
-            var CC=(['EUR','CHF','USD','USDT','USDC','CZK','PLN']).filter(visC).filter(function(c){return c!=='USD';});
+            var CC=(['EUR','CHF','USD','USDT','USDC','CZK','PLN']).filter(visC).filter(function(c){return c!==mainC();});
             ctEl.innerHTML=CC.map(function(c){return '<b>'+c+'</b> '+fmt(frU(colUSD,c),c);}).join('<br>');
           }
         }
@@ -2515,10 +2553,10 @@
         var dueEl=g('hdr-due-val'),dueTtEl=g('hdr-due-tooltip'),dueBtcEl=g('hdr-due-btc');
         if(dueEl){
           var aDue=act.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
-          dueEl.textContent=aDue>0?('$'+Math.round(aDue).toLocaleString('de-CH')):dash;
+          dueEl.textContent=aDue>0?(''+pU(Math.round(aDue))):dash;
           if(dueBtcEl){dueBtcEl.textContent=aDue>0&&R.BTC>0?('₿'+(aDue/R.BTC).toFixed(4)):dash;}
           if(dueTtEl&&aDue>0){
-            var CC2=(['EUR','CHF','USD','USDT','USDC','CZK','PLN']).filter(visC).filter(function(c){return c!=='USD';});
+            var CC2=(['EUR','CHF','USD','USDT','USDC','CZK','PLN']).filter(visC).filter(function(c){return c!==mainC();});
             dueTtEl.innerHTML=CC2.map(function(c){return '<b>'+c+'</b> '+fmt(frU(aDue,c),c);}).join('<br>');
           }
         }
@@ -2563,11 +2601,11 @@
             var col=nearest.dist<0?'var(--err)':nearest.dist<5?'var(--err)':nearest.dist<15?'var(--warn)':'var(--ok)';
             mc1El.innerHTML=
               '<span style="color:'+col+'">'+nearest.dist.toFixed(1)+'%</span>'+
-              ' <span style="font-weight:400;font-size:11px;color:var(--text3)">'+nearest.lbl+' ($'+Math.round(nearest.price).toLocaleString('de-CH')+') '+esc(nearest.name)+'</span>';
+              ' <span style="font-weight:400;font-size:11px;color:var(--text3)">'+nearest.lbl+' ('+pU(Math.round(nearest.price))+') '+esc(nearest.name)+'</span>';
             if(mc1tEl){
               mc1tEl.innerHTML=loanItems.slice().sort(function(a,b){return a.dist-b.dist;}).map(function(x){
                 var c=x.dist<0?'var(--err)':x.dist<5?'var(--err)':x.dist<15?'var(--warn)':'var(--ok)';
-                return '<b>'+esc(x.name)+'</b> → '+x.lbl+' <span style="color:'+c+'">'+x.dist.toFixed(1)+'%</span> ($'+Math.round(x.price).toLocaleString('de-CH')+')';
+                return '<b>'+esc(x.name)+'</b> → '+x.lbl+' <span style="color:'+c+'">'+x.dist.toFixed(1)+'%</span> ('+pU(Math.round(x.price))+')';
               }).join('<br>');
             }
           } else { mc1El.textContent=dash; }
@@ -2593,13 +2631,13 @@
             var bepCol=bepAbove?'var(--ok)':'var(--err)';
             bepEl.innerHTML=
               '<span style="color:'+bepCol+'">'+(bepAbove?'+':'')+bepDist.toFixed(1)+'%</span>'+
-              ' <span style="font-weight:400;font-size:11px;color:var(--text3)">$'+Math.round(portfolioBep).toLocaleString('de-CH')+'</span>';
+              ' <span style="font-weight:400;font-size:11px;color:var(--text3)">'+pU(Math.round(portfolioBep))+'</span>';
             if(bepTtEl){
               bepTtEl.innerHTML=bepItems.slice().sort(function(a,b){return a.bep-b.bep;}).map(function(x){
                 var d=((R.BTC-x.bep)/R.BTC*100);
                 var c=d>=0?'var(--ok)':'var(--err)';
                 var badge=x.status==='active'?'<span style="color:var(--ok);font-size:10px">&#9679;</span> ':'<span style="color:var(--text4);font-size:10px">&#9675;</span> ';
-                return badge+'<b>'+esc(x.name)+'</b> <span style="color:'+c+'">'+(d>=0?'+':'')+d.toFixed(1)+'%</span> ($'+Math.round(x.bep).toLocaleString('de-CH')+')';
+                return badge+'<b>'+esc(x.name)+'</b> <span style="color:'+c+'">'+(d>=0?'+':'')+d.toFixed(1)+'%</span> ('+pU(Math.round(x.bep))+')';
               }).join('<br>');
             }
           } else { bepEl.textContent=dash; }
@@ -2711,7 +2749,7 @@
         }
         var grpPortfolio=
           '<div class="mc" style="margin:0"><span class="mc-lbl">Aktive Kredite</span><span class="mc-val">'+(empty?dash:act.length)+'</span><span class="mc-sub">'+(empty?'&nbsp;':'von '+loans.length+' gesamt')+'</span></div>'+
-          '<div class="mc" style="margin:0"><span class="mc-lbl">Offene Schuld (USD)</span><span class="mc-val">'+(empty?dash:fmt(aDue,'USD'))+'</span><span class="mc-sub" style="font-size:10px;line-height:1.4">'+(empty?'&nbsp;':dueByCcyGrid)+'</span></div>'+
+          '<div class="mc" style="margin:0"><span class="mc-lbl">Offene Schuld ('+mainC()+')</span><span class="mc-val">'+(empty?dash:fmtU(aDue))+'</span><span class="mc-sub" style="font-size:10px;line-height:1.4">'+(empty?'&nbsp;':dueByCcyGrid)+'</span></div>'+
           '<div class="mc" style="margin:0"><span class="mc-lbl">Collateral (aktiv)</span><span class="mc-val">'+(empty?dash:aC.toFixed(8)+' BTC')+'</span><span class="mc-sub" style="font-size:10px;line-height:1.4">'+(empty?'&nbsp;':colValCcyGrid)+'</span></div>';
         /* Nearest liquidation price across all active loans with collateral */
         var liqItems=act.filter(function(l){return l.col>0;}).map(function(l){
@@ -2723,10 +2761,10 @@
         var grpRisiko=
           '<div class="mc" style="margin:0"><span class="mc-lbl">Portfolio-LTV</span><span class="mc-val">'+(empty?dash:'<span style="color:'+portLtvColor+'">'+portLtv.toFixed(1)+'%</span>')+'</span><span class="mc-sub" style="font-size:10px;line-height:1.4">'+(empty?'&nbsp;':ltvSub)+'</span></div>'+
           '<div class="mc" style="margin:0"><span class="mc-lbl">Deckungsgrad</span><span class="mc-val">'+(empty?dash:'<span style="color:'+(coverage<1.1?'#dc2626':coverage<1.4?'#d97706':'#16a34a')+'">'+coverage.toFixed(2)+'×</span>')+'</span><span class="mc-sub">'+(empty?'&nbsp;':'Col. / Schulden')+'</span></div>'+
-          '<div class="mc" style="margin:0"><span class="mc-lbl">Nächster '+(empty?'MC':nextMClbl)+'</span><span class="mc-val">'+(empty?dash:(nextMC?'<span style="color:'+(nextMCdist<0?'var(--err)':nextMCdist<5?'var(--err)':nextMCdist<15?'#d97706':'inherit')+'">$'+Math.round(nextMC).toLocaleString('de-CH')+'</span>':'–'))+'</span><span class="mc-sub">'+(empty?'&nbsp;':(nextMCdist!==null?nextMCdist.toFixed(1)+'% Abstand':''))+'</span></div>'+
+          '<div class="mc" style="margin:0"><span class="mc-lbl">Nächster '+(empty?'MC':nextMClbl)+'</span><span class="mc-val">'+(empty?dash:(nextMC?'<span style="color:'+(nextMCdist<0?'var(--err)':nextMCdist<5?'var(--err)':nextMCdist<15?'#d97706':'inherit')+'">'+pU(Math.round(nextMC))+'</span>':'–'))+'</span><span class="mc-sub">'+(empty?'&nbsp;':(nextMCdist!==null?nextMCdist.toFixed(1)+'% Abstand':''))+'</span></div>'+
           (nearestLiq?
             '<div class="mc" style="margin:0"><span class="mc-lbl">Nächster Liq.-Preis</span>'+
-            '<span class="mc-val"><span style="color:'+(nearestLiq.dist<0?'#dc2626':nearestLiq.dist<5?'#dc2626':nearestLiq.dist<15?'#d97706':'inherit')+'">$'+Math.round(nearestLiq.price).toLocaleString('de-CH')+'</span></span>'+
+            '<span class="mc-val"><span style="color:'+(nearestLiq.dist<0?'#dc2626':nearestLiq.dist<5?'#dc2626':nearestLiq.dist<15?'#d97706':'inherit')+'">'+pU(Math.round(nearestLiq.price))+'</span></span>'+
             '<span class="mc-sub">'+nearestLiq.dist.toFixed(1)+'% Abstand · '+esc(nearestLiq.name)+'</span>'+
             '</div>'
           :'');
@@ -2763,7 +2801,7 @@
             (subParts.length?subParts.join(' · '):(count===1?'1 Kredit':count+' Kredite'));
           var valHtml=count===0
             ?'<span style="color:var(--text4)">—</span>'
-            :'<span style="color:'+accentClr+'">'+fmt(frU(totalUSD,'USD'),'USD')+'</span>';
+            :'<span style="color:'+accentClr+'">'+fmtU(totalUSD)+'</span>';
           return '<div class="mc" style="margin:0">'+
             '<span class="mc-lbl">'+w.lbl+'</span>'+
             '<span class="mc-val" style="font-size:15px;line-height:1.5">'+valHtml+'</span>'+
@@ -2797,7 +2835,7 @@
           var pct=totalMs>0?Math.min(100,Math.max(0,((now2-started)/totalMs*100))).toFixed(1):100;
           var mc1P=due3/(tW()*l.col);
           var beDist=l.col>0?((R.BTC-mc1P)/R.BTC*100).toFixed(1):null;
-          var beHtml=l.col>0?'<div style="font-size:11px;color:var(--text4);margin-top:.4rem">MC1 bei $'+Math.round(mc1P).toLocaleString('de-CH')+' ('+(beDist>0?'−'+beDist+'% vom aktuellen Preis':'⚠ überschritten')+')</div>':'';
+          var beHtml=l.col>0?'<div style="font-size:11px;color:var(--text4);margin-top:.4rem">MC1 bei '+pU(Math.round(mc1P))+' ('+(beDist>0?'−'+beDist+'% vom aktuellen Preis':'⚠ überschritten')+')</div>':'';
           return '<div class="card">'+
             '<div class="lh"><span class="lid">'+esc(l.name)+' <span class="lid-sub">'+esc(l.id)+'</span></span><div class="fx" style="gap:4px"><span class="badge ba">Aktiv</span>'+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+' </div></div>'+
             /* ② Kernzahlen 3-spaltig */
@@ -2816,7 +2854,7 @@
             '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
               '<div><span class="ll">Collateral</span><span class="lv">'+l.col.toFixed(8)+' BTC</span></div>'+
               (l.status==='active'&&l.col>0?(function(){var due=ltvU(l);var liqUSD=due/(0.95*l.col);var near=R.BTC<liqUSD*1.1;return '<div><span class="ll">Liquidationspreis</span><span class="lv" style="color:'+(R.BTC<=liqUSD?'#dc2626':near?'#d97706':'#16a34a')+'">'+fmt(frU(liqUSD,l.c),l.c)+''+(R.BTC<=liqUSD?' ⚠ Liquidiert':near?' ⚠ Nahe':'')+'</span></div>';})():'')+
-              '<div><span class="ll">Geb\u00fchr</span><span class="lv">'+(l.feeBtc?l.feeBtc+' BTC (\u2248 $'+feeU(l).toLocaleString('de-CH',{maximumFractionDigits:0})+')':'–')+'</span></div>'+
+              '<div><span class="ll">Geb\u00fchr</span><span class="lv">'+(l.feeBtc?l.feeBtc+' BTC (\u2248 '+pU(feeU(l))+')':'–')+'</span></div>'+
             '</div>'+
             /* ⑤ Fortschrittsbalken */
             '<div class="prog-row" style="margin-top:.6rem"><span>Laufzeit vergangen</span><span>'+pct+'% '+(l.status==='active'&&dl>0?'<span style="color:var(--text4)">· noch '+dl+' Tage</span>':l.status==='active'?'<span style="color:var(--err)">· F\u00e4llig!</span>':'')+'</span></div>'+
@@ -2879,7 +2917,7 @@
             var feeStr=l.feeBtc>0?l.feeBtc+' BTC':'–';
             var dueAmount=l.amount+interest+(l.feeBtc||0)*(R.BTC/(R[l.c]||1));
             var dueStr=fmt(dueAmount,l.c);
-            if(l.status==='active'&&l.col>0){var due=ltvU(l);liqUSDval=due/(0.95*l.col);var near=R.BTC<liqUSDval*1.1;var col='color:'+(R.BTC<=liqUSDval?'#dc2626':near?'#d97706':'#16a34a');liqCcyStr='<span style="'+col+'">'+fmt(frU(liqUSDval,l.c),l.c)+'</span>';liqUSDstr='<span style="'+col+'">$'+liqUSDval.toLocaleString('de-CH',{maximumFractionDigits:0})+'</span>';}
+            if(l.status==='active'&&l.col>0){var due=ltvU(l);liqUSDval=due/(0.95*l.col);var near=R.BTC<liqUSDval*1.1;var col='color:'+(R.BTC<=liqUSDval?'#dc2626':near?'#d97706':'#16a34a');liqCcyStr='<span style="'+col+'">'+fmt(frU(liqUSDval,l.c),l.c)+'</span>';liqUSDstr='<span style="'+col+'">'+pU(liqUSDval)+'</span>';}
             var dlStr=l.status==='active'?(dl>0?'<span style="color:'+(dl<30?'#dc2626':dl<60?'#d97706':'var(--text2)')+'">'+dl+' Tage</span>':'<span style="color:#dc2626">F&#228;llig!</span>'):'<span style="color:#9ca3af">&#10003;</span>';
             return '<tr>'+
               '<td><div class="tbl-name">'+esc(l.name)+(l.chainId?' <span class="badge" title="Roll-Over" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer;font-size:11px;padding:1px 4px;vertical-align:middle" onclick="goRo()">🔗</span>':'')+'</div><div class="tbl-id">'+esc(l.id)+'</div></td>'+
@@ -2977,7 +3015,7 @@
               '<span style="font-size:16px">'+(won?'✅':'⏳')+'</span>'+
               '<div>'+
                 '<div style="font-size:12px;font-weight:600;color:'+(won?'var(--ok)':'var(--warn)')+'">'+(won?'Break-even erreicht — Kredit hat sich gelohnt':'Break-even noch nicht erreicht')+'</div>'+
-                '<div style="font-size:11px;color:var(--text3)">Break-even: <b>$'+bep.toLocaleString('de-CH',{maximumFractionDigits:0})+'</b> · Aktuell: <b>$'+R.BTC.toLocaleString('de-CH',{maximumFractionDigits:0})+'</b>'+(won?' · <span style="color:var(--ok)">▲ $'+(R.BTC-bep).toLocaleString('de-CH',{maximumFractionDigits:0})+' über Break-even</span>':' · <span style="color:var(--warn)">noch $'+(bep-R.BTC).toLocaleString('de-CH',{maximumFractionDigits:0})+' bis Break-even</span>')+'</div>'+
+                '<div style="font-size:11px;color:var(--text3)">Break-even: <b>'+pU(bep)+'</b> · Aktuell: <b>'+pU(R.BTC)+'</b>'+(won?' · <span style="color:var(--ok)">▲ '+pU((R.BTC-bep))+' über Break-even</span>':' · <span style="color:var(--warn)">noch '+pU((bep-R.BTC))+' bis Break-even</span>')+'</div>'+
               '</div>'+
             '</div>';
           } else {
@@ -3015,7 +3053,7 @@
             '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
               '<div><span class="ll">Collateral</span><span class="lv">'+l.col.toFixed(8)+' BTC</span></div>'+
               (l.status==='active'&&l.col>0?(function(){var due=ltvU(l);var liqUSD=due/(0.95*l.col);var near=R.BTC<liqUSD*1.1;return '<div><span class="ll">Liquidationspreis</span><span class="lv" style="color:'+(R.BTC<=liqUSD?'#dc2626':near?'#d97706':'#16a34a')+'">'+fmt(frU(liqUSD,l.c),l.c)+''+(R.BTC<=liqUSD?' ⚠ Liquidiert':near?' ⚠ Nahe':'')+'</span></div>';})():'')+
-              '<div><span class="ll">Gebühr</span><span class="lv">'+(l.feeBtc?l.feeBtc+' BTC (≈ $'+feeU(l).toLocaleString('de-CH',{maximumFractionDigits:0})+')':'–')+'</span></div>'+
+              '<div><span class="ll">Gebühr</span><span class="lv">'+(l.feeBtc?l.feeBtc+' BTC (≈ '+pU(feeU(l))+')':'–')+'</span></div>'+
             '</div>'+
             /* ⑤ Fortschrittsbalken */
             '<div class="prog-row" style="margin-top:.6rem"><span>Laufzeit vergangen</span><span>'+pct+'% '+(l.status==='active'&&dl>0?'<span style="color:var(--text4)">· noch '+dl+' Tage</span>':l.status==='active'?'<span style="color:var(--err)">· Fällig!</span>':'')+'</span></div>'+
@@ -3122,7 +3160,7 @@
       closeReset:function(){g('reset-modal-bg').classList.remove('open');},
       confirmReset:function(){
         var mode=g('reset-modal-bg').dataset.mode;
-        var defaultCfg={ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false,btcReserve:0,btcReserveManual:false};
+        var defaultCfg={ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false,btcReserve:0,btcReserveManual:false,mainCcy:'USD'};
         if(mode==='loans'||mode==='all'){
           /* An explicit reset is the user's way out of a write lock */
           storeUnblock(STORE_KEY);
@@ -3330,7 +3368,8 @@
             hideBreakEven:cfg.hideBreakEven||false,
             darkMode:document.getElementById('ffd-root').classList.contains('dark'),
             btcReserve:cfg.btcReserve||0,
-            btcReserveManual:cfg.btcReserveManual||false
+            btcReserveManual:cfg.btcReserveManual||false,
+            mainCcy:cfg.mainCcy||'USD'
           },
           loans:loans.map(function(l){return{id:l.id,name:l.name,amount:l.amount,currency:l.c,rate:l.rate,termMonths:l.term,startDate:l.start,collateralBtc:l.col,status:l.status,btcStart:l.btcStart||null,feeBtc:l.feeBtc||0,chainId:l.chainId||null,note:l.note||''};}),
           transactions:txs
@@ -3540,6 +3579,7 @@
               if(importedSettings.defaultTab)cfg.defaultTab=nStr(importedSettings.defaultTab);
               if(importedSettings.defaultView==='grid'||importedSettings.defaultView==='list')cfg.defaultView=importedSettings.defaultView;
               if(ALL_CCYS.indexOf(importedSettings.defaultCcy)>=0)cfg.defaultCcy=importedSettings.defaultCcy;
+              if(ALL_CCYS.indexOf(importedSettings.mainCcy)>=0)cfg.mainCcy=importedSettings.mainCcy;
               numSet('ltvWarn',1,94);numSet('ltvCrit',1,94);numSet('ltvDanger',1,94);
               /* Unordered thresholds make the alarm buckets unsatisfiable, so a
                  loan in the danger zone would raise no banner at all. */
@@ -3611,16 +3651,16 @@
         var ltv=((lU+intUv)/cU)*100;
         function mc(t){return((lU+intUv)/(t/100))/col;}
         g('ltv-r').style.display='block';
-        g('rcol-usd').textContent=fmt(cU,'USD');
+        g('rcol-usd').textContent=fmtU(cU);
         g('rcol-ccy').textContent=fmt(frU(cU,c),c);
         g('rltv').innerHTML='<span style="color:'+lc(ltv)+'">'+ltv.toFixed(2)+'%</span>';
         [['rmc1-lbl',cfg.ltvWarn!=null?cfg.ltvWarn:73,1],['rmc2-lbl',cfg.ltvCrit!=null?cfg.ltvCrit:79,2],['rmc3-lbl',cfg.ltvDanger!=null?cfg.ltvDanger:86,3]].forEach(function(x){
           var el=g(x[0]);if(el)el.textContent='MC '+x[2]+' ('+x[1]+'%) — BTC/USD';
         });
-        g('rmc1').textContent='$ '+mc(cfg.ltvWarn!=null?cfg.ltvWarn:73).toLocaleString('de-CH',{maximumFractionDigits:0});
-        g('rmc2').textContent='$ '+mc(cfg.ltvCrit!=null?cfg.ltvCrit:79).toLocaleString('de-CH',{maximumFractionDigits:0});
-        g('rmc3').textContent='$ '+mc(cfg.ltvDanger!=null?cfg.ltvDanger:86).toLocaleString('de-CH',{maximumFractionDigits:0});
-        g('rliq').textContent='$ '+mc(95).toLocaleString('de-CH',{maximumFractionDigits:0});
+        g('rmc1').textContent=pU(mc(cfg.ltvWarn!=null?cfg.ltvWarn:73));
+        g('rmc2').textContent=pU(mc(cfg.ltvCrit!=null?cfg.ltvCrit:79));
+        g('rmc3').textContent=pU(mc(cfg.ltvDanger!=null?cfg.ltvDanger:86));
+        g('rliq').textContent=pU(mc(95));
         var w=g('ltv-w');
         if(ltv>=(cfg.ltvDanger||86)){w.style.display='block';w.innerHTML='<span class="err">⚠ Kritisch: LTV nahe Liquidation!</span>';}
         else if(ltv>=(cfg.ltvWarn||73)){w.style.display='block';w.innerHTML='<span class="wrn">⚠ Margin Call Zone.</span>';}
@@ -3733,7 +3773,7 @@
         var bpUSD=toU(bp,vorCcy); /* convert BTC price from vorCcy to USD */
         var interest=l*(r/100)*(t/12),fee=parseFloat(g('befee').value)||0,feeUSD=fee*R.BTC,iU=toU(interest,c),lU=toU(l,c),dueUSD=lU+iU+feeUSD,sold=lU/bpUSD,bep=bpUSD*(dueUSD/lU);
         g('be-r').style.display='block';
-        g('becost').textContent=fmt(interest,c);g('becostusd').textContent=fmt(iU,'USD');
+        g('becost').textContent=fmt(interest,c);g('becostusd').textContent=fmtU(iU);
         g('bebtc').textContent=sold.toFixed(8)+' BTC';
         var bepDisp=frU(bep,vorCcy);
         g('bebep').textContent=fmt(bepDisp,vorCcy);
@@ -3764,7 +3804,7 @@
         var prices=[];
         for(var px=priceMin;px<=priceMax;px+=priceStep)prices.push(px);
         var labelCols=prices.map(function(p){
-          var k=p>=1000?'$'+Math.round(p/1000)+'k':'$'+p;
+          var k=faxU(p);
           var isCur=Math.abs(p-R.BTC)<priceStep/2;
           return '<div style="flex:1;text-align:center;font-size:9px;color:'+(isCur?'var(--accent)':'var(--text4)')+';font-weight:'+(isCur?700:400)+';white-space:nowrap">'+k+(isCur?'◂':'')+' </div>';
         }).join('');
@@ -3801,7 +3841,7 @@
           rows+legend;
       },
       stress:function(){
-        var bp=R.BTC;g('st-btc').textContent='$ '+bp.toLocaleString('de-CH',{maximumFractionDigits:0});
+        var bp=R.BTC;g('st-btc').textContent=pU(bp);
         var el=g('st-r'),act=loans.filter(function(l){return l.status==='active';});
         if(!act.length){el.innerHTML='<div class="empty">Keine aktiven Kredite.</div>';return;}
         var sc=[-10,-20,-30,-40,-50,-60,-70,-80];
@@ -3809,7 +3849,7 @@
         function stDue(l){return toU(l.amount,l.c)+intU(l);}
         function mcP(l,t){if(!l.col)return null;return stDue(l)/(t/100)/l.col;}
         function liqP(l){if(!l.col)return null;return stDue(l)/(0.95*l.col);}
-        function pFmt(usd,l){return usd?'$'+Math.round(usd).toLocaleString('de-CH'):'–';}
+        function pFmt(usd,l){return usd?''+pU(Math.round(usd)):'–';}
         var h='<div class="ovx"><table><thead><tr>'+
           '<th style="min-width:90px">Szenario</th>';
         act.forEach(function(l){
@@ -3851,7 +3891,7 @@
         sc.forEach(function(p){
           var pp=bp*(1+p/100);
           h+='<tr><td style="color:'+(p<=-50?'#dc2626':'#d97706')+';font-weight:600;font-size:12px;white-space:nowrap">'+
-            p+'%<br><span style="font-size:10px;font-weight:400;color:var(--text3)">$'+Math.round(pp).toLocaleString('de-CH')+'</span></td>';
+            p+'%<br><span style="font-size:10px;font-weight:400;color:var(--text3)">'+pU(Math.round(pp))+'</span></td>';
           act.forEach(function(l){
             var v=l.col>0?stDue(l)/(l.col*pp)*100:0;
             var lb=v>=95?'LIQ':v>=(cfg.ltvDanger||86)?'MC3':v>=(cfg.ltvCrit||79)?'MC2':v>=(cfg.ltvWarn||73)?'MC1':'OK';
@@ -3887,7 +3927,7 @@
             '<div class="fxsb"><span style="font-size:13px;font-weight:600;color:var(--text)">'+esc(l.name)+' <span style="font-weight:400;color:#9ca3af">'+esc(l.c)+'</span></span>'+
             '<span style="font-size:12px;color:'+(l.days<14?'#dc2626':l.days<30?'#d97706':'#6b7280')+';font-weight:600">'+(l.days<14?'⚠ ':'')+l.days+' Tage — '+l.end.toLocaleDateString('de-CH')+'</span></div>'+
             '<p class="note2 amt" style="margin-top:3px">'+fmt(l.amount,l.c)+' · '+l.rate+'% p.a. · '+l.col+' BTC</p>'+
-            '<p class="note amt" style="margin-top:2px">= '+fmt(lU,'USD')+' / '+fmt(frU(lU,'CHF'),'CHF')+' / '+fmt(frU(lU,'EUR'),'EUR')+'</p>'+
+            '<p class="note amt" style="margin-top:2px">= '+fmtU(lU)+' / '+fmt(frU(lU,'CHF'),'CHF')+' / '+fmt(frU(lU,'EUR'),'EUR')+'</p>'+
           '</div>';
         }).join(''):'<div class="empty">Keine bevorstehenden Fälligkeiten</div>';
       },
@@ -3899,6 +3939,7 @@
       },
       debtChart:function(ccy){
         if(typeof Chart==='undefined')return;
+        ccy=ccy||dCcy||mainC();
         var _dcCs=getComputedStyle(document.getElementById('ffd-root'));
         var chGridColor=_dcCs.getPropertyValue('--border').trim();
         var chTextColor=_dcCs.getPropertyValue('--text3').trim();
@@ -4077,6 +4118,9 @@
             }};
           }
 
+          [{id:'ch-t-int',pre:'Zinskosten gesamt vs. bisher aufgelaufen (',post:')'},{id:'ch-t-mint',pre:'Monatliche Zinslast — Verlauf über Zeit (',post:')'},{id:'ch-t-cf',pre:'Fällige Gesamtbeträge nächste 12 Monate — Kapital + Zinsen (',post:')'},{id:'ch-t-dcol',pre:'Schulden vs. Collateral-Wert (',post:', 12 Monate)'}].forEach(function(t){
+            var el=g(t.id);if(el)el.textContent=t.pre+mainC()+t.post;
+          });
           var mcdT=g('ch-mcd-title');
           if(mcdT)mcdT.textContent='Margin-Call-Distanz (% BTC-Preisfall bis MC1 '+(cfg.ltvWarn!=null?cfg.ltvWarn:73)+'%)';
           /* ── 1. LTV pro Kredit — historisch ── */
@@ -4209,18 +4253,18 @@
                   return chart.data.labels.map(function(label,i){
                     var val=ccyMap[label]||0;
                     var pct=ccyTotal>0?Math.round(val/ccyTotal*100):0;
-                    return{text:label+': $'+Math.round(val).toLocaleString('de-CH')+' ('+pct+'%)',fillStyle:COLORS[i%COLORS.length],fontColor:chTextColor,hidden:false,index:i};
+                    return{text:label+': '+pU(Math.round(val))+' ('+pct+'%)',fillStyle:COLORS[i%COLORS.length],fontColor:chTextColor,hidden:false,index:i};
                   });
                 }}},
                 tooltip:{callbacks:{label:function(x){
                   var pct=ccyTotal>0?Math.round(x.parsed/ccyTotal*100):0;
-                  return ' '+x.label+': $'+x.parsed.toLocaleString('de-CH',{maximumFractionDigits:0})+' ('+pct+'%)';
+                  return ' '+x.label+': '+pU(x.parsed)+' ('+pct+'%)';
                 }}},
                 datalabels:{anchor:'end',align:'end',offset:6,
                   formatter:function(val,ctx){
                     var key=ccyKeys[ctx.dataIndex];
                     var pct=ccyTotal>0?Math.round((ccyMap[key]||0)/ccyTotal*100):0;
-                    return key+': $'+Math.round(val).toLocaleString('de-CH')+'\n('+pct+'%)';
+                    return key+': '+pU(Math.round(val))+'\n('+pct+'%)';
                   },
                   font:{size:10},color:chText2Color,
                   display:function(ctx){var pct=ccyTotal>0?ctx.dataset.data[ctx.dataIndex]/ccyTotal*100:0;return pct>=5;}
@@ -4233,7 +4277,7 @@
                 ctx2.textAlign='center';ctx2.textBaseline='middle';
                 ctx2.fillStyle=getComputedStyle(document.getElementById('ffd-root')).getPropertyValue('--text');
                 ctx2.font='bold 13px sans-serif';
-                ctx2.fillText('$'+Math.round(ccyTotal).toLocaleString('de-CH'),cx,cy-8);
+                ctx2.fillText(''+pU(Math.round(ccyTotal)),cx,cy-8);
                 ctx2.font='11px sans-serif';
                 ctx2.fillStyle=getComputedStyle(document.getElementById('ffd-root')).getPropertyValue('--text3')||'#888';
                 ctx2.fillText('Total (USD)',cx,cy+10);
@@ -4270,10 +4314,10 @@
                     {label:'Break-even BTC',data:bepVals,backgroundColor:'rgba(249,115,22,.6)',borderColor:'#F97316',borderWidth:1,borderRadius:4}
                   ]},
                 options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:11}}},
-                  tooltip:{callbacks:{label:function(x){return ' '+x.dataset.label+': $'+x.parsed.y.toLocaleString('de-CH',{maximumFractionDigits:0});}}}},
-                  scales:{y:{suggestedMax:(function(){var vs=bepVals.concat(startVals,[R.BTC]).filter(function(v){return typeof v==='number'&&isFinite(v);});return vs.length?Math.max.apply(null,vs)*1.05:undefined;})(),ticks:{callback:function(v){return '$'+Math.round(v/1000)+'k';}},grid:{color:chGridColor}},x:{grid:{display:false}}}
+                  tooltip:{callbacks:{label:function(x){return ' '+x.dataset.label+': '+pU(x.parsed.y);}}}},
+                  scales:{y:{suggestedMax:(function(){var vs=bepVals.concat(startVals,[R.BTC]).filter(function(v){return typeof v==='number'&&isFinite(v);});return vs.length?Math.max.apply(null,vs)*1.05:undefined;})(),ticks:{callback:function(v){return faxU(v);}},grid:{color:chGridColor}},x:{grid:{display:false}}}
                 },
-                plugins:[hLinePlugin(R.BTC,'#16a34a','Aktuell $'+Math.round(R.BTC/1000)+'k')]});
+                plugins:[hLinePlugin(R.BTC,'#16a34a','Aktuell '+faxU(R.BTC))]});
             }
             if(!pending.length){renderBep();return;}
             /* Temporäre Map für historische Preise — btcStart am Loan-Objekt bleibt unverändert */
@@ -4307,8 +4351,8 @@
                   {label:'Gebühren (einmalig)',data:totalFee,backgroundColor:'rgba(139,92,246,.4)',borderColor:'#8B5CF6',borderWidth:1,borderRadius:4}
                 ]},
               options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:11}}},
-                tooltip:{callbacks:{label:function(x){return ' '+x.dataset.label+': $'+x.parsed.y.toLocaleString('de-CH',{maximumFractionDigits:0});}}}},
-                scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return '$'+Math.round(v);}},grid:{color:chGridColor}}}}});
+                tooltip:{callbacks:{label:function(x){return ' '+x.dataset.label+': '+pU(x.parsed.y);}}}},
+                scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return faxU(v);}},grid:{color:chGridColor}}}}});
           }
 
           /* ── 7b. Monatliche Zinslast über Zeit ── */
@@ -4362,13 +4406,13 @@
                 plugins:{
                   legend:{position:'top',labels:{font:{size:11}}},
                   tooltip:{callbacks:{
-                    label:function(x){return ' '+x.dataset.label+': $'+x.parsed.y.toLocaleString('de-CH',{maximumFractionDigits:0});},
-                    footer:function(items){var sum=items.reduce(function(s,x){return s+x.parsed.y;},0);return sum>0?'Gesamt: $'+Math.round(sum).toLocaleString('de-CH'):'';} 
+                    label:function(x){return ' '+x.dataset.label+': '+pU(x.parsed.y);},
+                    footer:function(items){var sum=items.reduce(function(s,x){return s+x.parsed.y;},0);return sum>0?'Gesamt: '+pU(Math.round(sum)):'';} 
                   }}
                 },
                 scales:{
                   x:{stacked:true,grid:{display:false},ticks:{maxTicksLimit:18,autoSkip:true}},
-                  y:{stacked:true,ticks:{callback:function(v){return '$'+Math.round(v);}},grid:{color:chGridColor}}
+                  y:{stacked:true,ticks:{callback:function(v){return faxU(v);}},grid:{color:chGridColor}}
                 }
               },
               plugins:[zlTodayPlugin]
@@ -4519,13 +4563,13 @@
                   var isActive=l.status==='active';
                   var intCost=intU(l);
                   var gap=li>0?2:0;
-                  html+='<div title="'+esc(l.name)+' · '+fmt(l.amount,l.c)+' · Zinsen: '+fmt(intCost,'USD')+'" style="position:absolute;left:calc('+left+'% + '+gap+'px);width:calc('+width+'% - '+gap+'px);height:100%;background:'+clr+';opacity:'+(isActive?1:.55)+';border-radius:3px;display:flex;align-items:center;overflow:hidden;padding:0 4px;z-index:1;box-sizing:border-box">'+
+                  html+='<div title="'+esc(l.name)+' · '+fmt(l.amount,l.c)+' · Zinsen: '+fmtU(intCost)+'" style="position:absolute;left:calc('+left+'% + '+gap+'px);width:calc('+width+'% - '+gap+'px);height:100%;background:'+clr+';opacity:'+(isActive?1:.55)+';border-radius:3px;display:flex;align-items:center;overflow:hidden;padding:0 4px;z-index:1;box-sizing:border-box">'+
                     '<span style="font-size:9px;color:#fff;white-space:nowrap;overflow:hidden">'+esc(l.name)+'</span>'+
                   '</div>';
                 });
                 html+='<div style="position:absolute;left:'+nowPctR+'%;top:0;width:2px;height:100%;background:#ef4444;z-index:2"></div>'+
                   '</div>'+
-                  '<div style="width:80px;flex-shrink:0;font-size:10px;font-weight:600;color:var(--text3);text-align:right">'+fmt(totalCost,'USD')+'</div>'+
+                  '<div style="width:80px;flex-shrink:0;font-size:10px;font-weight:600;color:var(--text3);text-align:right">'+fmtU(totalCost)+'</div>'+
                 '</div>';
               });
               html+='</div><div style="font-size:10px;color:var(--text4);margin-top:4px">■ Roter Strich = Heute &nbsp;·&nbsp; Gestapfte Balken = einzelne Roll-Overs &nbsp;·&nbsp; Transparenz = abgeschlossen</div>';
@@ -4559,8 +4603,8 @@
             chCf=new Chart(cfC,{type:'bar',
               data:{labels:cfLabels,datasets:[{data:cfData,backgroundColor:cfData.map(function(v){return v>0?'rgba(249,115,22,.7)':'rgba(229,231,235,.5)';}),borderColor:cfData.map(function(v){return v>0?'#F97316':'#e5e7eb';}),borderWidth:1,borderRadius:4}]},
               options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
-                tooltip:{callbacks:{label:function(x){return x.parsed.y>0?' Fällig (Kapital+Zinsen): $'+x.parsed.y.toLocaleString('de-CH',{maximumFractionDigits:0}):'  Nichts fällig';}}}},
-                scales:{y:{ticks:{callback:function(v){return v>0?'$'+Math.round(v/1000)+'k':'';}},grid:{color:chGridColor}},x:{grid:{display:false}}}},
+                tooltip:{callbacks:{label:function(x){return x.parsed.y>0?' Fällig (Kapital+Zinsen): '+pU(x.parsed.y):'  Nichts fällig';}}}},
+                scales:{y:{ticks:{callback:function(v){return v>0?faxU(v):'';}},grid:{color:chGridColor}},x:{grid:{display:false}}}},
               plugins:[makeTodayPlugin(cfLabels)]});
           }
 
@@ -4627,10 +4671,10 @@
                     plugins:{legend:{position:'top',labels:{font:{size:11}}},
                       tooltip:{callbacks:{label:function(x){
                         if(x.dataset.yAxisID==='yBtc')return ' '+x.dataset.label+': '+x.parsed.y.toFixed(6)+' BTC';
-                        return ' '+x.dataset.label+': $'+x.parsed.y.toLocaleString('de-CH',{maximumFractionDigits:0});
+                        return ' '+x.dataset.label+': '+pU(x.parsed.y);
                       }}}},
                     scales:{
-                      y:{position:'left',ticks:{callback:function(v){return '$'+Math.round(v/1000)+'k';}},grid:{color:chGridColor}},
+                      y:{position:'left',ticks:{callback:function(v){return faxU(v);}},grid:{color:chGridColor}},
                       yBtc:{position:'right',ticks:{callback:function(v){return v.toFixed(4)+'₿';}},grid:{display:false},title:{display:true,text:'BTC',font:{size:10}}},
                       x:{grid:{display:false}}}},
                   plugins:[makeTodayPlugin(dcLabels)]});
@@ -4695,12 +4739,12 @@
               options:{responsive:true,maintainAspectRatio:false,
                 plugins:{legend:{position:'top',labels:{font:{size:11}}},
                   tooltip:{callbacks:{label:function(x){
-                    if(x.dataset.yAxisID==='yVol')return ' Volumen: $'+Math.round(x.parsed.y).toLocaleString('de-CH');
+                    if(x.dataset.yAxisID==='yVol')return ' Volumen: '+pU(Math.round(x.parsed.y));
                     return ' Kredite: '+x.parsed.y;
                   }}}},
                 scales:{
                   y:{position:'left',title:{display:true,text:'Anzahl',font:{size:10}},ticks:{stepSize:1},grid:{color:chGridColor}},
-                  yVol:{position:'right',title:{display:true,text:'Volumen USD',font:{size:10}},ticks:{callback:function(v){return '$'+Math.round(v/1000)+'k';}},grid:{display:false}},
+                  yVol:{position:'right',title:{display:true,text:'Volumen '+mainC(),font:{size:10}},ticks:{callback:function(v){return faxU(v);}},grid:{display:false}},
                   x:{grid:{display:false}}
                 }
               }
@@ -4824,8 +4868,11 @@
         var sel=document.getElementById('vor-ccy');
         if(!sel)return;
         var ccys=['USD','EUR','CHF','CZK','PLN','USDC','USDT'];
+        /* Start on the configured main currency so the tools agree with the
+           rest of the dashboard; the picker can still be changed per session. */
+        var startC=ccys.indexOf(mainC())>=0?mainC():'USD';
         if(!sel.options.length)
-          sel.innerHTML=ccys.map(function(c){return '<option'+(c==='USD'?' selected':'')+'>'+c+'</option>';}).join('');
+          sel.innerHTML=ccys.map(function(c){return '<option'+(c===startC?' selected':'')+'>'+c+'</option>';}).join('');
         d.vorCcyChange();
       },
       vorCcyChange:function(){
@@ -4962,8 +5009,8 @@
         var btc=R.BTC;
         var g=function(id){return document.getElementById(id);};
         /* Tool 1: Fair Price */
-        if(g('pl1-btc'))g('pl1-btc').textContent='$'+btc.toLocaleString('de-CH',{maximumFractionDigits:0});
-        if(g('pl1-fair'))g('pl1-fair').textContent='$'+fair.toLocaleString('de-CH',{maximumFractionDigits:0});
+        if(g('pl1-btc'))g('pl1-btc').textContent=''+pU(btc);
+        if(g('pl1-fair'))g('pl1-fair').textContent=''+pU(fair);
         var dev1=((btc/fair-1)*100);
         if(g('pl1-dev')){g('pl1-dev').textContent=(dev1>=0?'+':'')+dev1.toFixed(1)+'%';g('pl1-dev').style.color=dev1<0?'var(--ok)':'var(--err)';}
         var v1=g('pl1-verdict');
@@ -4975,8 +5022,8 @@
         d.pl2();
         /* Tool 3 & 4 */
         d.pl3();
-        if(g('pl4-bottom'))g('pl4-bottom').textContent='$'+bottom.toLocaleString('de-CH',{maximumFractionDigits:0});
-        if(g('pl4-btc'))g('pl4-btc').textContent='$'+btc.toLocaleString('de-CH',{maximumFractionDigits:0});
+        if(g('pl4-bottom'))g('pl4-bottom').textContent=''+pU(bottom);
+        if(g('pl4-btc'))g('pl4-btc').textContent=''+pU(btc);
         d.pl4();
       },
       pl2:function(){
@@ -4987,16 +5034,16 @@
         var needed=Math.round(bottom/0.525);
         var btc=R.BTC;
         var g=function(id){return document.getElementById(id);};
-        if(g('pl2-btc'))g('pl2-btc').textContent='$'+btc.toLocaleString('de-CH',{maximumFractionDigits:0});
-        if(g('pl2-fair'))g('pl2-fair').textContent='$'+fair.toLocaleString('de-CH',{maximumFractionDigits:0});
-        if(g('pl2-bottom'))g('pl2-bottom').textContent='$'+bottom.toLocaleString('de-CH',{maximumFractionDigits:0});
-        if(g('pl2-needed'))g('pl2-needed').textContent='$'+needed.toLocaleString('de-CH',{maximumFractionDigits:0});
+        if(g('pl2-btc'))g('pl2-btc').textContent=''+pU(btc);
+        if(g('pl2-fair'))g('pl2-fair').textContent=''+pU(fair);
+        if(g('pl2-bottom'))g('pl2-bottom').textContent=''+pU(bottom);
+        if(g('pl2-needed'))g('pl2-needed').textContent=''+pU(needed);
         var dev2=((btc/fair-1)*100);
         if(g('pl2-dev')){g('pl2-dev').textContent=(dev2>=0?'+':'')+dev2.toFixed(1)+'%';g('pl2-dev').style.color=dev2<0?'var(--ok)':'var(--err)';}
         var v2=g('pl2-verdict');
         if(v2){
-          if(btc<=needed){v2.style.background='var(--ok-bg)';v2.style.color='var(--ok)';v2.style.border='1px solid var(--ok-border)';v2.textContent='\u2192 Wenn ich bei einem Bitcoin-Preis von $'+needed.toLocaleString('de-CH',{maximumFractionDigits:0})+' einen Kredit nehmen würde, dann beträgt der Liquidationspreis des Kredits $'+bottom.toLocaleString('de-CH',{maximumFractionDigits:0})+'. Dies entspricht der heutigen Preisuntergrenze des Power Laws.';}
-          else{v2.style.background='var(--warn-bg)';v2.style.color='var(--warn)';v2.style.border='1px solid var(--warn-border)';v2.textContent='\u2192 Wenn ich bei einem Bitcoin-Preis von $'+needed.toLocaleString('de-CH',{maximumFractionDigits:0})+' einen Kredit nehmen würde, dann beträgt der Liquidationspreis des Kredits $'+bottom.toLocaleString('de-CH',{maximumFractionDigits:0})+'. Dies entspricht der heutigen Preisuntergrenze des Power Laws.';}
+          if(btc<=needed){v2.style.background='var(--ok-bg)';v2.style.color='var(--ok)';v2.style.border='1px solid var(--ok-border)';v2.textContent='\u2192 Wenn ich bei einem Bitcoin-Preis von '+pU(needed)+' einen Kredit nehmen würde, dann beträgt der Liquidationspreis des Kredits '+pU(bottom)+'. Dies entspricht der heutigen Preisuntergrenze des Power Laws.';}
+          else{v2.style.background='var(--warn-bg)';v2.style.color='var(--warn)';v2.style.border='1px solid var(--warn-border)';v2.textContent='\u2192 Wenn ich bei einem Bitcoin-Preis von '+pU(needed)+' einen Kredit nehmen würde, dann beträgt der Liquidationspreis des Kredits '+pU(bottom)+'. Dies entspricht der heutigen Preisuntergrenze des Power Laws.';}
         }
       },
       pl3:function(){
@@ -5007,14 +5054,14 @@
         var thresh=thEl?parseInt(thEl.value)||0:0;
         var g=function(id){return document.getElementById(id);};
         var target=Math.round(fair*(1+thresh/100));
-        if(g('pl3-btc'))g('pl3-btc').textContent='$'+btc.toLocaleString('de-CH',{maximumFractionDigits:0});
-        if(g('pl3-target'))g('pl3-target').textContent='$'+target.toLocaleString('de-CH',{maximumFractionDigits:0});
+        if(g('pl3-btc'))g('pl3-btc').textContent=''+pU(btc);
+        if(g('pl3-target'))g('pl3-target').textContent=''+pU(target);
         var dev3=((btc/fair-1)*100);
         if(g('pl3-dev')){g('pl3-dev').textContent=(dev3>=0?'+':'')+dev3.toFixed(1)+'% (Fair Price)';g('pl3-dev').style.color=dev3>=thresh?'var(--ok)':'var(--text3)';}
         var v3=g('pl3-verdict');
         if(v3){
-          if(dev3>=thresh){v3.style.display='';v3.style.background='var(--ok-bg)';v3.style.color='var(--ok)';v3.style.border='1px solid var(--ok-border)';v3.textContent='\u2713 Bitcoin ($'+btc.toLocaleString('de-CH',{maximumFractionDigits:0})+') hat den Zielpreis ($'+target.toLocaleString('de-CH',{maximumFractionDigits:0})+') erreicht. Vorzeitige R\u00fcckzahlung ist gem\u00e4ss Strategie empfohlen.';}
-          else{v3.style.display='';v3.style.background='var(--warn-bg)';v3.style.color='var(--warn)';v3.style.border='1px solid var(--warn-border)';v3.textContent='\u23f3 Bitcoin ($'+btc.toLocaleString('de-CH',{maximumFractionDigits:0})+') hat den Zielpreis ($'+target.toLocaleString('de-CH',{maximumFractionDigits:0})+') noch nicht erreicht. Noch '+(thresh-dev3).toFixed(1)+'% entfernt.';}
+          if(dev3>=thresh){v3.style.display='';v3.style.background='var(--ok-bg)';v3.style.color='var(--ok)';v3.style.border='1px solid var(--ok-border)';v3.textContent='\u2713 Bitcoin ('+pU(btc)+') hat den Zielpreis ('+pU(target)+') erreicht. Vorzeitige R\u00fcckzahlung ist gem\u00e4ss Strategie empfohlen.';}
+          else{v3.style.display='';v3.style.background='var(--warn-bg)';v3.style.color='var(--warn)';v3.style.border='1px solid var(--warn-border)';v3.textContent='\u23f3 Bitcoin ('+pU(btc)+') hat den Zielpreis ('+pU(target)+') noch nicht erreicht. Noch '+(thresh-dev3).toFixed(1)+'% entfernt.';}
         }
       },
       pl4:function(){
@@ -5024,15 +5071,15 @@
         var dueEl=document.getElementById('pl4-due');
         var due=dueEl?parseFloat(dueEl.value)||0:0;
         var g=function(id){return document.getElementById(id);};
-        if(g('pl4-bottom'))g('pl4-bottom').textContent='$'+bottom.toLocaleString('de-CH',{maximumFractionDigits:0});
-        if(g('pl4-btc'))g('pl4-btc').textContent='$'+btc.toLocaleString('de-CH',{maximumFractionDigits:0});
+        if(g('pl4-bottom'))g('pl4-bottom').textContent=''+pU(bottom);
+        if(g('pl4-btc'))g('pl4-btc').textContent=''+pU(btc);
         if(!due){if(g('pl4-col'))g('pl4-col').textContent='\u2014';if(g('pl4-ltv'))g('pl4-ltv').textContent='\u2014';if(g('pl4-formula'))g('pl4-formula').textContent='';return;}
         var colNeeded=due/(bottom*0.95);
         var colCeil=Math.ceil(colNeeded*100000)/100000;
         var ltv=Math.round(due/(colCeil*btc)*100*10)/10;
         if(g('pl4-col'))g('pl4-col').textContent=colCeil.toFixed(5)+' BTC';
         if(g('pl4-ltv'))g('pl4-ltv').textContent=ltv.toFixed(1)+'%';
-        if(g('pl4-formula'))g('pl4-formula').textContent='F\u00e4lliger Betrag $'+due.toLocaleString('de-CH',{maximumFractionDigits:0})+' \u00f7 (Bottom Price $'+bottom.toLocaleString('de-CH',{maximumFractionDigits:0})+' \u00d7 0.95)';
+        if(g('pl4-formula'))g('pl4-formula').textContent='F\u00e4lliger Betrag '+pU(due)+' \u00f7 (Bottom Price '+pU(bottom)+' \u00d7 0.95)';
       },
 
       /* ── Roll-Over Simulation ── */
@@ -5096,7 +5143,7 @@
             '<td class="amt">'+feePct+'%<br><span style="font-size:10px;color:var(--text4)">'+fmtC(feeAmt)+'</span></td>'+
             '<td class="amt" style="font-weight:700;color:'+(isLast?'var(--accent)':'var(--text)')+'">'+fmtC(dueAmt)+'</td>'+
             '<td class="amt">'+fmtC(costAmt)+'</td>'+
-            (collateralBTC>0?'<td class="amt" style="font-size:11px">$'+(Math.round(btcPusd+toU(costAmt,ccy)/collateralBTC)).toLocaleString('de-CH')+'</td>':'<td class="amt" style="color:var(--text4)">—</td>')+
+            (collateralBTC>0?'<td class="amt" style="font-size:11px">'+pU(Math.round(btcPusd+toU(costAmt,ccy)/collateralBTC))+'</td>':'<td class="amt" style="color:var(--text4)">—</td>')+
           '</tr>';
           currentAmount=dueAmt;
         }
@@ -5115,7 +5162,7 @@
           '<td class="amt">'+fmtC(totalFee)+'</td>'+
           '<td class="amt" style="color:var(--accent)">'+fmtC(finalDue)+'</td>'+
           '<td class="amt" style="color:var(--accent)">'+fmtC(totalCost)+'</td>'+
-          (collateralBTC>0?'<td class="amt" style="font-size:11px;font-weight:700;color:var(--accent)">$'+(Math.round(btcPusd+toU(totalCost,ccy)/collateralBTC)).toLocaleString('de-CH')+'</td>':'<td class="amt" style="color:var(--text4)">—</td>')+
+          (collateralBTC>0?'<td class="amt" style="font-size:11px;font-weight:700;color:var(--accent)">'+pU(Math.round(btcPusd+toU(totalCost,ccy)/collateralBTC))+'</td>':'<td class="amt" style="color:var(--text4)">—</td>')+
         '</tr></tbody>';
         g('rosi-tbl').innerHTML=rows;
         function tile(lbl,val,sub){
@@ -5236,16 +5283,16 @@
         }
         var dateLabel=futDate?futDate.toLocaleDateString('de-CH',{day:'2-digit',month:'short',year:'numeric'}):'Fälligkeit';
         g('zk-summary').innerHTML=
-          tile('BTC-Preis','$'+Math.round(R.BTC).toLocaleString('de-CH')+' → $'+Math.round(futBtc).toLocaleString('de-CH'),
+          tile('BTC-Preis',''+pU(Math.round(R.BTC))+' → '+pU(Math.round(futBtc)),
             (btcChange>=0?'▲ +':' ▼ ')+Math.abs(btcChange).toFixed(1)+'%',btcChange>=0?'var(--ok)':'var(--err)')+
-          tile('Collateral-Wert',fmt(totalColFut,'USD'),
-            'Heute: '+fmt(totalColNow,'USD')+' · '+(colChange>=0?'▲ +':' ▼ ')+Math.abs(colChange).toFixed(1)+'%',
+          tile('Collateral-Wert',fmtU(totalColFut),
+            'Heute: '+fmtU(totalColNow)+' · '+(colChange>=0?'▲ +':' ▼ ')+Math.abs(colChange).toFixed(1)+'%',
             colChange>=0?'var(--ok)':'var(--err)')+
-          tile('Schulden gesamt',fmt(totalDebtFut,'USD'),'Heute: '+fmt(totalDebtNow,'USD'),'var(--text)')+
-          tile('Netto-Position (Equity)',fmt(totalColFut-totalDebtFut,'USD'),
-            'Heute: '+fmt(totalColNow-totalDebtNow,'USD'),
+          tile('Schulden gesamt',fmtU(totalDebtFut),'Heute: '+fmtU(totalDebtNow),'var(--text)')+
+          tile('Netto-Position (Equity)',fmtU(totalColFut-totalDebtFut),
+            'Heute: '+fmtU(totalColNow-totalDebtNow),
             (totalColFut-totalDebtFut)>=0?'var(--ok)':'var(--err)')+
-          tile('Netto P&L',( totalNetPnl>=0?'▲ +':'▼ ')+fmt(Math.abs(totalNetPnl),'USD'),
+          tile('Netto P&L',( totalNetPnl>=0?'▲ +':'▼ ')+fmtU(Math.abs(totalNetPnl)),
             'Wertzuwachs abzgl. Zinskosten',totalNetPnl>=0?'var(--ok)':'var(--err)');
 
         /* ── Chart: BTC-Preisverlauf → Collateral & Schulden ── */
@@ -5256,7 +5303,7 @@
         var labels=[],colData=[],debtData=[];
         for(var s=0;s<=steps;s++){
           var p=pMin+(pMax-pMin)*(s/steps);
-          labels.push('$'+Math.round(p/1000)+'k');
+          labels.push(faxU(p));
           colData.push(rows.reduce(function(sum,r){return sum+r.l.col*p;},0));
           debtData.push(rows.reduce(function(sum,r){return sum+r.debtFut;},0));
         }
@@ -5283,11 +5330,11 @@
               interaction:{mode:'index',intersect:false},
               plugins:{
                 legend:{display:true,position:'top'},
-                tooltip:{callbacks:{label:function(c){return c.dataset.label+': $'+Math.round(c.raw).toLocaleString('de-CH');}}},
+                tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+pU(Math.round(c.raw));}}},
                 annotation:{} /* no dependency, skip */
               },
               scales:{
-                y:{ticks:{callback:function(v){return '$'+Math.round(v/1000)+'k';}},grid:{color:chGridColor}},
+                y:{ticks:{callback:function(v){return faxU(v);}},grid:{color:chGridColor}},
                 x:{grid:{display:false},ticks:{maxTicksLimit:8,autoSkip:true}}
               }
             }
@@ -5300,7 +5347,7 @@
           '<th>Kredit</th>'+
           '<th>Collateral</th>'+
           '<th>Wert heute</th>'+
-          '<th>Wert bei $'+Math.round(futBtc/1000)+'k</th>'+
+          '<th>Wert bei '+faxU(futBtc)+'</th>'+
           '<th>Schulden heute</th>'+
           '<th>Schulden '+dateLabel+'</th>'+
           '<th>LTV heute</th>'+
@@ -5315,31 +5362,31 @@
             '<td class="tbl-name">'+r.l.name+
               (r.isMatured?'<br><span style="font-size:10px;color:var(--warn)">⚠ Fällig vor Zieldatum</span>':'')+'</td>'+
             '<td class="amt">'+r.l.col.toFixed(4)+' BTC</td>'+
-            '<td class="amt">'+fmt(r.colNow,'USD')+'</td>'+
-            '<td class="amt" style="font-weight:600;color:'+(r.colFut>=r.colNow?'var(--ok)':'var(--err)')+'">'+fmt(r.colFut,'USD')+'</td>'+
-            '<td class="amt">'+fmt(r.debtNow,'USD')+'</td>'+
-            '<td class="amt" style="font-weight:600">'+fmt(r.debtFut,'USD')+'</td>'+
+            '<td class="amt">'+fmtU(r.colNow)+'</td>'+
+            '<td class="amt" style="font-weight:600;color:'+(r.colFut>=r.colNow?'var(--ok)':'var(--err)')+'">'+fmtU(r.colFut)+'</td>'+
+            '<td class="amt">'+fmtU(r.debtNow)+'</td>'+
+            '<td class="amt" style="font-weight:600">'+fmtU(r.debtFut)+'</td>'+
             '<td class="amt" style="color:'+(r.ltvNow!==null?ltvColor(r.ltvNow):'')+'">'+
               (r.ltvNow!==null?r.ltvNow.toFixed(1)+'%':'—')+'</td>'+
             '<td class="amt" style="color:'+(r.ltvFut!==null?ltvColor(r.ltvFut):'')+'">'+
               (r.ltvFut!==null?r.ltvFut.toFixed(1)+'%':'—')+'</td>'+
             '<td class="amt" style="color:'+(r.mc1!==null&&futBtc<=r.mc1?'#dc2626':r.mc1!==null&&futBtc<=r.mc1*1.15?'#ea580c':'var(--text3)')+'">'+
-              (r.mc1!==null?'$'+Math.round(r.mc1).toLocaleString('de-CH'):'—')+'</td>'+
+              (r.mc1!==null?''+pU(Math.round(r.mc1)):'—')+'</td>'+
             '<td class="amt" style="font-weight:600;color:'+(r.netPnl>=0?'var(--ok)':'var(--err)')+'">'+
-              (r.netPnl>=0?'▲ +':'▼ ')+fmt(Math.abs(r.netPnl),'USD')+'</td>'+
+              (r.netPnl>=0?'▲ +':'▼ ')+fmtU(Math.abs(r.netPnl))+'</td>'+
           '</tr>';
         });
 
         /* Total row */
         tbl+='<tr style="font-weight:700;border-top:2px solid var(--border);background:var(--bg2)">'+
           '<td colspan="2" style="font-size:12px;color:var(--text4)">Total ('+rows.length+' Kredite)</td>'+
-          '<td class="amt">'+fmt(totalColNow,'USD')+'</td>'+
-          '<td class="amt" style="color:'+(totalColFut>=totalColNow?'var(--ok)':'var(--err)')+'">'+fmt(totalColFut,'USD')+'</td>'+
-          '<td class="amt">'+fmt(totalDebtNow,'USD')+'</td>'+
-          '<td class="amt">'+fmt(totalDebtFut,'USD')+'</td>'+
+          '<td class="amt">'+fmtU(totalColNow)+'</td>'+
+          '<td class="amt" style="color:'+(totalColFut>=totalColNow?'var(--ok)':'var(--err)')+'">'+fmtU(totalColFut)+'</td>'+
+          '<td class="amt">'+fmtU(totalDebtNow)+'</td>'+
+          '<td class="amt">'+fmtU(totalDebtFut)+'</td>'+
           '<td></td><td></td><td></td>'+
           '<td class="amt" style="color:'+(totalNetPnl>=0?'var(--ok)':'var(--err)')+'">'+
-            (totalNetPnl>=0?'▲ +':'▼ ')+fmt(Math.abs(totalNetPnl),'USD')+'</td>'+
+            (totalNetPnl>=0?'▲ +':'▼ ')+fmtU(Math.abs(totalNetPnl))+'</td>'+
         '</tr></tbody>';
 
         g('zk-tbl').innerHTML=tbl;
@@ -5629,7 +5676,7 @@
           sugEl.style.display='block';
           sugEl.innerHTML=
             '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+
-              '<span style="font-size:11px;color:var(--text3)">Historischer Preis am '+pD(startDate).toLocaleDateString('de-CH')+': <b style="color:var(--text)">$'+Math.round(usd).toLocaleString('de-CH')+'</b></span>'+
+              '<span style="font-size:11px;color:var(--text3)">Historischer Preis am '+pD(startDate).toLocaleDateString('de-CH')+': <b style="color:var(--text)">'+pU(Math.round(usd))+'</b></span>'+
               '<button onclick="d.applyHistBtc('+i+','+Math.round(usd)+',\''+escJs(lid)+'\')" style="font-size:11px;color:#fff;background:var(--ok);border:none;border-radius:4px;cursor:pointer;padding:2px 8px">&#10003; Übernehmen</button>'+
               '<span style="font-size:11px;color:var(--text4)">oder eigener Preis:</span>'+
               '<input id="bsw-manual-'+i+'" type="number" placeholder="z.B. '+Math.round(usd)+'" step="1" style="width:110px;font-size:11px;padding:2px 6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">'+
@@ -5938,7 +5985,7 @@
         }
         var rate=parseFloat(slider.value);
         info.textContent=fmt(l.amount,l.c)+' · '+l.rate+'% p.a. · Laufzeit '+l.term+' Mo';
-        g('ext-due').textContent=fmt(frU(due,l.c),l.c)+' = $'+Math.round(due).toLocaleString('de-CH');
+        g('ext-due').textContent=fmt(frU(due,l.c),l.c)+' = '+pU(Math.round(due));
         g('ext-start').textContent=endDate.toLocaleDateString('de-CH');
         r.style.display='block';
         var exts=[3,6,12,18,24];
@@ -5950,7 +5997,7 @@
           return '<div class="card" style="border:1px solid var(--border);box-shadow:none;padding:.75rem">'+
             '<div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:.4rem">+'+mo+' Monate</div>'+
             '<div style="font-size:12px;color:var(--text2);margin-bottom:2px">Zusatzkosten: <b>'+fmt(addInterest,l.c)+'</b></div>'+
-            '<div style="font-size:12px;color:var(--text3);margin-bottom:2px">= $'+addUSD.toLocaleString('de-CH',{maximumFractionDigits:0})+'</div>'+
+            '<div style="font-size:12px;color:var(--text3);margin-bottom:2px">= '+pU(addUSD)+'</div>'+
             '<div style="font-size:12px;font-weight:600;color:var(--text);margin:.4rem 0 2px;border-top:1px solid var(--border);padding-top:.4rem">Endbetrag: '+fmt(base+addInterest,l.c)+'</div>'+
             '<div style="font-size:11px;color:var(--text4)">Startbetrag: '+fmt(base,l.c)+'</div>'+
             '<div style="font-size:11px;color:var(--text4)">Start: '+endDate.toLocaleDateString('de-CH')+'</div>'+
@@ -5965,7 +6012,7 @@
         var pctEl=g('wc-pct'),rEl=g('wc-r');
         if(!simBtc||simBtc<=0){rEl.innerHTML='';pctEl.textContent='';return;}
         var diff=((simBtc-R.BTC)/R.BTC*100).toFixed(1);
-        pctEl.textContent=(diff>0?'+':'')+diff+'% vs. aktuell ($'+R.BTC.toLocaleString('de-CH',{maximumFractionDigits:0})+')';
+        pctEl.textContent=(diff>0?'+':'')+diff+'% vs. aktuell ('+pU(R.BTC)+')';
         pctEl.style.color=diff<0?'#dc2626':'#16a34a';
         var act=loans.filter(function(l){return l.status==='active'&&l.col>0;});
         if(!act.length){rEl.innerHTML='<p class="note2">Keine aktiven Kredite mit Collateral.</p>';return;}
@@ -6013,15 +6060,15 @@
               '</div>'+
               '<div style="padding:.45rem .5rem;border-right:1px solid var(--border)">'+
                 '<span style="color:var(--text4);display:block">MC1 bei</span>'+
-                '<b style="color:'+(simBtc<=mc1P?'#dc2626':'#d97706')+'">'+(mc1P?'$'+Math.round(mc1P).toLocaleString('de-CH'):'–')+'</b>'+
+                '<b style="color:'+(simBtc<=mc1P?'#dc2626':'#d97706')+'">'+(mc1P?''+pU(Math.round(mc1P)):'–')+'</b>'+
               '</div>'+
               '<div style="padding:.45rem .5rem;border-right:1px solid var(--border)">'+
                 '<span style="color:var(--text4);display:block">MC3 bei</span>'+
-                '<b style="color:'+(simBtc<=mc3P?'#dc2626':'#ea580c')+'">'+(mc3P?'$'+Math.round(mc3P).toLocaleString('de-CH'):'–')+'</b>'+
+                '<b style="color:'+(simBtc<=mc3P?'#dc2626':'#ea580c')+'">'+(mc3P?''+pU(Math.round(mc3P)):'–')+'</b>'+
               '</div>'+
               '<div style="padding:.45rem .5rem">'+
                 '<span style="color:var(--text4);display:block">Liq. bei</span>'+
-                '<b style="color:'+(simBtc<=liqP?'#dc2626':'#7c3aed')+'">'+(liqP?'$'+Math.round(liqP).toLocaleString('de-CH'):'–')+'</b>'+
+                '<b style="color:'+(simBtc<=liqP?'#dc2626':'#7c3aed')+'">'+(liqP?''+pU(Math.round(liqP)):'–')+'</b>'+
               '</div>'+
             '</div>'+
             (pufferToNext?'<div style="padding:.3rem .85rem;font-size:11px;color:var(--text3);border-top:1px solid var(--border);background:var(--warn-bg)">Noch '+pufferToNext+'% Abstand bis '+nextThreshLabel+'</div>':'')+
@@ -6154,18 +6201,18 @@
               '</div>'+
             '</div>'+
             '<div style="display:flex;gap:1.5rem;flex-wrap:wrap">'+
-              '<div style="text-align:right"><div style="font-size:10px;color:var(--text4);text-transform:uppercase;letter-spacing:.04em">Gesamtkosten</div><div style="font-size:16px;font-weight:700;color:var(--text)">'+fmt(totalCostUSD,'USD')+'</div></div>'+
+              '<div style="text-align:right"><div style="font-size:10px;color:var(--text4);text-transform:uppercase;letter-spacing:.04em">Gesamtkosten</div><div style="font-size:16px;font-weight:700;color:var(--text)">'+fmtU(totalCostUSD)+'</div></div>'+
               '<div style="text-align:right"><div style="font-size:10px;color:var(--text4);text-transform:uppercase;letter-spacing:.04em">Eff. Jahreszins</div><div style="font-size:16px;font-weight:700;color:'+color+'">'+effRate.toFixed(2)+'%</div></div>'+
             '</div>'+
           '</div>';
 
           /* Summary tiles */
           html+='<div class="mg" style="margin-bottom:.75rem">'+
-            '<div class="mc"><span class="mc-lbl">Kumulierter fälliger Betrag</span><span class="mc-val">'+fmt(totalDueUSD,'USD')+'</span><span class="mc-sub">Kapital + alle Zinsen</span></div>'+
-            '<div class="mc"><span class="mc-lbl">Zinsen gesamt</span><span class="mc-val">'+fmt(totalInterestUSD,'USD')+'</span></div>'+
-            '<div class="mc"><span class="mc-lbl">Gebühren gesamt</span><span class="mc-val">'+(totalFeeBtc?totalFeeBtc.toFixed(6)+' BTC':'—')+'</span>'+(totalFeeUSD?'<span class="mc-sub">≈ '+fmt(totalFeeUSD,'USD')+'</span>':'')+'</div>'+
+            '<div class="mc"><span class="mc-lbl">Kumulierter fälliger Betrag</span><span class="mc-val">'+fmtU(totalDueUSD)+'</span><span class="mc-sub">Kapital + alle Zinsen</span></div>'+
+            '<div class="mc"><span class="mc-lbl">Zinsen gesamt</span><span class="mc-val">'+fmtU(totalInterestUSD)+'</span></div>'+
+            '<div class="mc"><span class="mc-lbl">Gebühren gesamt</span><span class="mc-val">'+(totalFeeBtc?totalFeeBtc.toFixed(6)+' BTC':'—')+'</span>'+(totalFeeUSD?'<span class="mc-sub">≈ '+fmtU(totalFeeUSD)+'</span>':'')+'</div>'+
             '<div class="mc"><span class="mc-lbl">Ø Zinssatz (gewichtet)</span><span class="mc-val">'+avgRate.toFixed(2)+'%</span></div>'+
-            '<div class="mc"><span class="mc-lbl">Ø Kreditbetrag</span><span class="mc-val">'+fmt(avgAmount,'USD')+'</span></div>'+
+            '<div class="mc"><span class="mc-lbl">Ø Kreditbetrag</span><span class="mc-val">'+fmtU(avgAmount)+'</span></div>'+
           '</div>';
 
           /* Loan table */
@@ -6191,11 +6238,11 @@
               '<td>'+l.term+' Mt.</td>'+
               '<td>'+pD(l.start).toLocaleDateString('de-CH')+'</td>'+
               '<td>'+end+'</td>'+
-              '<td class="amt">'+fmt(iUSD,'USD')+'</td>'+
-              '<td class="amt" style="font-weight:600">'+fmt(dueUSD,'USD')+'</td>'+
+              '<td class="amt">'+fmtU(iUSD)+'</td>'+
+              '<td class="amt" style="font-weight:600">'+fmtU(dueUSD)+'</td>'+
               '<td class="amt">'+(l.feeBtc?l.feeBtc.toFixed(6)+' BTC':'—')+'</td>'+
-              '<td class="amt" style="font-weight:600">'+fmt(costUSD,'USD')+'</td>'+
-              (lBep?'<td class="amt" style="font-size:11px">$'+Math.round(lBep).toLocaleString('de-CH')+'</td>':'<td class="amt" style="color:var(--text4)">—</td>')+
+              '<td class="amt" style="font-weight:600">'+fmtU(costUSD)+'</td>'+
+              (lBep?'<td class="amt" style="font-size:11px">'+pU(Math.round(lBep))+'</td>':'<td class="amt" style="color:var(--text4)">—</td>')+
             '</tr>';
           });
           /* Totals row */
@@ -6211,11 +6258,11 @@
           var totalBep=(firstBtcStart&&totalColBtc>0)?(firstBtcStart+totalCostUSD/totalColBtc):null;
           html+='<tr style="background:var(--bg2);font-weight:700;border-top:2px solid var(--border)">'+
             '<td colspan="8" style="font-size:12px;color:var(--text4)">Total</td>'+
-            '<td class="amt">'+fmt(totalInterestUSD,'USD')+'</td>'+
-            '<td class="amt" style="color:'+color+'">'+fmt(totalDueUSD,'USD')+'</td>'+
+            '<td class="amt">'+fmtU(totalInterestUSD)+'</td>'+
+            '<td class="amt" style="color:'+color+'">'+fmtU(totalDueUSD)+'</td>'+
             '<td class="amt">'+(totalFeeBtc?totalFeeBtc.toFixed(6)+' BTC':'—')+'</td>'+
-            '<td class="amt" style="color:'+color+'">'+fmt(totalCostUSD,'USD')+'</td>'+
-            (totalBep?'<td class="amt" style="font-size:11px;color:'+color+'">$'+Math.round(totalBep).toLocaleString('de-CH')+'</td>':'<td class="amt" style="color:var(--text4)">—</td>')+
+            '<td class="amt" style="color:'+color+'">'+fmtU(totalCostUSD)+'</td>'+
+            (totalBep?'<td class="amt" style="font-size:11px;color:'+color+'">'+pU(Math.round(totalBep))+'</td>':'<td class="amt" style="color:var(--text4)">—</td>')+
           '</tr>';
           html+='</tbody></table></div>';
           html+='</div>';
@@ -6387,8 +6434,8 @@
 
         html+=section('Portfolio-\u00dcbersicht');
         html+=tile('Kredite',loans.length+'',sub3(act.length+'',clo.length+'',loans.length+''));
-        html+='<div class="mc"><span class="mc-lbl">Volumen (Kreditbetrag)</span><span class="mc-val">'+fmt(tU,'USD')+'</span>'+
-          sub3(fmt(aU,'USD'),clo.length?fmt(cloVolume,'USD'):dash,fmt(tU,'USD'))+
+        html+='<div class="mc"><span class="mc-lbl">Volumen (Kreditbetrag)</span><span class="mc-val">'+fmtU(tU)+'</span>'+
+          sub3(fmtU(aU),clo.length?fmtU(cloVolume):dash,fmtU(tU))+
           subCcy(
             function(c){var v=volByCcy(act,c);return v?fmt(v,c):null;},
             function(c){var v=volByCcy(clo,c);return clo.length&&v?fmt(v,c):null;},
@@ -6397,8 +6444,8 @@
         var tDue=loans.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
         var aDueS=act.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
         var cloDue=clo.reduce(function(s,l){return s+toU(l.amount,l.c)+intU(l);},0);
-        html+='<div class="mc"><span class="mc-lbl">Volumen (Schulden)</span><span class="mc-val">'+fmt(tDue,'USD')+'</span>'+
-          sub3(fmt(aDueS,'USD'),clo.length?fmt(cloDue,'USD'):dash,fmt(tDue,'USD'))+
+        html+='<div class="mc"><span class="mc-lbl">Volumen (Schulden)</span><span class="mc-val">'+fmtU(tDue)+'</span>'+
+          sub3(fmtU(aDueS),clo.length?fmtU(cloDue):dash,fmtU(tDue))+
           subCcy(
             function(c){var v=dueByCcyFn(act,c);return v?fmt(v,c):null;},
             function(c){var v=dueByCcyFn(clo,c);return clo.length&&v?fmt(v,c):null;},
@@ -6411,8 +6458,8 @@
             function(c){var v=weightedRateByCcy(clo,c);return clo.length&&v!==null?v.toFixed(2)+'%':null;},
             function(c){var v=weightedRateByCcy(loans,c);return v!==null?v.toFixed(2)+'%':null;}
           )+'</div>';
-        html+='<div class="mc"><span class="mc-lbl">\u00d8 Kredith\u00f6he</span><span class="mc-val">'+fmt(avgAmt,'USD')+'</span>'+
-          sub3(act.length?fmt(avgAmtAct,'USD'):dash,clo.length?fmt(avgAmtClo,'USD'):dash,fmt(avgAmt,'USD'))+
+        html+='<div class="mc"><span class="mc-lbl">\u00d8 Kredith\u00f6he</span><span class="mc-val">'+fmtU(avgAmt)+'</span>'+
+          sub3(act.length?fmtU(avgAmtAct):dash,clo.length?fmtU(avgAmtClo):dash,fmtU(avgAmt))+
           subCcy(
             function(c){var v=avgAmtByCcy(act,c);return v!==null?fmt(v,c):null;},
             function(c){var v=avgAmtByCcy(clo,c);return clo.length&&v!==null?fmt(v,c):null;},
@@ -6423,18 +6470,18 @@
         html+=section('Zinsen &amp; Kosten');
         var fiatCCYs=['EUR','CHF','CZK','PLN','USD'].filter(visC);
         var feePaidGrid=cGrid(fiatCCYs.map(function(c){return {c:c,v:frU(totalFeePaid,c)};}));
-        html+='<div class="mc"><span class="mc-lbl">Zinsen (bis F\u00e4lligkeit)</span><span class="mc-val">'+fmt(totalInterestOut+totalInterestPaid,'USD')+'</span>'+
-          sub3(fmt(totalInterestOut,'USD'),clo.length?fmt(totalInterestPaid,'USD'):dash,fmt(totalInterestOut+totalInterestPaid,'USD'))+
+        html+='<div class="mc"><span class="mc-lbl">Zinsen (bis F\u00e4lligkeit)</span><span class="mc-val">'+fmtU(totalInterestOut+totalInterestPaid)+'</span>'+
+          sub3(fmtU(totalInterestOut),clo.length?fmtU(totalInterestPaid):dash,fmtU(totalInterestOut+totalInterestPaid))+
           subCcy(
             function(c){var v=intByCcy(act,c);return v?fmt(v,c):null;},
             function(c){var v=intByCcy(clo,c);return clo.length&&v?fmt(v,c):null;},
             function(c){var v=intByCcy(loans,c);return v?fmt(v,c):null;}
           )+'</div>';
-        html+=tile('Zinsen seit Beginn (effektiv)',fmt(totalInterestEver,'USD'),'aufgelaufene Zinsen bis heute');
+        html+=tile('Zinsen seit Beginn (effektiv)',fmtU(totalInterestEver),'aufgelaufene Zinsen bis heute');
         html+='<div class="mc"><span class="mc-lbl">Zinsen / Volumen</span><span class="mc-val">'+zinsBelastungAll.toFixed(1)+'%</span>'+
           sub3(zinsBelastung.toFixed(1)+'%',clo.length?zinsBelastungClo.toFixed(1)+'%':dash,zinsBelastungAll.toFixed(1)+'%')+'</div>';
         html+='<div class="mc"><span class="mc-lbl">Geb\u00fchren bezahlt (alle)</span><span class="mc-val">'+totalFeePaidBtc.toFixed(8)+' BTC</span><span class="mc-sub" style="font-size:10px;line-height:1.4">'+feePaidGrid+'</span></div>';
-        html+=tile('Gesamtkosten (Zins+Geb\u00fchr)',fmt(totalInterestOut+totalFeeActive,'USD'),'aktive Kredite');
+        html+=tile('Gesamtkosten (Zins+Geb\u00fchr)',fmtU(totalInterestOut+totalFeeActive),'aktive Kredite');
         html+='</div>';
 
         html+=section('Laufzeit');
@@ -6495,26 +6542,26 @@
         html+=tile('Teuerster Kredit',priciest?priciest.rate.toFixed(2)+'%':dash,priciest?esc(priciest.name):'');
         if(beAvg!==null){
           html+='<div class="mc"><span class="mc-lbl">Break-even \u00d8 (einfach)</span>'+
-            '<span class="mc-val" style="color:'+(beReached?'var(--ok)':'var(--warn)')+'">$'+Math.round(beAvg).toLocaleString('de-CH')+'</span>'+
+            '<span class="mc-val" style="color:'+(beReached?'var(--ok)':'var(--warn)')+'">'+pU(Math.round(beAvg))+'</span>'+
             '<span class="mc-sub" style="color:'+(beReached?'var(--ok)':'var(--warn)')+'">'+
               (beReached?'\u2713 Erreicht — Kredite haben sich gelohnt':'\u2715 Noch nicht erreicht')+
             '</span>'+
-            '<span class="mc-sub">Aktuell $'+Math.round(R.BTC).toLocaleString('de-CH')+
-              (beReached?' · \u25b2 $'+(Math.round(R.BTC-beAvg)).toLocaleString('de-CH')+' \u00fcber Break-even':
-                         ' · noch $'+(Math.round(beAvg-R.BTC)).toLocaleString('de-CH')+' bis Break-even')+
+            '<span class="mc-sub">Aktuell '+pU(Math.round(R.BTC))+
+              (beReached?' · \u25b2 '+pU((Math.round(R.BTC-beAvg)))+' \u00fcber Break-even':
+                         ' · noch '+pU((Math.round(beAvg-R.BTC)))+' bis Break-even')+
             '</span>'+
             '<span class="mc-sub" style="color:var(--text4)">Mittelwert der einzelnen Break-even-Preise</span>'+
           '</div>';
         }
         if(beWeighted!==null){
           html+='<div class="mc"><span class="mc-lbl">Break-even gewichtet</span>'+
-            '<span class="mc-val" style="color:'+(beWReached?'var(--ok)':'var(--warn)')+'">$'+Math.round(beWeighted).toLocaleString('de-CH')+'</span>'+
+            '<span class="mc-val" style="color:'+(beWReached?'var(--ok)':'var(--warn)')+'">'+pU(Math.round(beWeighted))+'</span>'+
             '<span class="mc-sub" style="color:'+(beWReached?'var(--ok)':'var(--warn)')+'">'+
               (beWReached?'\u2713 Erreicht — Kredite haben sich gelohnt':'\u2715 Noch nicht erreicht')+
             '</span>'+
-            '<span class="mc-sub">Aktuell $'+Math.round(R.BTC).toLocaleString('de-CH')+
-              (beWReached?' · \u25b2 $'+(Math.round(R.BTC-beWeighted)).toLocaleString('de-CH')+' \u00fcber Break-even':
-                          ' · noch $'+(Math.round(beWeighted-R.BTC)).toLocaleString('de-CH')+' bis Break-even')+
+            '<span class="mc-sub">Aktuell '+pU(Math.round(R.BTC))+
+              (beWReached?' · \u25b2 '+pU((Math.round(R.BTC-beWeighted)))+' \u00fcber Break-even':
+                          ' · noch '+pU((Math.round(beWeighted-R.BTC)))+' bis Break-even')+
             '</span>'+
             '<span class="mc-sub" style="color:var(--text4)">Gewichtet nach Kreditbetrag in USD</span>'+
           '</div>';
@@ -6532,8 +6579,9 @@
         el.innerHTML=ALL_CCYS.map(function(c){
           var on=visC(c);
           return '<label style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid '+(on?'var(--accent)':'var(--border)')+';border-radius:20px;cursor:pointer;background:'+(on?'var(--accent-bg)':'var(--bg)')+';font-size:13px;color:var(--text)">'+
-            '<input type="checkbox" data-c="'+c+'" '+(on?'checked':'')+' style="accent-color:var(--accent);width:14px;height:14px">'+c+'</label>';
+            '<input type="checkbox" data-c="'+c+'" '+(on?'checked':'')+' onchange="d.seMainCcyRender(true)" style="accent-color:var(--accent);width:14px;height:14px">'+c+'</label>';
         }).join('');
+        d.seMainCcyRender();
         /* Populate display/nav settings */
         var st=g('se-default-tab');if(st){for(var i=0;i<st.options.length;i++){if(st.options[i].value===(cfg.defaultTab||'ov')){st.selectedIndex=i;break;}}}
         var sv=g('se-default-view');if(sv){for(var i=0;i<sv.options.length;i++){if(sv.options[i].value===(cfg.defaultView||'grid')){sv.selectedIndex=i;break;}}}
@@ -6552,18 +6600,39 @@
       },
       ccyAll:function(){
         document.querySelectorAll('#ccy-toggles input[type=checkbox]').forEach(function(cb){cb.checked=true;});
+        d.seMainCcyRender(true);
+      },
+      /* The options mirror the currently ticked checkboxes, so the main
+         currency can never point at a currency that is switched off. */
+      seMainCcyRender:function(fromCheckboxes){
+        var sel=g('se-main-ccy');if(!sel)return;
+        var list=[];
+        if(fromCheckboxes){
+          document.querySelectorAll('#ccy-toggles input[type=checkbox]').forEach(function(cb){if(cb.checked)list.push(cb.dataset.c);});
+        }
+        if(!list.length)list=cfg.ccys.slice();
+        var cur=sel.value||mainC();
+        if(list.indexOf(cur)<0)cur=list.indexOf('USD')>=0?'USD':list[0];
+        sel.innerHTML=list.map(function(c){
+          return '<option value="'+esc(c)+'"'+(c===cur?' selected':'')+'>'+esc(c)+'</option>';
+        }).join('');
       },
       ccySave:function(){
         var checked=[];
         document.querySelectorAll('#ccy-toggles input[type=checkbox]').forEach(function(cb){if(cb.checked)checked.push(cb.dataset.c);});
         if(!checked.length){alert('Mindestens eine Währung auswählen.');return;}
         cfg.ccys=checked;
+        var mSel=g('se-main-ccy');
+        var wanted=mSel&&mSel.value?mSel.value:cfg.mainCcy;
+        cfg.mainCcy=(checked.indexOf(wanted)>=0)?wanted:(checked.indexOf('USD')>=0?'USD':checked[0]);
         saveSettings(cfg);
-        /* Update CSW buttons */
+        /* The main currency touches every view, so refresh all of them */
+        dCcy=null;
         d.renderCsw();
-        /* Re-render current active section */
-        var at=document.querySelector('#ffd-root .nav-item.on, #ffd-root .tab.on');
-        if(at){var t=at.getAttribute('onclick').match(/'([^']+)'/)[1];var fn={ov:d.ov,lo:d.loans,st:d.stress,ca:d.cal,tl:d.tl};if(fn[t])fn[t]();}
+        d.seMainCcyRender();
+        d.updateHdrStats();d.checkAlarms();
+        if(typeof d.vorCcyChange==='function'){var vs=g('vor-ccy');if(vs){vs.value=mainC();d.vorCcyChange();}}
+        renderActiveTab();
         var msg=g('ccy-saved-msg');msg.style.display='block';setTimeout(function(){msg.style.display='none';},2000);
       },
       seDisplaySave:function(){
@@ -6742,7 +6811,7 @@
         var monthlyInt=act.reduce(function(s,l){return s+toU(l.amount*(l.rate/100)/12,l.c);},0);
         var CC2=(['EUR','CHF','USD','USDT','USDC','CZK','PLN','BTC']).filter(visC);
         var CC3=CC2.filter(function(c){return c!=='BTC';});
-        var CC4=CC2.filter(function(c){return c!=='USD';});
+        var CC4=CC2.filter(function(c){return c!=='BTC';}); /* main currency is dropped by usdGridSub */
         function tile(lbl,val,sub,col){
           return '<div class="mc">'+
             '<span class="mc-lbl">'+lbl+'</span>'+
@@ -6794,9 +6863,9 @@
           var netCol=net<0?'color:#dc2626':'color:#16a34a';
           scRows+='<tr'+(sc.factor===1?' style="background:var(--bg2);font-weight:700"':'')+'>'+
             '<td style="color:'+sc.col+';font-weight:600">'+sc.lbl+'</td>'+
-            '<td class="amt">$'+Math.round(p).toLocaleString('de-CH')+'</td>'+
-            '<td class="amt">$'+Math.round(stackVal).toLocaleString('de-CH')+'</td>'+
-            '<td class="amt" style="'+netCol+'">$'+Math.round(net).toLocaleString('de-CH')+'</td>'+
+            '<td class="amt">'+pU(Math.round(p))+'</td>'+
+            '<td class="amt">'+pU(Math.round(stackVal))+'</td>'+
+            '<td class="amt" style="'+netCol+'">'+pU(Math.round(net))+'</td>'+
             '<td class="amt" style="color:'+(sLtv>=95?'#dc2626':lc(sLtv))+'">'+sLtv.toFixed(1)+'%</td>'+
             '<td class="amt" style="color:'+(pLtv>=95?'#dc2626':lc(pLtv))+'">'+pLtv.toFixed(1)+'%</td>'+
           '</tr>';
@@ -6810,11 +6879,11 @@
             tile('Cold Storage / Reserve',(btcReserve>0?btcReserve.toFixed(8)+' \u20bf':'—'),(btcReserve>0?usdGrid(CC3,btcReserve*R.BTC)+' ('+reserveShare.toFixed(1)+'% des Stacks)':'Bitcoin-Stack eingeben \u2193'))+
             tile('Hinterlegtes Collateral',(aC>0?aC.toFixed(8)+' \u20bf':'—'),(aC>0?usdGrid(CC3,aC*R.BTC)+' ('+collateralShare.toFixed(1)+'%)':''))+
             /* Schulden & Kosten */
-            tile('Offene Schulden',(aDue>0?fmt(frU(aDue,'USD'),'USD'):'—'),(aDue>0?usdGrid(CC4,aDue):''))+
+            tile('Offene Schulden',(aDue>0?fmtU(aDue):'—'),(aDue>0?usdGridSub(CC4,aDue):''))+
             tile('Monatl. Zinslast',(monthlyInt>0?usdGrid(CC3,monthlyInt):'—'),'laufende Zinskosten')+
             tile('Zinslast / Stack',(intPctStack!==null?intPctStack.toFixed(2)+'% p.a.':'—'),(intPctStack!==null?'Jahreszinsen relativ zum Gesamtportfolio-Wert':''),(intPctStack!==null?(intPctStack>=10?'var(--err)':intPctStack>=5?'var(--warn)':'var(--ok)'):null))+
             /* Ergebnis */
-            tile('Netto-Verm\u00f6gen',fmt(frU(netWorthUSD,'USD'),'USD'),usdGrid(CC4,netWorthUSD),(netWorthUSD<0?'var(--err)':'var(--ok)'))+
+            tile('Netto-Verm\u00f6gen',fmtU(netWorthUSD),usdGridSub(CC4,netWorthUSD),(netWorthUSD<0?'var(--err)':'var(--ok)'))+
             tile('Stack-LTV',(totalBTCvalUSD>0?stackLTV.toFixed(1)+'%':'—'),'Schulden \u00f7 Gesamtportfolio',sLtvCol)+
             tile('Hebel-Faktor',(leverage!==null?leverage.toFixed(2)+'\u00d7':'—'),(leverage!==null?(leverage<1?'\u2713 Ungehebelt':leverage<2?'Moderat':leverage<5?'Hoch':'\u26a0 Sehr hoch'):'Kein Eigenkapital'),(leverage!==null?(leverage>=5?'var(--err)':leverage>=2?'var(--warn)':'var(--ok)'):null))+
             tile('Liquidit\u00e4ts-Puffer',(liquidityMonths!==null?liquidityMonths+' Monate':'—'),(btcReserve>0?'Cold Storage deckt Zinsen':'Kein Reserve eingegeben'))+
@@ -6875,7 +6944,7 @@
                   '<td>'+esc(t.date)+'</td>'+
                   '<td style="color:'+(typeCol[t.type]||'var(--text)')+'">'+(typeLabel[t.type]||esc(t.type))+'</td>'+
                   '<td class="amt" style="color:'+(typeCol[t.type]||'var(--text)')+'">'+(signed>=0?'+':'\u2212')+t.btc.toFixed(8)+'</td>'+
-                  '<td class="amt">'+(t.price?'$'+Math.round(t.price).toLocaleString('de-CH'):'—')+'</td>'+
+                  '<td class="amt">'+(t.price?''+pU(Math.round(t.price)):'—')+'</td>'+
                   '<td class="amt">'+(t.type==='fee'?'<span style="color:var(--text4)" title="Der BTC-Betrag ist bereits die Geb\u00fchr">—</span>':(t.fee?t.fee.toFixed(8):'—'))+'</td>'+
                   '<td style="font-size:11px;color:var(--text3)">'+esc(t.note)+'</td>'+
                   '<td style="white-space:nowrap">'+
@@ -6931,14 +7000,14 @@
         el.innerHTML=
           '<div class="mg">'+
             '<div class="mc"><span class="mc-lbl">Ben\u00f6tigter Exit-Preis</span>'+
-            '<span class="mc-val" style="color:'+col+'">$'+Math.round(exitP).toLocaleString('de-CH')+'</span>'+
+            '<span class="mc-val" style="color:'+col+'">'+pU(Math.round(exitP))+'</span>'+
             '<span class="mc-sub">'+(exitP>R.BTC?'\u26a0 \u00dcber aktuellem Kurs':distPct.toFixed(1)+'% Abstand zum aktuellen Kurs')+'</span></div>'+
             '<div class="mc"><span class="mc-lbl">Zu verkaufende BTC</span>'+
             '<span class="mc-val">'+sellable.toFixed(6)+' \u20bf</span>'+
-            '<span class="mc-sub">\u2248 $'+Math.round(sellable*exitP).toLocaleString('de-CH')+'</span></div>'+
+            '<span class="mc-sub">\u2248 '+pU(Math.round(sellable*exitP))+'</span></div>'+
             '<div class="mc"><span class="mc-lbl">Verbleibende Reserve</span>'+
             '<span class="mc-val">'+keep.toFixed(6)+' \u20bf</span>'+
-            '<span class="mc-sub">\u2248 $'+Math.round(keep*exitP).toLocaleString('de-CH')+' bei Exit-Preis</span></div>'+
+            '<span class="mc-sub">\u2248 '+pU(Math.round(keep*exitP))+' bei Exit-Preis</span></div>'+
           '</div>';
       },
       bkSave:function(){
@@ -7026,7 +7095,8 @@
         var csw=g('debt-csw');if(!csw)return;
         var vis=['USD','EUR','CHF','USDT','USDC','CZK','PLN','BTC','SAT'].filter(visC);
         if(!vis.length)return;
-        var cur=dCcy;if(vis.indexOf(cur)<0){cur=vis[0];dCcy=cur;}
+        if(!dCcy)dCcy=mainC();
+        var cur=dCcy;if(vis.indexOf(cur)<0){cur=vis.indexOf(mainC())>=0?mainC():vis[0];dCcy=cur;}
         csw.innerHTML=vis.map(function(c){return '<button class="cb'+(c===cur?' on':'')+'" onclick="d.ccy(\'' +c+ '\',this)">'+c+'</button>';}).join('');
       },
       tl:function(){
@@ -7041,7 +7111,7 @@
             '<span class="tdate">'+pD(l.start).toLocaleDateString('de-CH')+' → '+end+'</span>'+
             '<span class="tlabel">'+esc(l.name)+' <span class="badge '+(l.status==='active'?'ba':'bc')+'" style="margin-left:6px">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span></span>'+
             '<span class="tsub amt">'+fmt(l.amount,l.c)+' · '+l.rate+'% · '+l.term+' Mo'+(l.status==='active'&&dl>0?' · noch <b>'+dl+' Tage</b>':'')+'</span>'+
-            '<span class="note" style="margin-top:2px">= '+fmt(lU,'USD')+' / '+fmt(frU(lU,'CHF'),'CHF')+' / '+fmt(frU(lU,'EUR'),'EUR')+'</span></div>';
+            '<span class="note" style="margin-top:2px">= '+fmtU(lU)+' / '+fmt(frU(lU,'CHF'),'CHF')+' / '+fmt(frU(lU,'EUR'),'EUR')+'</span></div>';
         }).join('')+'</div>';
         if(typeof Chart==='undefined'){console.warn('[tl] Chart.js not yet loaded — charts deferred to init()');return;}
         setTimeout(function(){
@@ -7054,7 +7124,7 @@
           var c2=g('int-chart');
           if(c2&&act.length)chI=new Chart(c2,{type:'bar',
             data:{labels:act.map(function(l){return l.name;}),datasets:[{data:act.map(function(l){return Math.round(intU(l));}),backgroundColor:'#FDBA74',borderColor:'#F97316',borderWidth:1,borderRadius:4}]},
-            options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:chTextColor,callback:function(v){return '$'+v.toLocaleString('de-CH');}},grid:{color:chGridColor}},x:{ticks:{color:chTextColor},grid:{display:false}}}}
+            options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:chTextColor,callback:function(v){return ''+pU(v);}},grid:{color:chGridColor}},x:{ticks:{color:chTextColor},grid:{display:false}}}}
           });
         },120);
       }
@@ -7080,7 +7150,7 @@
       /* Re-render active tab now that Chart.js is available — fixes tabs that bail early on typeof Chart */
       (function(){
         var at=document.querySelector('#ffd-root .tab.on, #ffd-root .nav-item.on');
-        if(at){var m=at.getAttribute('onclick').match(/'([^']+)'/);if(m){var t=m[1];var fn={ch:d.ch,st:d.stress,tl:d.tl,sx:d.sx,lo:d.loans,ca:d.cal};if(fn[t])fn[t]();}}
+        if(at){var m=at.getAttribute('onclick').match(/'([^']+)'/);if(m){var t=m[1];var fn={ch:d.ch,st:d.stress,tl:d.tl,sx:d.sx,lo:d.loans,ca:d.cal};if(fn[t]){try{fn[t]();}catch(e){console.error('[init] Tab-Render:',e);}}}}
       })();
       d.refreshBtc();
     }
@@ -7146,7 +7216,17 @@
         dl.src='https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js';
         dl.onload=function(){console.log('[init] ChartDataLabels loaded');};
         document.head.appendChild(dl);
-      };document.head.appendChild(s);
+      };
+      /* Without this the whole of init() — dark mode, sidebar state, the tab
+         from the URL and, most importantly, the exchange-rate fetch — never ran
+         when the CDN was unreachable, and nothing told the user why every
+         figure was based on the built-in fallback rates. */
+      s.onerror=function(){
+        console.warn('[init] Chart.js konnte nicht geladen werden — Diagramme sind nicht verfügbar');
+        ffdNotice('Chart.js konnte nicht geladen werden (kein Internet oder CDN blockiert). Diagramme werden nicht angezeigt; alle übrigen Funktionen stehen zur Verfügung.');
+        init();
+      };
+      document.head.appendChild(s);
     }
     /* Run immediately so alarm banner, pills and overview show on first paint regardless of Chart.js */
     try{syncStatus();pills();d.renderCsw();d.loans();d.checkAlarms();d.ov();}catch(e){console.error('[startup] Fehler beim initialen Render:', e);}
