@@ -4,6 +4,21 @@
 ---
 
 
+## v1.5.0 (24.07.2026)
+
+### New Features
+
+**Main Currency**
+- New «Hauptwährung» select in Einstellungen → Bevorzugte Währungen: pick one of the currencies you have enabled and it becomes the primary currency across the whole dashboard — header stats, Übersicht, Meine Kredite, Statistiken, Roll-Overs, Portfolio, Stress-Test, every chart axis and the four chart titles that name a currency
+- The Tools calculators and the debt chart's currency buttons start on the main currency instead of always on USD
+- Multi-currency breakdowns lead with the main currency; it is left out only where the headline right above already states the amount in it
+- Amounts are stored and calculated in USD internally and only converted for display, so switching the main currency is lossless and can be undone at any time
+- The setting is saved with the other settings and travels with JSON export and import; switching a currency off that is currently the main currency falls back to USD or the first remaining currency
+
+
+---
+
+
 ## v1.4.0 (24.07.2026)
 
 ### New Features
@@ -68,6 +83,7 @@
 
 **Interface**
 - Opening the Diagramme tab with no loans left every chart blank for the rest of the session, even after adding a loan
+- When Chart.js could not be loaded (no internet, blocked CDN) the start-up routine was skipped entirely, so exchange rates were never fetched and nothing said why every figure used the built-in fallback rates
 - Collateral, amount and interest rate could not be edited to 0 — the old value was silently kept
 - Assigning a roll-over predecessor left the predecessor untagged, so the chain contained only one loan and the selection was lost on reopening
 - Duplicate loan IDs are rejected instead of quietly breaking edit and delete
