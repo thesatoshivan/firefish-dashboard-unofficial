@@ -2,7 +2,7 @@
 
 > An unofficial, self-hosted single-file dashboard for the [Firefish](https://firefish.io) Bitcoin lending platform.
 
-Track your active and closed loans, monitor LTV ratios and collateral health, analyse break-even prices, and get a full overview of upcoming maturities — all in one portable PHP file with no external dependencies or database required.
+Track your active and closed loans, monitor LTV ratios and collateral health, analyse break-even prices, and get a full overview of upcoming maturities — all in one portable file with no build step, no backend and no database.
 
 **This project is not affiliated with or endorsed by Firefish.**
 
@@ -10,26 +10,34 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 
 ## Features
 
-- **Loan overview** — track all active and closed loans with full details (amount, rate, term, collateral, status)
+- **Loan overview** — track all active and closed loans with full details (amount, rate, term, collateral, status), as cards or as a sortable table
 - **LTV monitoring** — real-time LTV per loan with configurable MC1/MC2/MC3/liquidation thresholds and colour-coded alerts
+- **Header stats bar** — active loans, next maturity, open debt in fiat and BTC, pledged collateral and its value, distance to the next margin call, portfolio break-even and the BTC 24 h change, each with a detailed tooltip
+- **Alarm banner** — a margin-call warning that stays visible on every tab and names the affected loans
 - **Collateral health** — portfolio-level collateral value, coverage ratio, margin call price and open debt in BTC
 - **Break-even analysis** — calculates the BTC price at which a loan becomes profitable, with automatic historical BTC price lookup and break-even average / weighted break-even statistics
-- **Upcoming maturities** — countdown to due dates with configurable alert window
-- **Multi-currency support** — EUR, CHF, CZK, PLN, USDC, USDT with live exchange rates
-- **Roll-over chains** — link loans into roll-over chains, show chain badges on loan cards and analyse them in a dedicated Roll-Overs tab
-- **Built-in tools** — includes Roll-Over Simulation and Future Simulation for modelling extensions, future BTC prices, debt development, LTV and P&L
+- **Upcoming maturities** — countdown to due dates with a configurable alert window, plus a cumulative debt card for eight time windows from 7 days to 2 years
+- **Calendar & timeline** — a month calendar of due dates and a Gantt-style timeline of loan runtimes and roll-over chains
+- **Multi-currency support** — EUR, CHF, CZK, PLN, USDC, USDT with live exchange rates that can be overridden by hand
+- **Roll-over chains** — link loans into roll-over chains, show chain badges on loan cards and analyse them in a dedicated Roll-Overs tab with effective annual rates
+- **Built-in tools** — calculators for before, during and after a loan (maximum loan amount, required collateral, LTV and margin-call prices, break-even hold-vs-sell, collateral top-up, extension scenarios, profit/loss borrow-vs-sell), a Power Law price model, a Roll-Over Simulation and a Future Simulation
+- **Portfolio view** — track your entire Bitcoin stack (cold storage + collateral) with net worth, stack LTV, leverage factor, liquidity buffer, MC1 reserve, rebalancing hints, BTC price scenarios and an exit-strategy calculator
+- **Transaction ledger** — record buys, sells, transfers, mining income and fees; the balance feeds the Portfolio view automatically or can be overridden by hand
 - **Charts & statistics** — LTV history, debt timeline, cash flow, collateral concentration, currency distribution, effective cost in BTC and more
 - **Stress test** — simulate BTC price drops with scenarios, a BTC price heatmap and a worst-case simulator
+- **Privacy toggle** — hide all amounts with one click for screenshots or shoulder surfers
 - **Dark mode** — full dark/light theme with persistent preference
-- **Import / Export** — JSON and CSV (Firefish statement format) with configurable merge strategies, including roll-over chain IDs
-- **No backend required** — all data is stored in browser `localStorage`; the PHP file is a single self-contained page
+- **Import / Export** — JSON (loans, transactions and settings) and CSV, with configurable merge strategies
+- **No backend required** — all loan data is stored in your browser's `localStorage`; the file is a single self-contained page
 
 ---
 
 ## Requirements
 
-- A web server with PHP (any version ≥ 7.x) — or simply open the file directly in a browser
-- No database, no composer, no npm
+- Any modern browser — the file works when opened directly from disk
+- Optionally any web server, if you prefer to host it. Note that despite the `.php` extension the file contains **no PHP code** — it is plain HTML, CSS and JavaScript, so PHP does not need to be installed
+- No database, no composer, no npm, no build step
+- An internet connection is used for Chart.js and the Google Fonts stylesheet (both from a CDN) and for exchange rates from the public CoinGecko API. Without it the dashboard still works; charts and live prices are simply unavailable
 
 ---
 
@@ -62,13 +70,35 @@ You can link related loans into roll-over chains using a shared chain ID. The da
 
 ### Tools
 
-The **Tools** area includes a **Roll-Over Simulation** for modelling multiple consecutive extensions with compounding and automatic fee calculation, plus a **Future Simulation** for projecting collateral value, debt, LTV, MC1 price and net P&L at a chosen future BTC price.
+The **Tools** tab is split into six areas:
+
+- **Vor Kredit** — maximum loan amount for a given stack, required collateral, maximum amount while keeping a reserve, and what buying bitcoin with borrowed money would cost
+- **Während Kredit** — LTV and margin-call prices for a loan you are running, a break-even calculator comparing holding against selling, and a converter showing your debt in every currency
+- **Nach Kredit** — collateral top-up calculator with the resulting liquidation price, extension scenarios, and a profit/loss comparison of borrowing against selling
+- **Powerlaw** — fair, bottom and overvalued price bands from the Bitcoin power-law model, plus the resulting liquidation price
+- **Roll-Over Simulation** — models several consecutive extensions with compounding, automatic fee calculation and a break-even price per period
+- **Zukunftssimulation** — projects collateral value, debt, LTV, MC1 price and net P&L at a chosen future BTC price and date
+
+### Calendar & timeline
+
+The **Kalender** tab marks every due date in a month grid and highlights the ones coming up. The **Timeline** tab draws each loan as a bar from start to maturity, with roll-over chains shown as connected segments.
+
+### Privacy
+
+The eye button in the header hides every amount in the interface, which is useful for screenshots or when someone is looking over your shoulder. The setting survives a reload.
+
+### Portfolio
+
+The **Portfolio** tab looks at your whole Bitcoin position, not just the loans. Enter your BTC held outside the loans (cold storage, exchange etc.) — or record individual transactions in the built-in ledger, which calculates the balance automatically. The dashboard then shows total stack, net worth, stack LTV, leverage factor and liquidity buffer, warns how much BTC would be needed to keep all loans below MC1, simulates BTC price scenarios from −50 % to +50 %, and calculates the exit price at which all loans could be repaid while keeping a reserve of your choice.
 
 ### Import & Export
 
-- **Export JSON** — saves all loans and settings to a timestamped JSON file
-- **Import JSON** — restores from a previous export (merge, skip duplicates or replace)
-- **Import CSV** — compatible with the official Firefish loan statement CSV export
+- **Export JSON** — saves all loans, transactions and settings to a timestamped JSON file
+- **Import JSON** — restores from a previous export (merge, skip duplicates or replace); records that cannot be read are rejected and reported instead of being stored
+- **Export CSV** — a spreadsheet-friendly export of all loans with their derived values
+- **Import CSV** — accepts the official Firefish loan statement export as well as this dashboard's own CSV export, including quoted fields and both comma and semicolon separators
+
+If the stored data ever becomes unreadable, the dashboard keeps a backup copy in the browser, stops writing, and says so — rather than silently starting from an empty list.
 
 ---
 
@@ -87,6 +117,9 @@ All settings are saved in `localStorage` and included in JSON exports:
 | Countdown window | How many days ahead to show upcoming maturities |
 | Hide break-even | Hide the break-even widget on loan cards |
 | Navigation order | Custom order of sidebar navigation items |
+| Hide amounts | Masks all figures in the interface (eye button in the header) |
+| LTV display filter | Minimum LTV a loan needs before it appears in the Overview's LTV list |
+| BTC reserve | Bitcoin held outside the loans (set in the Portfolio tab, auto-derived from the transaction ledger) |
 
 ---
 
@@ -121,7 +154,11 @@ All settings are saved in `localStorage` and included in JSON exports:
 
 ## Disclaimer
 
-This is an unofficial community tool. It is not connected to, affiliated with, or endorsed by Firefish. All data is stored locally in your browser — nothing is sent to any server. Use at your own risk.
+This is an unofficial community tool. It is not connected to, affiliated with, or endorsed by Firefish.
+
+Your loan and transaction data never leaves your browser — it is stored in `localStorage` and is never transmitted anywhere. The page itself does load Chart.js and a Google Fonts stylesheet from public CDNs and queries the CoinGecko API for exchange rates, so those services see your IP address and the dates you request prices for. If that matters to you, host the libraries yourself and enter rates by hand.
+
+Use at your own risk.
 
 ---
 
