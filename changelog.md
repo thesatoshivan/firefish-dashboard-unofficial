@@ -4,7 +4,25 @@
 ---
 
 
-## v1.5.0 (25.07.2026)
+## v1.6.0 (25.07.2026)
+
+### Improvements
+
+- **Loans without a stored BTC start price are now marked**: without a start price the fee's fiat value and the break-even have to fall back to the current BTC price — unavoidable, but until now invisible. «Meine Kredite» shows a chip counting the affected loans, following the active filter and naming how many of them carry a fee, and the fee value on such a loan is marked with ⚠ that explains on hover that today's price was used. Loans that do have a start price show which price their fee was valued at. Note that the Firefish statement CSV contains no start price, so imported loans are affected until the price is accepted once per loan
+
+### Bug Fixes
+
+- **Origination fee valued at today's price**: the fee is a fixed BTC amount paid when the loan is taken out, but its fiat value was recalculated at the current BTC price, so a sunk cost drifted with the market — the same 0.005 BTC fee showed 250 at BTC 50'000 and 500 after the price doubled. It is now valued at the BTC price stored for the loan's start date, which also corrects the break-even prices, the roll-over chain totals, the statistics and the CSV export. Hovering the fee on a loan card shows which price was used
+- **Liquidation price in the Vor-Kredit and Powerlaw tools**: «Aktueller Liquidationspreis», the LTV calculator, the Bitcoin reserve tool and the Powerlaw liquidation tool approximated the 95 % liquidation threshold as «×1.05» instead of «÷0.95». They reported a liquidation price 0.25 % lower than the loan cards, the alarms and the other calculators do for the same position — the direction that makes a position look safer than it is. All tools now use the same definition, verified against a live Firefish position (7'156 USD due on 0.13972794 BTC liquidates at ~53'912 USD, i.e. at exactly 95 % LTV), and the two «Kursrückgang»-sliders no longer reach past the liquidation point
+- **Collateral-Nachschuss-Rechner**: the calculator worked with the loan principal only, while every LTV elsewhere in the dashboard includes the interest. For a 10'000 loan at 10 % over 12 months with 0.2 BTC collateral it reported 50.0 % where the loan card reported 55.0 %, and it consequently understated every top-up — in a tight position it even answered «✓ Kein Nachschuss nötig» when collateral was in fact missing. It now uses principal + interest, and the input is labelled «Fälliger Betrag (Kredit + Zinsen)» accordingly
+- **Collateral-Nachschuss-Rechner**: a loan with no collateral yet showed no result at all, which is exactly the case where the required amount matters most; it now reports the full amount needed
+- **JSON import**: a backup whose main currency was not among its own enabled currencies was restored as-is. Nothing looked wrong at first, because the display falls back to USD for a currency that is switched off — but the setting stayed in place invisibly and took over the whole dashboard the moment that currency was enabled again. The import now falls back to USD, or to the first enabled currency
+
+
+---
+
+
+## v1.5.0 (24.07.2026)
 
 ### New Features
 
