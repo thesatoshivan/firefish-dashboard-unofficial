@@ -683,7 +683,7 @@
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v150-24072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.5.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v160-25072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.6.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
@@ -825,6 +825,7 @@
             <button id="ft-closed" class="filter-tab" onclick="d.filterLoans('closed',this)">Abgeschlossen</button>
           </div>
           <div id="ccy-filter-bar" style="display:none;gap:6px;flex-wrap:wrap"></div>
+          <span id="nobtcstart-chip" style="display:none"></span>
         </div>
         <div class="view-toggle">
           <button class="view-btn on" id="view-grid-btn" onclick="d.setView('grid',this)" title="Kachelansicht">&#9783;</button>
@@ -979,7 +980,7 @@
             </div>
             <div class="vor-field" id="mkr-pct-row">
               <label>Kursrückgang</label>
-              <input type="range" id="mkr-drop-sl" min="0" max="47.5" step="0.5" value="0" style="width:100%;margin-top:.35rem" oninput="document.getElementById('mkr-drop-lbl').textContent=parseFloat(this.value).toFixed(1)+' %';d.mkr()">
+              <input type="range" id="mkr-drop-sl" min="0" max="47" step="0.5" value="0" style="width:100%;margin-top:.35rem" oninput="document.getElementById('mkr-drop-lbl').textContent=parseFloat(this.value).toFixed(1)+' %';d.mkr()">
               <span id="mkr-drop-lbl" style="font-size:11px;color:var(--text4)">0.0 %</span>
               <p class="note2" id="mkr-liq-warn" style="margin-top:2px;font-size:11px"></p>
             </div>
@@ -1021,7 +1022,7 @@
             </div>
             <div class="vor-field" id="btr-pct-row">
               <label>Kursrückgang</label>
-              <input type="range" id="btr-drop-sl" min="0" max="47.5" step="0.5" value="0" style="width:100%;margin-top:.35rem" oninput="document.getElementById('btr-drop-lbl').textContent=parseFloat(this.value).toFixed(1)+' %';d.btr()">
+              <input type="range" id="btr-drop-sl" min="0" max="47" step="0.5" value="0" style="width:100%;margin-top:.35rem" oninput="document.getElementById('btr-drop-lbl').textContent=parseFloat(this.value).toFixed(1)+' %';d.btr()">
               <span id="btr-drop-lbl" style="font-size:11px;color:var(--text4)">0.0 %</span>
               <p class="note2" id="btr-liq-warn" style="margin-top:2px;font-size:11px"></p>
             </div>
@@ -1241,7 +1242,7 @@
         <div class="card">
           <span class="card-title">Collateral-Nachschuss-Rechner</span>
           <div class="tr"><label>Kredit ausw&#228;hlen (optional)</label><select id="cn-loan-sel" onchange="d.nachFill()"><option value="">— Kredit w&#228;hlen —</option></select></div>
-          <div class="tr"><label id="cn-loan-lbl">Kreditbetrag (USD)</label><input type="number" id="cnl" placeholder="10000" oninput="d.nach()"></div>
+          <div class="tr"><label id="cn-loan-lbl">F&#228;lliger Betrag (Kredit + Zinsen) (USD)</label><input type="number" id="cnl" placeholder="10000" oninput="d.nach()"></div>
           <div class="tr"><label>Collateral (BTC)</label><input type="number" id="cncol" placeholder="0.25" step="0.001" oninput="d.nach()"></div>
           <div class="rb" id="cn-r" style="display:none">
             <div class="rr"><span class="rl">Aktueller LTV</span><span class="rv" id="cnltv">–</span></div>
@@ -1937,7 +1938,7 @@
       </div>
     </div>
 
-    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v150-24072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.5.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
+    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v160-25072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.6.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
     </div><!-- #ffd-root -->
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -2353,7 +2354,22 @@
     function toU(a,c){return a*(R[c]||1);}
     function frU(u,c){return c==='BTC'?u/R.BTC:c==='SAT'?(u/R.BTC)*1e8:u/(R[c]||1);}
     function intU(l){return toU(l.amount*(l.rate/100)*(l.term/12),l.c);}
-    function feeU(l){return (l.feeBtc||0)*R.BTC;}
+    /* Fiat value of the origination fee. The fee is a fixed BTC amount paid when
+       the loan started, so it is valued at the BTC price of that day — otherwise
+       this sunk cost would drift with the current market price. Falls back to the
+       current price only when no start price is stored. */
+    /* Marker for the fee's fiat value: names the BTC price it was valued at, or
+       warns that no start price is stored and today's price had to be used. */
+    function feeBasisAttr(l){
+      if(!l.feeBtc)return '';
+      return l.btcStart
+        ? ' title="Wert bei Kreditaufnahme, BTC-Kurs '+esc(pU(l.btcStart))+'"'
+        : ' title="Kein BTC-Startpreis hinterlegt \u2014 zum aktuellen Kurs bewertet" style="border-bottom:1px dotted var(--warn)"';
+    }
+    function feeBasisMark(l){
+      return (l.feeBtc&&!l.btcStart)?' <span style="color:var(--warn)">\u26a0</span>':'';
+    }
+    function feeU(l){return (l.feeBtc||0)*(l.btcStart||R.BTC);}
     function dueU(l){return toU(l.amount,l.c)+intU(l)+feeU(l);}
     /* Debt basis for every LTV/margin-call calculation: principal + interest,
        fees excluded (see changelog v1.3.0). */
@@ -2854,7 +2870,7 @@
             '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
               '<div><span class="ll">Collateral</span><span class="lv">'+l.col.toFixed(8)+' BTC</span></div>'+
               (l.status==='active'&&l.col>0?(function(){var due=ltvU(l);var liqUSD=due/(0.95*l.col);var near=R.BTC<liqUSD*1.1;return '<div><span class="ll">Liquidationspreis</span><span class="lv" style="color:'+(R.BTC<=liqUSD?'#dc2626':near?'#d97706':'#16a34a')+'">'+fmt(frU(liqUSD,l.c),l.c)+''+(R.BTC<=liqUSD?' ⚠ Liquidiert':near?' ⚠ Nahe':'')+'</span></div>';})():'')+
-              '<div><span class="ll">Geb\u00fchr</span><span class="lv">'+(l.feeBtc?l.feeBtc+' BTC (\u2248 '+pU(feeU(l))+')':'–')+'</span></div>'+
+              '<div><span class="ll">Geb\u00fchr</span><span class="lv"'+feeBasisAttr(l)+'>'+(l.feeBtc?l.feeBtc+' BTC (\u2248 '+pU(feeU(l))+')'+feeBasisMark(l):'–')+'</span></div>'+
             '</div>'+
             /* ⑤ Fortschrittsbalken */
             '<div class="prog-row" style="margin-top:.6rem"><span>Laufzeit vergangen</span><span>'+pct+'% '+(l.status==='active'&&dl>0?'<span style="color:var(--text4)">· noch '+dl+' Tage</span>':l.status==='active'?'<span style="color:var(--err)">· F\u00e4llig!</span>':'')+'</span></div>'+
@@ -2884,6 +2900,26 @@
             '</div>';
         }).join(''):'<p class="note2">Keine Kredite über dem LTV-Schwellenwert.</p>';
         d.renderNextAction();
+      },
+      /* Loans without a stored BTC start price fall back to the current price
+         for the fee's fiat value and for the break-even — surface how many, so
+         the imprecision is visible without opening every card. */
+      renderNoBtcStartChip:function(){
+        var chip=g('nobtcstart-chip');if(!chip)return;
+        /* Follow the visible filter, so «Alle» also counts closed loans —
+           their fee value feeds the statistics just the same. */
+        var miss=loans.filter(function(l){
+          if(l.btcStart)return false;
+          return lFilter==='all'||l.status===lFilter;
+        });
+        if(!miss.length){chip.style.display='none';chip.innerHTML='';return;}
+        var withFee=miss.filter(function(l){return l.feeBtc>0;}).length;
+        var names=miss.slice(0,8).map(function(l){return esc(l.name);}).join(', ')+(miss.length>8?' …':'');
+        chip.style.display='inline-flex';
+        chip.innerHTML='<span title="'+esc(names)+'" style="display:inline-flex;align-items:center;gap:6px;'+
+          'padding:4px 10px;border-radius:20px;font-size:12px;background:var(--warn-bg);border:1px solid var(--warn-border);color:var(--warn)">'+
+          '\u26a0 '+miss.length+' ohne BTC-Startpreis'+
+          (withFee?' \u00b7 '+withFee+' davon mit Geb\u00fchr':'')+'</span>';
       },
       loansTable:function(sorted){
         var el=g('loans-list');
@@ -2915,7 +2951,7 @@
             var liqUSDval=0,liqCcyStr='–',liqUSDstr='–';
             var interestStr=fmt(interest,l.c);
             var feeStr=l.feeBtc>0?l.feeBtc+' BTC':'–';
-            var dueAmount=l.amount+interest+(l.feeBtc||0)*(R.BTC/(R[l.c]||1));
+            var dueAmount=l.amount+interest+frU(feeU(l),l.c);
             var dueStr=fmt(dueAmount,l.c);
             if(l.status==='active'&&l.col>0){var due=ltvU(l);liqUSDval=due/(0.95*l.col);var near=R.BTC<liqUSDval*1.1;var col='color:'+(R.BTC<=liqUSDval?'#dc2626':near?'#d97706':'#16a34a');liqCcyStr='<span style="'+col+'">'+fmt(frU(liqUSDval,l.c),l.c)+'</span>';liqUSDstr='<span style="'+col+'">'+pU(liqUSDval)+'</span>';}
             var dlStr=l.status==='active'?(dl>0?'<span style="color:'+(dl<30?'#dc2626':dl<60?'#d97706':'var(--text2)')+'">'+dl+' Tage</span>':'<span style="color:#dc2626">F&#228;llig!</span>'):'<span style="color:#9ca3af">&#10003;</span>';
@@ -2995,6 +3031,7 @@
           else if(lSort.key==='fee')v=feeU(a)-feeU(b);
           return v*lSort.dir;
         });
+        d.renderNoBtcStartChip();
         if(lView==='list'){d.loansTable(sorted);return;}
         if(!sorted.length){el.style.display='grid';el.innerHTML='<div class="empty">'+(lFilter==='active'?'Keine aktiven Kredite.':lFilter==='closed'?'Keine abgeschlossenen Kredite.':'Noch keine Kredite.')+'</div>';return;}
         el.style.display='grid';
@@ -3053,7 +3090,7 @@
             '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
               '<div><span class="ll">Collateral</span><span class="lv">'+l.col.toFixed(8)+' BTC</span></div>'+
               (l.status==='active'&&l.col>0?(function(){var due=ltvU(l);var liqUSD=due/(0.95*l.col);var near=R.BTC<liqUSD*1.1;return '<div><span class="ll">Liquidationspreis</span><span class="lv" style="color:'+(R.BTC<=liqUSD?'#dc2626':near?'#d97706':'#16a34a')+'">'+fmt(frU(liqUSD,l.c),l.c)+''+(R.BTC<=liqUSD?' ⚠ Liquidiert':near?' ⚠ Nahe':'')+'</span></div>';})():'')+
-              '<div><span class="ll">Gebühr</span><span class="lv">'+(l.feeBtc?l.feeBtc+' BTC (≈ '+pU(feeU(l))+')':'–')+'</span></div>'+
+              '<div><span class="ll">Gebühr</span><span class="lv"'+feeBasisAttr(l)+'>'+(l.feeBtc?l.feeBtc+' BTC (≈ '+pU(feeU(l))+')'+feeBasisMark(l):'–')+'</span></div>'+
             '</div>'+
             /* ⑤ Fortschrittsbalken */
             '<div class="prog-row" style="margin-top:.6rem"><span>Laufzeit vergangen</span><span>'+pct+'% '+(l.status==='active'&&dl>0?'<span style="color:var(--text4)">· noch '+dl+' Tage</span>':l.status==='active'?'<span style="color:var(--err)">· Fällig!</span>':'')+'</span></div>'+
@@ -3580,6 +3617,10 @@
               if(importedSettings.defaultView==='grid'||importedSettings.defaultView==='list')cfg.defaultView=importedSettings.defaultView;
               if(ALL_CCYS.indexOf(importedSettings.defaultCcy)>=0)cfg.defaultCcy=importedSettings.defaultCcy;
               if(ALL_CCYS.indexOf(importedSettings.mainCcy)>=0)cfg.mainCcy=importedSettings.mainCcy;
+              /* The main currency must be one of the enabled ones, otherwise the
+                 stored setting silently springs to life the moment that currency
+                 is switched on again. */
+              if(cfg.ccys.indexOf(cfg.mainCcy)<0)cfg.mainCcy=cfg.ccys.indexOf('USD')>=0?'USD':cfg.ccys[0];
               numSet('ltvWarn',1,94);numSet('ltvCrit',1,94);numSet('ltvDanger',1,94);
               /* Unordered thresholds make the alarm buckets unsatisfiable, so a
                  loan in the danger zone would raise no banner at all. */
@@ -3745,7 +3786,9 @@
       nachFill:function(){
         var sel=g('cn-loan-sel');if(!sel||!sel.value)return;
         var l=loans[parseInt(sel.value)];if(!l)return;
-        var lU=toU(l.amount,l.c);
+        /* Principal + interest, matching the LTV definition used by the loan
+           cards, the alarms and the sibling calculators */
+        var lU=ltvU(l);
         var ccy=d.vorGetCcy();
         g('cnl').value=parseFloat(frU(lU,ccy).toFixed(ccy==='CZK'||ccy==='PLN'?0:2));
         if(l.col)g('cncol').value=l.col;
@@ -3753,11 +3796,11 @@
       },
       nach:function(){
         var lU=d.vorReadUSD('cnl'),col=parseFloat(g('cncol').value);
-        if(!lU||!col){g('cn-r').style.display='none';return;}
-        var cU=col*R.BTC,ltv=(lU/cU)*100;
+        if(!lU||isNaN(col)||col<0){g('cn-r').style.display='none';return;}
+        var cU=col*R.BTC,ltv=cU>0?(lU/cU)*100:null;
         function nb(t){return Math.max(0,(lU/(t/100))/R.BTC-col);}
         g('cn-r').style.display='block';
-        g('cnltv').innerHTML='<span style="color:'+lc(ltv)+'">'+ltv.toFixed(2)+'%</span>';
+        g('cnltv').innerHTML=ltv===null?'<span style="color:var(--err)">kein Collateral</span>':'<span style="color:'+lc(ltv)+'">'+ltv.toFixed(2)+'%</span>';
         /* Target a hair below each threshold — topping up to exactly the
            trigger value would set off the very margin call being avoided. */
         var mc1t=(cfg.ltvWarn!=null?cfg.ltvWarn:73)-0.5;
@@ -4932,7 +4975,7 @@
           'gvl-fee-lbl':'Bearbeitungsgeb\u00fchr ('+ccy+', auto)',
           'gvl-zinsen-lbl':'Zinsen ('+ccy+')',
           'gvl-gebühr-lbl':'Bearbeitungsgeb\u00fchr ('+ccy+')',
-          'cn-loan-lbl':'Kreditbetrag ('+ccy+')',
+          'cn-loan-lbl':'F\u00e4lliger Betrag (Kredit + Zinsen) ('+ccy+')',
           'nlp-due-lbl':'F\u00e4lliger Betrag (Kredit + Zinsen) ('+ccy+')',
           'nlp-old-lbl':'Bisheriger Liquidationspreis ('+ccy+')',
           'nlp-new-lbl':'Neuer Liquidationspreis ('+ccy+')',
@@ -5030,8 +5073,10 @@
         var days=d.plDays();
         var fair=d.plFair(days);
         var bottom=d.plBottom(days);
-        /* Nötiger Bitcoin-Preis: Bottom / 0.525 (Liquidation bei 95% LTV, Sicherheit = Kredit/0.5) */
-        var needed=Math.round(bottom/0.525);
+        /* Nötiger Bitcoin-Preis: Liquidation bei 95% LTV und 2x Sicherheit
+           heisst, der Kurs darf auf Einstieg/(2*0.95) fallen — der Einstieg
+           muss also mindestens Bottom*2*0.95 betragen. */
+        var needed=Math.round(bottom*2*0.95);
         var btc=R.BTC;
         var g=function(id){return document.getElementById(id);};
         if(g('pl2-btc'))g('pl2-btc').textContent=''+pU(btc);
@@ -5482,7 +5527,7 @@
         var resBTC=fBtc>0?(loan+interest)/fBtc:0;
         /* Liq-Warnung */
         var liqPct=((btc-fBtc)/btc*100);
-        g('mkr-liq-warn').textContent='Bei einem Kursrückgang von 47.5% wird das Collateral liquidiert';
+        g('mkr-liq-warn').textContent='Bei einem Kursrückgang von 47.4% wird das Collateral liquidiert';
         /* Ausgaben — runden nur hier */
         if(!feeEl.value||feeEl._autoFilled){feeEl.value=(Math.ceil(feeBTC*100000)/100000).toFixed(5)+' BTC';feeEl._autoFilled=true;}
         g('mkr-zinsen').value=d.vorFmt(Math.round(interest));
@@ -5510,9 +5555,9 @@
         /* Zu hinterlegende Sicherheit: CEIL(fällig*2 / btc, 0.00001) */
         var colBTC=(due*2)/btc;
         /* Liquidationspreis: ROUND(btc/2 * 1.05) */
-        var liqPrice=(btc/2)*1.05;
-        /* Liq-Warnung: fix 47.5% */
-        g('btr-liq-warn').textContent='Bei einem Kursrückgang von 47.5% wird das Collateral liquidiert';
+        var liqPrice=btc/(2*0.95);
+        /* Liq-Warnung: 1 - 1/(2*0.95) = 47.37 % */
+        g('btr-liq-warn').textContent='Bei einem Kursrückgang von 47.4% wird das Collateral liquidiert';
         /* Bitcoin-Reserve: CEIL(fällig / fBtc, 0.00001) */
         var resBTC=fBtc>0?due/fBtc:0;
         /* Ausgaben - runden nur hier */
@@ -5555,7 +5600,7 @@
         /* ROUND(colBTC * BTC-Preis) */
         var colUSD=colBTC*btc;
         /* ROUND((Kredit+Zinsen) / colBTC * 1.05) */
-        var liqPrice=(due/colBTC)*1.05;
+        var liqPrice=(due/colBTC)/0.95;
         /* Ausgaben — runden nur hier */
         g('ltvc-col-btc').textContent=(Math.ceil(colBTC*100000)/100000).toFixed(5)+' BTC';
         g('ltvc-col-usd').textContent=d.vorFmt(Math.round(colUSD));
@@ -5567,7 +5612,7 @@
         var btc=d.vorBtcUSD('alp');
         if(!btc){g('alp-result').textContent='—';return;}
         /* ROUND(btc - (btc/2 * 0.95)) */
-        var liq=btc-(btc/2*0.95);
+        var liq=btc/(2*0.95);
         g('alp-result').textContent=d.vorFmt(Math.round(liq));
       },
 
