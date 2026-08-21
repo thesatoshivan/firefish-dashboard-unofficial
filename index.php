@@ -99,6 +99,8 @@
     #ffd-root.hide-amounts .lid-sub,
     #ffd-root.hide-amounts .tlabel,
     #ffd-root.hide-amounts .fxsb,
+    #ffd-root.hide-amounts #abl-total-sub,
+    #ffd-root.hide-amounts .abl-amt,
     #ffd-root.hide-amounts #s-ch.on { filter: blur(6px); user-select: none; pointer-events: none; }
     #ffd-root.hide-amounts #hide-btn { color: var(--accent); }
 
@@ -455,7 +457,17 @@
     #ffd-root .hdr-stat:has(.hdr-stat-tooltip) .hdr-stat-lbl::after { content: ' \B7\B7\B7'; font-size: 9px; color: var(--text4); vertical-align: middle; margin-left: 2px; letter-spacing: 1px; }
     #ffd-root .hdr-stat:has(.hdr-stat-tooltip):hover .hdr-stat-lbl::after { color: var(--accent); }
     #ffd-root .alarm-banner { display: none; padding: 3px 10px; border-radius: 10px; margin: 0 0 0 auto; font-size: 11px; font-weight: 600; align-items: center; overflow: hidden; white-space: nowrap; flex: 0 1 auto; max-width: 100%; }
-    #ffd-root .ffd-notices { display: flex; flex-direction: column; gap: 6px; padding: .5rem .75rem 0; }
+    /* Schwebender Tooltip für die Roll-Over-Timeline. Fixiert positioniert,
+       weil die Balken in einem Container mit overflow:hidden sitzen — ein
+       Kindelement würde dort abgeschnitten. */
+    #ffd-root .tl-tip { display: none; position: fixed; z-index: 1200; max-width: 300px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px; font-size: 11px; line-height: 1.65; color: var(--text2); box-shadow: 0 8px 24px rgba(0,0,0,.16); pointer-events: none; }
+    #ffd-root .tl-tip b { color: var(--text); }
+    #ffd-root .tl-tip .tl-tip-hd { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    #ffd-root .tl-tip .tl-tip-row { display: flex; justify-content: space-between; gap: 14px; }
+    #ffd-root .tl-tip .tl-tip-row span:first-child { color: var(--text4); }
+    #ffd-root .tl-tip hr { border: none; border-top: 1px solid var(--border); margin: 5px 0; }
+    #ffd-root.hide-amounts .tl-tip { filter: blur(6px); }
+    #ffd-root .ffd-notices { display: flex; flex-direction: column; gap: 6px; margin: 0 0 1rem; }
     #ffd-root .ffd-notice { display: flex; align-items: center; gap: 8px; padding: .55rem .85rem; border-radius: 8px; font-size: 12px; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); color: var(--text2); }
     #ffd-root .ffd-notice.warn { background: var(--warn-bg); border-color: var(--warn-border); color: var(--warn); }
     #ffd-root .alarm-banner-inner { display: inline-block; padding-right: 4rem; }
@@ -683,7 +695,7 @@
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v160-25072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.6.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v170-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.7.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
@@ -844,9 +856,17 @@
           <div class="ff"><label>Startdatum</label><input type="date" id="fd" onchange="d.autoFillBtcStart('fd','fbp','fbp-hint')"></div>
           <div class="ff"><label>Collateral (BTC)</label><input type="number" id="fb" placeholder="0.25" step="0.001"></div>
           <div class="ff"><label>Status</label><select id="fs"><option value="active">Aktiv</option><option value="closed">Abgeschlossen</option></select></div>
+          <div class="ff"><label>R&#252;ckzahlungsdatum <span style="font-size:11px;font-weight:400;color:var(--text4)">(optional)</span></label><input type="date" id="fcd"><span style="font-size:11px;color:var(--text4);display:block;margin-top:3px">Nur bei abgeschlossenen Krediten. Leer = F&#228;lligkeitsdatum.</span></div>
           <div class="ff"><label>Währung</label><select id="fc"><option>EUR</option><option>CHF</option><option>CZK</option><option>PLN</option><option>USDC</option><option>USDT</option></select></div>
           <div class="ff" style="grid-column:span 2"><label>BTC-Preis bei Kreditaufnahme (USD) — für Break-even</label><input type="number" id="fbp" placeholder="z.B. 85000" step="1"><span id="fbp-hint" style="display:none;font-size:11px;color:var(--text4);margin-top:3px"></span></div>
           <div class="ff" style="grid-column:span 2"><label>Roll-Over-Kette</label><select id="fchain"><option value="">— Keine Kette —</option></select><span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Vorläufer-Kredit wählen oder neue Kette starten</span></div>
+          <div class="ff" style="grid-column:span 2">
+            <label style="display:flex;align-items:center;gap:.45rem;font-weight:400;cursor:pointer;margin:0">
+              <input type="checkbox" id="ftx" style="accent-color:var(--accent);width:15px;height:15px;flex-shrink:0">
+              <span>Passende Portfolio-Transaktionen anlegen</span>
+            </label>
+            <span style="font-size:11px;color:var(--text4);display:block;margin-top:3px">Bucht das Collateral als Transfer aus dem Cold Storage und die Geb&#252;hr als Geb&#252;hr-Transaktion, beide auf das Startdatum. Bei einem bereits abgeschlossenen Kredit wird das Collateral zum F&#228;lligkeitsdatum wieder eingebucht.</span>
+          </div>
           <div class="ff" style="grid-column:span 2"><label>Notiz</label><textarea id="fnote" rows="2" placeholder="Konditionen, Kontaktperson, Besonderheiten…" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea></div>
         </div>
         <div class="fa">
@@ -923,7 +943,7 @@
                 <label style="font-weight:400;font-size:13px;display:inline-flex;align-items:center;gap:.3rem;white-space:nowrap"><input type="radio" name="szb-term" value="24" onchange="d.szb()"> 24 Monate</label>
               </div>
             </div>
-            <div class="vor-field"><label id="szb-fee-lbl">Bearbeitungsgeb&#252;hr (USD)</label><input type="text" id="szb-fee" placeholder="—" oninput="d.szb()"><p class="note2" style="margin-top:2px">Bei 12 Monaten 1.5% des Kreditbetrags</p></div>
+            <div class="vor-field"><label id="szb-fee-lbl">Bearbeitungsgeb&#252;hr (USD)</label><input type="text" id="szb-fee" placeholder="—" oninput="d.feeManual('szb-fee');d.szb()"><p class="note2" style="margin-top:2px">Bei 12 Monaten 1.5% des Kreditbetrags</p></div>
             <div class="vor-field"><label id="szb-btc-lbl">Aktueller Bitcoin-Preis (USD)</label><input type="number" id="szb-btc" placeholder="71549" oninput="d.szb()"></div>
             <div class="vor-field"><label>Netzwerkgeb&#252;hr (BTC)</label><input type="number" id="szb-nwfee" placeholder="0.00001" step="0.00001" oninput="d.szb()"></div>
           </div>
@@ -988,7 +1008,7 @@
           </div>
           <p style="font-size:12px;font-weight:600;color:var(--text2);margin:.75rem 0 .4rem">Zus&#228;tzliche Angaben</p>
           <div class="tg2">
-            <div class="vor-field"><label>Geb&#252;hren (BTC)</label><input type="number" id="mkr-fee" placeholder="0.00" step="0.0001" oninput="d.mkr()"><p class="note2" style="margin-top:2px">Bei 12 Monaten 1.5% des Kreditbetrags</p></div>
+            <div class="vor-field"><label>Geb&#252;hren (BTC)</label><input type="text" id="mkr-fee" placeholder="—" readonly style="background:var(--bg2);color:var(--text3)"><p class="note2" style="margin-top:2px">Bei 12 Monaten 1.5% des Kreditbetrags</p></div>
             <div class="vor-field"><label>Netzwerkgeb&#252;hr (BTC)</label><input type="number" id="mkr-nwfee" placeholder="0.00001" step="0.00001" oninput="d.mkr()"></div>
           </div>
           <div class="tg2" style="margin-top:.75rem">
@@ -1051,7 +1071,7 @@
                 <label style="font-weight:400;font-size:13px;display:inline-flex;align-items:center;gap:.3rem;white-space:nowrap"><input type="radio" name="mkk-term" value="24" onchange="d.mkk()"> 24 Monate</label>
               </div>
             </div>
-            <div class="vor-field"><label id="mkk-fee-lbl">Bearbeitungsgeb&#252;hr (USD)</label><input type="text" id="mkk-fee" placeholder="—" oninput="d.mkk()"><p class="note2" style="margin-top:2px">Bei 12 Monaten 1.5% des Kreditbetrags</p></div>
+            <div class="vor-field"><label id="mkk-fee-lbl">Bearbeitungsgeb&#252;hr (USD)</label><input type="text" id="mkk-fee" placeholder="—" oninput="d.feeManual('mkk-fee');d.mkk()"><p class="note2" style="margin-top:2px">Bei 12 Monaten 1.5% des Kreditbetrags</p></div>
             <div class="vor-field"><label>Gekaufte Bitcoin</label><input type="number" id="mkk-btcbuy" placeholder="0.10" step="0.00001" oninput="d.mkk()"></div>
             <div style="padding:.6rem .75rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border)">
               <div style="font-size:11px;color:var(--text4)">N&#246;tiger BTC Preis f&#252;r Nullsumme</div>
@@ -1240,6 +1260,38 @@
       <!-- Während Kredit -->
       <div class="tool-tab" id="tt-wae">
         <div class="card">
+          <span class="card-title">Abl&#246;se-Rechner &#8212; alle offenen Kredite zur&#252;ckzahlen</span>
+          <p class="note2" style="margin-bottom:.75rem">Was kostet es, heute alle aktiven Kredite abzul&#246;sen, und wie viel Bitcoin kommt dabei aus den Sicherheiten zur&#252;ck? Gerechnet mit Kapital + Zinsen &#8212; die Bearbeitungsgeb&#252;hr wurde bereits bei Kreditaufnahme bezahlt.</p>
+          <p class="note2" id="abl-empty" style="display:none">Keine aktiven Kredite vorhanden.</p>
+          <div id="abl-pick-wrap" style="display:none;margin-bottom:.85rem">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap;margin-bottom:.4rem">
+              <span class="note2" style="margin:0">Ber&#252;cksichtigte Kredite</span>
+              <span style="display:flex;gap:.35rem">
+                <button class="sm" style="padding:2px 9px;font-size:11px" onclick="d.ablAll(true)">Alle</button>
+                <button class="sm" style="padding:2px 9px;font-size:11px" onclick="d.ablAll(false)">Keine</button>
+              </span>
+            </div>
+            <div id="abl-pick" style="display:flex;flex-wrap:wrap;gap:.4rem"></div>
+          </div>
+          <p class="note2" id="abl-none" style="display:none;color:var(--warn)">Kein Kredit ausgew&#228;hlt.</p>
+          <div id="abl-r" style="display:none">
+            <div class="rb">
+              <div class="rr"><span class="rl">Offene Schulden <span id="abl-cnt" style="color:var(--text4);font-weight:400"></span></span><span class="rv" id="abl-due">–</span></div>
+              <div class="rr"><span class="rl">Ben&#246;tigte Bitcoin zum aktuellen Kurs</span><span class="rv wrn" id="abl-need">–</span></div>
+              <div class="rr"><span class="rl">Sicherheiten zur&#252;ck (alle Collaterals)</span><span class="rv ok" id="abl-col">–</span></div>
+              <div class="rr"><span class="rl" id="abl-net-lbl">Verbleibend, wenn aus dem Collateral zur&#252;ckgezahlt wird</span><span class="rv" id="abl-net">–</span></div>
+              <div class="rr"><span class="rl">Bitcoin-Bestand im Portfolio (Cold Storage)</span><span class="rv" id="abl-res">–</span></div>
+              <div class="rr" style="border-top:1px solid var(--border);padding-top:.5rem;margin-top:.25rem"><span class="rl" style="font-weight:700">Gesamter Bitcoin-Bestand danach<br><span id="abl-total-sub" style="color:var(--text4);font-weight:400;font-size:11px"></span></span><span class="rv" id="abl-total" style="font-weight:700">–</span></div>
+            </div>
+            <p class="note2" style="margin:.75rem 0 0">R&#252;ckzahlungsbetrag umgerechnet</p>
+            <div class="ccyg" id="abl-grid"></div>
+            <div id="abl-percy-wrap" style="display:none">
+              <p class="note2" style="margin:.75rem 0 0">Tats&#228;chlich geschuldet je Kreditw&#228;hrung &#8212; eine EUR-Schuld l&#228;sst sich nicht mit CHF begleichen</p>
+              <div class="ccyg" id="abl-percy"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
           <span class="card-title">Collateral-Nachschuss-Rechner</span>
           <div class="tr"><label>Kredit ausw&#228;hlen (optional)</label><select id="cn-loan-sel" onchange="d.nachFill()"><option value="">— Kredit w&#228;hlen —</option></select></div>
           <div class="tr"><label id="cn-loan-lbl">F&#228;lliger Betrag (Kredit + Zinsen) (USD)</label><input type="number" id="cnl" placeholder="10000" oninput="d.nach()"></div>
@@ -1313,7 +1365,7 @@
             <div class="vor-field"><label id="gvl-loan-lbl">Kreditbetrag (USD)</label><input type="number" id="gvl-loan" placeholder="10000" oninput="d.gvl()"></div>
             <div class="vor-field"><label>Kreditlaufzeit</label><select id="gvl-term" onchange="d.gvl()"><option value="3">3 Monate</option><option value="6">6 Monate</option><option value="12" selected>12 Monate</option><option value="18">18 Monate</option><option value="24">24 Monate</option></select></div>
             <div class="vor-field"><label>Zinssatz (% p.a.)</label><input type="number" id="gvl-rate" placeholder="10" step="0.1" oninput="d.gvl()"></div>
-            <div class="vor-field"><label id="gvl-fee-lbl">Bearbeitungsgeb&#252;hr (USD, auto) <span id="gvl-fee-reset" onclick="d.gvlFeeReset()" style="display:none;font-size:11px;font-weight:400;color:var(--accent);cursor:pointer;margin-left:.4rem">↺ Auto</span></label><input type="number" id="gvl-fee" placeholder="0" step="0.01" oninput="d.gvlFeeManual()"></div>
+            <div class="vor-field"><label id="gvl-fee-lbl">Bearbeitungsgeb&#252;hr (USD, auto) <span id="gvl-fee-reset" onclick="d.gvlFeeReset()" style="display:none;font-size:11px;font-weight:400;color:var(--accent);cursor:pointer;margin-left:.4rem">↺ Auto</span><span id="gvl-fee-src" style="display:none;font-size:11px;font-weight:400;color:var(--text4);margin-left:.4rem">echte Geb&#252;hr des Kredits</span></label><input type="number" id="gvl-fee" placeholder="0" step="0.01" oninput="d.gvlFeeManual()"></div>
             <div class="vor-field"><label id="gvl-btcstart-lbl">Bitcoin-Preis bei Kreditnahme (USD) <span id="gvl-start-date" style="font-weight:400;color:var(--text4)"></span></label><input type="number" id="gvl-btcstart" placeholder="80000" oninput="d.gvl()"><span id="gvl-api-hint" style="display:none;font-size:11px;color:#d97706;margin-top:.25rem"></span></div>
             <div class="vor-field"><label id="gvl-btcnow-lbl">Aktueller Bitcoin-Preis (USD)</label><input type="number" id="gvl-btcnow" placeholder="85000" oninput="d.gvl()"></div>
           </div>
@@ -1597,10 +1649,18 @@
           <div class="ff"><label>Collateral (BTC)</label><input type="number" id="ef-b" placeholder="0.25" step="0.001"></div>
           <div class="ff"><label>Status</label>
             <select id="ef-s"><option value="active">Aktiv</option><option value="closed">Abgeschlossen</option></select></div>
+          <div class="ff"><label>R&#252;ckzahlungsdatum <span style="font-size:11px;font-weight:400;color:var(--text4)">(optional)</span></label><input type="date" id="ef-cd"><span style="font-size:11px;color:var(--text4);display:block;margin-top:3px">Nur bei abgeschlossenen Krediten. Leer = F&#228;lligkeitsdatum.</span></div>
           <div class="ff"><label>W&#228;hrung</label>
             <select id="ef-c"><option>EUR</option><option>CHF</option><option>CZK</option><option>PLN</option><option>USDC</option><option>USDT</option></select></div>
           <div class="ff" style="grid-column:span 2"><label>BTC-Preis bei Kreditaufnahme (USD) &#8212; f&#252;r Break-even</label><input type="number" id="ef-bp" placeholder="z.B. 85000" step="1"><span id="ef-bp-hint" style="display:none;font-size:11px;color:var(--text4);margin-top:3px"></span></div>
           <div class="ff" style="grid-column:span 2"><label>Roll-Over-Kette</label><select id="ef-chain"><option value="">— Keine Kette —</option></select><span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Vorläufer-Kredit wählen oder neue Kette starten</span></div>
+          <div class="ff" style="grid-column:span 2">
+            <label style="display:flex;align-items:center;gap:.45rem;font-weight:400;cursor:pointer;margin:0">
+              <input type="checkbox" id="ef-tx" style="accent-color:var(--accent);width:15px;height:15px;flex-shrink:0">
+              <span>Im Portfolio gebucht</span>
+            </label>
+            <span style="font-size:11px;color:var(--text4);display:block;margin-top:3px">Angehakt hält die Buchungen f&#252;r Collateral und Geb&#252;hr auf dem Stand des Kredits. Haken entfernen l&#246;scht sie wieder aus dem Ledger.</span>
+          </div>
           <div class="ff" style="grid-column:span 2"><label>Notiz</label><textarea id="ef-note" rows="2" placeholder="Konditionen, Kontaktperson, Besonderheiten…" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea></div>
         </div>
         <div class="modal-actions">
@@ -1643,7 +1703,7 @@
       <div class="card" style="margin-bottom:1rem">
         <span class="card-title">Break-even-Übersicht — BTC-Preis bei Aufnahme vs. Break-even vs. aktuell</span>
         <div class="ch-wrap" style="height:240px"><canvas id="ch-bep"></canvas></div>
-        <p class="note2" style="margin-top:.4rem;font-size:11px">* Kein BTC-Startpreis hinterlegt — historischer Preis vom Kreditdatum wird via Coingecko geladen.</p>
+        <p class="note2" style="margin-top:.4rem;font-size:11px">* Kein BTC-Startpreis hinterlegt — historischer Preis vom Kreditdatum wird via Coingecko geladen. &#8224; Preis nicht ermittelbar — ohne Startpreis gibt es keinen Break-even, der Balken bleibt leer.</p>
       </div>
 
       <!-- Row 4: Zinskosten-Vergleich + Effektivkosten in BTC -->
@@ -1827,6 +1887,22 @@
       </div>
 
       <div class="card" style="margin-bottom:1rem">
+        <span class="card-title">Datensicherung</span>
+        <p class="note2" style="margin-bottom:.75rem">Alle Daten liegen ausschliesslich im Speicher dieses Browsers. Werden die Website-Daten gel&#246;scht &#8212; von Hand, durch eine Aufr&#228;umfunktion oder im privaten Modus &#8212; sind sie ohne Sicherung unwiederbringlich weg. Exportiere regelm&#228;ssig eine JSON-Datei.</p>
+        <p class="note2" id="backup-hint" style="margin-bottom:.75rem"></p>
+        <div class="fg" style="margin-top:.75rem">
+          <div class="ff">
+            <label>Erinnern nach (Tagen) <span style="font-size:11px;font-weight:400;color:var(--text4)">0 = aus</span></label>
+            <input type="number" id="se-backup" min="0" max="365" step="1" placeholder="30">
+          </div>
+        </div>
+        <div style="margin-top:.75rem">
+          <button class="sm primary" onclick="d.seBackupSave()">&#10003; Speichern</button>
+          <span id="se-backup-msg" style="display:none;margin-left:.75rem;font-size:12px;color:var(--ok)">&#10003; Gespeichert.</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:1rem">
         <span class="card-title">Countdown-Warnung</span>
         <p class="note2" style="margin-bottom:.75rem">Kredite werden im Countdown-Banner angezeigt, wenn sie innerhalb dieser Anzahl Tage f&#228;llig werden.</p>
         <div class="fg" style="margin-top:.75rem">
@@ -1888,6 +1964,36 @@
       </div>
     </div>
 
+    <!-- COLLATERAL TOP-UP MODAL -->
+    <div class="modal-bg" id="tu-modal-bg" onclick="if(event.target===this)d.closeTopup()">
+      <div class="modal" style="max-width:440px">
+        <div class="modal-title">
+          <span>Collateral nachlegen</span>
+          <button class="modal-close" onclick="d.closeTopup()">&#10005;</button>
+        </div>
+        <p id="tu-name" style="font-size:15px;font-weight:700;color:var(--text);margin:0 0 .85rem"></p>
+        <div class="fg">
+          <div class="ff"><label>Zus&#228;tzliches Collateral (BTC)</label><input type="number" id="tu-btc" placeholder="0.05" step="0.00000001" min="0" oninput="d.topupPreview()"></div>
+          <div class="ff"><label>Datum</label><input type="date" id="tu-date" onchange="d.topupPreview()"></div>
+        </div>
+        <div class="rb" style="margin-top:.85rem">
+          <div class="rr"><span class="rl">Collateral</span><span class="rv" id="tu-col">–</span></div>
+          <div class="rr"><span class="rl">LTV</span><span class="rv" id="tu-ltv">–</span></div>
+          <div class="rr"><span class="rl">Liquidationspreis</span><span class="rv" id="tu-liq">–</span></div>
+          <div class="rr" style="border-top:1px solid var(--border);padding-top:.5rem;margin-top:.25rem"><span class="rl" style="font-weight:700">Verbesserung</span><span class="rv ok" id="tu-diff" style="font-weight:700">–</span></div>
+        </div>
+        <label style="display:flex;align-items:center;gap:.45rem;font-size:13px;cursor:pointer;margin:.9rem 0 0">
+          <input type="checkbox" id="tu-tx" style="accent-color:var(--accent);width:15px;height:15px;flex-shrink:0">
+          <span>Passende Portfolio-Transaktion anlegen</span>
+        </label>
+        <span id="tu-tx-hint" style="font-size:11px;color:var(--text4);display:block;margin-top:3px"></span>
+        <div class="modal-actions" style="margin-top:1.1rem">
+          <button class="sm" onclick="d.closeTopup()">Abbrechen</button>
+          <button class="primary sm" onclick="d.confirmTopup()">Nachlegen</button>
+        </div>
+      </div>
+    </div>
+
     <!-- DELETE CONFIRM MODAL -->
     <div class="modal-bg" id="del-modal-bg" onclick="if(event.target===this)d.closeDel()">
       <div class="modal" style="max-width:400px">
@@ -1897,6 +2003,7 @@
         </div>
         <p style="font-size:14px;color:var(--text2);margin:0 0 .5rem">Soll dieser Kredit wirklich gel&#246;scht werden?</p>
         <p id="del-modal-name" style="font-size:15px;font-weight:700;color:var(--text);margin:0 0 1.1rem"></p>
+        <p id="del-modal-tx" style="display:none;font-size:12px;color:var(--warn);margin:0 0 .75rem"></p>
         <p style="font-size:12px;color:var(--text4);margin:0 0 1rem">Diese Aktion kann nicht r&#252;ckg&#228;ngig gemacht werden.</p>
         <div class="modal-actions">
           <button class="sm" onclick="d.closeDel()">Abbrechen</button>
@@ -1938,7 +2045,7 @@
       </div>
     </div>
 
-    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v160-25072026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.6.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
+    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v170-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.7.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
     </div><!-- #ffd-root -->
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -2002,6 +2109,9 @@
     var lFilter='active';
     var lCcyFilter='all';
     var lView='grid';
+    /* Im Ablöse-Rechner abgewählte Kredite (nur zur Laufzeit — die Rechnung ist
+       ein Gedankenspiel, keine Einstellung, die einen Neustart überdauern muss). */
+    var ablOff={};
     /* ── Notices (storage/data problems the user must know about) ───────────── */
     var pendingNotices=[];
     function ffdNotice(msg,kind){
@@ -2012,7 +2122,12 @@
         box=document.createElement('div');
         box.id='ffd-notice-box';
         box.className='ffd-notices';
-        root.insertBefore(box,root.firstChild);
+        /* In den Inhaltsbereich, nicht an die Wurzel: die Sidebar ist fixiert
+           und läge sonst über der Meldung — sichtbar blieb nur ihr rechtes
+           Ende. Betraf jede Meldung, auch die Speicher-Warnungen. */
+        var main=root.querySelector('.main');
+        if(main)main.insertBefore(box,main.firstChild);
+        else root.insertBefore(box,root.firstChild);
       }
       var n=document.createElement('div');
       n.className='ffd-notice'+(kind==='warn'?' warn':'');
@@ -2177,9 +2292,26 @@
         status:l.status==='closed'?'closed':'active',
         btcStart:l.btcStart!=null&&isFinite(nNum(l.btcStart,0))&&nNum(l.btcStart,0)>0?nNum(l.btcStart,0):null,
         feeBtc:Math.max(0,nNum(l.feeBtc,0)),
+        /* Tatsächliches Rückzahlungsdatum — optional. Eine ungültige Angabe
+           wird verworfen, dann gilt wieder das Fälligkeitsdatum. */
+        closedDate:normDate(nStr(l.closedDate))||null,
+        /* Nachschüsse als eigene Ereignisse. `col` bleibt die Gesamtsumme,
+           damit jede bestehende LTV- und Liquidationsrechnung unberührt
+           bleibt; die Liste sagt nur, wann welcher Teil dazukam. */
+        topups:Array.isArray(l.topups)?l.topups.map(function(t){
+          var btc=nNum(t&&t.btc,0),dt=normDate(nStr(t&&t.date));
+          if(!(btc>0)||!isFinite(btc)||!dt)return null;
+          return {id:nStr(t.id)||uid(),btc:btc,date:dt};
+        }).filter(Boolean):[],
         chainId:l.chainId?nStr(l.chainId):null,
         note:nStr(l.note)
       };
+    }
+    /* Ursprünglich hinterlegtes Collateral: alles ausser den Nachschüssen */
+    function baseCol(l){
+      if(!l)return 0;
+      var up=(l.topups||[]).reduce(function(s,t){return s+(t.btc||0);},0);
+      return Math.max(0,parseFloat(((l.col||0)-up).toFixed(8)));
     }
     /* Effect of one transaction on the BTC balance. For a 'fee' entry the BTC
        amount already IS the fee, so the separate fee field must not be
@@ -2197,7 +2329,7 @@
       if(!(btc>0)||!isFinite(btc))return null;
       var date=nStr(t.date);
       if(!/^\d{4}-\d{2}-\d{2}/.test(date))return null;
-      return {
+      var o={
         id:nStr(t.id)||('tx'+new Date().getTime()+Math.random().toString(36).slice(2,6)),
         date:date,
         type:TX_TYPES.indexOf(t.type)>=0?t.type:'buy',
@@ -2206,6 +2338,20 @@
         fee:Math.max(0,nNum(t.fee,0)),
         note:nStr(t.note)
       };
+      /* Verknüpfung zu einem Kredit — nur gesetzt bei automatisch gebuchten
+         Einträgen. Ohne diese Felder verlöre ein Import die Zuordnung und die
+         Buchungen blieben beim Bearbeiten oder Löschen des Kredits zurück. */
+      var lid=nStr(t.loanId);
+      if(lid){
+        o.loanId=lid;
+        var role=nStr(t.loanRole);
+        /* Nachschüsse tragen eine Rolle je Ereignis («topup:<id>»), es gibt
+           also keine feste Liste. Ohne diesen Zweig verlöre eine Nachschuss-
+           Buchung beim Laden ihre Rolle, würde beim nächsten Abgleich nicht
+           wiedererkannt und dabei gelöscht und neu angelegt. */
+        if(['collateral','fee','return'].indexOf(role)>=0||/^topup:[A-Za-z0-9_-]+$/.test(role))o.loanRole=role;
+      }
+      return o;
     }
     var STORE_KEY='ffd_loans';
     function save(){storeWrite(STORE_KEY,JSON.stringify(loans),'Kredite');}
@@ -2286,12 +2432,14 @@
               darkMode: p.darkMode||false,
               btcReserve: p.btcReserve!=null?p.btcReserve:0,
               btcReserveManual: p.btcReserveManual||false,
-              mainCcy: p.mainCcy||'USD'
+              mainCcy: p.mainCcy||'USD',
+              lastExportTs: p.lastExportTs!=null?p.lastExportTs:0,
+              backupDays: p.backupDays!=null?p.backupDays:30
             };
           }
         }
       }catch(e){}
-      return{ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false,btcReserve:0,btcReserveManual:false,mainCcy:'USD'};
+      return{ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false,btcReserve:0,btcReserveManual:false,mainCcy:'USD',lastExportTs:0,backupDays:30};
     }
     function saveSettings(cfg){storeWrite(SETTINGS_KEY,JSON.stringify(cfg),'Einstellungen');}
     var cfg=loadSettings();
@@ -2370,7 +2518,17 @@
       return (l.feeBtc&&!l.btcStart)?' <span style="color:var(--warn)">\u26a0</span>':'';
     }
     function feeU(l){return (l.feeBtc||0)*(l.btcStart||R.BTC);}
-    function dueU(l){return toU(l.amount,l.c)+intU(l)+feeU(l);}
+    /* Rueckzahlung an Firefish: Kapital + Zinsen. Die Bearbeitungsgebuehr wird
+       einmalig beim Matching in BTC bezahlt und ist am Ende nicht mehr faellig. */
+    function dueU(l){return toU(l.amount,l.c)+intU(l);}
+    /* Gesamtkosten des Kredits inkl. der einmaligen Bearbeitungsgebuehr —
+       Basis fuer Break-even, nicht fuer den faelligen Betrag.
+       Bei Krediten in Fremdwaehrung bleibt ein kleiner Rest: die Gebuehr ist
+       in USD fixiert, der Kreditbetrag wird zum heutigen Devisenkurs
+       umgerechnet. Der Break-even bewegt sich dadurch minimal mit EURUSD —
+       um den Gebuehrenanteil (rund 1-2 %) mal der Kursaenderung. Exakt waere
+       es nur mit dem Devisenkurs vom Kreditdatum, der nicht gespeichert ist. */
+    function costU(l){return dueU(l)+feeU(l);}
     /* Debt basis for every LTV/margin-call calculation: principal + interest,
        fees excluded (see changelog v1.3.0). */
     function ltvU(l){return toU(l.amount,l.c)+intU(l);}
@@ -2379,6 +2537,9 @@
     function tW(){return (cfg.ltvWarn!=null?cfg.ltvWarn:73)/100;}
     function tC(){return (cfg.ltvCrit!=null?cfg.ltvCrit:79)/100;}
     function tD(){return (cfg.ltvDanger!=null?cfg.ltvDanger:86)/100;}
+    /* Dieselben Schwellen als Prozentzahl fuer Beschriftungen und Markierungen */
+    function tWp(){return tW()*100;}
+    function tDp(){return tD()*100;}
     /* Parse a date-only string as LOCAL midnight — new Date('YYYY-MM-DD') is
        parsed as UTC and shifts the day for users west of UTC. */
     function pD(ds){
@@ -2401,7 +2562,16 @@
     }
     function dL(ds,m){var e=aM(ds,m);if(isNaN(e.getTime()))return 0;var n=new Date();return Math.ceil((e-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);}
     /* Auto-close loans whose end date has passed */
-    function syncStatus(){loans.forEach(function(l){if(l.status==='active'&&dL(l.start,l.term)<0)l.status='closed';});}
+    function syncStatus(){
+      var closedNow=[];
+      loans.forEach(function(l){if(l.status==='active'&&dL(l.start,l.term)<0){l.status='closed';closedNow.push(l);}});
+      /* Ein automatisch geschlossener Kredit hat sein Collateral zurück. Wer
+         den Kredit ins Ledger gebucht hat, braucht die Rückbuchung auch dann,
+         wenn er den Abschluss nicht selbst eingetragen hat. */
+      closedNow.forEach(function(l){
+        if(typeof d!=='undefined'&&d.loanTxs&&d.loanTxs(l.id).length)d.syncLoanTxs(l);
+      });
+    }
     window.goRo=function(){
       /* Try visible nav-item first (desktop sidebar), then mobile tab bar */
       var all=document.querySelectorAll('#ffd-root .nav-item, #ffd-root .tab');
@@ -2629,19 +2799,21 @@
         /* Break-even BTC (alle Kredite: aktiv + abgeschlossen) */
         var bepEl=g('hdr-bep'),bepTtEl=g('hdr-bep-tooltip');
         if(bepEl){
-          var bepLoans=loans.filter(function(l){return l.col>0;});
+          /* Ohne hinterlegten Startpreis gibt es keinen Break-even — der
+             Live-Kurs als Ersatz wuerde eine Zahl liefern, die einfach dem
+             Markt hinterherlaeuft. Solche Kredite bleiben aussen vor. */
+          var bepSkipped=loans.filter(function(l){return !(l.btcStart>0);}).length;
+          var bepLoans=loans.filter(function(l){return l.btcStart>0&&toU(l.amount,l.c)>0;});
           if(bepLoans.length){
-            /* Per-loan break-even: btcStart + costUSD / colBtc */
+            /* Halten statt verkaufen: btcStart x Gesamtkosten / Kreditbetrag —
+               dieselbe Definition wie auf den Karten und in den Statistiken. */
             var bepItems=bepLoans.map(function(l){
-              var bs=l.btcStart||R.BTC;
-              var costUSD=intU(l)+feeU(l);
-              return {name:l.name,status:l.status,bep:bs+costUSD/l.col};
+              var lU=toU(l.amount,l.c);
+              return {name:l.name,status:l.status,bep:l.btcStart*(costU(l)/lU),w:lU};
             });
-            /* Portfolio break-even: weighted by collateral */
-            var totalCol=bepLoans.reduce(function(s,l){return s+l.col;},0);
-            var totalCost=bepLoans.reduce(function(s,l){return s+intU(l)+feeU(l);},0);
-            var avgBtcStart=bepLoans.reduce(function(s,l){return s+(l.btcStart||R.BTC)*l.col;},0)/totalCol;
-            var portfolioBep=avgBtcStart+totalCost/totalCol;
+            /* Portfolio break-even: nach Kreditvolumen gewichtet */
+            var bepWDen=bepItems.reduce(function(s,x){return s+x.w;},0);
+            var portfolioBep=bepItems.reduce(function(s,x){return s+x.bep*x.w;},0)/bepWDen;
             var bepDist=((R.BTC-portfolioBep)/R.BTC*100);
             var bepAbove=bepDist>=0;
             var bepCol=bepAbove?'var(--ok)':'var(--err)';
@@ -2654,9 +2826,12 @@
                 var c=d>=0?'var(--ok)':'var(--err)';
                 var badge=x.status==='active'?'<span style="color:var(--ok);font-size:10px">&#9679;</span> ':'<span style="color:var(--text4);font-size:10px">&#9675;</span> ';
                 return badge+'<b>'+esc(x.name)+'</b> <span style="color:'+c+'">'+(d>=0?'+':'')+d.toFixed(1)+'%</span> ('+pU(Math.round(x.bep))+')';
-              }).join('<br>');
+              }).join('<br>')+(bepSkipped?'<br><span style="color:var(--text4);font-size:10px">'+bepSkipped+' Kredit(e) ohne BTC-Startpreis nicht berücksichtigt</span>':'');
             }
-          } else { bepEl.textContent=dash; }
+          } else {
+            bepEl.textContent=dash;
+            if(bepTtEl)bepTtEl.innerHTML=loans.length?'<span style="color:var(--text4)">Kein Kredit hat einen BTC-Startpreis hinterlegt.</span>':'';
+          }
         }
       },
       tab:function(t,el){
@@ -2743,7 +2918,7 @@
           }));
         }
         var dueByCcyGrid=ccyBreakdownGrid(function(l){return l.amount+l.amount*(l.rate/100)*(l.term/12);});
-        var costByCcyGrid=ccyBreakdownGrid(function(l){return l.amount*(l.rate/100)*(l.term/12)+(l.feeBtc||0)*(R.BTC/(R[l.c]||1));});
+        var costByCcyGrid=ccyBreakdownGrid(function(l){return l.amount*(l.rate/100)*(l.term/12)+frU(feeU(l),l.c);});
         var colValCcyGrid=usdGrid(CC,colVal);
         /* Per-currency LTV breakdown */
         var ccyLtvParts=activeCcys.map(function(c){
@@ -2824,10 +2999,37 @@
             '<span class="mc-sub" style="font-size:10px;line-height:1.4">'+subHtml+'</span>'+
           '</div>';
         }).join('');
+        /* Ballung: mehrere Fälligkeiten dicht beieinander. Die Fenster-Kacheln
+           oben zeigen Summen, aber nicht, dass sich drei Kredite auf elf Tage
+           drängen — genau das ist das Liquiditätsrisiko. */
+        var clusterHtml=(function(){
+          var WIN=14;
+          var items=act.map(function(l){return {l:l,dl:dL(l.start,l.term),end:aM(l.start,l.term),due:toU(l.amount,l.c)+intU(l)};})
+            .filter(function(x){return x.dl>=0&&!isNaN(x.end.getTime());})
+            .sort(function(a,b){return a.end-b.end;});
+          var best=null;
+          for(var i=0;i<items.length;i++){
+            var j=i,sum=0,n=0;
+            while(j<items.length&&(items[j].end-items[i].end)<=WIN*864e5){sum+=items[j].due;n++;j++;}
+            if(n>=2&&(!best||n>best.n||(n===best.n&&sum>best.sum)))
+              best={n:n,sum:sum,from:items[i].end,to:items[j-1].end,dl:items[i].dl,
+                    names:items.slice(i,j).map(function(x){return x.l.name;})};
+          }
+          if(!best)return '';
+          var urgent=best.dl<=(cfg.countdownDays||30);
+          var span=Math.round((best.to-best.from)/864e5);
+          return '<div style="margin-top:.5rem;padding:.5rem .7rem;border-radius:8px;font-size:11px;line-height:1.5;'+
+            'background:'+(urgent?'var(--warn-bg)':'var(--bg2)')+';border:1px solid '+(urgent?'var(--warn-border)':'var(--border)')+';color:'+(urgent?'var(--warn)':'var(--text3)')+'">'+
+            (urgent?'⚠ ':'')+'<b>'+best.n+' Kredite</b> fällig innerhalb von '+(span===0?'einem Tag':span+' Tagen')+
+            ' ('+best.from.toLocaleDateString('de-CH')+(span===0?'':' – '+best.to.toLocaleDateString('de-CH'))+') — <b>'+fmtU(best.sum)+'</b>'+
+            '<span style="display:block;color:var(--text4);font-size:10px;margin-top:1px">'+esc(best.names.join(' · '))+'</span>'+
+          '</div>';
+        })();
         var dueTilesHtml=
           '<div class="card ov-due-card" style="padding:.75rem;display:flex;flex-direction:column">'+
             '<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);padding-bottom:.4rem;border-bottom:1px solid var(--border);margin-bottom:.6rem">Kommende Fälligkeiten — Kumulierte Schulden</div>'+
             '<div class="due-windows-grid">'+grpDue+'</div>'+
+            clusterHtml+
           '</div>';
         g('metrics').innerHTML=
           '<div class="ov-grp-grid">'+
@@ -2882,14 +3084,14 @@
               return '<div class="prog-row" style="margin-top:.4rem"><span>LTV</span><span style="color:'+lc(ltv)+';font-weight:600">'+ltv.toFixed(1)+'%</span></div>'+
                 '<div class="prog-bg" style="background:var(--bg3);position:relative">'+
                   '<div class="prog-fill" style="width:'+ltvW+'%;background:'+lc(ltv)+'"></div>'+
-                  '<div style="position:absolute;left:60%;top:-3px;width:1px;height:10px;background:#d97706;opacity:.5"></div>'+
-                  '<div style="position:absolute;left:73%;top:-3px;width:1px;height:10px;background:#ea580c;opacity:.6"></div>'+
-                  '<div style="position:absolute;left:95%;top:-3px;width:1px;height:10px;background:#dc2626"></div>'+
+                  '<div title="MC1 '+tWp()+'%" style="position:absolute;left:'+tWp()+'%;top:-3px;width:1px;height:10px;background:#d97706;opacity:.6"></div>'+
+                  '<div title="MC3 '+tDp()+'%" style="position:absolute;left:'+tDp()+'%;top:-3px;width:1px;height:10px;background:#ea580c;opacity:.6"></div>'+
+                  '<div title="Liquidation 95%" style="position:absolute;left:95%;top:-3px;width:1px;height:10px;background:#dc2626"></div>'+
                 '</div>'+
-                '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--border2);margin-top:2px">'+
-                  '<span style="padding-left:60%">60</span>'+
-                  '<span style="padding-left:15%">75</span>'+
-                  '<span>95</span>'+
+                '<div style="position:relative;height:12px;font-size:10px;color:var(--border2);margin-top:2px">'+
+                  '<span style="position:absolute;left:'+tWp()+'%;transform:translateX(-50%)">'+tWp()+'</span>'+
+                  '<span style="position:absolute;left:'+tDp()+'%;transform:translateX(-50%)">'+tDp()+'</span>'+
+                  '<span style="position:absolute;left:95%;transform:translateX(-50%)">95</span>'+
                 '</div>';
             })():'')+
             /* ⑦ Währungsumrechnung */
@@ -2951,7 +3153,7 @@
             var liqUSDval=0,liqCcyStr='–',liqUSDstr='–';
             var interestStr=fmt(interest,l.c);
             var feeStr=l.feeBtc>0?l.feeBtc+' BTC':'–';
-            var dueAmount=l.amount+interest+frU(feeU(l),l.c);
+            var dueAmount=l.amount+interest;
             var dueStr=fmt(dueAmount,l.c);
             if(l.status==='active'&&l.col>0){var due=ltvU(l);liqUSDval=due/(0.95*l.col);var near=R.BTC<liqUSDval*1.1;var col='color:'+(R.BTC<=liqUSDval?'#dc2626':near?'#d97706':'#16a34a');liqCcyStr='<span style="'+col+'">'+fmt(frU(liqUSDval,l.c),l.c)+'</span>';liqUSDstr='<span style="'+col+'">'+pU(liqUSDval)+'</span>';}
             var dlStr=l.status==='active'?(dl>0?'<span style="color:'+(dl<30?'#dc2626':dl<60?'#d97706':'var(--text2)')+'">'+dl+' Tage</span>':'<span style="color:#dc2626">F&#228;llig!</span>'):'<span style="color:#9ca3af">&#10003;</span>';
@@ -2971,7 +3173,7 @@
               '<td class="amt">'+liqUSDstr+'</td>'+
               '<td><div class="tbl-actions">'+
                 '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openEdit('+i+',\''+escJs(l.id)+'\')">&#9998;</button>'+
-                '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+',\''+escJs(l.id)+'\')" title="Duplizieren">&#10064;</button>'+
+                '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openTopup('+i+',\''+escJs(l.id)+'\')" title="Collateral nachlegen">+&#8383;</button>'+'<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+',\''+escJs(l.id)+'\')" title="Duplizieren">&#10064;</button>'+
                 '<button class="del" onclick="d.openDel('+i+',\''+escJs(l.id)+'\')">&#10005;</button>'+
               '</div></td>'+
             '</tr>';
@@ -3017,7 +3219,7 @@
         /* Sort */
         sorted.sort(function(a,b){
           var v=0;
-          if(lSort.key==='start')v=new Date(a.start)-new Date(b.start);
+          if(lSort.key==='start')v=pD(a.start)-pD(b.start);
           else if(lSort.key==='amount')v=toU(a.amount,a.c)-toU(b.amount,b.c);
           else if(lSort.key==='rate')v=a.rate-b.rate;
           else if(lSort.key==='term')v=a.term-b.term;
@@ -3042,7 +3244,7 @@
           var interest=l.amount*(l.rate/100)*(l.term/12),lU=toU(l.amount,l.c);
           /* Break-even */
           var btcAtStart=l.btcStart||null;
-          var bep=btcAtStart?btcAtStart*(dueU(l)/lU):null;
+          var bep=btcAtStart?btcAtStart*(costU(l)/lU):null;
           var beHtml='';
           if(cfg.hideBreakEven){
             beHtml='';
@@ -3072,7 +3274,7 @@
             '<div class="lh"><span class="lid">'+esc(l.name)+' <span class="lid-sub">'+esc(l.id)+'</span></span>'+
             '<div class="fx"><span class="badge '+(l.status==='active'?'ba':'bc')+'">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span>'+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+
             '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openEdit('+i+',\''+escJs(l.id)+'\')">&#9998;</button>'+
-            '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+',\''+escJs(l.id)+'\')" title="Duplizieren">&#10064;</button>'+
+            '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openTopup('+i+',\''+escJs(l.id)+'\')" title="Collateral nachlegen">+&#8383;</button>'+'<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+',\''+escJs(l.id)+'\')" title="Duplizieren">&#10064;</button>'+
             '<button class="del" onclick="d.openDel('+i+',\''+escJs(l.id)+'\')">&#10005;</button></div></div>'+
             /* ② Kernzahlen 3-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr 1fr">'+
@@ -3102,14 +3304,14 @@
               return '<div class="prog-row" style="margin-top:.4rem"><span>LTV</span><span style="color:'+lc(ltv)+';font-weight:600">'+ltv.toFixed(1)+'%</span></div>'+
                 '<div class="prog-bg" style="background:var(--bg3);position:relative">'+
                   '<div class="prog-fill" style="width:'+ltvW+'%;background:'+lc(ltv)+'"></div>'+
-                  '<div style="position:absolute;left:60%;top:-3px;width:1px;height:10px;background:#d97706;opacity:.5"></div>'+
-                  '<div style="position:absolute;left:73%;top:-3px;width:1px;height:10px;background:#ea580c;opacity:.6"></div>'+
-                  '<div style="position:absolute;left:95%;top:-3px;width:1px;height:10px;background:#dc2626"></div>'+
+                  '<div title="MC1 '+tWp()+'%" style="position:absolute;left:'+tWp()+'%;top:-3px;width:1px;height:10px;background:#d97706;opacity:.6"></div>'+
+                  '<div title="MC3 '+tDp()+'%" style="position:absolute;left:'+tDp()+'%;top:-3px;width:1px;height:10px;background:#ea580c;opacity:.6"></div>'+
+                  '<div title="Liquidation 95%" style="position:absolute;left:95%;top:-3px;width:1px;height:10px;background:#dc2626"></div>'+
                 '</div>'+
-                '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text4);margin-top:2px">'+
-                  '<span style="padding-left:60%">60</span>'+
-                  '<span style="padding-left:15%">75</span>'+
-                  '<span>95</span>'+
+                '<div style="position:relative;height:12px;font-size:10px;color:var(--text4);margin-top:2px">'+
+                  '<span style="position:absolute;left:'+tWp()+'%;transform:translateX(-50%)">'+tWp()+'</span>'+
+                  '<span style="position:absolute;left:'+tDp()+'%;transform:translateX(-50%)">'+tDp()+'</span>'+
+                  '<span style="position:absolute;left:95%;transform:translateX(-50%)">95</span>'+
                 '</div>';
             })():'')+
             /* ⑦ Währungsumrechnung */
@@ -3165,6 +3367,9 @@
           /* Pre-select default currency */
           var fc=g('fc');if(fc){var dc=cfg.defaultCcy||'EUR';for(var i=0;i<fc.options.length;i++){if(fc.options[i].value===dc){fc.selectedIndex=i;break;}}}
           var fid=g('fid');if(fid)fid.value='';
+          var fcd=g('fcd');if(fcd)fcd.value='';
+          /* Buchen ist eine bewusste Entscheidung — bei jedem Öffnen wieder aus */
+          var ftx=g('ftx');if(ftx)ftx.checked=false;
           d.populateChainSelect('fchain',null,null);
         }
       },
@@ -3172,15 +3377,103 @@
         var customId=(g('fid').value||'').trim();
         var chainSel=g('fchain').value;
         var chainId=chainSel==='__new__'?uid():chainSel||null;
-        loans.push({id:customId||uid(),name:g('fn').value||'Neuer Kredit',
+        var nl={id:customId||uid(),name:g('fn').value||'Neuer Kredit',
           amount:parseFloat(g('fa').value)||0,c:g('fc').value,rate:parseFloat(g('fr').value)||0,
           feeBtc:parseFloat(g('ffee').value)||0,
           term:parseInt(g('ft').value)||12,start:g('fd').value||new Date().toISOString().split('T')[0],
           col:parseFloat(g('fb').value)||0,status:g('fs').value,
+          closedDate:normDate(g('fcd').value)||null,
           btcStart:parseFloat(g('fbp').value)||null,
           chainId:chainId||undefined,
-          note:g('fnote').value||''});
+          note:g('fnote').value||''};
+        loans.push(nl);
+        var txBox=g('ftx');
         d.togAdd();syncStatus();save();d.loans();d.ov();d.extPopulate();d.checkAlarms();
+        if(txBox&&txBox.checked)d.txFromLoan(nl);
+      },
+      /* Legt zu einem neuen Kredit die passenden Ledger-Buchungen an: das
+         Collateral verlässt den frei verfügbaren Bestand (Transfer), die
+         Bearbeitungsgebühr ist endgültig weg (Gebühr). Ein bereits
+         abgeschlossener Kredit bekommt das Collateral zum Fälligkeitsdatum
+         wieder eingebucht — sonst würde der Bestand dauerhaft zu klein
+         bleiben, obwohl die Bitcoin längst zurück sind. */
+      loanTxs:function(id){
+        return id?txs.filter(function(t){return t.loanId===id;}):[];
+      },
+      /* Soll-Buchungen aus dem aktuellen Stand eines Kredits */
+      loanTxPlan:function(l){
+        if(!l)return [];
+        /* Die Kredit-ID gehört in die Notiz: Namen lassen sich ändern und
+           doppeln, und im Ledger steht die Buchung sonst ohne belastbaren
+           Bezug zu ihrem Kredit da. */
+        var name=(l.name||'Kredit')+(l.id?' ('+l.id+')':''),plan=[];
+        /* Der Erstbetrag geht auf das Startdatum, jeder Nachschuss auf seinen
+           eigenen Tag — sonst stünde später hinterlegtes Collateral im Ledger
+           zu einem Zeitpunkt, an dem es den Bestand noch gar nicht verlassen hat. */
+        plan.push({role:'collateral',type:'transfer_out',btc:baseCol(l),date:l.start,note:'Collateral — '+name});
+        (l.topups||[]).forEach(function(t){
+          plan.push({role:'topup:'+t.id,type:'transfer_out',btc:t.btc,date:t.date,
+            note:'Collateral-Nachschuss — '+name});
+        });
+        plan.push({role:'fee',type:'fee',btc:l.feeBtc||0,date:l.start,note:'Bearbeitungsgebühr — '+name});
+        if(l.status==='closed'&&l.col>0){
+          /* Das eingetragene Rückzahlungsdatum gewinnt — nur wenn keines da
+             ist, dient das Fälligkeitsdatum als Näherung. */
+          var rd=l.closedDate||'';
+          if(!rd){
+            var end=aM(l.start,l.term);
+            if(!isNaN(end.getTime()))rd=end.getFullYear()+'-'+String(end.getMonth()+1).padStart(2,'0')+'-'+String(end.getDate()).padStart(2,'0');
+          }
+          plan.push({role:'return',type:'transfer_in',btc:l.col,date:rd,
+            note:'Collateral zurück — '+name});
+        }
+        return plan.filter(function(p){return p.btc>0&&/^\d{4}-\d{2}-\d{2}/.test(p.date||'');});
+      },
+      /* Bringt die Buchungen eines Kredits auf den aktuellen Stand. Bestehende
+         werden aktualisiert statt gelöscht und neu angelegt — sonst verlören
+         sie ihre ID und ihre Stellung im Ledger. Was nicht mehr zutrifft,
+         fällt weg: etwa die Rückbuchung, wenn ein Kredit wieder aktiv wird. */
+      syncLoanTxs:function(l){
+        var res={added:0,updated:0,removed:0};
+        if(!l||!l.id)return res;
+        var plan=d.loanTxPlan(l),keep={};
+        plan.forEach(function(p){
+          keep[p.role]=1;
+          var ex=txs.find(function(t){return t.loanId===l.id&&t.loanRole===p.role;});
+          var btc=parseFloat(p.btc.toFixed(8)),price=l.btcStart||0;
+          if(ex){
+            if(ex.date!==p.date||ex.btc!==btc||ex.type!==p.type||ex.note!==p.note||ex.price!==price)res.updated++;
+            ex.date=p.date;ex.type=p.type;ex.btc=btc;ex.note=p.note;ex.price=price;
+          } else {
+            txs.push({id:'tx'+new Date().getTime()+Math.random().toString(36).slice(2,6),
+              date:p.date,type:p.type,btc:btc,price:price,fee:0,note:p.note,
+              loanId:l.id,loanRole:p.role});
+            res.added++;
+          }
+        });
+        for(var i=txs.length-1;i>=0;i--){
+          if(txs[i].loanId===l.id&&!keep[txs[i].loanRole]){txs.splice(i,1);res.removed++;}
+        }
+        if(res.added||res.updated||res.removed){
+          txs.sort(function(a,b){return pD(a.date)-pD(b.date);});
+          saveTxs();d.bkRecalcReserve();d.bk();
+        }
+        return res;
+      },
+      removeLoanTxs:function(id){
+        if(!id)return 0;
+        var n=0;
+        for(var i=txs.length-1;i>=0;i--){if(txs[i].loanId===id){txs.splice(i,1);n++;}}
+        if(n){saveTxs();d.bkRecalcReserve();d.bk();}
+        return n;
+      },
+      txFromLoan:function(l){
+        var r=d.syncLoanTxs(l);
+        if(!r.added){
+          ffdNotice('Keine Transaktion angelegt — der Kredit hat weder Collateral noch Gebühr.','warn');
+          return;
+        }
+        ffdNotice(r.added+' Transaktion'+(r.added===1?'':'en')+' im Portfolio angelegt.');
       },
       openReset:function(mode){
         var titles={loans:'Alle Kredite l\u00f6schen',settings:'Einstellungen zur\u00fccksetzen',all:'Alles zur\u00fccksetzen'};
@@ -3197,7 +3490,7 @@
       closeReset:function(){g('reset-modal-bg').classList.remove('open');},
       confirmReset:function(){
         var mode=g('reset-modal-bg').dataset.mode;
-        var defaultCfg={ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false,btcReserve:0,btcReserveManual:false,mainCcy:'USD'};
+        var defaultCfg={ccys:['EUR','CHF','USD','BTC'],defaultTab:'ov',defaultView:'grid',defaultCcy:'EUR',ltvWarn:73,ltvCrit:79,ltvDanger:86,ltvDisplay:73,countdownDays:30,hideAmounts:false,hideBreakEven:false,navOrder:null,darkMode:false,btcReserve:0,btcReserveManual:false,mainCcy:'USD',lastExportTs:0,backupDays:30};
         if(mode==='loans'||mode==='all'){
           /* An explicit reset is the user's way out of a write lock */
           storeUnblock(STORE_KEY);
@@ -3228,10 +3521,80 @@
         d.closeReset();
         syncStatus();d.loans();d.ov();d.checkAlarms();d.extPopulate();d.vorInit();d.plInit();
       },
+      /* ─── Collateral nachlegen ─── */
+      openTopup:function(i,id){
+        var l=lRef(i,id);
+        if(!l)return;
+        var bg=g('tu-modal-bg');
+        bg.dataset.idx=i;bg.dataset.lid=l.id||'';
+        g('tu-name').textContent=l.name+' ('+fmt(l.amount,l.c)+', '+l.rate+'% p.a.)';
+        g('tu-btc').value='';
+        var n=new Date();
+        g('tu-date').value=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+        /* Gebuchte Kredite buchen den Nachschuss standardmässig mit, sonst
+           liefe das Ledger sofort auseinander. Ungebuchte bleiben ungebucht. */
+        var booked=d.loanTxs(l.id).length>0;
+        var box=g('tu-tx');if(box)box.checked=booked;
+        var hint=g('tu-tx-hint');
+        if(hint)hint.textContent=booked
+          ? 'Der Kredit ist im Portfolio gebucht — der Nachschuss wird als Transfer auf das gewählte Datum ergänzt.'
+          : 'Der Kredit ist nicht im Portfolio gebucht. Angehakt wird nur der Nachschuss gebucht.';
+        d.topupPreview();
+        bg.classList.add('open');
+      },
+      closeTopup:function(){g('tu-modal-bg').classList.remove('open');},
+      topupPreview:function(){
+        var bg=g('tu-modal-bg');
+        var l=lRef(parseInt(bg.dataset.idx),bg.dataset.lid);
+        if(!l)return;
+        var add=parseFloat(g('tu-btc').value);
+        if(!(add>0)||!isFinite(add))add=0;
+        var due=ltvU(l);
+        var oldCol=l.col||0,newCol=oldCol+add;
+        function liq(c){return c>0?due/(0.95*c):null;}
+        function ltv(c){return c>0?(due/(c*R.BTC))*100:null;}
+        var lo=liq(oldCol),ln=liq(newCol),vo=ltv(oldCol),vn=ltv(newCol);
+        g('tu-col').textContent=oldCol.toFixed(8)+' BTC'+(add>0?' → '+newCol.toFixed(8)+' BTC':'');
+        g('tu-ltv').textContent=(vo!=null?vo.toFixed(1)+'%':'–')+(add>0&&vn!=null?' → '+vn.toFixed(1)+'%':'');
+        var ltvEl=g('tu-ltv');ltvEl.style.color=(add>0?vn:vo)!=null?lc(add>0?vn:vo):'';
+        g('tu-liq').textContent=(lo!=null?pU(lo):'–')+(add>0&&ln!=null?' → '+pU(ln):'');
+        var diff=g('tu-diff');
+        if(add>0&&lo!=null&&ln!=null){
+          diff.textContent='Liquidation '+pU(lo-ln)+' tiefer · '+(((lo-ln)/lo)*100).toFixed(1)+'%';
+        } else if(add>0&&ln!=null){
+          diff.textContent='Liquidationspreis bei '+pU(ln);
+        } else {
+          diff.textContent='–';
+        }
+      },
+      confirmTopup:function(){
+        var bg=g('tu-modal-bg');
+        var l=lRef(parseInt(bg.dataset.idx),bg.dataset.lid);
+        if(!l){d.closeTopup();return;}
+        var add=parseFloat(g('tu-btc').value);
+        if(!(add>0)||!isFinite(add)){alert('Bitte einen Betrag grösser als 0 eingeben.');return;}
+        var date=normDate(g('tu-date').value);
+        if(!date){alert('Bitte ein gültiges Datum eingeben.');return;}
+        if(!Array.isArray(l.topups))l.topups=[];
+        l.topups.push({id:uid(),btc:parseFloat(add.toFixed(8)),date:date});
+        l.col=parseFloat(((l.col||0)+add).toFixed(8));
+        save();
+        var box=g('tu-tx');
+        if(box&&box.checked)d.syncLoanTxs(l);
+        d.closeTopup();
+        d.loans();d.ov();d.extPopulate();d.checkAlarms();d.updateHdrStats();
+        ffdNotice(add.toFixed(8)+' BTC nachgelegt — Collateral jetzt '+l.col.toFixed(8)+' BTC.');
+      },
       openDel:function(i,id){
         var l=lRef(i,id);
         if(!l)return;
         g('del-modal-name').textContent=l.name+' ('+fmt(l.amount,l.c)+', '+l.rate+'% p.a.)';
+        /* Verknüpfte Buchungen verschwinden mit — das gehört vor die Bestätigung */
+        var linked=d.loanTxs(l.id).length,txWarn=g('del-modal-tx');
+        if(txWarn){
+          txWarn.style.display=linked?'block':'none';
+          txWarn.textContent=linked?'⚠ '+linked+' verknüpfte Portfolio-Transaktion'+(linked===1?'':'en')+' wird ebenfalls gelöscht.':'';
+        }
         g('del-modal-bg').dataset.idx=i;
         g('del-modal-bg').dataset.lid=l.id||'';
         g('del-modal-bg').classList.add('open');
@@ -3241,10 +3604,13 @@
         var l=lRef(parseInt(g('del-modal-bg').dataset.idx),g('del-modal-bg').dataset.lid);
         var i=loans.indexOf(l);
         if(i<0){d.closeDel();return;}
+        var lid=l.id;
         loans.splice(i,1);
         save();
+        var gone=d.removeLoanTxs(lid);
         d.closeDel();
         d.loans();d.ov();d.extPopulate();d.checkAlarms();
+        if(gone)ffdNotice(gone+' verknüpfte Transaktion'+(gone===1?'':'en')+' mitgelöscht.');
       },
       openEdit:function(i,id){
         var l=lRef(i,id);
@@ -3256,6 +3622,8 @@
         g('ef-fee').value=l.feeBtc||0;
         g('ef-b').value=l.col;
         g('ef-d').value=l.start;
+        var efcd=g('ef-cd');if(efcd)efcd.value=l.closedDate||'';
+        var eftx=g('ef-tx');if(eftx)eftx.checked=d.loanTxs(l.id).length>0;
         ['ef-t','ef-s','ef-c'].forEach(function(id,_){});
         var ts=g('ef-t');for(var o=0;o<ts.options.length;o++){if(parseInt(ts.options[o].value)===l.term){ts.selectedIndex=o;break;}}
         var ss=g('ef-s');for(var o=0;o<ss.options.length;o++){if(ss.options[o].value===l.status){ss.selectedIndex=o;break;}}
@@ -3280,6 +3648,13 @@
         if(newId&&newId!==l.id){
           /* Reject a duplicate id — the id-based handlers rely on uniqueness */
           if(loans.some(function(x){return x!==l&&x.id===newId;})){alert('Diese ID ist bereits vergeben.');return;}
+          /* Verknüpfte Buchungen mitnehmen, sonst zeigen sie auf eine ID, die
+             es nicht mehr gibt, und der Abgleich legt sie ein zweites Mal an. */
+          var oldId=l.id,moved=0;
+          txs.forEach(function(t){if(t.loanId===oldId){t.loanId=newId;moved++;}});
+          /* Sofort sichern: der spätere Abgleich findet dann keine Änderung
+             mehr und käme von sich aus nicht mehr zum Speichern. */
+          if(moved)saveTxs();
           l.id=newId;
         }
         /* 0 is a legitimate value for amount, rate and collateral, so these
@@ -3295,6 +3670,9 @@
         l.start=newStart||l.start;
         l.term=parseInt(g('ef-t').value)||l.term;
         l.status=g('ef-s').value;
+        var cdRaw=g('ef-cd').value;
+        if(cdRaw&&!normDate(cdRaw)){alert('Bitte ein gültiges Rückzahlungsdatum eingeben.');return;}
+        l.closedDate=normDate(cdRaw)||null;
         l.c=g('ef-c').value;
         l.btcStart=parseFloat(g('ef-bp').value)||null;
         l.note=g('ef-note').value||'';
@@ -3314,6 +3692,17 @@
           delete l.chainId;
         }
         syncStatus();save();d.closeEdit();d.loans();d.ov();d.extPopulate();d.checkAlarms();
+        /* Buchungen nachziehen. Angehakt heisst «soll gebucht sein» — ein
+           entfernter Haken löscht sie wieder. */
+        var efTxBox=g('ef-tx');
+        if(efTxBox&&efTxBox.checked){
+          var r=d.syncLoanTxs(l);
+          if(!d.loanTxs(l.id).length)ffdNotice('Keine Transaktion angelegt — der Kredit hat weder Collateral noch Gebühr.','warn');
+          else if(r.added||r.removed||r.updated)ffdNotice('Portfolio-Buchungen aktualisiert.');
+        } else if(efTxBox){
+          var gone=d.removeLoanTxs(l.id);
+          if(gone)ffdNotice(gone+' verknüpfte Transaktion'+(gone===1?'':'en')+' aus dem Portfolio entfernt.');
+        }
       },
       /* ─── Duplicate loan ─── */
       dupLoan:function(i,id){
@@ -3324,7 +3713,10 @@
           name:src.name+' (Kopie)',
           status:'active',
           /* A copy is a draft, not a member of the original's roll-over chain */
-          chainId:null
+          chainId:null,
+          /* Eigene Nachschuss-Einträge — sonst teilten sich Kopie und Original
+             dieselbe Liste und ein Nachschuss beim einen träfe auch den anderen */
+          topups:(src.topups||[]).map(function(t){return {id:uid(),btc:t.btc,date:t.date};})
         });
         loans.push(copy);
         syncStatus();
@@ -3361,11 +3753,10 @@
 
       /* ─── CSV Export ─── */
       exportCSV:function(){
-        var headers=['ID','Bezeichnung','Betrag','Währung','Zinssatz %','Gebühr BTC','Laufzeit Mo','Startdatum','Fälligkeitsdatum','Collateral BTC','Status','Zinsen (CCY)','Gebühr (BTC)','Fälliger Betrag (CCY)','Gebühr (USD)','LTV %','Liq.preis USD/BTC','BTC Startpreis','Roll-Over Kette','Notiz'];
+        var headers=['ID','Bezeichnung','Betrag','Währung','Zinssatz %','Gebühr BTC','Laufzeit Mo','Startdatum','Fälligkeitsdatum','Collateral BTC','Status','Rückzahlungsdatum','Zinsen (CCY)','Gebühr (BTC)','Fälliger Betrag (CCY)','Gebühr (USD)','LTV %','Liq.preis USD/BTC','BTC Startpreis','Roll-Over Kette','Notiz'];
         var rows=loans.map(function(l){
           var lU=toU(l.amount,l.c);
           var interest=l.amount*(l.rate/100)*(l.term/12);var feeBtcAmt=l.feeBtc||0;
-          var due=dueU(l);
           var ltvBase=ltvU(l);
           var liqP=l.col>0?ltvBase/(0.95*l.col):null;
           var ltv=ltvPct(l);
@@ -3373,7 +3764,7 @@
           function q(v){v=String(v===null||v===undefined?'':v);return '"'+v.replace(/"/g,'""')+'"';}
           return [
             q(l.id),q(l.name),q(l.amount),q(l.c),q(l.rate),q(l.feeBtc||0),q(l.term),
-            q(l.start),q(endDate),q(l.col),q(l.status),
+            q(l.start),q(endDate),q(l.col),q(l.status),q(l.closedDate||''),
             q(interest.toFixed(2)),q(feeBtcAmt.toFixed(8)),q((l.amount+interest).toFixed(2)),q(feeU(l).toFixed(2)),
             q(ltv?ltv.toFixed(1):''),q(liqP?Math.round(liqP):''),
             q(l.btcStart||''),q(l.chainId||''),q(l.note||'')
@@ -3406,9 +3797,12 @@
             darkMode:document.getElementById('ffd-root').classList.contains('dark'),
             btcReserve:cfg.btcReserve||0,
             btcReserveManual:cfg.btcReserveManual||false,
-            mainCcy:cfg.mainCcy||'USD'
+            mainCcy:cfg.mainCcy||'USD',
+            navOrder:cfg.navOrder||null,
+            lastExportTs:cfg.lastExportTs||0,
+            backupDays:cfg.backupDays!=null?cfg.backupDays:30
           },
-          loans:loans.map(function(l){return{id:l.id,name:l.name,amount:l.amount,currency:l.c,rate:l.rate,termMonths:l.term,startDate:l.start,collateralBtc:l.col,status:l.status,btcStart:l.btcStart||null,feeBtc:l.feeBtc||0,chainId:l.chainId||null,note:l.note||''};}),
+          loans:loans.map(function(l){return{id:l.id,name:l.name,amount:l.amount,currency:l.c,rate:l.rate,termMonths:l.term,startDate:l.start,collateralBtc:l.col,status:l.status,closedDate:l.closedDate||null,topups:l.topups||[],btcStart:l.btcStart||null,feeBtc:l.feeBtc||0,chainId:l.chainId||null,note:l.note||''};}),
           transactions:txs
         };
         var blob=new Blob([JSON.stringify(exportData,null,2)],{type:'application/json'});
@@ -3418,6 +3812,50 @@
         a.href=url;a.download='firefish-kredite_'+ts+'.json';
         document.body.appendChild(a);a.click();
         document.body.removeChild(a);URL.revokeObjectURL(url);
+        /* Zeitpunkt festhalten — localStorage kann jederzeit vom Browser
+           geräumt werden, und ohne diesen Wert weiss niemand, wie alt die
+           letzte Sicherung ist. */
+        cfg.lastExportTs=new Date().getTime();
+        saveSettings(cfg);
+        d.renderBackupHint();
+      },
+      /* Alter der letzten Sicherung in Tagen, null wenn nie exportiert */
+      backupAgeDays:function(){
+        var ts=cfg&&cfg.lastExportTs;
+        if(!ts||!isFinite(ts)||ts<=0)return null;
+        return Math.floor((new Date().getTime()-ts)/864e5);
+      },
+      backupOverdue:function(){
+        var lim=cfg&&cfg.backupDays!=null?cfg.backupDays:30;
+        if(!(lim>0))return false;
+        if(!loans.length&&!txs.length)return false;
+        var age=d.backupAgeDays();
+        return age===null||age>=lim;
+      },
+      renderBackupHint:function(){
+        var el=g('backup-hint');if(!el)return;
+        var lim=cfg&&cfg.backupDays!=null?cfg.backupDays:30;
+        var age=d.backupAgeDays();
+        if(!(lim>0)){
+          el.innerHTML='<span style="color:var(--text4)">Erinnerung ausgeschaltet.</span>';
+          return;
+        }
+        var over=d.backupOverdue();
+        var txt=age===null?'Noch nie exportiert.':'Letzter Export vor '+age+' Tag'+(age===1?'':'en')+'.';
+        el.innerHTML='<span style="color:'+(over?'var(--warn)':'var(--text3)')+'">'+(over?'⚠ ':'')+txt+'</span>'+
+          (over?' <button class="sm" style="padding:2px 9px;font-size:11px;margin-left:6px" onclick="d.exportJSON()">Jetzt sichern</button>':'');
+      },
+      /* Einmal je Sitzung erinnern — bei jedem Seitenaufruf zu nerven wäre
+         der schnellste Weg, dass die Meldung ignoriert wird. */
+      backupRemind:function(){
+        if(d._backupReminded)return;
+        d._backupReminded=true;
+        if(!d.backupOverdue())return;
+        var age=d.backupAgeDays();
+        ffdNotice((age===null
+          ? 'Noch keine Sicherung vorhanden.'
+          : 'Letzte Sicherung vor '+age+' Tagen.')+
+          ' Die Daten liegen nur in diesem Browser — bitte über «↓ JSON» exportieren.','warn');
       },
       openImport:function(fmt){
         fmt=fmt||'json';
@@ -3481,6 +3919,7 @@
             var iName=col('bezeichnung');
             var iChain=col('roll-over kette');
             var iBtcStart=col('btc startpreis');
+            var iClosed=col('rückzahlungsdatum','ruckzahlungsdatum');
             if(iId<0||iStart<0||iAmount<0)throw new Error('CSV-Format nicht erkannt. Bitte Firefish-Export oder einen Export dieses Dashboards verwenden.');
             /* Helper: parse dd.m.yyyy, dd.mm.yyyy or yyyy-mm-dd → yyyy-mm-dd */
             function parseDate(s){
@@ -3498,7 +3937,19 @@
               var s=pD(startStr),e=pD(endStr);
               if(isNaN(s)||isNaN(e))return 12;
               var months=(e.getFullYear()-s.getFullYear())*12+(e.getMonth()-s.getMonth());
-              return Math.max(1,Math.round(months));
+              /* Reine Monatsdifferenz verliert einen Monat, wenn das Enddatum
+                 knapp vor dem Monatstag liegt (01.03.2024 -> 28.02.2025 waeren
+                 11 statt 12 Monaten). Deshalb die Laufzeit nehmen, deren
+                 berechnetes Enddatum dem tatsaechlichen am naechsten kommt. */
+              var best=months,bestDiff=Infinity;
+              for(var m=months-1;m<=months+1;m++){
+                if(m<1)continue;
+                var cand=aM(startStr,m);
+                if(isNaN(cand.getTime()))continue;
+                var diff=Math.abs(cand-e);
+                if(diff<bestDiff){bestDiff=diff;best=m;}
+              }
+              return Math.max(1,best);
             }
             /* Helper: sat → BTC */
             function satToBtc(satStr){
@@ -3543,6 +3994,7 @@
                 start:startDate,
                 col:colBtc,
                 status:status,
+                closedDate:iClosed>=0?parseDate((row[iClosed]||'').trim()):null,
                 btcStart:iBtcStart>=0?csvNum(row[iBtcStart])||null:null,
                 feeBtc:feeBtcVal,
                 chainId:iChain>=0?((row[iChain]||'').trim()||null):null,
@@ -3630,13 +4082,21 @@
               }
               if(importedSettings.ltvDisplay!=null){numSet('ltvDisplay',0,100);ltvThresh=cfg.ltvDisplay;}
               numSet('countdownDays',1,3650);numSet('btcReserve',-1e9,1e9);
+              numSet('backupDays',0,365);numSet('lastExportTs',0,Number.MAX_SAFE_INTEGER);
+              /* Navigationsreihenfolge: nur Zeichenketten übernehmen. Fehlende
+                 Einträge ergänzt applyNavOrder() ohnehin, ein leeres Feld
+                 bedeutet «Standardreihenfolge». */
+              if(Array.isArray(importedSettings.navOrder)){
+                var no=importedSettings.navOrder.filter(function(x){return typeof x==='string'&&x;});
+                cfg.navOrder=no.length?no:null;
+              } else if(importedSettings.navOrder===null){cfg.navOrder=null;}
               if(importedSettings.btcReserveManual!=null)cfg.btcReserveManual=!!importedSettings.btcReserveManual;
               if(importedSettings.hideAmounts!=null)cfg.hideAmounts=!!importedSettings.hideAmounts;
               if(importedSettings.hideBreakEven!=null)cfg.hideBreakEven=!!importedSettings.hideBreakEven;
               if(importedSettings.darkMode!=null){cfg.darkMode=!!importedSettings.darkMode;var r=document.getElementById('ffd-root');if(cfg.darkMode){r.classList.add('dark');localStorage.setItem('ffd_dark','1');}else{r.classList.remove('dark');localStorage.setItem('ffd_dark','');}var db=g('dark-btn');if(db)db.textContent=cfg.darkMode?'☀':'☾';}
               saveSettings(cfg);
               lView=cfg.defaultView||'grid';
-              d.renderCsw();
+              d.renderCsw();d.applyNavOrder();
               settingsNote=' · Einstellungen importiert.'+settingsNote;
             }
             /* Transactions are independent of the settings block and follow the
@@ -3783,6 +4243,105 @@
           act.map(function(l){var i=loans.indexOf(l);return '<option value="'+i+'">'+esc(l.name)+' ('+fmt(l.amount,l.c)+')</option>';}).join('');
         if(cur)sel.value=cur;
       },
+      /* Abgewählte Kredite im Ablöse-Rechner. Gemerkt wird die Ausnahme, nicht
+         die Auswahl — so ist ein neu erfasster Kredit von sich aus dabei. */
+      ablAll:function(on){
+        loans.forEach(function(l){if(l.status==='active'){if(on)delete ablOff[l.id];else ablOff[l.id]=true;}});
+        d.abl();
+      },
+      ablToggle:function(id){
+        if(ablOff[id])delete ablOff[id];else ablOff[id]=true;
+        d.abl();
+      },
+      /* ─── Ablöse-Rechner: offene Kredite auf einmal zurückzahlen ─── */
+      abl:function(){
+        var rEl=g('abl-r'),eEl=g('abl-empty'),pw=g('abl-pick-wrap'),nEl=g('abl-none');
+        if(!rEl)return;
+        var all=loans.filter(function(l){return l.status==='active';});
+        if(!all.length){
+          rEl.style.display='none';if(pw)pw.style.display='none';
+          if(nEl)nEl.style.display='none';if(eEl)eEl.style.display='block';return;
+        }
+        if(eEl)eEl.style.display='none';
+        /* Auswahlliste jedes Mal neu — der Zustand steht in ablOff, nicht im DOM */
+        if(pw){
+          pw.style.display='block';
+          /* Nach Fälligkeit sortiert — mit sichtbarem Ablaufdatum ist das die
+             Reihenfolge, in der man die Liste liest, und sie deckt sich mit den
+             Kredit-Auswahlfeldern der übrigen Werkzeuge. */
+          g('abl-pick').innerHTML=all.slice().sort(function(a,b){return aM(a.start,a.term)-aM(b.start,b.term);}).map(function(l){
+            var on=!ablOff[l.id];
+            var end=aM(l.start,l.term);
+            var endStr=isNaN(end.getTime())?'—':end.toLocaleDateString('de-CH');
+            return '<label style="display:inline-flex;align-items:center;gap:.35rem;font-size:12px;cursor:pointer;'+
+              'background:var(--bg2);border:1px solid '+(on?'var(--accent)':'var(--border)')+';border-radius:8px;padding:.3rem .55rem">'+
+              '<input type="checkbox" '+(on?'checked':'')+' style="accent-color:var(--accent);width:14px;height:14px" '+
+              'onchange="d.ablToggle(\''+escJs(l.id)+'\')">'+
+              '<span'+(on?'':' style="color:var(--text4)"')+'>'+esc(l.name)+
+              ' <span class="abl-amt" style="color:var(--text4)">'+fmt(l.amount,l.c)+'</span>'+
+              ' <span style="color:var(--text4)">· f&#228;llig '+endStr+'</span></span></label>';
+          }).join('');
+        }
+        var act=all.filter(function(l){return !ablOff[l.id];});
+        if(!act.length){
+          rEl.style.display='none';if(nEl)nEl.style.display='block';return;
+        }
+        if(nEl)nEl.style.display='none';
+        rEl.style.display='block';
+        /* Rückzahlung = Kapital + Zinsen. Die Bearbeitungsgebühr ist bei der
+           Kreditaufnahme in BTC bezahlt worden und wird nicht noch einmal fällig. */
+        var dueUSD=act.reduce(function(s,l){return s+dueU(l);},0);
+        var colBtc=act.reduce(function(s,l){return s+(l.col||0);},0);
+        var needBtc=R.BTC>0?dueUSD/R.BTC:0;
+        var netBtc=colBtc-needBtc;
+        g('abl-cnt').textContent=act.length===all.length
+          ? '('+act.length+' Kredit'+(act.length===1?'':'e')+')'
+          : '('+act.length+' von '+all.length+' Krediten)';
+        g('abl-due').textContent=fmtU(dueUSD);
+        g('abl-need').textContent=needBtc.toFixed(8)+' BTC';
+        g('abl-col').textContent=colBtc.toFixed(8)+' BTC · '+fmtU(colBtc*R.BTC);
+        var netEl=g('abl-net'),netLbl=g('abl-net-lbl');
+        netEl.textContent=(netBtc<0?'−':'')+Math.abs(netBtc).toFixed(8)+' BTC · '+fmtU(Math.abs(netBtc)*R.BTC);
+        netEl.style.color=netBtc>=0?'var(--ok)':'var(--err)';
+        if(netLbl)netLbl.textContent=netBtc>=0
+          ? 'Verbleibend, wenn aus dem Collateral zurückgezahlt wird'
+          : 'Fehlbetrag — das Collateral deckt die Schulden nicht';
+        /* Gesamtbestand: was vom Collateral übrig bleibt plus die Bitcoin
+           ausserhalb der Kredite. Der Fehlbetrag geht mit negativem Vorzeichen
+           ein — dann zehrt die Rückzahlung am Cold Storage. */
+        var resBtc=(cfg&&cfg.btcReserve)||0;
+        var totalBtc=netBtc+resBtc;
+        g('abl-res').textContent=resBtc>0?resBtc.toFixed(8)+' BTC · '+fmtU(resBtc*R.BTC):'—';
+        var totEl=g('abl-total');
+        totEl.textContent=(totalBtc<0?'−':'')+Math.abs(totalBtc).toFixed(8)+' BTC · '+fmtU(Math.abs(totalBtc)*R.BTC);
+        totEl.style.color=totalBtc>=0?'var(--ok)':'var(--err)';
+        var subEl=g('abl-total-sub');
+        if(subEl)subEl.textContent=resBtc>0
+          ? (netBtc<0?'−':'')+Math.abs(netBtc).toFixed(8)+' aus Collateral + '+resBtc.toFixed(8)+' Cold Storage'
+          : 'kein Bitcoin-Bestand im Portfolio hinterlegt';
+        /* Umrechnung in alle aktivierten Währungen, Hauptwährung zuerst */
+        var m=mainC();
+        var list=['EUR','CHF','USD','USDT','USDC','CZK','PLN','BTC','SAT'].filter(visC);
+        if(list.indexOf(m)>=0)list=[m].concat(list.filter(function(c){return c!==m;}));
+        g('abl-grid').innerHTML=list.map(function(c){
+          return '<div class="ccyc"><span class="ccy-lbl">'+esc(c)+'</span><span class="ccy-val">'+fmt(frU(dueUSD,c),c)+'</span></div>';
+        }).join('');
+        /* Die umgerechnete Summe sagt nicht, was tatsächlich zu zahlen ist:
+           Kredite laufen in verschiedenen Währungen. Deshalb zusätzlich die
+           echte Schuld je Kreditwährung, sobald es mehr als eine gibt. */
+        var byCcy={},order=[];
+        act.forEach(function(l){
+          if(order.indexOf(l.c)<0)order.push(l.c);
+          byCcy[l.c]=(byCcy[l.c]||0)+l.amount+l.amount*(l.rate/100)*(l.term/12);
+        });
+        var wrap=g('abl-percy-wrap');
+        if(order.length>1){
+          wrap.style.display='block';
+          g('abl-percy').innerHTML=order.map(function(c){
+            return '<div class="ccyc"><span class="ccy-lbl">'+esc(c)+'</span><span class="ccy-val">'+fmt(byCcy[c],c)+'</span></div>';
+          }).join('');
+        } else { wrap.style.display='none'; }
+      },
       nachFill:function(){
         var sel=g('cn-loan-sel');if(!sel||!sel.value)return;
         var l=loans[parseInt(sel.value)];if(!l)return;
@@ -3814,7 +4373,7 @@
         if(!l||!r||!bp){g('be-r').style.display='none';return;}
         var vorCcy=d.vorGetCcy();
         var bpUSD=toU(bp,vorCcy); /* convert BTC price from vorCcy to USD */
-        var interest=l*(r/100)*(t/12),fee=parseFloat(g('befee').value)||0,feeUSD=fee*R.BTC,iU=toU(interest,c),lU=toU(l,c),dueUSD=lU+iU+feeUSD,sold=lU/bpUSD,bep=bpUSD*(dueUSD/lU);
+        var interest=l*(r/100)*(t/12),fee=parseFloat(g('befee').value)||0,feeUSD=fee*bpUSD,iU=toU(interest,c),lU=toU(l,c),dueUSD=lU+iU+feeUSD,sold=lU/bpUSD,bep=bpUSD*(dueUSD/lU);
         g('be-r').style.display='block';
         g('becost').textContent=fmt(interest,c);g('becostusd').textContent=fmtU(iU);
         g('bebtc').textContent=sold.toFixed(8)+' BTC';
@@ -3831,6 +4390,74 @@
         g('cv-grid').innerHTML=['EUR','CHF','USD','USDT','USDC','CZK','PLN','BTC','SAT'].filter(visC).map(function(c){
           return '<div class="ccyc"><span class="ccy-lbl">'+c+'</span><span class="ccy-val">'+fmt(frU(toU(a,f),c),c)+'</span></div>';
         }).join('');
+      },
+      /* Tooltip-Inhalt für einen Balken der Roll-Over-Timeline */
+      roTlTip:function(l,idx,total){
+        function row(k,v){return '<div class="tl-tip-row"><span>'+k+'</span><span><b>'+v+'</b></span></div>';}
+        var s=pD(l.start),e=aM(l.start,l.term);
+        var act=l.status==='active';
+        var dl=dL(l.start,l.term);
+        var fee=feeU(l),int_=intU(l);
+        var h='<div class="tl-tip-hd">'+esc(l.name)+'</div>'+
+          '<div style="color:var(--text4);margin-bottom:2px">'+esc(l.id)+' · Roll-Over '+(idx+1)+' von '+total+
+          ' · <span style="color:'+(act?'var(--ok)':'var(--text4)')+'">'+(act?'Aktiv':'Abgeschlossen')+'</span></div><hr>'+
+          row('Betrag',fmt(l.amount,l.c))+
+          row('Zinssatz',l.rate+'% p.a.')+
+          row('Laufzeit',l.term+' Monate')+
+          row('Zeitraum',s.toLocaleDateString('de-CH')+' – '+e.toLocaleDateString('de-CH'));
+        if(act)h+=row('Fällig in',dl>0?dl+' Tag'+(dl===1?'':'en'):'überfällig');
+        h+='<hr>'+
+          row('Zinsen',fmtU(int_))+
+          row('Gebühr',l.feeBtc?l.feeBtc+' BTC ≈ '+fmtU(fee):'–')+
+          row('Gesamtkosten',fmtU(int_+fee))+
+          row('Fälliger Betrag',fmt(frU(dueU(l),l.c),l.c));
+        if(l.col>0){
+          h+='<hr>'+row('Collateral',l.col.toFixed(8)+' BTC');
+          var v=ltvPct(l);
+          if(act&&v!=null){
+            h+=row('LTV','<span style="color:'+lc(v)+'">'+v.toFixed(1)+'%</span>')+
+              row('Liquidation',pU(ltvU(l)/(0.95*l.col)));
+          }
+        }
+        return h;
+      },
+      /* Ein einziger schwebender Tooltip für alle Balken. Die Listener hängen
+         am Container, nicht an den Balken — der Chart wird neu gezeichnet,
+         seine Kinder also laufend ersetzt. */
+      roTlBindTips:function(host){
+        if(!host||host._tlTipBound)return;
+        var root=document.getElementById('ffd-root');if(!root)return;
+        var tip=document.getElementById('ffd-tl-tip');
+        if(!tip){
+          tip=document.createElement('div');
+          tip.id='ffd-tl-tip';tip.className='tl-tip';
+          root.appendChild(tip);
+        }
+        function hide(){tip.style.display='none';tip._src=null;}
+        function show(ev){
+          var t=ev.target;
+          var bar=t&&t.closest?t.closest('[data-tip]'):null;
+          if(!bar||!host.contains(bar)){hide();return;}
+          if(tip._src!==bar){tip._src=bar;tip.innerHTML=bar.getAttribute('data-tip')||'';}
+          tip.style.display='block';
+          /* Erst einblenden, dann messen — sonst sind Breite und Höhe 0 und
+             der Tooltip kippt am rechten Rand aus dem Bild. */
+          var pad=14,w=tip.offsetWidth,h=tip.offsetHeight;
+          var x=ev.clientX+pad,y=ev.clientY+pad;
+          if(x+w>window.innerWidth-8)x=ev.clientX-w-pad;
+          if(y+h>window.innerHeight-8)y=ev.clientY-h-pad;
+          tip.style.left=Math.max(8,x)+'px';
+          tip.style.top=Math.max(8,y)+'px';
+        }
+        host.addEventListener('mousemove',show);
+        host.addEventListener('mouseleave',hide);
+        /* Ohne Mauszeiger: Tippen zeigt den Tooltip, erneutes Tippen schliesst ihn */
+        host.addEventListener('click',function(ev){
+          var bar=ev.target&&ev.target.closest?ev.target.closest('[data-tip]'):null;
+          if(bar&&tip._src===bar&&tip.style.display==='block')hide();else show(ev);
+        });
+        window.addEventListener('scroll',hide,true);
+        host._tlTipBound=true;
       },
       renderHeatmap:function(){
         var hd=g('heat-desc');
@@ -3872,8 +4499,8 @@
         var legend='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:.75rem;font-size:10px">'+
           '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:rgba(22,163,74,.2);display:inline-block"></span>Sicher</span>'+
           '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:rgba(249,115,22,.18);display:inline-block"></span>Beobachten</span>'+
-          '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#d97706;display:inline-block"></span>MC1 \u226573%</span>'+
-          '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#ea580c;display:inline-block"></span>MC3 \u226586%</span>'+
+          '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#d97706;display:inline-block"></span>MC1 \u2265'+tWp()+'%</span>'+
+          '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#ea580c;display:inline-block"></span>MC3 \u2265'+tDp()+'%</span>'+
           '<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:2px;background:#dc2626;display:inline-block"></span>Liq \u226595%</span>'+
         '</div>';
         heatEl.innerHTML=
@@ -4335,8 +4962,12 @@
           (function(){
             var pending=all.filter(function(l){return !l.btcStart&&l.start;});
             var done=0;
+            /* Temporäre Map für historische Preise — btcStart am Loan-Objekt bleibt unverändert */
             var histPrices={};
-            function bsFor(l){return l.btcStart||(l.start&&histPrices[l.start])||R.BTC;}
+            /* Kein stiller Ersatz durch den Live-Kurs: laesst sich der Preis vom
+               Kreditdatum nicht aufloesen, gibt es fuer diesen Kredit keinen
+               Break-even und der Balken bleibt leer. */
+            function bsFor(l){return l.btcStart||(l.start&&histPrices[l.start])||null;}
             function renderBep(){
               if(!bepC||!all.length){
                 if(bepC)emptyChart(bepC,'Keine Kredite vorhanden.');
@@ -4344,11 +4975,12 @@
               }
               chBep=dst(chBep);
               chartReady(bepC);
-              var bepLabels=all.map(function(l){return l.name+(!l.btcStart?' *':'');});
+              var bepLabels=all.map(function(l){return l.name+(l.btcStart?'':(bsFor(l)?' *':' †'));});
               var startVals=all.map(function(l){return bsFor(l);});
               var bepVals=all.map(function(l){
                 var lU=toU(l.amount,l.c);var bs=bsFor(l);
-                return parseFloat((bs*(dueU(l)/lU)).toFixed(0));
+                if(!bs||!lU)return null;
+                return parseFloat((bs*(costU(l)/lU)).toFixed(0));
               });
               chBep=new Chart(bepC,{type:'bar',
                 data:{labels:bepLabels,
@@ -4363,8 +4995,6 @@
                 plugins:[hLinePlugin(R.BTC,'#16a34a','Aktuell '+faxU(R.BTC))]});
             }
             if(!pending.length){renderBep();return;}
-            /* Temporäre Map für historische Preise — btcStart am Loan-Objekt bleibt unverändert */
-            var histPrices={};
             pending.forEach(function(l){
               d.btcHistPrice(l.start,function(usd){
                 if(usd)histPrices[l.start]=usd;
@@ -4502,7 +5132,7 @@
           /* ── 8. Fälligkeits-Gantt ── */
           var ganttEl=g('ch-gantt');
           if(ganttEl&&all.length){
-            var ganttLoans=all.slice().sort(function(a,b){return new Date(a.start)-new Date(b.start);});
+            var ganttLoans=all.slice().sort(function(a,b){return pD(a.start)-pD(b.start);});
             var now=new Date();
             var minD=new Date(Math.min.apply(null,ganttLoans.map(function(l){return pD(l.start);})));
             var latestDueG=new Date(Math.max.apply(null,ganttLoans.map(function(l){return aM(l.start,l.term);})));
@@ -4562,7 +5192,7 @@
               roTlEl.innerHTML='<p class="note2" style="text-align:center;padding:1.5rem">Keine Roll-Over-Ketten vorhanden.</p>';
             } else {
               /* Sort each chain by start date */
-              chainIds.forEach(function(cid){chains[cid].sort(function(a,b){return new Date(a.start)-new Date(b.start);});});
+              chainIds.forEach(function(cid){chains[cid].sort(function(a,b){return pD(a.start)-pD(b.start);});});
               /* Timeline range */
               var allChainLoans=chainIds.reduce(function(a,cid){return a.concat(chains[cid]);},[]); 
               var minDR=new Date(Math.min.apply(null,allChainLoans.map(function(l){return pD(l.start);})));
@@ -4606,7 +5236,7 @@
                   var isActive=l.status==='active';
                   var intCost=intU(l);
                   var gap=li>0?2:0;
-                  html+='<div title="'+esc(l.name)+' · '+fmt(l.amount,l.c)+' · Zinsen: '+fmtU(intCost)+'" style="position:absolute;left:calc('+left+'% + '+gap+'px);width:calc('+width+'% - '+gap+'px);height:100%;background:'+clr+';opacity:'+(isActive?1:.55)+';border-radius:3px;display:flex;align-items:center;overflow:hidden;padding:0 4px;z-index:1;box-sizing:border-box">'+
+                  html+='<div data-tip="'+esc(d.roTlTip(l,li,chainLoans.length))+'" style="position:absolute;left:calc('+left+'% + '+gap+'px);width:calc('+width+'% - '+gap+'px);height:100%;background:'+clr+';opacity:'+(isActive?1:.55)+';border-radius:3px;display:flex;align-items:center;overflow:hidden;padding:0 4px;z-index:1;box-sizing:border-box;cursor:default">'+
                     '<span style="font-size:9px;color:#fff;white-space:nowrap;overflow:hidden">'+esc(l.name)+'</span>'+
                   '</div>';
                 });
@@ -4617,6 +5247,7 @@
               });
               html+='</div><div style="font-size:10px;color:var(--text4);margin-top:4px">■ Roter Strich = Heute &nbsp;·&nbsp; Gestapfte Balken = einzelne Roll-Overs &nbsp;·&nbsp; Transparenz = abgeschlossen</div>';
               roTlEl.innerHTML=html;
+              d.roTlBindTips(roTlEl);
             }
           }
 
@@ -4972,7 +5603,7 @@
           'gvl-loan-lbl':'Kreditbetrag ('+ccy+')',
           'gvl-btcstart-lbl':null /* handled dynamically */,
           'gvl-btcnow-lbl':'Aktueller Bitcoin-Preis ('+ccy+')',
-          'gvl-fee-lbl':'Bearbeitungsgeb\u00fchr ('+ccy+', auto)',
+          'gvl-fee-lbl':null /* handled dynamically */,
           'gvl-zinsen-lbl':'Zinsen ('+ccy+')',
           'gvl-gebühr-lbl':'Bearbeitungsgeb\u00fchr ('+ccy+')',
           'cn-loan-lbl':'F\u00e4lliger Betrag (Kredit + Zinsen) ('+ccy+')',
@@ -4992,13 +5623,22 @@
         var bsEl=document.getElementById('gvl-btcstart');
         if(bsEl&&bsEl._btcStartUSD){bsEl.value=parseFloat(frU(bsEl._btcStartUSD,ccy).toFixed(ccy==='CZK'||ccy==='PLN'?0:2));}
         /* Update btcstart label with currency */
+        /* Gebuehren-Label separat: textContent wuerde die Kind-Spans loeschen */
+        var feeLbl=document.getElementById('gvl-fee-lbl');
+        if(feeLbl){
+          var feeRst=document.getElementById('gvl-fee-reset');
+          var feeSrc=document.getElementById('gvl-fee-src');
+          feeLbl.textContent='Bearbeitungsgebühr ('+ccy+', auto) ';
+          if(feeRst)feeLbl.appendChild(feeRst);
+          if(feeSrc)feeLbl.appendChild(feeSrc);
+        }
         var bsLbl=document.getElementById('gvl-btcstart-lbl');
         if(bsLbl){
           var dateSpan=document.getElementById('gvl-start-date');
           bsLbl.textContent='Bitcoin-Preis bei Kreditnahme ('+ccy+') ';
           if(dateSpan)bsLbl.appendChild(dateSpan);
         }
-        d.mkb();d.szb();d.mkr();d.btr();d.mkk();d.ltvc();d.alp();d.gz();d.nach();d.nlp();d.se2();d.gvl();
+        d.mkb();d.szb();d.mkr();d.btr();d.mkk();d.ltvc();d.alp();d.gz();d.nach();d.nlp();d.se2();d.gvl();d.abl();
       },
       vorGetCcy:function(){
         var sel=document.getElementById('vor-ccy');
@@ -5459,6 +6099,9 @@
       },
 
       /* 2. Sicherheit zu Beginn */
+      /* Merkt sich, dass der Nutzer ein auto-gefuelltes Feld selbst editiert hat */
+      feeManual:function(id){var el=g(id);if(el)el._autoFilled=false;},
+
       szb:function(){
         var loan=d.vorReadUSD('szb-loan');
         var zinsen=d.vorReadUSD('szb-zinsen');
@@ -5498,7 +6141,7 @@
         var nwfee=parseFloat(g('mkr-nwfee').value)||0;
         var feeEl=g('mkr-fee');
         if(!btc||!anz){
-          g('mkr-wert').value='';g('mkr-zinsen').value='';
+          g('mkr-wert').value='';g('mkr-zinsen').value='';if(feeEl)feeEl.value='';
           g('mkr-result-loan').textContent='—';g('mkr-result-res').textContent='—';
           g('mkr-check').style.display='none';return;
         }
@@ -5529,7 +6172,7 @@
         var liqPct=((btc-fBtc)/btc*100);
         g('mkr-liq-warn').textContent='Bei einem Kursrückgang von 47.4% wird das Collateral liquidiert';
         /* Ausgaben — runden nur hier */
-        if(!feeEl.value||feeEl._autoFilled){feeEl.value=(Math.ceil(feeBTC*100000)/100000).toFixed(5)+' BTC';feeEl._autoFilled=true;}
+        if(feeEl)feeEl.value=(Math.ceil(feeBTC*100000)/100000).toFixed(5)+' BTC';
         g('mkr-zinsen').value=d.vorFmt(Math.round(interest));
         g('mkr-result-loan').textContent=d.vorFmt(Math.round(loan));
         g('mkr-result-res').textContent=(Math.ceil(resBTC*100000)/100000).toFixed(5)+' BTC';
@@ -5646,7 +6289,8 @@
         if(cur)sel.value=cur;
       },
       gvlFill:function(){
-        var sel=g('gvl-loan-sel');if(!sel||!sel.value)return;
+        var sel=g('gvl-loan-sel');
+        if(!sel||!sel.value){var fe0=g('gvl-fee');if(fe0){fe0._loanFeeUSD=null;fe0._autoFeeUSD=null;}return;}
         var l=loans[parseInt(sel.value)];if(!l)return;
         var ccy=d.vorGetCcy();
         var lU=toU(l.amount,l.c);
@@ -5656,7 +6300,7 @@
         var termVal=l.term||12;
         var feerate=termVal===3?0.00375:termVal===6?0.0075:termVal===12?0.015:termVal===18?0.0225:0.03;
         var feeUSD=l.feeBtc?feeU(l):Math.round(lU*feerate);
-        var feeFieldEl=g('gvl-fee');feeFieldEl._manualFee=false;feeFieldEl._autoFeeUSD=null;feeFieldEl.value=parseFloat(frU(feeUSD,ccy).toFixed(ccy==='CZK'||ccy==='PLN'?0:2));var feeBtn=g('gvl-fee-reset');if(feeBtn)feeBtn.style.display='none';
+        var feeFieldEl=g('gvl-fee');feeFieldEl._manualFee=false;feeFieldEl._autoFeeUSD=null;feeFieldEl._loanFeeUSD=l.feeBtc?feeU(l):null;feeFieldEl.value=parseFloat(frU(feeUSD,ccy).toFixed(ccy==='CZK'||ccy==='PLN'?0:2));var feeBtn=g('gvl-fee-reset');if(feeBtn)feeBtn.style.display='none';
         g('gvl-btcnow').value=parseFloat(frU(R.BTC,ccy).toFixed(ccy==='CZK'||ccy==='PLN'?0:2));
         /* BTC-Startpreis: Feld immer zuerst leeren */
         var el=g('gvl-btcstart');
@@ -5695,11 +6339,24 @@
             dates[iso]=1;
           }
         });
-        /* Fire-and-forget mit gestaffelten Delays — API nicht überlasten */
-        var isos=Object.keys(dates);
-        isos.forEach(function(iso,idx){
-          setTimeout(function(){d.btcHistPrice(iso,function(){});},idx*300);
+        /* Nacheinander statt alle auf einmal: die CoinGecko-Gratis-API kippt
+           schon bei wenigen Anfragen pro Minute in ein Rate-Limit. Nach dem
+           ersten Limit wird abgebrochen — die restlichen Anfragen wuerden
+           ohnehin nur abgewiesen und den Zaehler weiter hochtreiben. */
+        var isos=Object.keys(dates).filter(function(iso){
+          /* Aus Cache oder Preistabelle beantwortbar — kein Netzabruf noetig */
+          try{var c=localStorage.getItem('ffd_btc_hist_'+iso);if(c){var pc=JSON.parse(c);if(pc&&pc.usd)return false;}}catch(e){}
+          return btcHistLocal(iso)===null;
         });
+        var idx=0,stopped=false;
+        (function next(){
+          if(stopped||idx>=isos.length)return;
+          var iso=isos[idx++];
+          d.btcHistPrice(iso,function(usd,err){
+            if(err==='ratelimit'){stopped=true;return;}
+            setTimeout(next,1200);
+          });
+        })();
       },
       /* Shared historic BTC price lookup with localStorage cache */
       loadHistBtc_auto:function(i,startDate,wid){
@@ -5934,15 +6591,18 @@
         var feerate=term===3?0.00375:term===6?0.0075:term===12?0.015:term===18?0.0225:0.03;
         var feeEl=g('gvl-fee');
         var feeResetBtn=g('gvl-fee-reset');
+        var feeSrcEl=g('gvl-fee-src');
         if(!feeEl._manualFee){
-          /* Auto: berechne und fülle */
-          var autoFeeUSD=Math.round(lU*feerate);
+          /* Gewaehlter Kredit hat eine echte Gebuehr -> diese gewinnt vor der Auto-Formel */
+          var autoFeeUSD=feeEl._loanFeeUSD!=null?feeEl._loanFeeUSD:Math.round(lU*feerate);
           var ccy=d.vorGetCcy();
           feeEl.value=parseFloat(frU(autoFeeUSD,ccy).toFixed(ccy==='CZK'||ccy==='PLN'?0:2));
           feeEl._autoFeeUSD=autoFeeUSD;
           if(feeResetBtn)feeResetBtn.style.display='none';
+          if(feeSrcEl)feeSrcEl.style.display=feeEl._loanFeeUSD!=null?'inline':'none';
         } else {
           if(feeResetBtn)feeResetBtn.style.display='inline';
+          if(feeSrcEl)feeSrcEl.style.display='none';
         }
         var feeUSD=feeEl._manualFee?d.vorReadUSD('gvl-fee'):(feeEl._autoFeeUSD||Math.round(lU*feerate));
         /* Zinsen */
@@ -5964,6 +6624,9 @@
         g('gvl-result').innerHTML='<span style="color:'+color+'">'+sign+d.vorFmt(result)+'</span>';
       },
       extPopulate:function(){
+        /* Der Ablöse-Rechner hängt allein an den Krediten — hier mitziehen,
+           weil extPopulate() bei jeder Kreditänderung läuft. */
+        d.abl();
         var sel=g('ext-loan');if(!sel)return;
         var act=loans.filter(function(l){return l.status==='active';})
           .slice().sort(function(a,b){return aM(a.start,a.term)-aM(b.start,b.term);});
@@ -6136,8 +6799,11 @@
             if(data&&data.prices){
               window._btcHist={};
               data.prices.forEach(function(p){
+                /* CoinGecko liefert Tageswerte auf UTC-Mitternacht. Mit lokalen
+                   Gettern faellt der Schluessel westlich von Greenwich auf den
+                   Vortag — der Chart zeigt dann jeden Tag den falschen Kurs. */
                 var dt=new Date(p[0]);
-                var key=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+                var key=dt.getUTCFullYear()+'-'+String(dt.getUTCMonth()+1).padStart(2,'0')+'-'+String(dt.getUTCDate()).padStart(2,'0');
                 window._btcHist[key]=p[1];
               });
               cb(window._btcHist);
@@ -6199,7 +6865,7 @@
         var html='';
 
         chainIds.forEach(function(cid,ci){
-          var members=chains[cid].slice().sort(function(a,b){return new Date(a.start)-new Date(b.start);});
+          var members=chains[cid].slice().sort(function(a,b){return pD(a.start)-pD(b.start);});
           var color=CHAIN_COLORS[ci%CHAIN_COLORS.length];
 
           /* Aggregate totals */
@@ -6271,9 +6937,8 @@
             var iUSD=intU(l),fUSD=feeU(l),costUSD=iUSD+fUSD,dueUSD=toU(l.amount,l.c)+iUSD;
             var end=aM(l.start,l.term).toLocaleDateString('de-CH');
             var isActive=l.status==='active';
-            var lBtcStart=l.btcStart||R.BTC;
-            var lColBtc=l.col||0;
-            var lBep=lColBtc>0?(lBtcStart+costUSD/lColBtc):null;
+            var lLU=toU(l.amount,l.c);
+            var lBep=(l.btcStart>0&&lLU>0)?(l.btcStart*((lLU+costUSD)/lLU)):null;
             html+='<tr>'+
               '<td style="color:var(--text4);font-size:11px">'+(mi+1)+'</td>'+
               '<td class="tbl-name">'+esc(l.name)+'</td>'+
@@ -6291,16 +6956,16 @@
             '</tr>';
           });
           /* Totals row */
-          /* Break-even total: a roll-over re-pledges the SAME bitcoin each
-             period, so the chain's collateral is the largest single pledge —
+          /* Break-even total: a roll-over carries the SAME principal forward,
+             so the bitcoin one avoided selling is the one from the first loan —
              summing the members would divide the cost several times over and
-             understate the break-even price. */
-          var totalColBtc=members.reduce(function(mx,l){return Math.max(mx,l.col||0);},0);
-          /* Without a stored start price there is no meaningful chain
+             understate the break-even price.
+             Without a stored start price there is no meaningful chain
              break-even — falling back to spot would produce a "target" that
              just tracks the current price. */
           var firstBtcStart=members[0].btcStart||null;
-          var totalBep=(firstBtcStart&&totalColBtc>0)?(firstBtcStart+totalCostUSD/totalColBtc):null;
+          var firstLU=toU(members[0].amount,members[0].c);
+          var totalBep=(firstBtcStart&&firstLU>0)?(firstBtcStart*((firstLU+totalCostUSD)/firstLU)):null;
           html+='<tr style="background:var(--bg2);font-weight:700;border-top:2px solid var(--border)">'+
             '<td colspan="8" style="font-size:12px;color:var(--text4)">Total</td>'+
             '<td class="amt">'+fmtU(totalInterestUSD)+'</td>'+
@@ -6408,12 +7073,14 @@
         var zinsBelastung=aU>0?totalInterestOut/aU*100:0;
         /* Effektiver Jahreszins: volumengewichtet, aktive Kredite */
         var effJahreszins=aU>0?act.reduce(function(s,l){
-          var annRate=l.term>0?(intU(l)/toU(l.amount,l.c))*(12/l.term)*100:l.rate;
+          /* Effektiv heisst: inklusive der einmaligen Bearbeitungsgebuehr */
+          var annRate=l.term>0?((intU(l)+feeU(l))/toU(l.amount,l.c))*(12/l.term)*100:l.rate;
           return s+annRate*toU(l.amount,l.c);
         },0)/aU:0;
         /* Effektiver Jahreszins alle Kredite */
         var effJahreszinsAll=tU>0?loans.reduce(function(s,l){
-          var annRate=l.term>0?(intU(l)/toU(l.amount,l.c))*(12/l.term)*100:l.rate;
+          /* Effektiv heisst: inklusive der einmaligen Bearbeitungsgebuehr */
+          var annRate=l.term>0?((intU(l)+feeU(l))/toU(l.amount,l.c))*(12/l.term)*100:l.rate;
           return s+annRate*toU(l.amount,l.c);
         },0)/tU:0;
         /* Gewichteter Zinssatz abgeschlossen */
@@ -6566,13 +7233,13 @@
         var beLoans=loans.filter(function(l){return l.btcStart&&l.btcStart>0&&l.col>0;});
         /* Simple average: mean of individual break-even prices */
         var beAvg=beLoans.length?beLoans.reduce(function(s,l){
-          var bep=l.btcStart*(dueU(l)/toU(l.amount,l.c));
+          var bep=l.btcStart*(costU(l)/toU(l.amount,l.c));
           return s+bep;
         },0)/beLoans.length:null;
         /* Weighted by loan volume (USD): each bep weighted by loan amount in USD */
         var beWNum=beLoans.reduce(function(s,l){
           var lU=toU(l.amount,l.c);
-          var bep=l.btcStart*(dueU(l)/lU);
+          var bep=l.btcStart*(costU(l)/lU);
           return s+bep*lU;
         },0);
         var beWDen=beLoans.reduce(function(s,l){return s+toU(l.amount,l.c);},0);
@@ -6582,7 +7249,8 @@
 
         html+=section('Effizienz');
         html+='<div class="mc"><span class="mc-lbl">Effektiver Jahreszins</span><span class="mc-val">'+effJahreszinsAll.toFixed(2)+'%</span>'+
-          sub3(effJahreszins.toFixed(2)+'%',null,effJahreszinsAll.toFixed(2)+'%')+'</div>';
+          sub3(effJahreszins.toFixed(2)+'%',null,effJahreszinsAll.toFixed(2)+'%')+
+          '<span class="mc-sub" style="color:var(--text4)">inkl. Bearbeitungsgebühr</span></div>';
         html+=tile('G\u00fcnstigster Kredit',cheapest?cheapest.rate.toFixed(2)+'%':dash,cheapest?esc(cheapest.name):'');
         html+=tile('Teuerster Kredit',priciest?priciest.rate.toFixed(2)+'%':dash,priciest?esc(priciest.name):'');
         if(beAvg!==null){
@@ -6616,6 +7284,126 @@
         }
         html+='</div>';
 
+        html+='<span class="sh">R&#252;ckblick — hat sich das Beleihen gelohnt?</span>'+
+          '<div class="card" style="margin-bottom:1rem;overflow-x:auto" id="sx-retro"></div>';
+        el.innerHTML=html;
+        d.renderRetro();
+      },
+      /* Tag, an dem der Kredit tatsächlich beendet wurde. Ohne eingetragenes
+         Rückzahlungsdatum dient die Fälligkeit als Näherung; ein Datum in der
+         Zukunft wird auf heute begrenzt, sonst gäbe es keinen Kurs dazu. */
+      retroCloseIso:function(l){
+        var iso=l.closedDate||'';
+        if(!iso){
+          var e=aM(l.start,l.term);
+          if(isNaN(e.getTime()))return '';
+          iso=e.getFullYear()+'-'+String(e.getMonth()+1).padStart(2,'0')+'-'+String(e.getDate()).padStart(2,'0');
+        }
+        var n=new Date();
+        var today=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+        return iso>today?today:iso;
+      },
+      /* Rückblick auf abgeschlossene Kredite: der Break-even sagt, ab welchem
+         Kurs sich ein Kredit lohnt — hier steht fest, ob er es getan hat. */
+      renderRetro:function(){
+        var el=g('sx-retro');if(!el)return;
+        d._retroPx=d._retroPx||{};
+        var items=loans.filter(function(l){
+          return l.status==='closed'&&l.btcStart>0&&toU(l.amount,l.c)>0&&d.retroCloseIso(l);
+        });
+        var open=loans.filter(function(l){
+          return l.status==='active'&&l.btcStart>0&&toU(l.amount,l.c)>0;
+        });
+        if(!items.length&&!open.length){
+          el.innerHTML='<p class="note2" style="margin:0">Noch keine Kredite mit hinterlegtem BTC-Startpreis. '+
+            'Sobald einer vorliegt, steht hier, ob das Beleihen gegenüber einem Verkauf günstiger war.</p>';
+          return;
+        }
+        d._retroOpen=open;
+        var missing=[];
+        items.forEach(function(l){
+          var iso=d.retroCloseIso(l);
+          if(d._retroPx[iso]===undefined&&missing.indexOf(iso)<0)missing.push(iso);
+        });
+        if(!missing.length){d.retroDraw(el,items);return;}
+        /* Preise einzeln nachladen — dieselbe Zurückhaltung wie beim Prefetch */
+        var i=0;
+        (function next(){
+          if(i>=missing.length){d.retroDraw(el,items);return;}
+          var iso=missing[i++];
+          d.btcHistPrice(iso,function(usd,err){
+            d._retroPx[iso]=usd||null;
+            if(err==='ratelimit'){d.retroDraw(el,items);return;}
+            next();
+          });
+        })();
+      },
+      /* Baut einen Block der Gegenüberstellung. `live` unterscheidet den
+         abgeschlossenen Kredit (Kurs am Rückzahlungstag, Ergebnis steht fest)
+         vom laufenden (heutiger Kurs, Ergebnis noch in Bewegung). */
+      retroBlock:function(list,live){
+        var totGain=0,totCost=0,won=0,known=0;
+        var rows=list.map(function(l){
+          var iso=live?'':d.retroCloseIso(l);
+          var px=live?R.BTC:d._retroPx[iso];
+          var lU=toU(l.amount,l.c);
+          /* Die Bitcoin, die man für den Kreditbetrag hätte verkaufen müssen */
+          var soldBtc=lU/l.btcStart;
+          /* Volle Kosten der Laufzeit — die Zinsen sind bis zum Ende geschuldet,
+             auch wenn der Kredit noch läuft. Damit deckt sich das Vorzeichen
+             hier genau mit dem Break-even auf der Kreditkarte. */
+          var cost=intU(l)+feeU(l);
+          var gain=px?soldBtc*(px-l.btcStart):null;
+          var res=gain===null?null:gain-cost;
+          if(res!==null){totGain+=gain;totCost+=cost;known++;if(res>0)won++;}
+          var col=res===null?'var(--text4)':res>0?'var(--ok)':'var(--err)';
+          return '<tr>'+
+            '<td><div class="tbl-name">'+esc(l.name)+'</div><div class="tbl-id">'+esc(l.id)+'</div></td>'+
+            '<td>'+pD(l.start).toLocaleDateString('de-CH')+'<br><span style="color:var(--text4);font-size:11px">'+
+              (live?'heute':pD(iso).toLocaleDateString('de-CH'))+'</span></td>'+
+            '<td class="amt">'+pU(l.btcStart)+'<br><span style="color:var(--text4);font-size:11px">'+(px?pU(px):'—')+'</span></td>'+
+            '<td class="amt">'+soldBtc.toFixed(8)+' BTC</td>'+
+            '<td class="amt">'+(gain===null?'—':fmtU(gain))+'</td>'+
+            '<td class="amt">'+fmtU(cost)+'</td>'+
+            '<td class="amt" style="color:'+col+';font-weight:700">'+(res===null?'—':(res>0?'+':'')+fmtU(res))+'</td>'+
+          '</tr>';
+        }).join('');
+        var total=totGain-totCost;
+        return {
+          known:known,missing:list.length-known,total:total,
+          html:(known?'<div class="mc" style="margin:0 0 .6rem"><span class="mc-lbl">'+
+              (live?'Stand heute über ':'Ergebnis über ')+known+' Kredit'+(known===1?'':'e')+'</span>'+
+              '<span class="mc-val" style="color:'+(total>0?'var(--ok)':'var(--err)')+'">'+(total>0?'+':'')+fmtU(total)+'</span>'+
+              '<span class="mc-sub">'+won+' von '+known+(live?' liegen vorn':' haben sich gelohnt')+
+              ' · Kursgewinn '+fmtU(totGain)+' gegen Kosten '+fmtU(totCost)+'</span></div>':'')+
+            '<table class="loans-table"><thead><tr>'+
+              '<th>Kredit</th><th>Start / '+(live?'heute':'Ende')+'</th><th>BTC-Kurs</th><th>Nicht verkauft</th><th>Kursgewinn</th><th>Kosten</th><th>Ergebnis</th>'+
+            '</tr></thead><tbody>'+rows+
+            (known>1?'<tr style="background:var(--bg2);font-weight:700;border-top:2px solid var(--border)">'+
+              '<td colspan="4">Total</td>'+
+              '<td class="amt">'+fmtU(totGain)+'</td><td class="amt">'+fmtU(totCost)+'</td>'+
+              '<td class="amt" style="color:'+(total>0?'var(--ok)':'var(--err)')+'">'+(total>0?'+':'')+fmtU(total)+'</td></tr>':'')+
+            '</tbody></table>'
+        };
+      },
+      retroDraw:function(el,items){
+        var open=d._retroOpen||[];
+        var html='<p class="note2" style="margin:0 0 .75rem">Gegenüberstellung je Kredit: Was hätten die Bitcoin eingebracht, '+
+          'die man für den Kreditbetrag hätte verkaufen müssen — und was kostet der Kredit stattdessen? '+
+          'Die Kosten sind immer die der vollen Laufzeit, denn die Zinsen sind bis zum Ende geschuldet.</p>';
+        if(items.length){
+          var b=d.retroBlock(items,false);
+          html+='<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin:0 0 .5rem">Abgeschlossen — steht fest</div>'+
+            b.html+
+            (b.missing?'<p class="note2" style="margin:.6rem 0 0;color:var(--warn)">⚠ Für '+b.missing+' Kredit(e) liess sich der Kurs am Rückzahlungstag nicht ermitteln.</p>':'');
+        }
+        if(open.length){
+          var o=d.retroBlock(open,true);
+          html+='<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin:'+(items.length?'1.4rem':'0')+' 0 .5rem">Laufend — Stand heute</div>'+
+            '<p class="note2" style="margin:0 0 .6rem">Bewertet zum aktuellen BTC-Kurs von '+pU(Math.round(R.BTC))+
+            '. Das Ergebnis bewegt sich mit dem Kurs; ein Pluszeichen bedeutet, dass der Kredit über seinem Break-even liegt.</p>'+
+            o.html;
+        }
         el.innerHTML=html;
       },
 
@@ -6640,6 +7428,8 @@
         var sd=g('se-ltv-display');if(sd)sd.value=cfg.ltvDisplay!=null?cfg.ltvDisplay:73;
         /* Populate countdown */
         var scd=g('se-countdown');if(scd)scd.value=cfg.countdownDays!=null?cfg.countdownDays:30;
+        var sbk=g('se-backup');if(sbk)sbk.value=cfg.backupDays!=null?cfg.backupDays:30;
+        d.renderBackupHint();
         /* Render nav order */
         d.seNavOrderRender();
       },
@@ -6841,6 +7631,8 @@
         d.seNavOrderRender();
       },
       bk:function(){
+        /* Der Ablöse-Rechner rechnet den Cold-Storage-Bestand mit ein */
+        d.abl();
         var el=g('bk-content');if(!el)return;
         var act=loans.filter(function(l){return l.status==='active';});
         var btcReserve=cfg.btcReserve||0;
@@ -6852,6 +7644,11 @@
         var collateralShare=totalBTC>0?(aC/totalBTC*100):0;
         var reserveShare=totalBTC>0?(btcReserve/totalBTC*100):0;
         var netWorthUSD=totalBTCvalUSD-aDue;
+        /* Was vom Bestand bliebe, wenn die offenen Schulden mit Bitcoin
+           beglichen würden. Mal dem Kurs genommen ergibt das wieder das
+           Netto-Vermögen — dieselbe Zahl, nur in Bitcoin statt in Fiat. */
+        var dueBTC=R.BTC>0?aDue/R.BTC:0;
+        var netBTC=totalBTC-dueBTC;
         var stackLTV=totalBTCvalUSD>0?(aDue/totalBTCvalUSD*100):0;
         var monthlyInt=act.reduce(function(s,l){return s+toU(l.amount*(l.rate/100)/12,l.c);},0);
         var CC2=(['EUR','CHF','USD','USDT','USDC','CZK','PLN','BTC']).filter(visC);
@@ -6929,6 +7726,14 @@
             tile('Zinslast / Stack',(intPctStack!==null?intPctStack.toFixed(2)+'% p.a.':'—'),(intPctStack!==null?'Jahreszinsen relativ zum Gesamtportfolio-Wert':''),(intPctStack!==null?(intPctStack>=10?'var(--err)':intPctStack>=5?'var(--warn)':'var(--ok)'):null))+
             /* Ergebnis */
             tile('Netto-Verm\u00f6gen',fmtU(netWorthUSD),usdGridSub(CC4,netWorthUSD),(netWorthUSD<0?'var(--err)':'var(--ok)'))+
+            tile('BTC nach Schuldentilgung',
+              (totalBTC>0||aDue>0?(netBTC<0?'\u2212':'')+Math.abs(netBTC).toFixed(8)+' \u20bf':'\u2014'),
+              (aDue>0
+                ? (netBTC>=0
+                    ? 'abz\u00fcglich '+dueBTC.toFixed(8)+' \u20bf f\u00fcr die offenen Schulden'
+                    : '\u26a0 Der Bestand deckt die Schulden nicht \u2014 es fehlen '+Math.abs(netBTC).toFixed(8)+' \u20bf')
+                : (totalBTC>0?'Keine offenen Schulden':'')),
+              (netBTC<0?'var(--err)':'var(--ok)'))+
             tile('Stack-LTV',(totalBTCvalUSD>0?stackLTV.toFixed(1)+'%':'—'),'Schulden \u00f7 Gesamtportfolio',sLtvCol)+
             tile('Hebel-Faktor',(leverage!==null?leverage.toFixed(2)+'\u00d7':'—'),(leverage!==null?(leverage<1?'\u2713 Ungehebelt':leverage<2?'Moderat':leverage<5?'Hoch':'\u26a0 Sehr hoch'):'Kein Eigenkapital'),(leverage!==null?(leverage>=5?'var(--err)':leverage>=2?'var(--warn)':'var(--ok)'):null))+
             tile('Liquidit\u00e4ts-Puffer',(liquidityMonths!==null?liquidityMonths+' Monate':'—'),(btcReserve>0?'Cold Storage deckt Zinsen':'Kein Reserve eingegeben'))+
@@ -6982,7 +7787,12 @@
               var typeLabel={buy:'&#128722; Kauf',sell:'&#128200; Verkauf',transfer_in:'&#8594; Eingang',transfer_out:'&#8592; Ausgang',mining:'&#9935; Mining',fee:'&#128181; Geb\u00fchr'};
               var typeCol={buy:'var(--ok)',sell:'var(--err)',transfer_in:'var(--accent)',transfer_out:'var(--warn)',mining:'#f59e0b',fee:'var(--text4)'};
               var runBal=0;
-              return txs.map(function(t){
+              /* Anzeige neueste zuerst. Gespeichert bleibt chronologisch —
+                 daran hängen Saldo und Import; und weil der Saldo eine Summe
+                 über alle Einträge ist, ändert die Anzeigerichtung ihn nicht.
+                 Bei gleichem Datum bleibt die gespeicherte Reihenfolge (der
+                 Sortierer ist stabil), also etwa Collateral vor Gebühr. */
+              return txs.slice().sort(function(a,b){return pD(b.date)-pD(a.date);}).map(function(t){
                 var signed=(t.type==='buy'||t.type==='transfer_in'||t.type==='mining')?t.btc:-t.btc;
                 runBal+=txDelta(t);
                 return '<tr>'+
@@ -7117,6 +7927,7 @@
         if(cfg.btcReserveManual)return;
         cfg.btcReserve=d.bkTxBalance();
         saveSettings(cfg);
+        d.abl();
       },
       /* Ledger balance, unclamped — a negative result is a data-entry error the
          user needs to see, not something to hide behind Math.max(0,…). */
@@ -7128,6 +7939,14 @@
         cfg.btcReserve=d.bkTxBalance();
         saveSettings(cfg);
         d.bk();
+      },
+      seBackupSave:function(){
+        var days=parseInt(g('se-backup').value);
+        if(isNaN(days)||days<0||days>365){alert('Bitte eine Zahl zwischen 0 und 365 eingeben (0 = aus).');return;}
+        cfg.backupDays=days;
+        saveSettings(cfg);
+        d.renderBackupHint();
+        var msg=g('se-backup-msg');if(msg){msg.style.display='inline';setTimeout(function(){msg.style.display='none';},2000);}
       },
       seCountdownSave:function(){
         var days=parseInt(g('se-countdown').value);
@@ -7192,6 +8011,7 @@
          the stored data is unreadable, so this cannot destroy a backup. */
       syncStatus();save();
       pills();d.renderCsw();d.checkAlarms();d.extPopulate();d.vorInit();d.plInit();d.ov();
+      d.backupRemind();
       /* Re-render active tab now that Chart.js is available — fixes tabs that bail early on typeof Chart */
       (function(){
         var at=document.querySelector('#ffd-root .tab.on, #ffd-root .nav-item.on');
@@ -7234,7 +8054,7 @@
         }catch(e){console.error('[CoinGecko] Fetch-Fehler:', e);}
         if(!liveBtc){showCgRateLimit();}else{hideCgRateLimit();}
         if(!d._prefetched){d._prefetched=true;setTimeout(function(){d.prefetchHistPrices();},3000);}
-        pills();d.ov();d.checkAlarms();d.vorFillAll();d.nachPopulate();d.nlpPopulate();d.se2Populate();d.gvlPopulate();d.updateHdrStats();
+        pills();d.ov();d.checkAlarms();d.vorFillAll();d.nachPopulate();d.nlpPopulate();d.se2Populate();d.gvlPopulate();d.abl();d.updateHdrStats();
         renderActiveTab();
       } finally {
         /* Must run even if a re-render throws, or the button stays disabled */
