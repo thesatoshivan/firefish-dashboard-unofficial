@@ -22,7 +22,7 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 - **Main currency** — choose which of your enabled currencies is the primary one; every figure, chart axis and calculator then reads in that currency
 - **Roll-over chains** — link loans into roll-over chains, show chain badges on loan cards and analyse them in a dedicated Roll-Overs tab with effective annual rates
 - **Built-in tools** — calculators for before, during and after a loan (maximum loan amount, required collateral, paying off every open loan at once, LTV and margin-call prices, break-even hold-vs-sell, collateral top-up, extension scenarios, profit/loss borrow-vs-sell), a Power Law price model, a Roll-Over Simulation and a Future Simulation
-- **Portfolio view** — track your entire Bitcoin stack (cold storage + collateral) with net worth, stack LTV, leverage factor, liquidity buffer, MC1 reserve, rebalancing hints, BTC price scenarios and an exit-strategy calculator
+- **Portfolio view** — track your entire Bitcoin stack (cold storage + collateral) with net worth, stack LTV, leverage factor, liquidity buffer, MC1 reserve, rebalancing hints, BTC price scenarios, an exit-strategy calculator and a chart of holding and value since your first transaction
 - **Transaction ledger** — record buys, sells, transfers, mining income and fees; the balance feeds the Portfolio view automatically or can be overridden by hand
 - **Charts & statistics** — LTV history, debt timeline, cash flow, collateral concentration, currency distribution, effective cost in BTC and more, plus a retrospective that weighs borrowing against selling — settled for the loans that are over, and as things stand today for the ones still running
 - **Backup reminder** — records when you last exported and says so, because the data lives only in your browser
@@ -80,7 +80,7 @@ If a rate is missing from the response, the built-in fallback for that currency 
 
 ### Break-even
 
-For each loan, you can store the BTC price at the time of borrowing. The dashboard then shows whether the current BTC price has already covered the loan costs. Historical prices are resolved with a hybrid lookup: local cache first, then a bundled historical price set for 2022–2025, and only then the CoinGecko public API as fallback.
+For each loan, you can store the BTC price at the time of borrowing. The dashboard then shows whether the current BTC price has already covered the loan costs. Historical prices are resolved with a hybrid lookup: local cache first, then a bundled historical price set covering 01.01.2022 to 31.07.2026, and only then the CoinGecko public API as fallback.
 
 Break-even always means the same thing across the dashboard: the BTC price at which holding has beaten selling — the loan's total cost, including the one-off origination fee, divided by the bitcoin you avoided selling. Loans with no stored start price have no break-even and are left out of the figures rather than being filled in with today's price.
 
@@ -96,9 +96,9 @@ You can link related loans into roll-over chains using a shared chain ID. The da
 
 The **Tools** tab is split into six areas:
 
-- **Vor Kredit** — maximum loan amount for a given stack, required collateral, maximum amount while keeping a reserve, and what buying bitcoin with borrowed money would cost
-- **Während Kredit** — a payoff calculator for your active loans (what it costs in each currency and in BTC, and how much collateral comes back), with a per-loan selection so you can price any subset, LTV and margin-call prices for a loan you are running, a break-even calculator comparing holding against selling, and a converter showing your debt in every currency
-- **Nach Kredit** — collateral top-up calculator with the resulting liquidation price, extension scenarios, and a profit/loss comparison of borrowing against selling
+- **Vor Kredit** — maximum loan amount for a given stack, collateral needed at the start, maximum amount while keeping a reserve, what buying bitcoin with borrowed money would cost, LTV and margin-call prices, a break-even calculator comparing holding against selling, and a converter showing a debt in every enabled currency
+- **Während Kredit** — a payoff calculator for your active loans (what it costs in each currency and in BTC, and how much collateral comes back), with a per-loan selection so you can price any subset; a collateral top-up calculator with the resulting liquidation price; and extension scenarios that price 3 to 24 further months in interest and name the collateral each would require at 50 % LTV
+- **Nach Kredit** — a profit/loss comparison of borrowing against selling
 - **Powerlaw** — fair, bottom and overvalued price bands from the Bitcoin power-law model, plus the resulting liquidation price
 - **Roll-Over Simulation** — models several consecutive extensions with compounding, automatic fee calculation and a break-even price per period
 - **Zukunftssimulation** — projects collateral value, debt, LTV, MC1 price and net P&L at a chosen future BTC price and date
@@ -114,6 +114,8 @@ The eye button in the header hides every amount in the interface, which is usefu
 ### Portfolio
 
 The **Portfolio** tab looks at your whole Bitcoin position, not just the loans. Enter your BTC held outside the loans (cold storage, exchange etc.) — or record individual transactions in the built-in ledger, which calculates the balance automatically. The dashboard then shows total stack, net worth, how much bitcoin would be left after settling the open debt out of the stack, stack LTV, leverage factor and liquidity buffer, warns how much BTC would be needed to keep all loans below MC1, simulates BTC price scenarios from −50 % to +50 %, and calculates the exit price at which all loans could be repaid while keeping a reserve of your choice.
+
+The **Portfolio-Verlauf** chart plots the history of the whole stack, from the month of your first transaction or your first loan — whichever came first — up to today. Value in your main currency on the left axis, bitcoin holding and the BTC price itself on the right. Value and price run in parallel as long as the holding stays the same, so wherever the two lines come apart, a purchase, a sale or a loan moved the portfolio rather than the market. The holding is the total: free bitcoin from the ledger plus the collateral pledged at that moment, with a loan's collateral entering on its start date and leaving when the loan is closed. There is one point per week, valued at the historical BTC price of that day, so the curve reflects what the stack was worth at the time rather than what it would be worth now.
 
 ### Import & Export
 
