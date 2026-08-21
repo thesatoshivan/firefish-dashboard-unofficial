@@ -695,7 +695,7 @@
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v170-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.7.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v200-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.0.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
@@ -2045,7 +2045,7 @@
       </div>
     </div>
 
-    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v170-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v1.7.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
+    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v200-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.0.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
     </div><!-- #ffd-root -->
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -8030,7 +8030,7 @@
         try{
           var ctrl=(typeof AbortController!=='undefined')?new AbortController():null;
           var killer=ctrl?setTimeout(function(){ctrl.abort();},15000):null;
-          var res=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,eur,chf,pln&include_24hr_change=true',ctrl?{signal:ctrl.signal}:undefined);
+          var res=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,eur,chf,pln,czk&include_24hr_change=true',ctrl?{signal:ctrl.signal}:undefined);
           if(killer)clearTimeout(killer);
           var data=await res.json();
           if(data&&data.bitcoin&&data.bitcoin.usd){
@@ -8046,6 +8046,7 @@
               if(data.bitcoin.eur)R.EUR=data.bitcoin.usd/data.bitcoin.eur;
               if(data.bitcoin.chf)R.CHF=data.bitcoin.usd/data.bitcoin.chf;
               if(data.bitcoin.pln)R.PLN=data.bitcoin.usd/data.bitcoin.pln;
+              if(data.bitcoin.czk)R.CZK=data.bitcoin.usd/data.bitcoin.czk;
               if(data.bitcoin.usd_24h_change!=null)btc24hChange=data.bitcoin.usd_24h_change;
             }
           } else {
