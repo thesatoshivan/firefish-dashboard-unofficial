@@ -100,6 +100,7 @@
     #ffd-root.hide-amounts .tlabel,
     #ffd-root.hide-amounts .fxsb,
     #ffd-root.hide-amounts #abl-total-sub,
+    #ffd-root.hide-amounts #bk-hist-wrap,
     #ffd-root.hide-amounts .abl-amt,
     #ffd-root.hide-amounts #s-ch.on { filter: blur(6px); user-select: none; pointer-events: none; }
     #ffd-root.hide-amounts #hide-btn { color: var(--accent); }
@@ -695,7 +696,7 @@
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v200-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.0.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v210-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.1.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
@@ -2045,17 +2046,18 @@
       </div>
     </div>
 
-    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v200-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.0.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
+    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v210-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.1.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
     </div><!-- #ffd-root -->
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     (function(){
     'use strict';
     var R={BTC:85000,EUR:1.08,CHF:1.12,CZK:0.043,PLN:0.25,USDC:1,USDT:1,USD:1,SAT:85000/1e8};
-    /* ── Hardcoded BTC price history (2022-01-01 → 2025-12-31) ──────────────────
-       Approximate monthly-interpolated closing prices, rounded to nearest $100.
-       Stored as int16/100 array: multiply by 100 to get USD.
-       Base date: 2022-01-01 = index 0. Falls back to CoinGecko API if date not covered.
+    /* ── Hardcoded BTC price history (2022-01-01 → 2026-07-31) ──────────────────
+       Daily closing prices, stored as price ÷ 10 — multiply by 10 to get USD.
+       (2022 to mid-2024 is monthly-interpolated, from there on real daily closes.)
+       Base date: 2022-01-01 = index 0, one entry per day, no gaps.
+       Falls back to CoinGecko API if a date is not covered.
     ───────────────────────────────────────────────────────────────────────────── */
     function _ffdSetBanner(el,text){
       el.innerHTML='<span class="alarm-banner-inner" id="_ffd_bi">'+text+'</span>';
@@ -2068,8 +2070,8 @@
       });
     }
     var BTC_HIST_BASE='2022-01-01';
-    var BTC_HIST_END='2025-12-31';
-    var BTC_HIST_PRICES=[0,4769,4686,4602,4519,4436,4353,4270,4187,4204,4222,4239,4257,4274,4292,4310,4222,4134,4046,3958,3870,3782,3694,3704,3715,3726,3737,3748,3759,3769,3863,3956,4049,4142,4235,4328,4421,4393,4365,4336,4308,4280,4252,4223,4167,4112,4056,4000,3944,3888,3832,3844,3855,3866,3877,3889,3900,3911,3901,3891,3881,3871,3861,3851,3841,3846,3851,3857,3862,3867,3872,3877,3921,3965,4009,4053,4097,4141,4185,4260,4334,4409,4483,4557,4632,4706,4698,4690,4682,4674,4665,4657,4649,4587,4526,4464,4403,4341,4279,4218,4194,4171,4148,4125,4102,4079,4056,4044,4031,4019,4007,3994,3982,3970,3940,3910,3881,3851,3821,3792,3762,3732,3702,3672,3643,3613,3583,3553,3461,3369,3277,3184,3092,3000,2908,2913,2918,2923,2929,2934,2939,2944,2978,3011,3045,3079,3112,3146,3179,3152,3125,3098,3071,3044,3018,2991,2936,2881,2826,2771,2716,2661,2606,2528,2450,2372,2294,2216,2138,2060,2068,2077,2085,2094,2102,2110,2119,2099,2079,2059,2039,2019,1999,1978,1999,2019,2039,2060,2080,2100,2120,2152,2183,2214,2245,2277,2308,2339,2308,2277,2245,2214,2183,2151,2120,2155,2190,2224,2259,2294,2329,2364,2365,2367,2369,2370,2372,2374,2375,2385,2394,2403,2412,2422,2431,2440,2399,2359,2318,2277,2236,2196,2155,2133,2112,2091,2069,2048,2026,2005,2003,2000,1998,1996,1993,1991,1989,2024,2060,2095,2130,2166,2201,2237,2195,2153,2111,2069,2026,1984,1942,1942,1943,1943,1943,1943,1943,1943,1945,1947,1949,1951,1953,1955,1957,1955,1953,1951,1949,1947,1945,1943,1945,1947,1948,1950,1952,1954,1956,1973,1991,2009,2026,2044,2062,2079,2075,2071,2066,2062,2058,2054,2049,2058,2067,2076,2085,2093,2102,2111,2049,1987,1925,1862,1800,1738,1676,1668,1661,1653,1645,1637,1630,1622,1625,1629,1632,1636,1639,1643,1646,1656,1666,1676,1687,1697,1707,1717,1717,1717,1718,1718,1719,1719,1719,1710,1701,1692,1682,1673,1664,1655,1659,1663,1667,1671,1675,1679,1683,1679,1674,1669,1664,1660,1655,1663,1671,1678,1686,1694,1702,1710,1718,1773,1829,1884,1940,1995,2051,2107,2134,2162,2189,2216,2244,2271,2299,2312,2324,2337,2350,2362,2375,2388,2374,2361,2348,2334,2321,2308,2294,2278,2262,2246,2229,2213,2197,2180,2221,2261,2302,2342,2382,2423,2463,2442,2421,2400,2378,2357,2336,2315,2305,2294,2284,2274,2264,2253,2243,2271,2299,2327,2356,2384,2412,2440,2487,2534,2582,2629,2676,2723,2771,2774,2778,2782,2786,2790,2794,2797,2805,2812,2819,2826,2833,2840,2847,2864,2880,2896,2913,2929,2946,2962,2974,2985,2997,3009,3021,3032,3044,3005,2965,2926,2886,2847,2807,2768,2790,2812,2835,2857,2879,2902,2924,2927,2931,2934,2938,2941,2945,2949,2911,2873,2835,2797,2759,2721,2683,2684,2685,2685,2686,2687,2688,2688,2700,2711,2722,2734,2745,2756,2767,2761,2754,2748,2741,2735,2728,2722,2711,2701,2690,2680,2669,2658,2648,2674,2699,2725,2751,2777,2802,2828,2860,2891,2922,2954,2985,3016,3048,3054,3060,3066,3072,3078,3084,3090,3081,3073,3064,3055,3046,3037,3029,3022,3016,3009,3003,2996,2990,2983,2975,2966,2957,2949,2940,2932,2923,2923,2923,2923,2923,2923,2923,2923,2929,2936,2942,2948,2954,2961,2967,2963,2959,2955,2951,2947,2943,2939,2891,2843,2795,2747,2699,2652,2604,2604,2604,2604,2604,2604,2605,2605,2603,2601,2600,2598,2596,2595,2593,2596,2599,2603,2606,2609,2612,2615,2621,2627,2633,2639,2645,2651,2657,2652,2647,2642,2637,2632,2627,2622,2633,2644,2656,2667,2678,2690,2701,2715,2728,2742,2755,2769,2783,2796,2804,2812,2820,2828,2836,2844,2852,2924,2995,3067,3138,3210,3282,3353,3367,3381,3395,3409,3423,3437,3451,3459,3466,3474,3481,3489,3496,3504,3542,3581,3619,3658,3696,3735,3773,3768,3764,3759,3754,3749,3745,3740,3745,3749,3754,3759,3764,3768,3773,3829,3884,3940,3996,4051,4107,4163,4161,4159,4156,4154,4152,4150,4148,4159,4171,4182,4193,4204,4215,4227,4246,4266,4286,4306,4326,4345,4365,4345,4326,4306,4286,4266,4246,4227,4254,4281,4308,4335,4362,4389,4416,4393,4369,4346,4323,4300,4276,4253,4210,4167,4124,4080,4037,3994,3951,4008,4065,4122,4178,4235,4292,4349,4335,4322,4308,4294,4280,4267,4253,4333,4413,4493,4574,4654,4734,4814,4866,4919,4971,5024,5076,5129,5181,5255,5330,5404,5478,5552,5627,5701,5778,5854,5931,6008,6085,6161,6238,6367,6496,6625,6754,6883,7012,7142,7087,7031,6976,6921,6866,6811,6756,6730,6704,6678,6652,6625,6599,6573,6653,6732,6812,6892,6971,7051,7130,7146,7162,7177,7193,7209,7224,7240,7118,6995,6873,6751,6628,6506,6384,6398,6413,6427,6442,6456,6471,6486,6469,6453,6436,6420,6403,6387,6370,6326,6282,6238,6195,6151,6107,6063,6073,6082,6091,6101,6110,6120,6129,6210,6292,6373,6454,6535,6616,6697,6716,6735,6754,6772,6791,6810,6829,6818,6808,6797,6787,6777,6766,6756,6783,6809,6836,6863,6890,6916,6943,6884,6825,6765,6706,6647,6587,6528,6470,6412,6354,6296,6238,6180,6122,6154,6187,6220,6252,6285,6317,6350,6257,6164,6072,5979,5886,5793,5701,5713,5725,5737,5749,5761,5772,5784,5927,6070,6212,6355,6497,6640,6782,6769,6755,6742,6729,6715,6702,6689,6607,6525,6443,6361,6279,6197,6115,6109,6103,6097,6091,6085,6079,6073,6051,6029,6007,5984,5962,5940,5918,5990,6063,6136,6208,6281,6354,6426,6351,6275,6199,6124,6048,5973,5897,5869,5840,5812,5784,5756,5727,5699,5719,5739,5759,5779,5799,5819,5839,5909,5980,6050,6120,6190,6261,6331,6366,6401,6435,6470,6505,6540,6574,6530,6485,6441,6396,6351,6307,6262,6311,6360,6409,6457,6506,6555,6604,6653,6702,6751,6800,6848,6897,6946,6988,7029,7070,7111,7153,7194,7235,7292,7350,7407,7465,7522,7580,7637,7817,7998,8178,8358,8538,8719,8899,8923,8948,8973,8997,9022,9046,9071,9180,9290,9400,9510,9620,9729,9839,9811,9784,9756,9728,9700,9673,9645,9691,9736,9782,9828,9874,9920,9966,10039,10113,10186,10260,10333,10407,10480,10346,10211,10077,9943,9809,9674,9540,9512,9484,9456,9427,9399,9371,9343,9413,9482,9456,9696,9817,9822,9835,10225,9693,9507,9254,9472,9461,9454,9454,9654,10050,10001,10409,10454,10132,10220,10616,10369,10391,10486,10474,10264,10209,10135,10372,10473,10242,10065,9769,10134,9779,9660,9657,9651,9645,9647,9744,9577,9788,9661,9751,9757,9613,9578,9564,9665,9831,9616,9656,9626,9151,8869,8421,8472,8438,8607,9427,8621,8727,9061,8993,8653,8622,8069,7858,8292,8366,8110,8398,8434,8258,8402,8272,8684,8421,8407,8384,8608,8749,8740,8691,8723,8441,8265,8237,8255,8516,8253,8316,8387,8355,7839,7916,7631,8261,7961,8341,8529,8373,8459,8365,8403,8494,8448,8507,8518,8752,9344,9370,9398,9468,9463,9374,9500,9427,9418,9650,9689,9589,9432,9475,9683,9704,10327,10298,10480,10412,10280,10412,10351,10377,10348,10311,10651,10559,10682,10964,11170,10731,10776,10902,10946,10894,10779,10560,10398,10460,10564,10585,10581,10470,10152,10431,10556,10574,11027,11027,10866,10570,10608,10542,10559,10674,10456,10489,10467,10328,10211,10099,10538,10608,10735,10695,10704,10730,10836,10717,10569,10884,10960,10799,10821,10921,10827,10891,11125,11599,11754,11742,11909,11985,11776,11868,11920,11794,11785,11730,11739,11997,11876,11831,11763,11792,11940,11805,11795,11784,11577,11331,11255,11421,11506,11414,11500,11748,11668,11647,11929,11869,12015,12332,11831,11736,11741,11741,11620,11288,11428,11248,11693,11543,11348,11012,11177,11126,11257,10836,10882,10823,10924,11122,11172,11071,11065,11019,11115,11207,11152,11396,11549,11604,11593,11532,11536,11680,11643,11709,11565,11570,11524,11267,11200,11331,10902,10966,10965,11218,11436,11405,11858,12057,12222,12239,12348,12473,12136,12331,12167,11288,11067,11499,11518,11303,11077,10821,10644,10719,10866,11054,10834,10759,11008,11101,11165,11455,11411,11291,11003,10832,10960,11010,11059,10658,10150,10390,10133,10333,10231,10472,10601,10305,10166,9973,9455,9559,9426,9220,9296,9154,8661,8513,8472,8683,8830,8737,9050,9133,9090,9080,9037,8631,9129,9344,9208,8933,8921,9041,9064,9269,9200,9251,9027,9025,8816,8643,8785,8623,8551,8813,8836,8864,8855,8747,8766,8725,8736,8785,8790,8722,8847,8761];
+    var BTC_HIST_END='2026-07-31';
+    var BTC_HIST_PRICES=[0,4769,4686,4602,4519,4436,4353,4270,4187,4204,4222,4239,4257,4274,4292,4310,4222,4134,4046,3958,3870,3782,3694,3704,3715,3726,3737,3748,3759,3769,3863,3956,4049,4142,4235,4328,4421,4393,4365,4336,4308,4280,4252,4223,4167,4112,4056,4000,3944,3888,3832,3844,3855,3866,3877,3889,3900,3911,3901,3891,3881,3871,3861,3851,3841,3846,3851,3857,3862,3867,3872,3877,3921,3965,4009,4053,4097,4141,4185,4260,4334,4409,4483,4557,4632,4706,4698,4690,4682,4674,4665,4657,4649,4587,4526,4464,4403,4341,4279,4218,4194,4171,4148,4125,4102,4079,4056,4044,4031,4019,4007,3994,3982,3970,3940,3910,3881,3851,3821,3792,3762,3732,3702,3672,3643,3613,3583,3553,3461,3369,3277,3184,3092,3000,2908,2913,2918,2923,2929,2934,2939,2944,2978,3011,3045,3079,3112,3146,3179,3152,3125,3098,3071,3044,3018,2991,2936,2881,2826,2771,2716,2661,2606,2528,2450,2372,2294,2216,2138,2060,2068,2077,2085,2094,2102,2110,2119,2099,2079,2059,2039,2019,1999,1978,1999,2019,2039,2060,2080,2100,2120,2152,2183,2214,2245,2277,2308,2339,2308,2277,2245,2214,2183,2151,2120,2155,2190,2224,2259,2294,2329,2364,2365,2367,2369,2370,2372,2374,2375,2385,2394,2403,2412,2422,2431,2440,2399,2359,2318,2277,2236,2196,2155,2133,2112,2091,2069,2048,2026,2005,2003,2000,1998,1996,1993,1991,1989,2024,2060,2095,2130,2166,2201,2237,2195,2153,2111,2069,2026,1984,1942,1942,1943,1943,1943,1943,1943,1943,1945,1947,1949,1951,1953,1955,1957,1955,1953,1951,1949,1947,1945,1943,1945,1947,1948,1950,1952,1954,1956,1973,1991,2009,2026,2044,2062,2079,2075,2071,2066,2062,2058,2054,2049,2058,2067,2076,2085,2093,2102,2111,2049,1987,1925,1862,1800,1738,1676,1668,1661,1653,1645,1637,1630,1622,1625,1629,1632,1636,1639,1643,1646,1656,1666,1676,1687,1697,1707,1717,1717,1717,1718,1718,1719,1719,1719,1710,1701,1692,1682,1673,1664,1655,1659,1663,1667,1671,1675,1679,1683,1679,1674,1669,1664,1660,1655,1663,1671,1678,1686,1694,1702,1710,1718,1773,1829,1884,1940,1995,2051,2107,2134,2162,2189,2216,2244,2271,2299,2312,2324,2337,2350,2362,2375,2388,2374,2361,2348,2334,2321,2308,2294,2278,2262,2246,2229,2213,2197,2180,2221,2261,2302,2342,2382,2423,2463,2442,2421,2400,2378,2357,2336,2315,2305,2294,2284,2274,2264,2253,2243,2271,2299,2327,2356,2384,2412,2440,2487,2534,2582,2629,2676,2723,2771,2774,2778,2782,2786,2790,2794,2797,2805,2812,2819,2826,2833,2840,2847,2864,2880,2896,2913,2929,2946,2962,2974,2985,2997,3009,3021,3032,3044,3005,2965,2926,2886,2847,2807,2768,2790,2812,2835,2857,2879,2902,2924,2927,2931,2934,2938,2941,2945,2949,2911,2873,2835,2797,2759,2721,2683,2684,2685,2685,2686,2687,2688,2688,2700,2711,2722,2734,2745,2756,2767,2761,2754,2748,2741,2735,2728,2722,2711,2701,2690,2680,2669,2658,2648,2674,2699,2725,2751,2777,2802,2828,2860,2891,2922,2954,2985,3016,3048,3054,3060,3066,3072,3078,3084,3090,3081,3073,3064,3055,3046,3037,3029,3022,3016,3009,3003,2996,2990,2983,2975,2966,2957,2949,2940,2932,2923,2923,2923,2923,2923,2923,2923,2923,2929,2936,2942,2948,2954,2961,2967,2963,2959,2955,2951,2947,2943,2939,2891,2843,2795,2747,2699,2652,2604,2604,2604,2604,2604,2604,2605,2605,2603,2601,2600,2598,2596,2595,2593,2596,2599,2603,2606,2609,2612,2615,2621,2627,2633,2639,2645,2651,2657,2652,2647,2642,2637,2632,2627,2622,2633,2644,2656,2667,2678,2690,2701,2715,2728,2742,2755,2769,2783,2796,2804,2812,2820,2828,2836,2844,2852,2924,2995,3067,3138,3210,3282,3353,3367,3381,3395,3409,3423,3437,3451,3459,3466,3474,3481,3489,3496,3504,3542,3581,3619,3658,3696,3735,3773,3768,3764,3759,3754,3749,3745,3740,3745,3749,3754,3759,3764,3768,3773,3829,3884,3940,3996,4051,4107,4163,4161,4159,4156,4154,4152,4150,4148,4159,4171,4182,4193,4204,4215,4227,4246,4266,4286,4306,4326,4345,4365,4345,4326,4306,4286,4266,4246,4227,4254,4281,4308,4335,4362,4389,4416,4393,4369,4346,4323,4300,4276,4253,4210,4167,4124,4080,4037,3994,3951,4008,4065,4122,4178,4235,4292,4349,4335,4322,4308,4294,4280,4267,4253,4333,4413,4493,4574,4654,4734,4814,4866,4919,4971,5024,5076,5129,5181,5255,5330,5404,5478,5552,5627,5701,5778,5854,5931,6008,6085,6161,6238,6367,6496,6625,6754,6883,7012,7142,7087,7031,6976,6921,6866,6811,6756,6730,6704,6678,6652,6625,6599,6573,6653,6732,6812,6892,6971,7051,7130,7146,7162,7177,7193,7209,7224,7240,7118,6995,6873,6751,6628,6506,6384,6398,6413,6427,6442,6456,6471,6486,6469,6453,6436,6420,6403,6387,6370,6326,6282,6238,6195,6151,6107,6063,6073,6082,6091,6101,6110,6120,6129,6210,6292,6373,6454,6535,6616,6697,6716,6735,6754,6772,6791,6810,6829,6818,6808,6797,6787,6777,6766,6756,6783,6809,6836,6863,6890,6916,6943,6884,6825,6765,6706,6647,6587,6528,6470,6412,6354,6296,6238,6180,6122,6154,6187,6220,6252,6285,6317,6350,6257,6164,6072,5979,5886,5793,5701,5713,5725,5737,5749,5761,5772,5784,5927,6070,6212,6355,6497,6640,6782,6769,6755,6742,6729,6715,6702,6689,6607,6525,6443,6361,6279,6197,6115,6109,6103,6097,6091,6085,6079,6073,6051,6029,6007,5984,5962,5940,5918,5990,6063,6136,6208,6281,6354,6426,6351,6275,6199,6124,6048,5973,5897,5869,5840,5812,5784,5756,5727,5699,5719,5739,5759,5779,5799,5819,5839,5909,5980,6050,6120,6190,6261,6331,6366,6401,6435,6470,6505,6540,6574,6530,6485,6441,6396,6351,6307,6262,6311,6360,6409,6457,6506,6555,6604,6653,6702,6751,6800,6848,6897,6946,6988,7029,7070,7111,7153,7194,7235,7292,7350,7407,7465,7522,7580,7637,7817,7998,8178,8358,8538,8719,8899,8923,8948,8973,8997,9022,9046,9071,9180,9290,9400,9510,9620,9729,9839,9811,9784,9756,9728,9700,9673,9645,9691,9736,9782,9828,9874,9920,9966,10039,10113,10186,10260,10333,10407,10480,10346,10211,10077,9943,9809,9674,9540,9512,9484,9456,9427,9399,9371,9343,9413,9482,9456,9696,9817,9822,9835,10225,9693,9507,9254,9472,9461,9454,9454,9654,10050,10001,10409,10454,10132,10220,10616,10369,10391,10486,10474,10264,10209,10135,10372,10473,10242,10065,9769,10134,9779,9660,9657,9651,9645,9647,9744,9577,9788,9661,9751,9757,9613,9578,9564,9665,9831,9616,9656,9626,9151,8869,8421,8472,8438,8607,9427,8621,8727,9061,8993,8653,8622,8069,7858,8292,8366,8110,8398,8434,8258,8402,8272,8684,8421,8407,8384,8608,8749,8740,8691,8723,8441,8265,8237,8255,8516,8253,8316,8387,8355,7839,7916,7631,8261,7961,8341,8529,8373,8459,8365,8403,8494,8448,8507,8518,8752,9344,9370,9398,9468,9463,9374,9500,9427,9418,9650,9689,9589,9432,9475,9683,9704,10327,10298,10480,10412,10280,10412,10351,10377,10348,10311,10651,10559,10682,10964,11170,10731,10776,10902,10946,10894,10779,10560,10398,10460,10564,10585,10581,10470,10152,10431,10556,10574,11027,11027,10866,10570,10608,10542,10559,10674,10456,10489,10467,10328,10211,10099,10538,10608,10735,10695,10704,10730,10836,10717,10569,10884,10960,10799,10821,10921,10827,10891,11125,11599,11754,11742,11909,11985,11776,11868,11920,11794,11785,11730,11739,11997,11876,11831,11763,11792,11940,11805,11795,11784,11577,11331,11255,11421,11506,11414,11500,11748,11668,11647,11929,11869,12015,12332,11831,11736,11741,11741,11620,11288,11428,11248,11693,11543,11348,11012,11177,11126,11257,10836,10882,10823,10924,11122,11172,11071,11065,11019,11115,11207,11152,11396,11549,11604,11593,11532,11536,11680,11643,11709,11565,11570,11524,11267,11200,11331,10902,10966,10965,11218,11436,11405,11858,12057,12222,12239,12348,12473,12136,12331,12167,11288,11067,11499,11518,11303,11077,10821,10644,10719,10866,11054,10834,10759,11008,11101,11165,11455,11411,11291,11003,10832,10960,11010,11059,10658,10150,10390,10133,10333,10231,10472,10601,10305,10166,9973,9455,9559,9426,9220,9296,9154,8661,8513,8472,8683,8830,8737,9050,9133,9090,9080,9037,8631,9129,9344,9208,8933,8921,9041,9064,9269,9200,9251,9027,9025,8816,8643,8785,8623,8551,8813,8836,8864,8855,8747,8766,8725,8736,8785,8790,8722,8847,8761,8881,8998,9062,9155,9386,9374,9134,9108,9060,9049,9094,9127,9540,9693,9559,9555,9514,9367,9262,8840,8943,8952,8958,8925,8664,8833,8922,8925,8467,8424,7873,7698,7872,7572,7314,6286,7056,6932,7034,7013,6881,6705,6625,6888,6978,6881,6889,6749,6647,6698,6802,6801,6764,6466,6405,6798,6748,6587,6700,6576,6879,6832,7277,7089,6812,6726,6597,6844,6995,7019,7049,7096,7120,7282,7486,7391,7125,6992,7052,6888,6788,7091,7055,7133,6881,6640,6636,6599,6675,6827,6810,6690,6696,6730,6901,6885,7194,7111,7178,7296,7305,7074,7448,7416,7480,7517,7713,7571,7381,7585,7633,7819,7826,7743,7762,7864,7737,7635,7577,7632,7823,7868,7857,7983,8091,8144,8003,8020,8068,8219,8174,8050,7931,8108,7910,7816,7746,7699,7682,7754,7760,7553,7674,7705,7733,7591,7443,7361,7345,7385,7366,7140,6674,6517,6386,6098,6088,6333,6308,6171,6150,6361,6356,6443,6574,6632,6566,6448,6294,6354,6431,6329,6400,6272,6105,5978,6009,6001,5956,6020,5863,6001,6155,6260,6314,6364,6403,6333,6228,6323,6415,6382,6378,6232,6502,6475,6383,6393,6482,6472,6524,6654,6610,6509,6414,6437,6539,6375,6392,6397,6477,6288];
     /* Lookup helper: returns hardcoded price (×10) or null if date not covered */
     function btcHistLocal(dateISO){
       if(!dateISO)return null;
@@ -2103,7 +2105,7 @@
       return cGrid(ccys.filter(function(c){return c!=='BTC'&&c!=='SAT'&&c!==m;}).map(function(c){return {c:c,v:frU(usd,c)};}));
     }
     var chD=null,chI=null,dCcy=null; /* resolved from cfg.mainCcy on first use */
-    var chLtv=null,chMcd=null,chCol=null,chCcy=null,chBep=null,chInt2=null,chBtcost=null,chCf=null,chDcol=null,chHeat=null,chTerm=null,chZukunft=null,chZinslast=null;
+    var chLtv=null,chMcd=null,chCol=null,chCcy=null,chBep=null,chInt2=null,chBtcost=null,chCf=null,chDcol=null,chHeat=null,chTerm=null,chZukunft=null,chZinslast=null,chBkHist=null;
     var lSort={key:'dl',dir:1};
     var ltvThresh=73; /* overwritten from cfg.ltvDisplay once settings load */
     var lFilter='active';
@@ -6434,7 +6436,7 @@
           if(cached){var pc=JSON.parse(cached);if(pc&&pc.usd){cachedUsd=pc.usd;}}
         }catch(e){}
         if(cachedUsd){try{cb(cachedUsd,false);}catch(e){console.error('[btcHistPrice] callback:',e);}return;}
-        /* 2. Hardcoded local price table (2022–2025, no API needed) */
+        /* 2. Hardcoded local price table (2022 – Juli 2026, no API needed) */
         var local=btcHistLocal(dateISO);
         if(local){
           try{localStorage.setItem(CACHE_KEY,JSON.stringify({usd:local,ts:Date.now()}));}catch(e){}
@@ -6702,13 +6704,33 @@
           var addInterest=base*(rate/100)*(mo/12);
           var addUSD=toU(addInterest,l.c);
           var newEnd=aM(endDate,mo);
+          /* Collateral für die verlängerte Laufzeit. Bemessen wird am
+             Endbetrag, denn die Schuld ist am Ende am höchsten — und an 50%
+             LTV, der doppelten Besicherung, mit der ein Kredit bei Firefish
+             beginnt. Nicht an den MC-Schwellen aus den Einstellungen: die
+             sagen, wann es eng wird, nicht, womit man startet. */
+          var EXT_LTV=0.5;
+          var endUSD=due+addUSD;
+          var needCol=R.BTC>0?endUSD/(EXT_LTV*R.BTC):0;
+          var deltaCol=needCol-(l.col||0);
+          var colHtml='';
+          if(R.BTC>0){
+            colHtml=
+              '<div style="font-size:11px;color:var(--text3);margin-top:.4rem;border-top:1px solid var(--border);padding-top:.4rem">Collateral für LTV '+(EXT_LTV*100).toFixed(0)+'%: <b style="color:var(--text)">'+needCol.toFixed(8)+' ₿</b></div>'+
+              '<div style="font-size:11px;color:'+(deltaCol>1e-8?'var(--warn)':'var(--ok)')+'">'+
+                (deltaCol>1e-8
+                  ? '+'+deltaCol.toFixed(8)+' ₿ nachlegen'
+                  : (l.col>0?'✓ vorhandene '+l.col.toFixed(8)+' ₿ reichen':'✓ gedeckt'))+
+              '</div>';
+          }
           return '<div class="card" style="border:1px solid var(--border);box-shadow:none;padding:.75rem">'+
             '<div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:.4rem">+'+mo+' Monate</div>'+
             '<div style="font-size:12px;color:var(--text2);margin-bottom:2px">Zusatzkosten: <b>'+fmt(addInterest,l.c)+'</b></div>'+
             '<div style="font-size:12px;color:var(--text3);margin-bottom:2px">= '+pU(addUSD)+'</div>'+
             '<div style="font-size:12px;font-weight:600;color:var(--text);margin:.4rem 0 2px;border-top:1px solid var(--border);padding-top:.4rem">Endbetrag: '+fmt(base+addInterest,l.c)+'</div>'+
             '<div style="font-size:11px;color:var(--text4)">Startbetrag: '+fmt(base,l.c)+'</div>'+
-            '<div style="font-size:11px;color:var(--text4)">Start: '+endDate.toLocaleDateString('de-CH')+'</div>'+
+            colHtml+
+            '<div style="font-size:11px;color:var(--text4);margin-top:.4rem">Start: '+endDate.toLocaleDateString('de-CH')+'</div>'+
             '<div style="font-size:11px;color:var(--text4)">Ende: '+newEnd.toLocaleDateString('de-CH')+'</div>'+
           '</div>';
         }).join('');
@@ -7721,7 +7743,13 @@
             tile('Cold Storage / Reserve',(btcReserve>0?btcReserve.toFixed(8)+' \u20bf':'—'),(btcReserve>0?usdGrid(CC3,btcReserve*R.BTC)+' ('+reserveShare.toFixed(1)+'% des Stacks)':'Bitcoin-Stack eingeben \u2193'))+
             tile('Hinterlegtes Collateral',(aC>0?aC.toFixed(8)+' \u20bf':'—'),(aC>0?usdGrid(CC3,aC*R.BTC)+' ('+collateralShare.toFixed(1)+'%)':''))+
             /* Schulden & Kosten */
-            tile('Offene Schulden',(aDue>0?fmtU(aDue):'—'),(aDue>0?usdGridSub(CC4,aDue):''))+
+            /* Der Bitcoin-Betrag steht bewusst vor dem Währungsraster:
+               usdGridSub() lässt BTC und SAT aus, und die Frage «wie viel
+               Bitcoin schulde ich gerade» ist hier die naheliegendste. */
+            tile('Offene Schulden',(aDue>0?fmtU(aDue):'—'),
+              (aDue>0
+                ? (R.BTC>0?'<span style="color:var(--text);font-weight:700">'+dueBTC.toFixed(8)+' ₿</span> zum aktuellen Kurs':'')+usdGridSub(CC4,aDue)
+                : ''))+
             tile('Monatl. Zinslast',(monthlyInt>0?usdGrid(CC3,monthlyInt):'—'),'laufende Zinskosten')+
             tile('Zinslast / Stack',(intPctStack!==null?intPctStack.toFixed(2)+'% p.a.':'—'),(intPctStack!==null?'Jahreszinsen relativ zum Gesamtportfolio-Wert':''),(intPctStack!==null?(intPctStack>=10?'var(--err)':intPctStack>=5?'var(--warn)':'var(--ok)'):null))+
             /* Ergebnis */
@@ -7737,6 +7765,19 @@
             tile('Stack-LTV',(totalBTCvalUSD>0?stackLTV.toFixed(1)+'%':'—'),'Schulden \u00f7 Gesamtportfolio',sLtvCol)+
             tile('Hebel-Faktor',(leverage!==null?leverage.toFixed(2)+'\u00d7':'—'),(leverage!==null?(leverage<1?'\u2713 Ungehebelt':leverage<2?'Moderat':leverage<5?'Hoch':'\u26a0 Sehr hoch'):'Kein Eigenkapital'),(leverage!==null?(leverage>=5?'var(--err)':leverage>=2?'var(--warn)':'var(--ok)'):null))+
             tile('Liquidit\u00e4ts-Puffer',(liquidityMonths!==null?liquidityMonths+' Monate':'—'),(btcReserve>0?'Cold Storage deckt Zinsen':'Kein Reserve eingegeben'))+
+          '</div>'+
+          '<span class="sh">Portfolio-Verlauf</span>'+
+          '<div class="card" style="margin-bottom:1.25rem">'+
+            '<span class="card-title">Gesamtbestand und Wert im Zeitverlauf</span>'+
+            '<p class="note2" style="margin-bottom:.75rem">Wöchentliche Stände des gesamten Bitcoin-Bestands — freie BTC aus den erfassten Transaktionen plus das damals hinterlegte Collateral —, bewertet zum historischen BTC-Kurs des jeweiligen Tages. Beginnt bei der ersten Transaktion bzw. beim ersten Kredit, je nachdem was früher war.</p>'+
+            '<div class="ch-wrap" id="bk-hist-wrap" style="height:280px"><canvas id="bk-hist-chart"></canvas></div>'+
+            '<div class="fx" style="margin-top:.6rem;font-size:11px;color:var(--text3);gap:12px">'+
+              '<span><span style="display:inline-block;width:10px;height:10px;background:#F97316;border-radius:2px;margin-right:3px;vertical-align:middle"></span>Wert des Bestands</span>'+
+              '<span><span style="display:inline-block;width:10px;height:10px;background:#F59E0B;border-radius:2px;margin-right:3px;vertical-align:middle"></span>Gesamtbestand in BTC</span>'+
+              '<span><span style="display:inline-block;width:10px;height:10px;background:#3B82F6;border-radius:2px;margin-right:3px;vertical-align:middle"></span>BTC-Kurs</span>'+
+            '</div>'+
+            '<p class="note2" id="bk-hist-warn" style="margin-top:.5rem;color:var(--warn)"></p>'+
+            '<div class="stats" id="bk-hist-stats"></div>'+
           '</div>'+
           '<span class="sh">Risiko &amp; Handlungsbedarf</span>'+
           '<div class="mg" style="margin-bottom:1.25rem">'+
@@ -7833,6 +7874,172 @@
           '</div>';
         el.innerHTML=html;
         d.bkCalcExit();
+        d.bkChart();
+      },
+      /* Verlauf von Bestand und Wert seit der ersten Transaktion.
+         Der Bestand kommt aus dem Ledger, der Wert aus dem historischen
+         BTC-Kurs der jeweiligen Stützstelle. Fiat rechnet die App wie überall
+         mit den aktuellen Wechselkursen um — historische FX-Kurse gibt es
+         nicht, nur historische BTC-Kurse. */
+      bkChart:function(){
+        var cv=g('bk-hist-chart');if(!cv)return;
+        var stats=g('bk-hist-stats');
+        if(chBkHist){chBkHist.destroy();chBkHist=null;}
+        if(typeof Chart==='undefined'){emptyChart(cv,'Diagramm-Bibliothek nicht geladen.');return;}
+        var now=new Date();
+        var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+        var sorted=txs.slice().sort(function(a,b){return pD(a.date)-pD(b.date);});
+        /* Startpunkt: das frühere von erster Transaktion und erstem Kredit.
+           Das Diagramm zeigt den gesamten Bestand, also darf ein Kredit, der
+           vor der ersten Buchung begann, nicht abgeschnitten werden. */
+        var starts=[];
+        if(sorted.length)starts.push(pD(sorted[0].date));
+        loans.forEach(function(l){var s0=pD(l.start);if(!isNaN(s0.getTime()))starts.push(s0);});
+        starts=starts.filter(function(x){return !isNaN(x.getTime());});
+        if(!starts.length){
+          emptyChart(cv,'Noch nichts erfasst — sobald die erste Transaktion gebucht oder der erste Kredit angelegt ist, entsteht hier der Verlauf.');
+          if(stats)stats.innerHTML='';
+          var w0=g('bk-hist-warn');if(w0)w0.textContent='';
+          return;
+        }
+        chartReady(cv);
+        var ccy=mainC();
+        var cs=getComputedStyle(document.getElementById('ffd-root'));
+        var gridCol=cs.getPropertyValue('--border').trim();
+        var textCol=cs.getPropertyValue('--text3').trim();
+        var first=new Date(Math.min.apply(null,starts.map(function(x){return x.getTime();})));
+        if(first>today)first=today;
+        /* Wochenraster, rückwärts von heute gezählt — so liegt der letzte
+           Punkt exakt auf heute und alle Abstände sind gleich lang. Trifft das
+           Raster den Startpunkt nicht genau, wird er vorne ergänzt, damit die
+           Kurve dort beginnt, wo die Kachel «Startpunkt» es sagt. */
+        var pts=[];
+        for(var w=new Date(today.getTime());w>=first;w.setDate(w.getDate()-7))pts.push(new Date(w.getTime()));
+        pts.reverse();
+        if(!pts.length)pts.push(new Date(first.getTime()));
+        if(pts[0].getTime()>first.getTime())pts.unshift(new Date(first.getTime()));
+        var ni=pts.length-1;
+        function iso(x){return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');}
+        /* Freier Bestand aus dem Ledger — ein Durchlauf über beide sortierten
+           Listen statt für jeden Punkt von vorne. */
+        var _ti=0,_ts=0;
+        var free=pts.map(function(p){
+          while(_ti<sorted.length&&pD(sorted[_ti].date)<=p){_ts+=txDelta(sorted[_ti]);_ti++;}
+          return parseFloat(_ts.toFixed(8));
+        });
+        /* … plus das Collateral, das zu diesem Zeitpunkt bei Firefish lag.
+           Ein Kredit zählt ab seinem Startdatum und fällt weg, sobald er
+           geschlossen ist; Nachschüsse zählen ab ihrem eigenen Datum. Genau
+           wie in den Kacheln oben: Ledger = Bestand ausserhalb der Kredite,
+           Collateral kommt oben drauf. */
+        var col=pts.map(function(p){
+          return parseFloat(loans.reduce(function(s,l){
+            var st=pD(l.start);
+            if(isNaN(st.getTime())||st>p)return s;
+            if(l.status==='closed'){
+              var ci=d.retroCloseIso(l);
+              if(ci&&pD(ci)<=p)return s;
+            }
+            var c=baseCol(l);
+            (l.topups||[]).forEach(function(t){if(pD(t.date)<=p)c+=t.btc||0;});
+            return s+c;
+          },0).toFixed(8));
+        });
+        var bal=pts.map(function(_,i){return parseFloat((free[i]+col[i]).toFixed(8));});
+        var lbls=pts.map(function(p,i){return i===ni?'heute':p.toLocaleDateString('de-CH',{day:'2-digit',month:'2-digit',year:'2-digit'});});
+        var prices={}; /* ISO → USD, nachgeladen */
+        function draw(){
+          var ctx=g('bk-hist-chart');if(!ctx)return;
+          /* Solange ein historischer Kurs fehlt, wird ersatzweise mit dem
+             aktuellen gerechnet — sonst bliebe die Kurve leer, wenn CoinGecko
+             gerade nicht antwortet. Tooltip und Hinweiszeile sagen es an. */
+          var miss=0;
+          var pxUsd=pts.map(function(p,i){
+            if(i===ni)return R.BTC;
+            var px=prices[iso(p)];
+            if(!px){miss++;return R.BTC;}
+            return px;
+          });
+          var val=pts.map(function(_,i){return pxUsd[i]>0?frU(bal[i]*pxUsd[i],ccy):null;});
+          var pxLine=pts.map(function(_,i){return pxUsd[i]>0?frU(pxUsd[i],ccy):null;});
+          var warn=g('bk-hist-warn');
+          if(warn){
+            var hints=[];
+            if(miss)hints.push('⚠ Für '+miss+' von '+ni+' vergangenen Punkten liegt kein historischer BTC-Kurs vor — dort wird mit dem aktuellen Kurs gerechnet.');
+            /* Der manuell gesetzte Bestand hat keine Historie — das Diagramm
+               kann ihm nicht folgen, also sagt es, dass es das nicht tut. */
+            if(cfg.btcReserveManual&&Math.abs(free[ni]-(cfg.btcReserve||0))>1e-8)
+              hints.push('⚠ Der freie Bestand ist manuell auf '+(cfg.btcReserve||0).toFixed(8)+' ₿ gesetzt. Das Diagramm folgt dem Ledger ('+free[ni].toFixed(8)+' ₿), weil nur der eine Historie hat.');
+            warn.innerHTML=hints.join('<br>');
+          }
+          if(chBkHist){chBkHist.destroy();chBkHist=null;}
+          chBkHist=new Chart(ctx,{type:'line',data:{labels:lbls,datasets:[
+            /* Wochenpunkte sind zu dicht für dauerhaft sichtbare Marker —
+               nur «heute» bleibt gesetzt, der Rest erscheint beim Hovern. */
+            {label:'Wert',data:val,borderColor:'#F97316',backgroundColor:'rgba(249,115,22,.10)',fill:true,tension:0.25,borderWidth:2,spanGaps:true,
+             pointRadius:pts.map(function(_,i){return i===ni?5:0;}),pointHoverRadius:4,pointBackgroundColor:'#F97316',yAxisID:'y'},
+            {label:'BTC',data:bal,borderColor:'#F59E0B',backgroundColor:'transparent',fill:false,tension:0.25,borderWidth:1.5,borderDash:[4,3],
+             pointRadius:pts.map(function(_,i){return i===ni?4:0;}),pointHoverRadius:3,pointBackgroundColor:'#F59E0B',yAxisID:'yBtc'},
+            /* Der Kurs auf eigener Achse: solange der Bestand gleich bleibt,
+               hat die Wertkurve dieselbe Form — erst wo sie auseinanderlaufen,
+               ist zu sehen, dass gekauft, verkauft oder beliehen wurde. */
+            {label:'Kurs',data:pxLine,borderColor:'#3B82F6',backgroundColor:'transparent',fill:false,tension:0.25,borderWidth:1.5,
+             pointRadius:pts.map(function(_,i){return i===ni?4:0;}),pointHoverRadius:3,pointBackgroundColor:'#3B82F6',yAxisID:'yPx'}
+          ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+            plugins:{legend:{display:false},tooltip:{callbacks:{
+              title:function(it){var i=it[0].dataIndex;return pts[i].toLocaleDateString('de-CH')+(i===ni?' (heute)':'');},
+              label:function(x){
+                if(x.dataset.yAxisID==='yBtc')return ' Bestand: '+x.parsed.y.toFixed(8)+' ₿';
+                if(x.dataset.yAxisID==='yPx'){
+                  if(x.parsed.y===null||x.parsed.y===undefined)return ' BTC-Kurs: unbekannt';
+                  var est=x.dataIndex<ni&&!prices[iso(pts[x.dataIndex])];
+                  return ' BTC-Kurs: '+fmt(x.parsed.y,ccy)+(est?' (aktuell — kein historischer Kurs)':'');
+                }
+                if(x.parsed.y===null||x.parsed.y===undefined)return ' Wert: kein Kurs verfügbar';
+                return ' Wert: '+fmt(x.parsed.y,ccy);
+              },
+              afterBody:function(it){
+                var i=it[0].dataIndex;
+                return col[i]>0?['davon Collateral: '+col[i].toFixed(8)+' ₿ · frei: '+free[i].toFixed(8)+' ₿']:[];
+              }
+            }}},
+            scales:{
+              y:{min:0,position:'left',ticks:{color:textCol,maxTicksLimit:6,callback:function(v){return fax(v,ccy);}},grid:{color:gridCol},title:{display:true,text:'Wert',font:{size:10},color:textCol}},
+              yBtc:{min:0,position:'right',ticks:{color:textCol,maxTicksLimit:6,callback:function(v){return v.toFixed(3)+'₿';}},grid:{display:false},title:{display:true,text:'Bestand',font:{size:10},color:textCol}},
+              /* Auch bei null beginnend: sonst sehen die Kursausschläge grösser
+                 aus als die der Wertkurve, obwohl beide dieselbe Bewegung
+                 zeigen, solange der Bestand unverändert bleibt. */
+              yPx:{min:0,position:'right',ticks:{color:textCol,maxTicksLimit:6,callback:function(v){return fax(v,ccy);}},grid:{display:false},title:{display:true,text:'Kurs',font:{size:10},color:textCol}},
+              x:{grid:{display:false},ticks:{color:textCol,maxRotation:45,autoSkip:true,maxTicksLimit:12}}
+            }
+          }});
+          if(!stats)return;
+          var known=val.filter(function(v){return v!==null;});
+          var pk=known.length?Math.max.apply(null,known):null;
+          var pkI=pk===null?-1:val.indexOf(pk);
+          var dB=bal[ni]-bal[0];
+          stats.innerHTML=
+            '<div class="stat"><span class="stat-lbl">Startpunkt</span><span class="stat-val">'+first.toLocaleDateString('de-CH')+
+              '<br><span style="font-size:10px;color:var(--text4)">'+(sorted.length&&pD(sorted[0].date).getTime()===first.getTime()?'erste Transaktion':'erster Kredit')+'</span></span></div>'+
+            '<div class="stat"><span class="stat-lbl">Bestand heute</span><span class="stat-val">'+bal[ni].toFixed(8)+' ₿'+
+              '<br><span style="font-size:10px;color:var(--text4)">'+(col[ni]>0?col[ni].toFixed(6)+' ₿ Collateral + '+free[ni].toFixed(6)+' ₿ frei':(pts.length>1?(dB>=0?'+':'−')+Math.abs(dB).toFixed(8)+' ₿ seit '+lbls[0]:'&nbsp;'))+'</span></span></div>'+
+            '<div class="stat"><span class="stat-lbl">Wert heute</span><span class="stat-val">'+(val[ni]!==null?fmt(val[ni],ccy):'–')+'</span></div>'+
+            '<div class="stat"><span class="stat-lbl">Höchststand</span><span class="stat-val">'+(pk!==null?fmt(pk,ccy):'–')+
+              (pkI>=0?'<br><span style="font-size:10px;color:var(--text4)">'+lbls[pkI]+'</span>':'')+'</span></div>';
+        }
+        /* Sofort mit dem aktuellen Kurs zeichnen, dann mit den historischen
+           Kursen nachziehen — wie beim Schulden-Verlauf. */
+        draw();
+        var pend=pts.slice(0,ni);
+        if(!pend.length)return;
+        var done=0;
+        pend.forEach(function(p){
+          d.btcHistPrice(iso(p),function(usd){
+            if(usd)prices[iso(p)]=usd;
+            done++;
+            if(done===pend.length&&g('bk-hist-chart'))draw();
+          });
+        });
       },
       bkCalcExit:function(){
         var el=g('bk-exit-result');if(!el)return;
