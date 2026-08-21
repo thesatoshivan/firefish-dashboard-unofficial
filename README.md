@@ -16,14 +16,16 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 - **Alarm banner** — a margin-call warning that stays visible on every tab and names the affected loans
 - **Collateral health** — portfolio-level collateral value, coverage ratio, margin call price and open debt in BTC
 - **Break-even analysis** — calculates the BTC price at which a loan becomes profitable, with automatic historical BTC price lookup and break-even average / weighted break-even statistics
-- **Upcoming maturities** — countdown to due dates with a configurable alert window, plus a cumulative debt card for eight time windows from 7 days to 2 years
+- **Upcoming maturities** — countdown to due dates with a configurable alert window, a cumulative debt card for eight time windows from 7 days to 2 years, and a warning when several loans fall due close together
 - **Calendar & timeline** — a month calendar of due dates and a Gantt-style timeline of loan runtimes and roll-over chains
-- **Multi-currency support** — EUR, CHF, CZK, PLN, USDC, USDT with live exchange rates that can be overridden by hand
+- **Multi-currency support** — USD, EUR, CHF, CZK, PLN, USDC and USDT, plus bitcoin and sats as display units. Live rates from CoinGecko; the three shown in the header can also be typed in by hand
+- **Main currency** — choose which of your enabled currencies is the primary one; every figure, chart axis and calculator then reads in that currency
 - **Roll-over chains** — link loans into roll-over chains, show chain badges on loan cards and analyse them in a dedicated Roll-Overs tab with effective annual rates
-- **Built-in tools** — calculators for before, during and after a loan (maximum loan amount, required collateral, LTV and margin-call prices, break-even hold-vs-sell, collateral top-up, extension scenarios, profit/loss borrow-vs-sell), a Power Law price model, a Roll-Over Simulation and a Future Simulation
+- **Built-in tools** — calculators for before, during and after a loan (maximum loan amount, required collateral, paying off every open loan at once, LTV and margin-call prices, break-even hold-vs-sell, collateral top-up, extension scenarios, profit/loss borrow-vs-sell), a Power Law price model, a Roll-Over Simulation and a Future Simulation
 - **Portfolio view** — track your entire Bitcoin stack (cold storage + collateral) with net worth, stack LTV, leverage factor, liquidity buffer, MC1 reserve, rebalancing hints, BTC price scenarios and an exit-strategy calculator
 - **Transaction ledger** — record buys, sells, transfers, mining income and fees; the balance feeds the Portfolio view automatically or can be overridden by hand
-- **Charts & statistics** — LTV history, debt timeline, cash flow, collateral concentration, currency distribution, effective cost in BTC and more
+- **Charts & statistics** — LTV history, debt timeline, cash flow, collateral concentration, currency distribution, effective cost in BTC and more, plus a retrospective that weighs borrowing against selling — settled for the loans that are over, and as things stand today for the ones still running
+- **Backup reminder** — records when you last exported and says so, because the data lives only in your browser
 - **Stress test** — simulate BTC price drops with scenarios, a BTC price heatmap and a worst-case simulator
 - **Privacy toggle** — hide all amounts with one click for screenshots or shoulder surfers
 - **Dark mode** — full dark/light theme with persistent preference
@@ -35,7 +37,7 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 ## Requirements
 
 - Any modern browser — the file works when opened directly from disk
-- Optionally any web server, if you prefer to host it. Note that despite the `.php` extension the file contains **no PHP code** — it is plain HTML, CSS and JavaScript, so PHP does not need to be installed
+- Optionally any web server, if you prefer to host it — any static host will do; there is no server-side code
 - No database, no composer, no npm, no build step
 - An internet connection is used for Chart.js and the Google Fonts stylesheet (both from a CDN) and for exchange rates from the public CoinGecko API. Without it the dashboard still works; charts and live prices are simply unavailable
 
@@ -43,8 +45,8 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 
 ## Installation
 
-1. Download `index.php`
-2. Place it in any directory on your web server (or open locally in a browser)
+1. Download `index.html`
+2. Place it in any directory on your web server (or open locally in a browser). **Upgrading from a version before v2.0.0: replace your old `index.php` rather than adding the new file next to it** — otherwise most servers keep serving the old dashboard from it. Your data is not affected; it belongs to the site's address, not to the file name
 3. Add your `logo-bitcoin.png` to the same directory (optional — used as sidebar icon)
 4. Open the file in your browser and start adding loans
 
@@ -56,13 +58,35 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 
 Click **+ Kredit hinzufügen** and fill in the loan details: amount, currency, interest rate, term, start date, collateral and an optional note. The dashboard calculates all derived values automatically. If you enter a start date, the form can suggest the historical BTC rate for that day, which you can accept with one click.
 
+A checkbox at the bottom of the form — off by default — books the loan into the transaction ledger at the same time: the collateral as a transfer out of your freely held stack and the origination fee as a fee entry. A loan entered as already closed also gets its collateral booked back in on the maturity date.
+
+Those bookings stay linked to the loan. Editing it keeps them in step, deleting it removes them, and the same checkbox in the edit dialog turns the bookings on or off later. Transactions you entered yourself are never touched.
+
+A loan also has an optional **Rückzahlungsdatum**. The collateral return is otherwise booked on the maturity date, which is wrong for a loan repaid early — fill the field in and the booking moves to the real date.
+
+### Topping up collateral
+
+The **+₿** button on a loan raises its collateral. Enter the amount and the date, and the dialog shows the collateral, LTV and liquidation price both as they are and as they would be, along with how far the liquidation price drops. Each top-up is kept as its own event, so the ledger records the bitcoin leaving your stack on the day it actually did.
+
+### Main currency
+
+Under **Einstellungen → Bevorzugte Währungen** you first tick the currencies you care about, then pick one of them as your **Hauptwährung**. Every headline figure — header stats, overview tiles, statistics, roll-over summaries, the Portfolio view, the stress test, chart axes and the Tools calculators — is then shown in that currency. Everything is stored and calculated in USD internally, so you can switch at any time without losing precision.
+
 ### Exchange rates
 
-BTC/USD, EUR/USD and CHF/USD rates are fetched automatically on load. You can also override them manually at any time by editing the values directly in the header pills.
+BTC/USD, EUR/USD, CHF/USD, PLN/USD and CZK/USD are fetched from CoinGecko on load. BTC, EUR and CHF have a field in the header and can be overridden by hand at any time; a value you type in is not replaced by a request that arrives afterwards. USDT and USDC are treated as exactly one dollar.
+
+If a rate is missing from the response, the built-in fallback for that currency stays in place rather than being replaced by nothing.
 
 ### Break-even
 
 For each loan, you can store the BTC price at the time of borrowing. The dashboard then shows whether the current BTC price has already covered the loan costs. Historical prices are resolved with a hybrid lookup: local cache first, then a bundled historical price set for 2022–2025, and only then the CoinGecko public API as fallback.
+
+Break-even always means the same thing across the dashboard: the BTC price at which holding has beaten selling — the loan's total cost, including the one-off origination fee, divided by the bitcoin you avoided selling. Loans with no stored start price have no break-even and are left out of the figures rather than being filled in with today's price.
+
+### Retrospective
+
+The statistics close with **Rückblick — hat sich das Beleihen gelohnt?**: for each loan it puts the bitcoin you would have had to sell for the loan amount against what the loan actually cost in interest and fee. Closed loans are valued at the price on their repayment day and that result stands; running loans are valued at today's price and move with it. Costs are always those of the full term, since the interest is owed to maturity either way — which is why the sign of a running loan matches the break-even on its card.
 
 ### Roll-overs
 
@@ -73,7 +97,7 @@ You can link related loans into roll-over chains using a shared chain ID. The da
 The **Tools** tab is split into six areas:
 
 - **Vor Kredit** — maximum loan amount for a given stack, required collateral, maximum amount while keeping a reserve, and what buying bitcoin with borrowed money would cost
-- **Während Kredit** — LTV and margin-call prices for a loan you are running, a break-even calculator comparing holding against selling, and a converter showing your debt in every currency
+- **Während Kredit** — a payoff calculator for your active loans (what it costs in each currency and in BTC, and how much collateral comes back), with a per-loan selection so you can price any subset, LTV and margin-call prices for a loan you are running, a break-even calculator comparing holding against selling, and a converter showing your debt in every currency
 - **Nach Kredit** — collateral top-up calculator with the resulting liquidation price, extension scenarios, and a profit/loss comparison of borrowing against selling
 - **Powerlaw** — fair, bottom and overvalued price bands from the Bitcoin power-law model, plus the resulting liquidation price
 - **Roll-Over Simulation** — models several consecutive extensions with compounding, automatic fee calculation and a break-even price per period
@@ -89,14 +113,16 @@ The eye button in the header hides every amount in the interface, which is usefu
 
 ### Portfolio
 
-The **Portfolio** tab looks at your whole Bitcoin position, not just the loans. Enter your BTC held outside the loans (cold storage, exchange etc.) — or record individual transactions in the built-in ledger, which calculates the balance automatically. The dashboard then shows total stack, net worth, stack LTV, leverage factor and liquidity buffer, warns how much BTC would be needed to keep all loans below MC1, simulates BTC price scenarios from −50 % to +50 %, and calculates the exit price at which all loans could be repaid while keeping a reserve of your choice.
+The **Portfolio** tab looks at your whole Bitcoin position, not just the loans. Enter your BTC held outside the loans (cold storage, exchange etc.) — or record individual transactions in the built-in ledger, which calculates the balance automatically. The dashboard then shows total stack, net worth, how much bitcoin would be left after settling the open debt out of the stack, stack LTV, leverage factor and liquidity buffer, warns how much BTC would be needed to keep all loans below MC1, simulates BTC price scenarios from −50 % to +50 %, and calculates the exit price at which all loans could be repaid while keeping a reserve of your choice.
 
 ### Import & Export
 
 - **Export JSON** — saves all loans, transactions and settings to a timestamped JSON file
 - **Import JSON** — restores from a previous export (merge, skip duplicates or replace); records that cannot be read are rejected and reported instead of being stored
-- **Export CSV** — a spreadsheet-friendly export of all loans with their derived values
+- **Export CSV** — a spreadsheet-friendly export of all loans with their derived values. It carries every loan field except the individual collateral top-ups; the total collateral is preserved, only the record of when each part was added is not. JSON is the format for a complete backup
 - **Import CSV** — accepts the official Firefish loan statement export as well as this dashboard's own CSV export, including quoted fields and both comma and semicolon separators
+
+The dashboard records when you last exported. Once per session it warns if that was longer ago than the interval set in the settings, or if it never happened — everything lives in this browser, and clearing the site's data removes it without warning. Set the interval to 0 to switch the reminder off.
 
 If the stored data ever becomes unreadable, the dashboard keeps a backup copy in the browser, stops writing, and says so — rather than silently starting from an empty list.
 
@@ -109,6 +135,7 @@ All settings are saved in `localStorage` and included in JSON exports:
 | Setting | Description |
 |---|---|
 | Preferred currencies | Which currencies appear in conversion breakdowns |
+| Main currency | The primary currency for all displays, charts and calculators |
 | Default tab | Which section opens on load |
 | Default loan view | Grid (cards) or list table |
 | Default loan currency | Pre-selected currency for new loans |
@@ -119,6 +146,7 @@ All settings are saved in `localStorage` and included in JSON exports:
 | Navigation order | Custom order of sidebar navigation items |
 | Hide amounts | Masks all figures in the interface (eye button in the header) |
 | LTV display filter | Minimum LTV a loan needs before it appears in the Overview's LTV list |
+| Backup reminder | After how many days without an export to warn; 0 switches it off |
 | BTC reserve | Bitcoin held outside the loans (set in the Portfolio tab, auto-derived from the transaction ledger) |
 
 ---
