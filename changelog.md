@@ -4,6 +4,89 @@
 ---
 
 
+## v1.7.0 (21.08.2026)
+
+### New Features
+
+**Ablöse-Rechner (Tools → Während Kredit)**
+- Answers what it costs to repay every active loan today, and how much bitcoin comes back out of the collateral
+- Repayment amount converted into every enabled currency, main currency first, including BTC and sats
+- Because loans run in different currencies, the actual debt per loan currency is listed separately as soon as there is more than one — a EUR debt cannot be settled with CHF
+- Shows the bitcoin needed at the current price, the total collateral with its fiat value, and what is left over if the repayment is taken out of the collateral; if the collateral does not cover the debt, the shortfall is named as such
+- Closes with the total bitcoin holding afterwards — what remains of the collateral plus the bitcoin held outside the loans from the Portfolio tab — and names how the figure is composed. A shortfall enters with a negative sign, so it eats into the cold storage rather than being hidden
+- Counts active loans only, and uses principal + interest — the origination fee was already paid when the loan was taken out
+- Every active loan can be ticked in or out of the calculation, with **Alle** / **Keine** to switch the lot. All are selected to begin with, a loan added later joins on its own, and the selection survives price and currency changes. Each entry names the loan, its amount and its maturity date, ordered by maturity
+
+**Top up the collateral of an existing loan**
+- New **+₿** action on every loan, as a card button and in the table: enter an amount and a date and the collateral is raised
+- Before confirming, the dialog shows collateral, LTV and liquidation price as they are and as they would be, plus how far the liquidation price drops in absolute terms and in percent
+- Top-ups are kept as separate events with their own date, so the ledger shows bitcoin leaving the stack on the day it actually did rather than back-dated to the loan's start. Repaying the loan books the whole collateral back in one go
+- The same optional transaction checkbox as elsewhere; for a loan that is already booked it is ticked by default, because leaving it out would put the ledger out of step
+
+**Loans in the portfolio ledger**
+- New checkbox in the loan form, off by default: saving the loan also creates the matching transactions — the collateral as a transfer out of the freely held stack, the origination fee as a fee entry, both dated to the loan's start date and priced at the stored BTC start price. The box resets to off every time the form is opened, and says so if there was nothing to book
+- A loan entered as already closed also gets the collateral booked back in, so adding a past loan does not leave the stack permanently short
+- The bookings stay linked to their loan and follow it: collateral, fee, date and status all keep up, closing a loan adds the return booking and reopening it takes one away, and a fee set back to zero removes its entry. The edit dialog carries the same box as state — unticking it removes the bookings, ticking it on a loan that has none creates them
+- Deleting a loan removes its bookings too, and the confirmation dialog says how many before you confirm
+- Only bookings the dashboard created are touched; transactions you entered yourself are never changed or removed
+- Each booking's note names the loan and its ID, so a ledger entry can be traced back even after the loan has been renamed
+
+**«BTC nach Schuldentilgung» in the Portfolio overview**
+- New tile answering how much bitcoin would be left if the open debt were settled out of the stack: total holding minus the debt converted at the current price
+- Names how much bitcoin the debt costs, or by how much the stack falls short of covering it
+- Times the BTC price it comes to the net worth shown next to it — the same figure in bitcoin rather than fiat — and it matches the payoff calculator in Tools
+
+**Rückblick — hat sich das Beleihen gelohnt?**
+- New section in the statistics. Break-even says from which price a loan pays off; for a loan that is over, this says whether it did
+- Per loan: the bitcoin you would have had to sell for the loan amount, what that bitcoin gained, the interest and fee it cost instead, and the difference — the verdict on borrowing rather than selling
+- Two separate blocks. **Abgeschlossen** values each loan at the price on its repayment day; that result stands. **Laufend** values the running loans at today's price and moves with it, so the question «as things stand, has borrowing paid off?» has an answer too
+- Each block carries its own total and hit rate — a settled result and a provisional one do not belong in the same sum
+- Costs are always those of the full term, because the interest is owed to maturity either way. That makes the sign of a running loan agree exactly with the break-even shown on its card
+- Loans without a stored start price are left out, and a price that cannot be resolved shows a dash rather than a guess
+
+**Warning when maturities cluster**
+- The maturity tiles show what is due within 7, 14, 30 … days, but not that three of those loans fall within eleven days of each other — which is the liquidity risk the sums hide
+- A line under the tiles names the largest such group: how many loans, over how many days, the period, the total, and which loans. It turns amber once the group starts inside the countdown window and stays neutral when it is further out
+- Closed and overdue loans are left out; among equally sized groups the larger amount wins
+
+**Backup reminder**
+- All data lives in this browser and nowhere else — clearing the site's data, a cleanup tool or private mode wipes it without warning. The dashboard now records when the last JSON export happened and says so
+- Once per session it warns if the last export is older than the configured number of days, or if there never was one, with a button to export right there
+- New **Datensicherung** card in the settings shows the age of the last backup and lets you set the interval; 0 switches the reminder off
+
+**Repayment date on a loan**
+- New optional field. The collateral return is otherwise booked on the maturity date, which is wrong for a loan repaid early — entering the real date moves the booking there, and it stays put instead of being derived again on the next edit
+- Empty means the maturity date, as before. It only moves the booking: runtime, interest and the automatic close still work off the agreed term
+- Travels with JSON and CSV export and import
+
+### Improvements
+
+- **One break-even definition**: break-even was calculated two different ways under the same name. The loan cards, the chart, the statistics and the Tools calculator answer «at what BTC price has holding beaten selling» and divide the cost by the bitcoin you avoided selling; the header stat and the roll-over tables divided the same cost by the pledged collateral instead — under Firefish's twofold overcollateralization about twice as much bitcoin, and therefore roughly half the distance above the start price. The two figures could not both be right, and the header disagreed with every card below it. Header and roll-over tables now use the hold-versus-sell definition as well, and the header's portfolio figure is weighted by loan volume so it matches the weighted break-even in the statistics
+- **No more stand-in for a missing start price**: a loan with no stored BTC start price was filled in with the current price, which produced a «break-even» that simply followed the market. Such loans are now left out of the header figure — the tooltip says how many — and their bar in the break-even chart stays empty with a footnote explaining why
+- **Effektiver Jahreszins** in the statistics was the plain interest rate annualised, which is the same number as the interest rate itself. It now includes the one-off origination fee, which is what makes it effective, and says so
+- **Configured LTV thresholds are followed everywhere**: the heatmap legend and the threshold marks on the loan cards' LTV bars were fixed at 73 % and 86 % while their colours already followed the configured values, so after changing the thresholds the marks sat in the wrong place. The bar's scale also printed «75» where the mark was drawn at 73. Only the 95 % liquidation line stays fixed, because Firefish does
+- **Roll-Over-Timeline with a real tooltip**: hovering a bar showed a plain browser tooltip with the name, amount and interest. It now opens a proper panel with the loan's name and ID, its place in the chain, status, amount, rate, term, the period with days remaining, interest, fee, total cost, amount due, and — while the loan is running — collateral, LTV and liquidation price. It stays inside the window at the edges, and tapping works where there is no mouse
+- **Historic prices are fetched more gently**: the background prefetch asked for every needed date at once, 300 ms apart — far more than the free CoinGecko API tolerates, so it reliably walked into a rate limit. It now asks for one date at a time, skips dates the cache or the bundled price table already answer, and stops after the first rate limit instead of spending the remaining requests on refusals
+
+### Bug Fixes
+
+- **«Fälliger Betrag» differed depending on where you looked**: the origination fee is paid once in bitcoin when the loan is matched, so it is not part of what has to be repaid at maturity. Most of the dashboard followed that rule, but the table view, the sorting by «Fälliger Betrag», the «Nächste Fälligkeiten» tiles and the expiry notification added the fee on top — a 10'000 loan with 1'000 interest and a 250 fee read 11'000 on the card and 11'250 in the table. All of them now show principal + interest; break-even, which genuinely has to earn the fee back, still counts it
+- **«Gewinn/Verlust durch Beleihen» ignored the loan's real fee**: selecting a loan loaded its actual origination fee and then immediately overwrote it with the generic 1.5 %-per-year estimate, so the result never used the fee that was actually paid. The loan's fee now wins over the estimate, a hint names where the value comes from, and clearing the loan selection returns to the estimate
+- **Fee fields that could not be typed in**: in «Zu hinterlegende Sicherheit» and «Mit Kredit Bitcoin kaufen» the fee was refilled on every keystroke, so a manually entered fee never survived. Editing the field now marks it as manual; emptying it restores the automatic value. In «Maximaler Kreditbetrag mit Reserve» the fee field stayed permanently empty because the browser rejected its « BTC» suffix — it is a calculated value and is now shown as one
+- **The «↺ Auto» reset link** next to the fee in «Gewinn/Verlust durch Beleihen» disappeared as soon as the tool currency was switched, leaving no way back to the automatic value
+- **Tools break-even used today's BTC price for the fee**, so its result drifted away from the break-even shown on the loan card as soon as the market moved. It now uses the price at which the loan was taken out, the same basis as everywhere else
+- **Verlängerungsszenarien charged interest on the fee**: the extension was calculated on principal + interest + fee, so the already-paid origination fee was interest-bearing for the whole extension
+- **The currency breakdown under «Gesamtkosten»** valued the fee at today's BTC price while the tile right above it already used the price at which the fee was paid, so the two lines disagreed
+- **CSV import lost a month**: the term was derived from the plain month difference between start and maturity, which loses a month whenever the maturity falls just before the anniversary — a loan from 01.03.2024 to 28.02.2025 was imported as 11 months and therefore with too little interest. The term is now the one whose calculated maturity comes closest to the imported one
+- **A custom navigation order was lost on restore.** The sidebar order set in the settings was saved locally but never written to the JSON export, so restoring from a backup — or moving to another device — silently returned to the default order
+- **The transaction ledger lists the newest entry first.** It was ordered oldest first, so the entry you had just made ended up at the bottom of a growing table. Entries sharing a date keep their order, and the balance is unchanged — it is a sum over all entries, not a running total per row
+- **Notices were hidden behind the sidebar**: every message the dashboard shows — including the warnings about storage that could not be read or written — was placed at the very top left of the page, where the fixed sidebar covered all but its right-hand end. They now sit in the content area and are readable
+- **The LTV history chart read the wrong day's price**: daily prices from CoinGecko are stamped at UTC midnight but were keyed by the local date, so west of Greenwich every entry landed on the previous day and each day's ratio was measured against the wrong price
+
+
+---
+
+
 ## v1.6.0 (25.07.2026)
 
 ### Improvements
