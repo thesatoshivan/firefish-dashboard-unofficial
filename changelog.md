@@ -4,6 +4,23 @@
 ---
 
 
+## v2.0.0 (21.08.2026)
+
+### Improvements
+
+- **The CZK exchange rate is live now.** BTC, EUR, CHF and PLN came from CoinGecko while CZK sat on a fixed value built into the file and never moved, so every koruna figure drifted further from reality the longer the rate stood. It is fetched with the others; if a rate is missing from a response, that currency keeps its built-in fallback instead of being left with nothing
+
+### Breaking
+
+- **`index.php` is now `index.html`.** The file never held a single line of PHP, and the README had to explain the extension away. The honest name brings three things with it: a double-click opens the file without going through «open with», any static host can serve it, and a server that has PHP no longer runs it through the interpreter — where a future `<?xml` in an embedded SVG would silently swallow part of the page
+- **Your data is not affected.** Loans, transactions and settings belong to the page's origin, not to the file name, so renaming changes nothing on a web server. If you open the dashboard straight from disk (`file://`), export a JSON backup first — browsers treat that origin differently from one another
+- **Replace your existing `index.php` with `index.html` — do not just add the new file beside it.** The old one holds the previous version of the dashboard and, left in place, most servers keep serving it: the bookmark still works, the page still looks right, and none of the fixes in this release are in it
+- Calling the site by its bare address is unaffected either way. `example.com` served `index.php` before and serves `index.html` now; the address bar looks the same. Only links pointing straight at `/index.php` stop working — on Apache, `Redirect 301 /index.php /index.html` in `.htaccess` keeps those alive without any interpreter
+
+
+---
+
+
 ## v1.7.0 (21.08.2026)
 
 ### New Features
