@@ -4,6 +4,33 @@
 ---
 
 
+## v2.1.0 (21.08.2026)
+
+### New Features
+
+**Portfolio-Verlauf (Portfolio tab)**
+- A chart of how the whole stack developed, from the month of your first transaction — or your first loan, whichever came first — up to today
+- Two series on two axes: the portfolio value in your main currency on the left, the bitcoin holding on the right. The amount barely moves while the value swings, so a shared axis would have flattened one of them into a straight line
+- The holding is the **total**: free bitcoin from the transaction ledger plus the collateral that was pledged at that moment. A loan's collateral enters the curve on its start date and leaves it when the loan is closed; top-ups enter on their own date. Same convention as the tiles above, where the ledger is the holding outside the loans and collateral is added on top
+- One point per week, counted backwards from today so the last point sits exactly on today and every step is the same length. Each point is valued at the historical BTC price of that very day rather than at today's price, so the curve shows what the stack was actually worth back then — and at weekly resolution it shows the swings a monthly grid smoothed away
+- A third line carries the BTC price itself, on its own axis and starting at zero like the value axis. As long as the holding does not change, the two lines run in parallel; where they come apart, the reason was a purchase, a sale or a loan rather than the market
+- Only today carries a visible marker; the weekly points appear under the cursor, which keeps the lines readable over a year or more
+- The tooltip names the date, the value, the total holding, its split into collateral and free bitcoin, and the BTC price behind it
+- Below the chart: the starting point and what set it, the holding today with its split, the current value, and the highest value with the month it occurred in
+- Historical prices come from the built-in table where it reaches and from CoinGecko beyond it. If a price cannot be had, that point falls back to the current rate and a line under the chart says how many points are affected — an incomplete curve beats an empty one, as long as it admits it
+- If the free holding was overwritten by hand in the settings below, the chart says so and keeps following the ledger: a hand-set number has no history to draw
+- The chart is covered by the eye button in the header like every other amount
+
+### Improvements
+
+- **Every extension scenario in «Verlängerungsszenarien» now states the collateral it would take.** The tool priced an extension in interest but said nothing about the bitcoin side, so the question it left open was the one that decides whether an extension is possible at all. Each card now names the collateral the extension would need at 50 % LTV — the double coverage a Firefish loan starts with, not one of the margin-call thresholds, which say when it gets tight rather than what it takes to begin — and either the amount to add on top of what the loan already holds, or that the existing collateral covers it. Measured against the end amount, because that is when the debt is highest
+- **The «Offene Schulden» tile in the Portfolio tab now names the debt in bitcoin too.** The currency breakdown under it deliberately leaves out BTC and sats, so the one figure that matters most when the collateral is bitcoin was the one missing — it now stands above the breakdown, at the current rate, matching the header stat to the satoshi
+- **The built-in price history now runs to 31.07.2026.** It ended on 31.12.2025, so everything after that had to be fetched from CoinGecko one date at a time — slow, rate-limited, and simply unavailable offline. Seven more months of daily closing prices are built in; the retrospective, the historical valuation in the new chart and the start price of a loan now resolve without a single request for any date up to the end of July 2026
+
+
+---
+
+
 ## v2.0.0 (21.08.2026)
 
 ### Improvements
