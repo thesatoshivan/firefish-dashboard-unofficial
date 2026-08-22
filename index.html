@@ -97,7 +97,6 @@
     #ffd-root.hide-amounts #ch-gantt,
     #ffd-root.hide-amounts .lid,
     #ffd-root.hide-amounts .lid-sub,
-    #ffd-root.hide-amounts .tlabel,
     #ffd-root.hide-amounts .fxsb,
     #ffd-root.hide-amounts #abl-total-sub,
     #ffd-root.hide-amounts #bk-hist-wrap,
@@ -198,11 +197,49 @@
     align-items: center;flex-wrap: wrap;width: 100%;}
     #ffd-root .lid-sub { color: var(--text4); font-weight: 400; font-size: 11px; }
     #ffd-root .lmeta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 0 0 .7rem; }
+    /* Über die ganze Zeile — für Werte, die neben einem halbleeren Feld
+       stünden, etwa die Gebühr als letzte von drei Angaben. */
+    #ffd-root .lmeta .lm-wide { grid-column: 1 / -1; }
     #ffd-root .ll { font-size: 11px; color: var(--text4); margin: 0 0 2px; display: block; }
     #ffd-root .lv { font-size: 13px; font-weight: 500; color: var(--text); display: block; }
 
     /* ── Badge ── */
     #ffd-root .badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; display: inline-block; font-weight: 500;width: max-content; }
+    /* Ziel eines Sprungs kurz hervorheben, damit man nach dem Scrollen sieht,
+       wo man gelandet ist */
+    #ffd-root .go-hl {
+      animation: ffdGoHl 2s ease-out 1;
+      border-radius: 12px;
+    }
+    @keyframes ffdGoHl {
+      0%, 45% { box-shadow: 0 0 0 3px var(--accent); background: var(--accent-bg); }
+      100%    { box-shadow: 0 0 0 3px rgba(249,115,22,0); background: transparent; }
+    }
+    /* Verweis auf eine andere Stelle im Dashboard */
+    #ffd-root .xref {
+      cursor: pointer; color: var(--accent); text-decoration: none;
+      border-bottom: 1px dotted var(--accent); background: none; border-top: 0;
+      border-left: 0; border-right: 0; padding: 0; font: inherit;
+    }
+    #ffd-root .xref:hover { color: var(--text); border-bottom-color: var(--text); }
+    /* Nachgelegtes Collateral: Markierung am Betrag, aufklappbare Herkunft */
+    #ffd-root .tu { margin-top: 3px; font-weight: 400; }
+    #ffd-root .tu-sum {
+      cursor: pointer; list-style: none; display: inline-block;
+      font-size: 10px; font-weight: 600; line-height: 16px; padding: 0 7px;
+      border-radius: 20px; color: var(--accent);
+      background: var(--accent-bg); border: 1px solid var(--accent);
+    }
+    #ffd-root .tu-sum::-webkit-details-marker { display: none; }
+    #ffd-root .tu-sum::after { content: ' \25be'; }
+    #ffd-root .tu[open] .tu-sum::after { content: ' \25b4'; }
+    #ffd-root .tu-list {
+      margin-top: 4px; padding-left: 7px; border-left: 2px solid var(--border2);
+      display: flex; flex-direction: column; gap: 2px; text-align: left;
+    }
+    #ffd-root .tu-list > div { display: flex; justify-content: space-between; gap: 12px; font-size: 10px; color: var(--text4); white-space: nowrap; }
+    #ffd-root .tu-list b { color: var(--text); font-weight: 600; }
+    #ffd-root .tu-tot { border-top: 1px solid var(--border); margin-top: 2px; padding-top: 2px; }
     #ffd-root .ba { background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok-border); }
     #ffd-root .bc { background: var(--bg2); color: var(--text3); border: 1px solid var(--border); }
 
@@ -244,6 +281,48 @@
     #ffd-root .add-panel { background: var(--bg2); border-radius: 12px; padding: 1rem; margin: 0 0 1.25rem; border: 1px solid var(--border); }
     #ffd-root .add-title { font-size: 13px; font-weight: 600; color: var(--text); margin: 0 0 .75rem; display: block; }
     #ffd-root .fg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 10px; }
+    /* Dreispaltige Variante (Neuer Kredit) — ein Feld mit .ff-wide laeuft
+       ueber die ganze Breite, unabhaengig von der Spaltenzahl. */
+    #ffd-root .fg.fg3 { grid-template-columns: repeat(3, 1fr); }
+    #ffd-root .fg > .ff-wide { grid-column: 1 / -1; }
+    /* Felder links, Vorschau rechts — die Vorschau soll ohne Scrollen neben
+       den Eingaben stehen, nicht unter ihnen. Die rechte Spalte ist schmaler
+       und bekommt nur so viel Platz, wie sie braucht. */
+    /* Verhältnis statt fester Breite, damit die Vorschau in beiden Formularen
+       gleich viel Raum einnimmt. Eine feste Spalte wäre im breiteren Panel
+       «Neuer Kredit» anteilig schmaler als im Dialog. 7:3 entspricht dem,
+       was der Dialog bei seinen 1060px ohnehin ergab. */
+    #ffd-root .fsplit { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 3fr); gap: 1.1rem; align-items: start; }
+    #ffd-root .fsplit-main { min-width: 0; }
+    #ffd-root .fsplit-side { min-width: 0; }
+    /* Steht die Vorschau in der Spalte, hat sie ihren eigenen Abstand nicht
+       mehr nötig — sie beginnt auf derselben Höhe wie das erste Feld. */
+    #ffd-root .fsplit-side .lprev { margin-top: 0; position: sticky; top: 8px; }
+    /* Die Feldspalte ist jetzt schmaler als das Panel. Der Umbruch auf zwei
+       bzw. eine Spalte hängt aber am Fensterrand, nicht an der Spaltenbreite —
+       darum hier früher greifen, sonst quetschen sich drei Felder in den Rest.
+       Nur für «Neuer Kredit»: der Dialog hat eine feste Breite und richtet
+       sich nicht nach dem Fenster. */
+    @media (max-width: 1250px) {
+      #ffd-root #add-panel .fg.fg3 { grid-template-columns: 1fr 1fr; }
+    }
+    /* Der Bearbeiten-Dialog trägt drei Feldspalten plus die Vorschau und
+       braucht dafür mehr Breite als die übrigen Dialoge, die schmal bleiben. */
+    #ffd-root #edit-modal-bg .modal { max-width: 1060px; }
+    @media (max-width: 1020px) {
+      #ffd-root .fsplit { grid-template-columns: 1fr; }
+      #ffd-root .fsplit-side .lprev { position: static; margin-top: .2rem; }
+      /* Ohne die Vorschau daneben reicht die schmale Fassung — dann aber
+         zweispaltig, sonst blieben je Feld gut 150px. */
+      #ffd-root #edit-modal-bg .modal { max-width: 560px; }
+      #ffd-root #edit-modal-bg .fg.fg3 { grid-template-columns: 1fr 1fr; }
+    }
+    /* Auf dem Telefon einspaltig wie überall sonst. Die Regel weiter unten
+       greift hier nicht: sie hat keine ID im Selektor und verliert gegen die
+       Zeile darüber, egal in welcher Reihenfolge sie steht. */
+    @media (max-width: 639px) {
+      #ffd-root #edit-modal-bg .fg.fg3 { grid-template-columns: 1fr; }
+    }
     #ffd-root .ff { display: flex; flex-direction: column; gap: 4px; }
     #ffd-root .ff label { font-size: 12px; color: var(--text3); }
     #ffd-root .ff input, #ffd-root .ff select { width: 100%; }
@@ -280,15 +359,6 @@
 
     /* ── Timeline ── */
     #ffd-root #upcoming { display: flex; flex-direction: column; gap: 0.5rem; }
-    #ffd-root .tl { padding: 0 0 0 1rem; }
-    #ffd-root .ti { position: relative; padding: 0 0 1.2rem 1.2rem; border-left: 1px solid var(--border); }
-    #ffd-root .ti:last-child { border-left: 1px solid transparent; }
-    #ffd-root .dot { position: absolute; left: -5px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: #F97316; border: 2px solid var(--card-bg); }
-    #ffd-root .dot.done { background: var(--border2); }
-    #ffd-root .dot.soon { background: #dc2626; }
-    #ffd-root .tdate { font-size: 11px; color: var(--text4); margin: 0 0 2px; display: block; }
-    #ffd-root .tlabel { font-size: 13px; font-weight: 600; color: var(--text); }
-    #ffd-root .tsub { font-size: 12px; color: var(--text3); margin: 0 0 2px; display: block; }
 
     /* ── CCY switcher ── */
     #ffd-root .csw { display: flex; gap: 4px; flex-wrap: wrap; margin: 0 0 .75rem; }
@@ -308,10 +378,40 @@
 
     /* ── Flex helpers ── */
     #ffd-root .fx { display: flex; align-items: center; gap: 6px; }
+    /* Kopfzeile der Kreditkarte: Abzeichen und Knöpfe umbrechen lassen. Die
+       Gruppe war eine unteilbare Zeile und stand bei schmalen Karten über den
+       Rand hinaus — mit einem Abzeichen mehr schon bei normaler Breite. */
+    /* Abzeichen und Knöpfe fliessen als eine Reihe und brechen linksbündig
+       um. Rechtsbündig sah der Umbruch aus wie ein Fehler: die letzte
+       Zeile hing dann mit grosser Lücke am rechten Rand. */
+    /* Die Abzeichenzeile füllt ihre Zeile aus, damit der Aktionsknopf rechts
+       bündig stehen kann — sonst wäre die Gruppe nur so breit wie ihr Inhalt
+       und «nach rechts» hätte kein Ziel. */
+    #ffd-root .lh .fx { flex: 1 1 100%; flex-wrap: wrap; justify-content: flex-start; row-gap: 6px; }
+    #ffd-root .lh .fx .act-btn { margin-left: auto; }
+    #ffd-root .lh .lid { min-width: 0; }
     #ffd-root .fxsb { display: flex; justify-content: space-between; align-items: center; }
     #ffd-root .empty { text-align: center; padding: 2rem; color: var(--text4); font-size: 14px; }
     #ffd-root .note { font-size: 11px; color: var(--text4); }
     #ffd-root .note2 { font-size: 12px; color: var(--text3); white-space: break-spaces;}
+    #ffd-root .ch-navhint { margin-top: .4rem; font-size: 11px; color: var(--text4); }
+
+    /* ── Vorschau im Kreditformular ── */
+    #ffd-root .lprev { display: none; margin-top: .9rem; padding: .75rem .9rem; border: 1px solid var(--border); border-radius: 10px; background: var(--bg2); }
+    #ffd-root .lprev-hd { font-size: 11px; font-weight: 600; color: var(--text4); letter-spacing: .04em; text-transform: uppercase; margin-bottom: .5rem; }
+    /* Umbrechen statt überlaufen: in einer schmalen Spalte passen Beschriftung
+       und Wert nicht immer nebeneinander. Ungebrochen bleibt nur die Zahl —
+       ein Betrag darf nicht mitten entzwei. */
+    /* Beschriftung links, Wert rechts, Erläuterung darunter über beide
+       Spalten. Als Raster, nicht als Flexbox: sonst bestimmt der lange
+       Untertitel die Breite des Wertes mit und schiebt ihn in eine eigene
+       Zeile — dann stünden manche Reihen nebeneinander und andere gestapelt. */
+    #ffd-root .lprev-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; align-items: baseline; padding: 4px 0; font-size: 13px; color: var(--text3); }
+    #ffd-root .lprev-k { min-width: 0; overflow-wrap: break-word; }
+    #ffd-root .lprev-n { text-align: right; white-space: nowrap; color: var(--text); font-weight: 600; }
+    #ffd-root .lprev-sub { grid-column: 1 / -1; text-align: right; }
+    #ffd-root .lprev-row.lprev-tot { border-top: 1px solid var(--border); margin-top: .45rem; padding-top: .55rem; color: var(--text); font-weight: 600; }
+    #ffd-root .lprev-sub { font-size: 11px; font-weight: 400; color: var(--text4); white-space: normal; overflow-wrap: break-word; }
     #ffd-root .ovx { overflow-x: auto; }
     #ffd-root p, #ffd-root ul, #ffd-root ol, #ffd-root li { margin: 0; padding: 0; list-style: none; }
 
@@ -468,6 +568,23 @@
     #ffd-root .tl-tip .tl-tip-row span:first-child { color: var(--text4); }
     #ffd-root .tl-tip hr { border: none; border-top: 1px solid var(--border); margin: 5px 0; }
     #ffd-root.hide-amounts .tl-tip { filter: blur(6px); }
+
+    /* ── Aktionsmenü auf Kredit-Karten und -Zeilen ──
+       Wie der Tooltip oben: position:fixed und direkt an #ffd-root gehängt.
+       Ein Kindelement der Tabelle würde vom Scroll-Container «ovx»
+       abgeschnitten. */
+    #ffd-root .act-menu { display: none; position: fixed; z-index: 1300; min-width: 200px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.16); }
+    /* justify-content muss sein: die Grundregel für Knöpfe zentriert, hier
+       sollen Symbol und Text am linken Rand beginnen. */
+    #ffd-root .act-menu button { display: flex; align-items: center; justify-content: flex-start; gap: 9px; width: 100%; padding: 7px 10px; border: none; background: transparent; border-radius: 7px; font-size: 13px; color: var(--text2); text-align: left; cursor: pointer; }
+    #ffd-root .act-menu button:hover { background: var(--bg2); color: var(--text); }
+    #ffd-root .act-menu button .act-ic { width: 17px; flex-shrink: 0; text-align: center; font-size: 12px; }
+    #ffd-root .act-menu hr { border: none; border-top: 1px solid var(--border); margin: 4px 2px; }
+    #ffd-root .act-menu button.act-del { color: var(--err); }
+    #ffd-root .act-menu button.act-del:hover { background: var(--err-bg); color: var(--err); }
+    #ffd-root button.act-btn { padding: 2px 8px; font-size: 13px; line-height: 1.2; }
+    #ffd-root button.act-btn.on { background: var(--bg3); }
+
     #ffd-root .ffd-notices { display: flex; flex-direction: column; gap: 6px; margin: 0 0 1rem; }
     #ffd-root .ffd-notice { display: flex; align-items: center; gap: 8px; padding: .55rem .85rem; border-radius: 8px; font-size: 12px; font-weight: 600; background: var(--bg2); border: 1px solid var(--border); color: var(--text2); }
     #ffd-root .ffd-notice.warn { background: var(--warn-bg); border-color: var(--warn-border); color: var(--warn); }
@@ -528,6 +645,7 @@
 
     /* ── Tablet: chart pairs stay 2-col but tool fields stack ── */
     @media (max-width: 899px) {
+      #ffd-root .fg.fg3 { grid-template-columns: 1fr 1fr; }
       #ffd-root .main-hdr-row2 { overflow-x: auto; }
       #ffd-root .hdr-stats { min-width: max-content; }
       #ffd-root .tg3 { grid-template-columns: 1fr 1fr; }
@@ -570,6 +688,7 @@
       /* ── General card / metric grids ── */
       #ffd-root .mg { grid-template-columns: 1fr; }
       #ffd-root .fg { grid-template-columns: 1fr; }
+      #ffd-root .fg.fg3 { grid-template-columns: 1fr; }
       #ffd-root .mc { word-break: break-word; }
       #ffd-root .mc-val { font-size: 15px; }
 
@@ -686,17 +805,17 @@
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M12 1a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V2a1 1 0 011-1h8zM4 0a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V2a2 2 0 00-2-2H4z"/><path d="M4 2.5a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5v-2zm1 4a.5.5 0 100 1 .5.5 0 000-1zm2.5.5a.5.5 0 111 0 .5.5 0 01-1 0zm2.5-.5a.5.5 0 100 1 .5.5 0 000-1zM5 9.5a.5.5 0 111 0 .5.5 0 01-1 0zm2.5-.5a.5.5 0 100 1 .5.5 0 000-1zm2.5.5a.5.5 0 111 0 .5.5 0 01-1 0zM5 12a.5.5 0 100 1 .5.5 0 000-1zm2.5.5a.5.5 0 111 0 .5.5 0 01-1 0zm2.5-.5a.5.5 0 100 1 .5.5 0 000-1z"/></svg>
         <span>Tools</span>
       </button>
-      <div class="nav-spacer" style="flex:1"></div>
       <button class="nav-item" onclick="d.tab('bk',this)">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm.93 8.588-.077.079c-.149.127-.37.179-.63.179-.519 0-.898-.26-.898-.618 0-.337.253-.557.76-.64l.845-.126v1.126zm2.007-1.3c0 1.155-.909 1.985-2.183 1.985-.483 0-.932-.097-1.27-.276l.124-.64c.333.177.719.267 1.108.267.627 0 1.016-.3 1.016-.782 0-.434-.297-.675-.935-.918-.839-.313-1.366-.74-1.366-1.487 0-.765.634-1.338 1.573-1.42V5.5h.563v.486c.396.033.666.127.857.24l-.148.603c-.198-.104-.497-.228-.879-.228-.582 0-.829.294-.829.607 0 .373.27.563.993.843.907.341 1.376.79 1.376 1.585zM5.5 9.5h-1v-5h1v5z"/></svg>
         <span>Portfolio</span>
       </button>
+      <div class="nav-spacer" style="flex:1"></div>
       <button class="nav-item" data-nav-fixed onclick="d.tab('se',this)" style="border-top:1px solid var(--border);margin-top:4px">
         <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M11.5 2a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM9.05 3a2.5 2.5 0 014.9 0H16v1h-2.05a2.5 2.5 0 01-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM2.05 8a2.5 2.5 0 014.9 0H16v1H6.95a2.5 2.5 0 01-4.9 0H0V8h2.05zM11.5 12a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-2.45 1a2.5 2.5 0 014.9 0H16v1h-2.05a2.5 2.5 0 01-4.9 0H0v-1h9.05z"/></svg>
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v210-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.1.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v220-22082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.2.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
@@ -847,28 +966,33 @@
       </div>
       <div class="add-panel" id="add-panel" style="display:none">
         <span class="add-title">Neuer Kredit</span>
-        <div class="fg">
+        <div class="fsplit">
+          <div class="fsplit-main">
+        <div class="fg fg3">
           <div class="ff"><label>Bezeichnung</label><input type="text" id="fn" placeholder="Kredit #X"></div>
-          <div class="ff"><label>ID <span style="font-size:11px;font-weight:400;color:var(--text4)">(optional — wird automatisch generiert)</span></label><input type="text" id="fid" placeholder="z.B. abc12345" style="font-family:monospace"></div>
           <div class="ff"><label>Betrag</label><input type="number" id="fa" placeholder="10000"></div>
+          <div class="ff"><label>Währung</label><select id="fc"><option>EUR</option><option>CHF</option><option>CZK</option><option>PLN</option><option>USDC</option><option>USDT</option></select></div>
           <div class="ff"><label>Zinssatz (% p.a.)</label><input type="number" id="fr" placeholder="8" step="0.1"></div>
-          <div class="ff"><label>Gebühr (BTC, einmalig)</label><input type="number" id="ffee" placeholder="0" step="0.0001" min="0"></div>
           <div class="ff"><label>Laufzeit (Monate)</label><select id="ft"><option>3</option><option>6</option><option selected>12</option><option>18</option><option>24</option></select></div>
           <div class="ff"><label>Startdatum</label><input type="date" id="fd" onchange="d.autoFillBtcStart('fd','fbp','fbp-hint')"></div>
-          <div class="ff"><label>Collateral (BTC)</label><input type="number" id="fb" placeholder="0.25" step="0.001"></div>
+          <div class="ff"><label>Collateral (BTC)</label><input type="number" id="fb" placeholder="0.25" step="0.001"><span id="fb-hint" style="display:none;font-size:11px;color:var(--text4);margin-top:3px"></span></div>
+          <div class="ff"><label>Gebühr (BTC, einmalig)</label><input type="number" id="ffee" placeholder="0" step="0.0001" min="0"></div>
+          <div class="ff"><label>BTC-Preis bei Aufnahme (USD)</label><input type="number" id="fbp" placeholder="z.B. 85000" step="1"><span style="font-size:11px;color:var(--text4);display:block;margin-top:3px">F&#252;r Break-even und Geb&#252;hrenwert.</span><span id="fbp-hint" style="display:none;font-size:11px;color:var(--text4);margin-top:3px"></span></div>
           <div class="ff"><label>Status</label><select id="fs"><option value="active">Aktiv</option><option value="closed">Abgeschlossen</option></select></div>
           <div class="ff"><label>R&#252;ckzahlungsdatum <span style="font-size:11px;font-weight:400;color:var(--text4)">(optional)</span></label><input type="date" id="fcd"><span style="font-size:11px;color:var(--text4);display:block;margin-top:3px">Nur bei abgeschlossenen Krediten. Leer = F&#228;lligkeitsdatum.</span></div>
-          <div class="ff"><label>Währung</label><select id="fc"><option>EUR</option><option>CHF</option><option>CZK</option><option>PLN</option><option>USDC</option><option>USDT</option></select></div>
-          <div class="ff" style="grid-column:span 2"><label>BTC-Preis bei Kreditaufnahme (USD) — für Break-even</label><input type="number" id="fbp" placeholder="z.B. 85000" step="1"><span id="fbp-hint" style="display:none;font-size:11px;color:var(--text4);margin-top:3px"></span></div>
-          <div class="ff" style="grid-column:span 2"><label>Roll-Over-Kette</label><select id="fchain"><option value="">— Keine Kette —</option></select><span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Vorläufer-Kredit wählen oder neue Kette starten</span></div>
-          <div class="ff" style="grid-column:span 2">
+          <div class="ff"><label>ID <span style="font-size:11px;font-weight:400;color:var(--text4)">(optional — wird automatisch generiert)</span></label><input type="text" id="fid" placeholder="z.B. abc12345" style="font-family:monospace"></div>
+          <div class="ff ff-wide"><label>Roll-Over-Kette</label><select id="fchain"><option value="">— Keine Kette —</option></select><span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Vorläufer-Kredit wählen oder neue Kette starten</span></div>
+          <div class="ff ff-wide">
             <label style="display:flex;align-items:center;gap:.45rem;font-weight:400;cursor:pointer;margin:0">
               <input type="checkbox" id="ftx" style="accent-color:var(--accent);width:15px;height:15px;flex-shrink:0">
               <span>Passende Portfolio-Transaktionen anlegen</span>
             </label>
             <span style="font-size:11px;color:var(--text4);display:block;margin-top:3px">Bucht das Collateral als Transfer aus dem Cold Storage und die Geb&#252;hr als Geb&#252;hr-Transaktion, beide auf das Startdatum. Bei einem bereits abgeschlossenen Kredit wird das Collateral zum F&#228;lligkeitsdatum wieder eingebucht.</span>
           </div>
-          <div class="ff" style="grid-column:span 2"><label>Notiz</label><textarea id="fnote" rows="2" placeholder="Konditionen, Kontaktperson, Besonderheiten…" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea></div>
+          <div class="ff ff-wide"><label>Notiz</label><textarea id="fnote" rows="2" placeholder="Konditionen, Kontaktperson, Besonderheiten…" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea></div>
+        </div>
+          </div>
+          <aside class="fsplit-side"><div class="lprev" id="f-prev"></div></aside>
         </div>
         <div class="fa">
           <button class="sm" onclick="d.togAdd()">Abbrechen</button>
@@ -1615,8 +1739,12 @@
 
     <!-- ── TIMELINE ── -->
     <div class="sec" id="s-tl">
-      <span class="sh">Kreditlaufzeiten</span>
-      <div id="tl-list"></div>
+      <span class="sh">Gesamt-Timeline</span>
+      <div class="card" style="margin-bottom:1.25rem">
+        <span class="card-title">Alle Kredite — Roll-Overs auf einer Zeile</span>
+        <p class="note2" style="margin-bottom:.75rem">Jede Zeile ist eine Roll-Over-Kette oder ein einzelner Kredit. Die Glieder einer Kette liegen nebeneinander auf derselben Zeile, so wie sie aufeinander folgen.</p>
+        <div id="tl-gantt" style="overflow-x:auto"></div>
+      </div>
       <div class="mt">
         <span class="sh">Schulden-Verlauf</span>
         <div class="card">
@@ -1638,31 +1766,36 @@
           <span>Kredit bearbeiten</span>
           <button class="modal-close" onclick="d.closeEdit()">&#10005;</button>
         </div>
-        <div class="fg">
+        <div class="fsplit">
+          <div class="fsplit-main">
+        <div class="fg fg3">
           <div class="ff"><label>Bezeichnung</label><input type="text" id="ef-n" placeholder="Kredit #X"></div>
-          <div class="ff"><label>ID</label><input type="text" id="ef-id" placeholder="z.B. abc12345" style="font-family:monospace"></div>
           <div class="ff"><label>Betrag</label><input type="number" id="ef-a" placeholder="10000"></div>
+          <div class="ff"><label>W&#228;hrung</label>
+            <select id="ef-c"><option>EUR</option><option>CHF</option><option>CZK</option><option>PLN</option><option>USDC</option><option>USDT</option></select></div>
           <div class="ff"><label>Zinssatz (% p.a.)</label><input type="number" id="ef-r" placeholder="8" step="0.1"></div>
-          <div class="ff"><label>Gebühr (BTC, einmalig)</label><input type="number" id="ef-fee" placeholder="0" step="0.0001" min="0"></div>
           <div class="ff"><label>Laufzeit (Monate)</label>
             <select id="ef-t"><option>3</option><option>6</option><option>12</option><option>18</option><option>24</option></select></div>
           <div class="ff"><label>Startdatum</label><input type="date" id="ef-d" onchange="d.autoFillBtcStart('ef-d','ef-bp','ef-bp-hint')"></div>
           <div class="ff"><label>Collateral (BTC)</label><input type="number" id="ef-b" placeholder="0.25" step="0.001"></div>
+          <div class="ff"><label>Gebühr (BTC, einmalig)</label><input type="number" id="ef-fee" placeholder="0" step="0.0001" min="0"></div>
+          <div class="ff"><label>BTC-Preis bei Aufnahme (USD)</label><input type="number" id="ef-bp" placeholder="z.B. 85000" step="1"><span style="font-size:11px;color:var(--text4);display:block;margin-top:3px">F&#252;r Break-even und Geb&#252;hrenwert.</span><span id="ef-bp-hint" style="display:none;font-size:11px;color:var(--text4);margin-top:3px"></span></div>
           <div class="ff"><label>Status</label>
             <select id="ef-s"><option value="active">Aktiv</option><option value="closed">Abgeschlossen</option></select></div>
           <div class="ff"><label>R&#252;ckzahlungsdatum <span style="font-size:11px;font-weight:400;color:var(--text4)">(optional)</span></label><input type="date" id="ef-cd"><span style="font-size:11px;color:var(--text4);display:block;margin-top:3px">Nur bei abgeschlossenen Krediten. Leer = F&#228;lligkeitsdatum.</span></div>
-          <div class="ff"><label>W&#228;hrung</label>
-            <select id="ef-c"><option>EUR</option><option>CHF</option><option>CZK</option><option>PLN</option><option>USDC</option><option>USDT</option></select></div>
-          <div class="ff" style="grid-column:span 2"><label>BTC-Preis bei Kreditaufnahme (USD) &#8212; f&#252;r Break-even</label><input type="number" id="ef-bp" placeholder="z.B. 85000" step="1"><span id="ef-bp-hint" style="display:none;font-size:11px;color:var(--text4);margin-top:3px"></span></div>
-          <div class="ff" style="grid-column:span 2"><label>Roll-Over-Kette</label><select id="ef-chain"><option value="">— Keine Kette —</option></select><span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Vorläufer-Kredit wählen oder neue Kette starten</span></div>
-          <div class="ff" style="grid-column:span 2">
+          <div class="ff"><label>ID</label><input type="text" id="ef-id" placeholder="z.B. abc12345" style="font-family:monospace"></div>
+          <div class="ff ff-wide"><label>Roll-Over-Kette</label><select id="ef-chain"><option value="">— Keine Kette —</option></select><span style="font-size:11px;color:var(--text4);margin-top:3px;display:block">Vorläufer-Kredit wählen oder neue Kette starten</span></div>
+          <div class="ff ff-wide">
             <label style="display:flex;align-items:center;gap:.45rem;font-weight:400;cursor:pointer;margin:0">
               <input type="checkbox" id="ef-tx" style="accent-color:var(--accent);width:15px;height:15px;flex-shrink:0">
               <span>Im Portfolio gebucht</span>
             </label>
             <span style="font-size:11px;color:var(--text4);display:block;margin-top:3px">Angehakt hält die Buchungen f&#252;r Collateral und Geb&#252;hr auf dem Stand des Kredits. Haken entfernen l&#246;scht sie wieder aus dem Ledger.</span>
           </div>
-          <div class="ff" style="grid-column:span 2"><label>Notiz</label><textarea id="ef-note" rows="2" placeholder="Konditionen, Kontaktperson, Besonderheiten…" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea></div>
+          <div class="ff ff-wide"><label>Notiz</label><textarea id="ef-note" rows="2" placeholder="Konditionen, Kontaktperson, Besonderheiten…" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:13px;resize:vertical;font-family:inherit"></textarea></div>
+        </div>
+          </div>
+          <aside class="fsplit-side"><div class="lprev" id="ef-prev"></div></aside>
         </div>
         <div class="modal-actions">
           <button class="sm" onclick="d.closeEdit()">Abbrechen</button>
@@ -1887,7 +2020,7 @@
         </div>
       </div>
 
-      <div class="card" style="margin-bottom:1rem">
+      <div class="card" id="se-backup-card" style="margin-bottom:1rem">
         <span class="card-title">Datensicherung</span>
         <p class="note2" style="margin-bottom:.75rem">Alle Daten liegen ausschliesslich im Speicher dieses Browsers. Werden die Website-Daten gel&#246;scht &#8212; von Hand, durch eine Aufr&#228;umfunktion oder im privaten Modus &#8212; sind sie ohne Sicherung unwiederbringlich weg. Exportiere regelm&#228;ssig eine JSON-Datei.</p>
         <p class="note2" id="backup-hint" style="margin-bottom:.75rem"></p>
@@ -2046,10 +2179,10 @@
       </div>
     </div>
 
-    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v210-21082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.1.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
+    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v220-22082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.2.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
     </div><!-- #ffd-root -->
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
     (function(){
     'use strict';
     var R={BTC:85000,EUR:1.08,CHF:1.12,CZK:0.043,PLN:0.25,USDC:1,USDT:1,USD:1,SAT:85000/1e8};
@@ -2108,6 +2241,11 @@
     var chLtv=null,chMcd=null,chCol=null,chCcy=null,chBep=null,chInt2=null,chBtcost=null,chCf=null,chDcol=null,chHeat=null,chTerm=null,chZukunft=null,chZinslast=null,chBkHist=null;
     var lSort={key:'dl',dir:1};
     var ltvThresh=73; /* overwritten from cfg.ltvDisplay once settings load */
+    /* Der LTV, mit dem ein Kredit bei Firefish beginnt: 50%, also doppelte
+       Besicherung. Fest, keine Einstellung — die LTV-Werte in den
+       Einstellungen sind die Margin-Call-Schwellen und sagen, wann es eng
+       wird, nicht, womit man startet. */
+    var START_LTV=0.5;
     var lFilter='active';
     var lCcyFilter='all';
     var lView='grid';
@@ -2116,7 +2254,7 @@
     var ablOff={};
     /* ── Notices (storage/data problems the user must know about) ───────────── */
     var pendingNotices=[];
-    function ffdNotice(msg,kind){
+    function ffdNotice(msg,kind,action){
       var root=document.getElementById('ffd-root');
       if(!root){pendingNotices.push([msg,kind]);return;}
       var box=document.getElementById('ffd-notice-box');
@@ -2138,7 +2276,16 @@
       var cl=document.createElement('button');
       cl.className='sm';cl.textContent='×';cl.style.marginLeft='auto';
       cl.onclick=function(){n.remove();};
-      n.appendChild(txt);n.appendChild(cl);
+      n.appendChild(txt);
+      /* Optionaler Knopf: eine Meldung, die auf eine Stelle im Dashboard
+         verweist, sollte auch hinführen. */
+      if(action&&action.label&&action.fn){
+        var ab=document.createElement('button');
+        ab.className='sm';ab.textContent=action.label;ab.style.marginLeft='10px';
+        ab.onclick=function(){n.remove();action.fn();};
+        n.appendChild(ab);
+      }
+      n.appendChild(cl);
       box.appendChild(n);
     }
     function flushNotices(){
@@ -2314,6 +2461,27 @@
       if(!l)return 0;
       var up=(l.topups||[]).reduce(function(s,t){return s+(t.btc||0);},0);
       return Math.max(0,parseFloat(((l.col||0)-up).toFixed(8)));
+    }
+    /* Nachgelegtes Collateral kenntlich machen. Der angezeigte Betrag ist die
+       Summe aus Start und allen Nachschüssen — ohne Hinweis sieht ein
+       aufgestockter Kredit aus, als wäre er von Anfang an so besichert
+       gewesen. Das Aufklappen zeigt, woraus die Summe entstanden ist. */
+    function topupBlock(l){
+      var ups=(l&&l.topups)||[];
+      if(!ups.length)return '';
+      var sorted=ups.slice().sort(function(a,b){return pD(a.date)-pD(b.date);});
+      var sum=sorted.reduce(function(s,t){return s+(t.btc||0);},0);
+      var rows=sorted.map(function(t){
+        return '<div><span>'+pD(t.date).toLocaleDateString('de-CH')+'</span><b>+'+t.btc.toFixed(8)+' ₿</b></div>';
+      }).join('');
+      return '<details class="tu">'+
+        '<summary class="tu-sum" title="Collateral wurde nachgelegt">+₿ '+(sorted.length===1?'1 Nachschuss':sorted.length+' Nachschüsse')+'</summary>'+
+        '<div class="tu-list">'+
+          '<div><span>Zu Beginn</span><b>'+baseCol(l).toFixed(8)+' ₿</b></div>'+
+          rows+
+          (sorted.length>1?'<div class="tu-tot"><span>Nachgelegt</span><b>+'+sum.toFixed(8)+' ₿</b></div>':'')+
+        '</div>'+
+      '</details>';
     }
     /* Effect of one transaction on the BTC balance. For a 'fee' entry the BTC
        amount already IS the fee, so the separate fee field must not be
@@ -2503,7 +2671,21 @@
     }
     function toU(a,c){return a*(R[c]||1);}
     function frU(u,c){return c==='BTC'?u/R.BTC:c==='SAT'?(u/R.BTC)*1e8:u/(R[c]||1);}
-    function intU(l){return toU(l.amount*(l.rate/100)*(l.term/12),l.c);}
+    /* Tatsächliche Tage vom Start bis zur Fälligkeit. Firefish verzinst nach
+       Tagen geteilt durch 365, nicht nach Monaten geteilt durch 12. Bei
+       Laufzeiten, die ein ganzes Jahr treffen, ist das dasselbe; bei 18
+       Monaten (548 Tage) nicht: 20'000 zu 14,5% ergeben 24'353.97 statt
+       24'350 — nachgerechnet an echten Krediten.
+       Ohne brauchbares Datum bleibt nur der Durchschnittsmonat, und
+       term*(365/12)/365 ist genau term/12 — also das bisherige Verhalten. */
+    function loanDays(l){
+      var s=pD(l.start),e=aM(l.start,l.term);
+      if(isNaN(s.getTime())||isNaN(e.getTime()))return (l.term||0)*(365/12);
+      return Math.max(0,Math.round((e-s)/864e5));
+    }
+    /* Zins in der Währung des Kredits — intU() ist dasselbe in USD. */
+    function intC(l){return l.amount*(l.rate/100)*(loanDays(l)/365);}
+    function intU(l){return toU(intC(l),l.c);}
     /* Fiat value of the origination fee. The fee is a fixed BTC amount paid when
        the loan started, so it is valued at the BTC price of that day — otherwise
        this sunk cost would drift with the current market price. Falls back to the
@@ -2518,6 +2700,20 @@
     }
     function feeBasisMark(l){
       return (l.feeBtc&&!l.btcStart)?' <span style="color:var(--warn)">\u26a0</span>':'';
+    }
+    /* Was das hinterlegte Collateral heute wert ist \u2014 beim \u00dcberfahren, damit
+       Karte und Tabelle nicht noch eine Zahl mehr tragen. Gezeigt wird der
+       Tooltip der Roll-Over-Timeline, angebunden \u00fcber data-tip. Bei versteckten
+       Betr\u00e4gen entf\u00e4llt er: sonst g\u00e4be er preis, was die Unsch\u00e4rfe verdeckt. */
+    function colValAttr(l){
+      if(!l||!(l.col>0)||!(R.BTC>0)||(typeof cfg!=='undefined'&&cfg.hideAmounts))return '';
+      function row(k,v){return '<div class="tl-tip-row"><span>'+k+'</span><span><b>'+v+'</b></span></div>';}
+      var h='<div class="tl-tip-hd">Collateral</div>'+
+        row('Menge',l.col.toFixed(8)+' \u20bf')+
+        row('BTC-Kurs',pU(R.BTC))+
+        '<hr>'+
+        row('Aktueller Wert',fmtU(l.col*R.BTC));
+      return ' data-tip="'+esc(h)+'" style="border-bottom:1px dotted var(--border2);cursor:help"';
     }
     function feeU(l){return (l.feeBtc||0)*(l.btcStart||R.BTC);}
     /* Rueckzahlung an Firefish: Kapital + Zinsen. Die Bearbeitungsgebuehr wird
@@ -2574,16 +2770,94 @@
         if(typeof d!=='undefined'&&d.loanTxs&&d.loanTxs(l.id).length)d.syncLoanTxs(l);
       });
     }
-    window.goRo=function(){
-      /* Try visible nav-item first (desktop sidebar), then mobile tab bar */
+    /* Auf einen Tab wechseln — der Knopf dafür steht je nach Breite in der
+       Seitenleiste oder in der Tab-Zeile. */
+    function goTabId(t){
       var all=document.querySelectorAll('#ffd-root .nav-item, #ffd-root .tab');
       for(var i=0;i<all.length;i++){
         var oc=all[i].getAttribute('onclick')||'';
-        if(oc.indexOf("'ro'")>=0){
-          d.tab('ro',all[i]);
-          return;
+        if(oc.indexOf("'"+t+"'")>=0){d.tab(t,all[i]);return true;}
+      }
+      return false;
+    }
+    window.goRo=function(){goTabId('ro');};
+    window.goTab=function(t){goTabId(t);};
+    /* Zu einem Element scrollen und es kurz hervorheben. Ohne die kurze
+       Verzögerung misst der Browser die Position, bevor der Tab gezeichnet ist. */
+    function goHighlight(sel,many){
+      setTimeout(function(){
+        var els=many?document.querySelectorAll(sel):[document.querySelector(sel)];
+        var first=els[0];
+        if(!first)return;
+        first.scrollIntoView({behavior:'smooth',block:'center'});
+        Array.prototype.forEach.call(els,function(e){
+          if(!e)return;
+          e.classList.add('go-hl');
+          setTimeout(function(){e.classList.remove('go-hl');},2000);
+        });
+      },80);
+    }
+    function cssId(v){
+      return (window.CSS&&CSS.escape)?CSS.escape(String(v)):String(v).replace(/["\\]/g,'\\$&');
+    }
+    /* Kreditname als Verweis auf seine Karte. Überall dort einsetzbar, wo bisher
+       nur esc(l.name) stand — der Name bleibt derselbe, er wird nur anklickbar. */
+    function xrefLoan(l,label){
+      if(!l||!l.id)return esc((l&&l.name)||'');
+      return '<span class="xref" onclick="goLoan(\''+escJs(l.id)+'\')" title="Zum Kredit">'+
+             esc(label||l.name)+'</span>';
+    }
+    /* Zu einem bestimmten Kredit springen. Der Filter muss mit: «Meine Kredite»
+       steht standardmässig auf «Aktiv», ein Link auf einen abgeschlossenen
+       Kredit landete sonst auf einer Liste, in der er nicht vorkommt. */
+    window.goLoan=function(id){
+      var l=loans.filter(function(x){return x.id===id;})[0];
+      if(!l)return;
+      if((lFilter==='active'&&l.status!=='active')||(lFilter==='closed'&&l.status!=='closed')){
+        d.filterLoans('all',g('ft-all'));
+      }
+      if(lCcyFilter&&lCcyFilter!=='all'&&l.c!==lCcyFilter)lCcyFilter='all';
+      goTabId('lo');
+      d.loans();
+      goHighlight('#loans-list [data-loan="'+cssId(id)+'"]');
+    };
+    /* Balken eines Diagramms zum passenden Kredit führen. `ids` ist die Liste
+       der Kredit-IDs in derselben Reihenfolge wie die Balken — bei sortierten
+       Diagrammen also die sortierte Reihenfolge, nicht die von `loans`.
+       Der Mauszeiger wechselt über einem Balken, sonst wäre nicht zu ahnen,
+       dass da etwas anklickbar ist. */
+    function chartLoanNav(ch,ids){
+      if(!ch||!ch.options||!ids||!ids.length)return ch;
+      ch.options.onClick=function(evt,els){
+        if(els&&els.length&&ids[els[0].index])goLoan(ids[els[0].index]);
+      };
+      ch.options.onHover=function(evt,els){
+        var t=evt&&evt.native&&evt.native.target;
+        if(t)t.style.cursor=(els&&els.length)?'pointer':'default';
+      };
+      /* Ausserhalb der Zeichenfläche ruft Chart.js onHover nicht mehr auf —
+         der Zeiger bliebe sonst als Hand stehen. */
+      var cv=ch.canvas;
+      if(cv&&!cv._navCursorBound){
+        cv._navCursorBound=true;
+        cv.addEventListener('mouseleave',function(){cv.style.cursor='default';});
+        /* Ein Klick auf einen Balken ist von aussen nicht sichtbar — einmalig
+           einen Hinweis unter das Diagramm setzen. */
+        var card=cv.closest?cv.closest('.card'):null,node=cv;
+        while(card&&node.parentNode&&node.parentNode!==card)node=node.parentNode;
+        if(card&&node.parentNode===card){
+          var hint=document.createElement('p');
+          hint.className='note2 ch-navhint';
+          hint.textContent='Klick auf '+(/doughnut|pie/.test((ch.config&&ch.config.type)||'')?'ein Segment':'einen Balken')+' öffnet den Kredit.';
+          card.insertBefore(hint,node.nextSibling);
         }
       }
+      return ch;
+    }
+    /* Zu den Portfolio-Buchungen eines Kredits springen. */
+    window.goTx=function(loanId){
+      goTabId('bk');
+      goHighlight('#bk-content [data-tx-loan="'+cssId(loanId)+'"]',true);
     };
     function lc(v){return v<(cfg.ltvWarn!=null?cfg.ltvWarn:73)?'#16a34a':v<(cfg.ltvCrit!=null?cfg.ltvCrit:79)?'#d97706':v<(cfg.ltvDanger!=null?cfg.ltvDanger:86)?'#ea580c':'#dc2626';}
     function fmt(a,c){
@@ -2899,7 +3173,7 @@
         /* New metrics */
         var totalInterestUSD=act.reduce(function(s,l){return s+intU(l);},0);
         var totalFeeUSD=act.reduce(function(s,l){return s+feeU(l);},0);
-        var monthlyInterestUSD=act.reduce(function(s,l){return s+toU(l.amount*(l.rate/100)/12,l.c);},0);
+        var monthlyInterestUSD=act.reduce(function(s,l){return s+(l.term?intU(l)/l.term:0);},0);
         var totalDueUSD=aU+totalInterestUSD;
         var coverage=aDue>0?(colVal/aDue):0;
         var CC=(['EUR','CHF','USD','USDT','USDC','CZK','PLN','BTC']).filter(visC);
@@ -2919,8 +3193,8 @@
             return {c:c,v:v};
           }));
         }
-        var dueByCcyGrid=ccyBreakdownGrid(function(l){return l.amount+l.amount*(l.rate/100)*(l.term/12);});
-        var costByCcyGrid=ccyBreakdownGrid(function(l){return l.amount*(l.rate/100)*(l.term/12)+frU(feeU(l),l.c);});
+        var dueByCcyGrid=ccyBreakdownGrid(function(l){return l.amount+intC(l);});
+        var costByCcyGrid=ccyBreakdownGrid(function(l){return intC(l)+frU(feeU(l),l.c);});
         var colValCcyGrid=usdGrid(CC,colVal);
         /* Per-currency LTV breakdown */
         var ccyLtvParts=activeCcys.map(function(c){
@@ -2971,7 +3245,7 @@
           var dl=dL(l.start,l.term);
           var col=dl<=7?'var(--err)':dl<=14?'var(--warn)':'var(--text)';
           return '<div class="mc" style="margin:0">'+
-            '<span class="mc-lbl">'+esc(l.name)+'</span>'+
+            '<span class="mc-lbl">'+xrefLoan(l)+'</span>'+
             '<span class="mc-val" style="color:'+col+'">'+dl+' Tage</span>'+
             '<span class="mc-sub">F\u00e4llig: '+fmt(frU(dueU(l),l.c),l.c)+'</span>'+
             '<span class="mc-sub">'+aM(l.start,l.term).toLocaleDateString('de-CH',{day:'2-digit',month:'short',year:'numeric'})+'</span>'+
@@ -3015,7 +3289,7 @@
             while(j<items.length&&(items[j].end-items[i].end)<=WIN*864e5){sum+=items[j].due;n++;j++;}
             if(n>=2&&(!best||n>best.n||(n===best.n&&sum>best.sum)))
               best={n:n,sum:sum,from:items[i].end,to:items[j-1].end,dl:items[i].dl,
-                    names:items.slice(i,j).map(function(x){return x.l.name;})};
+                    names:items.slice(i,j).map(function(x){return x.l;})};
           }
           if(!best)return '';
           var urgent=best.dl<=(cfg.countdownDays||30);
@@ -3024,7 +3298,7 @@
             'background:'+(urgent?'var(--warn-bg)':'var(--bg2)')+';border:1px solid '+(urgent?'var(--warn-border)':'var(--border)')+';color:'+(urgent?'var(--warn)':'var(--text3)')+'">'+
             (urgent?'⚠ ':'')+'<b>'+best.n+' Kredite</b> fällig innerhalb von '+(span===0?'einem Tag':span+' Tagen')+
             ' ('+best.from.toLocaleDateString('de-CH')+(span===0?'':' – '+best.to.toLocaleDateString('de-CH'))+') — <b>'+fmtU(best.sum)+'</b>'+
-            '<span style="display:block;color:var(--text4);font-size:10px;margin-top:1px">'+esc(best.names.join(' · '))+'</span>'+
+            '<span style="display:block;color:var(--text4);font-size:10px;margin-top:1px">'+best.names.map(function(x){return xrefLoan(x);}).join(' · ')+'</span>'+
           '</div>';
         })();
         var dueTilesHtml=
@@ -3049,7 +3323,7 @@
         var filtered_ltv=act.filter(function(l){if(!l.col)return false;return ltvPct(l)>=ltvThresh;});
         g('ov-ltv').innerHTML=filtered_ltv.length?filtered_ltv.map(function(l){
           var cU=l.col*R.BTC,lU=toU(l.amount,l.c),due3=ltvU(l),ltv=(due3/cU)*100,w=Math.min(ltv,100),dl=dL(l.start,l.term);
-          var interest=l.amount*(l.rate/100)*(l.term/12);
+          var interest=intC(l);
           var end=aM(l.start,l.term).toLocaleDateString('de-CH');
           var started=pD(l.start),now2=new Date(),totalMs=aM(l.start,l.term)-started;
           var pct=totalMs>0?Math.min(100,Math.max(0,((now2-started)/totalMs*100))).toFixed(1):100;
@@ -3057,7 +3331,7 @@
           var beDist=l.col>0?((R.BTC-mc1P)/R.BTC*100).toFixed(1):null;
           var beHtml=l.col>0?'<div style="font-size:11px;color:var(--text4);margin-top:.4rem">MC1 bei '+pU(Math.round(mc1P))+' ('+(beDist>0?'−'+beDist+'% vom aktuellen Preis':'⚠ überschritten')+')</div>':'';
           return '<div class="card">'+
-            '<div class="lh"><span class="lid">'+esc(l.name)+' <span class="lid-sub">'+esc(l.id)+'</span></span><div class="fx" style="gap:4px"><span class="badge ba">Aktiv</span>'+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+' </div></div>'+
+            '<div class="lh"><span class="lid">'+xrefLoan(l)+' <span class="lid-sub">'+esc(l.id)+'</span></span><div class="fx" style="gap:4px"><span class="badge ba">Aktiv</span>'+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+' </div></div>'+
             /* ② Kernzahlen 3-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr 1fr">'+
               '<div><span class="ll">Betrag</span><span class="lv">'+fmt(l.amount,l.c)+'</span></div>'+
@@ -3065,7 +3339,7 @@
               '<div><span class="ll">Zins p.a.</span><span class="lv">'+l.rate+'%</span></div>'+
             '</div>'+
             /* ③ Zeitinfo 2-spaltig */
-            '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
+            '<div class="lmeta" style="grid-template-columns:1fr 1fr 1fr;margin-top:.4rem">'+
               '<div><span class="ll">Start</span><span class="lv">'+pD(l.start).toLocaleDateString('de-CH')+'</span></div>'+
               '<div><span class="ll">F\u00e4llig</span><span class="lv">'+end+'</span></div>'+
               '<div><span class="ll">Laufzeit</span><span class="lv">'+l.term+' Monate</span></div>'+
@@ -3118,12 +3392,15 @@
         });
         if(!miss.length){chip.style.display='none';chip.innerHTML='';return;}
         var withFee=miss.filter(function(l){return l.feeBtc>0;}).length;
-        var names=miss.slice(0,8).map(function(l){return esc(l.name);}).join(', ')+(miss.length>8?' …':'');
         chip.style.display='inline-flex';
-        chip.innerHTML='<span title="'+esc(names)+'" style="display:inline-flex;align-items:center;gap:6px;'+
-          'padding:4px 10px;border-radius:20px;font-size:12px;background:var(--warn-bg);border:1px solid var(--warn-border);color:var(--warn)">'+
+        /* Aufklappbar statt nur als Titel-Attribut: die betroffenen Kredite
+           sind der Grund für den Chip, also führt er auch zu ihnen. */
+        chip.innerHTML='<details class="tu"><summary class="tu-sum" style="background:var(--warn-bg);border-color:var(--warn-border);color:var(--warn)">'+
           '\u26a0 '+miss.length+' ohne BTC-Startpreis'+
-          (withFee?' \u00b7 '+withFee+' davon mit Geb\u00fchr':'')+'</span>';
+          (withFee?' \u00b7 '+withFee+' davon mit Geb\u00fchr':'')+'</summary>'+
+          '<div class="tu-list">'+miss.map(function(l){
+            return '<div><span>'+xrefLoan(l)+'</span><b>'+esc(l.id)+'</b></div>';
+          }).join('')+'</div></details>';
       },
       loansTable:function(sorted){
         var el=g('loans-list');
@@ -3150,7 +3427,7 @@
             var i=l._i;
             var dl=dL(l.start,l.term),end=aM(l.start,l.term).toLocaleDateString('de-CH');
             var lU=toU(l.amount,l.c);
-            var interest=l.amount*(l.rate/100)*(l.term/12);
+            var interest=intC(l);
             var ltv=ltvPct(l);
             var liqUSDval=0,liqCcyStr='–',liqUSDstr='–';
             var interestStr=fmt(interest,l.c);
@@ -3159,7 +3436,7 @@
             var dueStr=fmt(dueAmount,l.c);
             if(l.status==='active'&&l.col>0){var due=ltvU(l);liqUSDval=due/(0.95*l.col);var near=R.BTC<liqUSDval*1.1;var col='color:'+(R.BTC<=liqUSDval?'#dc2626':near?'#d97706':'#16a34a');liqCcyStr='<span style="'+col+'">'+fmt(frU(liqUSDval,l.c),l.c)+'</span>';liqUSDstr='<span style="'+col+'">'+pU(liqUSDval)+'</span>';}
             var dlStr=l.status==='active'?(dl>0?'<span style="color:'+(dl<30?'#dc2626':dl<60?'#d97706':'var(--text2)')+'">'+dl+' Tage</span>':'<span style="color:#dc2626">F&#228;llig!</span>'):'<span style="color:#9ca3af">&#10003;</span>';
-            return '<tr>'+
+            return '<tr data-loan="'+esc(l.id)+'">'+
               '<td><div class="tbl-name">'+esc(l.name)+(l.chainId?' <span class="badge" title="Roll-Over" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer;font-size:11px;padding:1px 4px;vertical-align:middle" onclick="goRo()">🔗</span>':'')+'</div><div class="tbl-id">'+esc(l.id)+'</div></td>'+
               '<td><span class="badge '+(l.status==='active'?'ba':'bc')+'">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span></td>'+
               '<td class="amt">'+fmt(l.amount,l.c)+'</td>'+
@@ -3169,14 +3446,12 @@
               '<td>'+dlStr+'</td>'+
               '<td class="amt">'+interestStr+'</td>'+
               '<td class="amt">'+dueStr+'</td>'+
-              '<td class="amt">'+l.col.toFixed(8)+' BTC</td>'+
+              '<td class="amt"><span'+colValAttr(l)+'>'+l.col.toFixed(8)+' BTC</span>'+topupBlock(l)+'</td>'+
               '<td class="amt">'+(ltv!==null?'<span style="color:'+lc(ltv)+';font-weight:600">'+ltv.toFixed(1)+'%</span><div class="tbl-ltv-bar"><div class="tbl-ltv-fill" style="width:'+Math.min(ltv,100)+'%;background:'+lc(ltv)+'"></div></div>':'–')+'</td>'+
               '<td class="amt">'+liqCcyStr+'</td>'+
               '<td class="amt">'+liqUSDstr+'</td>'+
               '<td><div class="tbl-actions">'+
-                '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openEdit('+i+',\''+escJs(l.id)+'\')">&#9998;</button>'+
-                '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openTopup('+i+',\''+escJs(l.id)+'\')" title="Collateral nachlegen">+&#8383;</button>'+'<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+',\''+escJs(l.id)+'\')" title="Duplizieren">&#10064;</button>'+
-                '<button class="del" onclick="d.openDel('+i+',\''+escJs(l.id)+'\')">&#10005;</button>'+
+                d.actMenuBtn(i,l.id)+
               '</div></td>'+
             '</tr>';
           }).join('')+
@@ -3188,10 +3463,14 @@
           if(!th.dataset.label)th.dataset.label=th.textContent.replace(/ [↑↓]$/,'');
           th.textContent=th.dataset.label+(isActive?(lSort.dir===1?' ↑':' ↓'):'');
         });
+        d.roTlBindTips(el);   /* Collateral-Tooltip, siehe colValAttr() */
       },
       loans:function(){
         var el=g('loans-list');
         if(!el)return;
+        /* Das Menü steht fix im Fenster und überlebt das Neuzeichnen — sein
+           Auslöser aber nicht. Es hinge sonst über einer fremden Karte. */
+        d.actMenuClose();
         /* Base sets for cross-dependent counts */
         var byCcy=lCcyFilter&&lCcyFilter!=='all'?loans.filter(function(l){return l.c===lCcyFilter;}):loans;
         var byStatus=lFilter==='active'?loans.filter(function(l){return l.status==='active';}):lFilter==='closed'?loans.filter(function(l){return l.status==='closed';}):loans;
@@ -3243,7 +3522,7 @@
           var i=l._i;
           var dl=dL(l.start,l.term),end=aM(l.start,l.term).toLocaleDateString('de-CH');
           var pct=l.status==='closed'?100:(function(){var st=pD(l.start),en=aM(l.start,l.term),tot=en-st;return tot>0?Math.min(100,Math.max(0,Math.round((new Date()-st)/tot*100))):100;})();
-          var interest=l.amount*(l.rate/100)*(l.term/12),lU=toU(l.amount,l.c);
+          var interest=intC(l),lU=toU(l.amount,l.c);
           /* Break-even */
           var btcAtStart=l.btcStart||null;
           var bep=btcAtStart?btcAtStart*(costU(l)/lU):null;
@@ -3271,13 +3550,11 @@
             '</div>';
             setTimeout(function(li,ls,wid){return function(){d.loadHistBtc_auto(li,ls,wid);};}(i,l.start,bsWid),0);
           }
-          return '<div class="card">'+
+          return '<div class="card" data-loan="'+esc(l.id)+'">'+
             /* ① Kopfzeile */
             '<div class="lh"><span class="lid">'+esc(l.name)+' <span class="lid-sub">'+esc(l.id)+'</span></span>'+
-            '<div class="fx"><span class="badge '+(l.status==='active'?'ba':'bc')+'">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span>'+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+
-            '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openEdit('+i+',\''+escJs(l.id)+'\')">&#9998;</button>'+
-            '<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.openTopup('+i+',\''+escJs(l.id)+'\')" title="Collateral nachlegen">+&#8383;</button>'+'<button class="sm" style="padding:2px 8px;font-size:12px" onclick="d.dupLoan('+i+',\''+escJs(l.id)+'\')" title="Duplizieren">&#10064;</button>'+
-            '<button class="del" onclick="d.openDel('+i+',\''+escJs(l.id)+'\')">&#10005;</button></div></div>'+
+            '<div class="fx"><span class="badge '+(l.status==='active'?'ba':'bc')+'">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span>'+(d.loanTxs(l.id).length?'<span class="badge" title="Im Portfolio gebucht \u2014 zu den Buchungen" style="background:var(--bg2);color:var(--text3);border:1px solid var(--border);cursor:pointer" onclick="goTx(\''+escJs(l.id)+'\')">\u20bf '+d.loanTxs(l.id).length+'</span>':'')+(l.chainId?'<span class="badge" style="background:var(--accent-bg);color:var(--accent);border:1px solid var(--accent);cursor:pointer" onclick="goRo()">🔗 Roll-Over</span>':'')+
+            d.actMenuBtn(i,l.id)+'</div></div>'+
             /* ② Kernzahlen 3-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr 1fr">'+
               '<div><span class="ll">Betrag</span><span class="lv">'+fmt(l.amount,l.c)+'</span></div>'+
@@ -3285,16 +3562,16 @@
               '<div><span class="ll">Zins p.a.</span><span class="lv">'+l.rate+'%</span></div>'+
             '</div>'+
             /* ③ Zeitinfo 2-spaltig */
-            '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
+            '<div class="lmeta" style="grid-template-columns:1fr 1fr 1fr;margin-top:.4rem">'+
               '<div><span class="ll">Start</span><span class="lv">'+pD(l.start).toLocaleDateString('de-CH')+'</span></div>'+
               '<div><span class="ll">Fällig</span><span class="lv">'+end+'</span></div>'+
               '<div><span class="ll">Laufzeit</span><span class="lv">'+l.term+' Monate</span></div>'+
             '</div>'+
             /* ④ Collateral & Risiko 2-spaltig */
             '<div class="lmeta" style="grid-template-columns:1fr 1fr;margin-top:.4rem">'+
-              '<div><span class="ll">Collateral</span><span class="lv">'+l.col.toFixed(8)+' BTC</span></div>'+
+              '<div><span class="ll">Collateral</span><span class="lv"'+colValAttr(l)+'>'+l.col.toFixed(8)+' BTC</span>'+topupBlock(l)+'</div>'+
               (l.status==='active'&&l.col>0?(function(){var due=ltvU(l);var liqUSD=due/(0.95*l.col);var near=R.BTC<liqUSD*1.1;return '<div><span class="ll">Liquidationspreis</span><span class="lv" style="color:'+(R.BTC<=liqUSD?'#dc2626':near?'#d97706':'#16a34a')+'">'+fmt(frU(liqUSD,l.c),l.c)+''+(R.BTC<=liqUSD?' ⚠ Liquidiert':near?' ⚠ Nahe':'')+'</span></div>';})():'')+
-              '<div><span class="ll">Gebühr</span><span class="lv"'+feeBasisAttr(l)+'>'+(l.feeBtc?l.feeBtc+' BTC (≈ '+pU(feeU(l))+')'+feeBasisMark(l):'–')+'</span></div>'+
+              '<div class="lm-wide"><span class="ll">Gebühr</span><span class="lv"'+feeBasisAttr(l)+'>'+(l.feeBtc?l.feeBtc+' BTC (≈ '+pU(feeU(l))+')'+feeBasisMark(l):'–')+'</span></div>'+
             '</div>'+
             /* ⑤ Fortschrittsbalken */
             '<div class="prog-row" style="margin-top:.6rem"><span>Laufzeit vergangen</span><span>'+pct+'% '+(l.status==='active'&&dl>0?'<span style="color:var(--text4)">· noch '+dl+' Tage</span>':l.status==='active'?'<span style="color:var(--err)">· Fällig!</span>':'')+'</span></div>'+
@@ -3323,6 +3600,7 @@
             (l.note?'<div style="margin-top:.6rem;padding:.45rem .65rem;border-radius:8px;background:var(--bg2);border:1px solid var(--border);font-size:12px;color:var(--text3)"><span style="font-weight:600;color:var(--text2)">&#128172; </span>'+esc(l.note)+'</div>':'')+
             '</div>';
         }).join('');
+        d.roTlBindTips(el);   /* Collateral-Tooltip, siehe colValAttr() */
       },
       setView:function(v,el){
         lView=v;
@@ -3373,12 +3651,26 @@
           /* Buchen ist eine bewusste Entscheidung — bei jedem Öffnen wieder aus */
           var ftx=g('ftx');if(ftx)ftx.checked=false;
           d.populateChainSelect('fchain',null,null);
+          d.loanPreviewBind('f');
+          d.loanPreview('f');
         }
       },
       addLoan:function(){
         var customId=(g('fid').value||'').trim();
         var chainSel=g('fchain').value;
-        var chainId=chainSel==='__new__'?uid():chainSel||null;
+        /* Die Auswahl nennt einen Vorgänger-Kredit, keine Ketten-ID. Dessen
+           Kette übernehmen — hat er noch keine, eine anlegen und ihn selbst
+           mit hineinnehmen, sonst stünde der neue Kredit allein in einer
+           «Kette», die den Vorgänger nicht enthält. Dieselbe Logik wie in
+           saveEdit(). */
+        var chainId=null;
+        if(chainSel==='__new__'){chainId=uid();}
+        else if(chainSel){
+          var pred=loans.filter(function(x){return x.id===chainSel;})[0];
+          if(pred&&pred.chainId){chainId=pred.chainId;}
+          else if(pred){chainId=uid();pred.chainId=chainId;}
+          else {chainId=chainSel;}
+        }
         var nl={id:customId||uid(),name:g('fn').value||'Neuer Kredit',
           amount:parseFloat(g('fa').value)||0,c:g('fc').value,rate:parseFloat(g('fr').value)||0,
           feeBtc:parseFloat(g('ffee').value)||0,
@@ -3640,6 +3932,8 @@
         g('edit-modal-bg').dataset.idx=i;
         g('edit-modal-bg').dataset.lid=l.id||'';
         g('edit-modal-bg').classList.add('open');
+        d.loanPreviewBind('ef');
+        d.loanPreview('ef');
       },
       closeEdit:function(){g('edit-modal-bg').classList.remove('open');},
       saveEdit:function(){
@@ -3730,6 +4024,148 @@
         },50);
       },
 
+      /* ─── Roll-Over aus einem laufenden Kredit ───
+         Öffnet «Neuer Kredit» mit dem, was aus dem Vorgänger folgt: der
+         fällige Betrag wird zur neuen Kreditsumme, der Fälligkeitstag zum
+         Startdatum, und die Kette ist vorausgewählt. Angelegt wird hier
+         nichts — das bleibt beim Speichern-Knopf, damit Laufzeit, Zins und
+         Gebühr vorher noch angepasst werden können.
+         Der Vorgänger wird bewusst nicht angefasst: syncStatus() schliesst
+         ihn ohnehin an seinem Fälligkeitstag, und ihn vorher zu schliessen
+         buchte sein Collateral zu früh ins Ledger zurück. */
+      rollover:function(i,id){
+        var l=lRef(i,id);
+        if(!l)return;
+        var p=g('add-panel');
+        if(p&&p.style.display!=='block')d.togAdd();
+        /* Fälliger Betrag des Vorgängers — dieselbe Rechnung wie auf der Karte */
+        var due=l.amount+intC(l);
+        var end=aM(l.start,l.term);
+        var nm=/^(.*?)\s+—\s+Roll-Over\s+(\d+)$/.exec(l.name);
+        var fn=g('fn');if(fn)fn.value=nm?(nm[1]+' — Roll-Over '+(parseInt(nm[2],10)+1)):(l.name+' — Roll-Over 1');
+        var fa=g('fa');if(fa)fa.value=parseFloat(due.toFixed(2));
+        var fc=g('fc');if(fc)for(var k=0;k<fc.options.length;k++){if(fc.options[k].value===l.c){fc.selectedIndex=k;break;}}
+        var fr=g('fr');if(fr)fr.value=l.rate;
+        /* Die Laufzeit ist eine Auswahlliste — eine krumme Laufzeit des
+           Vorgängers steht dort nicht und bleibt beim Vorgabewert. */
+        var ft=g('ft');if(ft)for(var k=0;k<ft.options.length;k++){if(parseInt(ft.options[k].value||ft.options[k].text,10)===l.term){ft.selectedIndex=k;break;}}
+        var fs=g('fs');if(fs)fs.value='active';
+        var fd=g('fd');
+        if(fd&&!isNaN(end.getTime())){
+          fd.value=end.getFullYear()+'-'+String(end.getMonth()+1).padStart(2,'0')+'-'+String(end.getDate()).padStart(2,'0');
+          d.autoFillBtcStart('fd','fbp','fbp-hint');
+        }
+        /* Die Kette: den Vorgänger vorauswählen. Die Auswahlliste führt
+           Kredite, nicht Ketten — also seine ID, nicht seine chainId.
+           addLoan() löst daraus die Kette auf und legt nötigenfalls eine an. */
+        d.populateChainSelect('fchain',null,null);
+        var fch=g('fchain');if(fch)fch.value=l.id;
+        d.rolloverCol(true);
+        d.rolloverBind();
+        d.loanPreviewBind('f');
+        d.loanPreview('f');
+        if(p){p.scrollIntoView({behavior:'smooth',block:'center'});}
+        var fnEl=g('fn');if(fnEl)setTimeout(function(){fnEl.focus();},350);
+      },
+      /* Das nötige Collateral für den Start-LTV von 50% (siehe START_LTV).
+         Der LTV dieses Dashboards rechnet mit Kapital plus Zins, also auch
+         hier — bemessen am fälligen Betrag, nicht an der Kreditsumme. */
+      rolloverCol:function(erstmals){
+        var fb=g('fb');if(!fb)return;
+        if(!erstmals&&!fb._auto)return;
+        var amt=parseFloat(g('fa').value)||0;
+        var rate=parseFloat(g('fr').value)||0;
+        var term=parseInt(g('ft').value||g('ft').selectedOptions[0].text,10)||12;
+        var ccy=g('fc').value;
+        var tage=loanDays({start:g('fd')?g('fd').value:'',term:term});
+        var dueU2=toU(amt+(amt*(rate/100)*(tage/365)),ccy);
+        var col=(R.BTC>0)?dueU2/START_LTV/R.BTC:0;
+        fb.value=col>0?parseFloat(col.toFixed(8)):'';
+        fb._auto=true;
+        var hint=g('fb-hint');
+        if(hint){
+          hint.textContent=col>0?('Vorschlag für '+(START_LTV*100).toFixed(0)+'% LTV bei '+pU(R.BTC)+' — anpassbar.'):'';
+          hint.style.display=col>0?'block':'none';
+        }
+        /* Das Collateral wurde hier gesetzt, nicht getippt — die Vorschau
+           bekommt davon sonst nichts mit. */
+        d.loanPreview('f');
+      },
+      /* ─── Vorschau im Kreditformular ───
+         Was der Kredit kosten wird, bevor er gespeichert ist. Aufbau wie bei
+         Firefish selbst: fälliger Betrag, Gebühr und Sicherheit getrennt,
+         darunter die Bitcoin-Menge, die man insgesamt braucht.
+         Die Gebühr wird bewusst nicht zum fälligen Betrag addiert — sie ist
+         bei Aufnahme in Bitcoin bezahlt und wird nicht noch einmal fällig.
+         `pfx` ist 'f' (Neuer Kredit) oder 'ef' (Bearbeiten). */
+      loanPreview:function(pfx){
+        var el=g(pfx+'-prev');if(!el)return;
+        function fld(n){return g(pfx==='f'?('f'+n):('ef-'+n));}
+        function val(n){var e=fld(n);return e?(parseFloat(e.value)||0):0;}
+        var amt=val('a'),rate=val('r'),fee=val('fee'),col=val('b');
+        var cEl=fld('c'),ccy=cEl?cEl.value:'USD';
+        var tEl=fld('t');
+        var term=tEl?(parseInt(tEl.value||(tEl.selectedOptions[0]&&tEl.selectedOptions[0].text),10)||0):0;
+        if(!(amt>0)||!(term>0)){el.style.display='none';el.innerHTML='';return;}
+        /* Über die tatsächlichen Tage, wie Firefish — das Startdatum steht im
+           Formular, also ist die Laufzeit auf den Tag genau bekannt. */
+        var dEl=fld('d');
+        var tage=loanDays({start:dEl?dEl.value:'',term:term});
+        var interest=amt*(rate/100)*(tage/365);
+        var due=amt+interest;
+        /* Gebühr in Geld: zum eingetragenen Aufnahmepreis, sonst zum
+           aktuellen Kurs — dieselbe Regel wie feeU() für gespeicherte Kredite. */
+        var bp=val('bp'),feePx=bp>0?bp:R.BTC;
+        function row(k,v,sub,cls){
+          return '<div class="lprev-row'+(cls?' '+cls:'')+'"><span class="lprev-k">'+k+'</span>'+
+                 '<span class="lprev-n">'+v+'</span>'+
+                 (sub?'<span class="lprev-sub">'+sub+'</span>':'')+'</div>';
+        }
+        var h='<div class="lprev-hd">Vorschau</div>';
+        h+=row('Fälliger Betrag',esc(fmt(due,ccy)),
+               'davon '+esc(fmt(interest,ccy))+' Zinsen · '+rate+'% p.a. für '+term+' Monate');
+        h+=row('Bearbeitungsgebühr',fee>0?('≈ '+fee.toFixed(8)+' BTC'):'–',
+               fee>0&&feePx>0?('≈ '+esc(pU(fee*feePx))+(bp>0?' zum Aufnahmepreis':'')):'');
+        var ltvSub='';
+        if(col>0&&R.BTC>0){
+          var ltv=toU(due,ccy)/(col*R.BTC)*100;
+          ltvSub='LTV <span style="color:'+lc(ltv)+'">'+ltv.toFixed(1)+'%</span>'+
+                 ' · ≈ '+esc(pU(col*R.BTC));
+        }
+        h+=row('Bitcoin-Sicherheit',col>0?('≈ '+col.toFixed(8)+' BTC'):'–',ltvSub);
+        h+=row('Benötigte Gesamtmenge an Bitcoin','≈ '+(col+fee).toFixed(8)+' BTC',
+               'Sicherheit plus Gebühr','lprev-tot');
+        el.innerHTML=h;
+        el.style.display='block';
+      },
+      /* Die Vorschau an die Felder hängen, die sie speisen. Einmal je
+         Formular — die Felder selbst werden nie ersetzt. */
+      loanPreviewBind:function(pfx){
+        var el=g(pfx+'-prev');
+        if(!el||el._pvBound)return;
+        el._pvBound=true;
+        ['a','r','fee','b','t','c','bp'].forEach(function(n){
+          var e=g(pfx==='f'?('f'+n):('ef-'+n));
+          if(!e)return;
+          e.addEventListener('input',function(){d.loanPreview(pfx);});
+          e.addEventListener('change',function(){d.loanPreview(pfx);});
+        });
+      },
+      /* Solange das Collateral-Feld nicht von Hand geändert wurde, zieht es
+         bei Betrag, Zins und Laufzeit mit — sonst stünde nach einer
+         geänderten Laufzeit still ein Wert da, der nicht mehr passt. */
+      rolloverBind:function(){
+        var fb=g('fb');
+        if(!fb||fb._roBound)return;
+        fb._roBound=true;
+        fb.addEventListener('input',function(){fb._auto=false;var h=g('fb-hint');if(h)h.style.display='none';});
+        ['fa','fr','ft','fc'].forEach(function(idf){
+          var e=g(idf);if(!e)return;
+          e.addEventListener('input',function(){d.rolloverCol(false);});
+          e.addEventListener('change',function(){d.rolloverCol(false);});
+        });
+      },
+
       /* ─── Countdown bar ─── */
       checkCountdown:function(){
         var el=g('countdown-bar');if(!el)return;
@@ -3746,7 +4182,7 @@
           return '<div class="'+chipCls+'">'+
             '<span class="cd-days" style="color:'+color+'">'+dl+'<span style="font-size:10px;font-weight:500;margin-left:2px">Tage</span></span>'+
             '<div class="cd-info">'+
-              '<span class="cd-name" style="color:'+color+'">'+esc(l.name)+'</span>'+
+              '<span class="cd-name" style="color:'+color+'">'+xrefLoan(l)+'</span>'+
               '<span class="cd-meta">'+fmt(l.amount,l.c)+' · '+aM(l.start,l.term).toLocaleDateString('de-CH')+'</span>'+
             '</div>'+
           '</div>';
@@ -3755,10 +4191,10 @@
 
       /* ─── CSV Export ─── */
       exportCSV:function(){
-        var headers=['ID','Bezeichnung','Betrag','Währung','Zinssatz %','Gebühr BTC','Laufzeit Mo','Startdatum','Fälligkeitsdatum','Collateral BTC','Status','Rückzahlungsdatum','Zinsen (CCY)','Gebühr (BTC)','Fälliger Betrag (CCY)','Gebühr (USD)','LTV %','Liq.preis USD/BTC','BTC Startpreis','Roll-Over Kette','Notiz'];
+        var headers=['ID','Bezeichnung','Betrag','Währung','Zinssatz %','Gebühr BTC','Laufzeit Mo','Startdatum','Fälligkeitsdatum','Collateral BTC','Status','Rückzahlungsdatum','Zinsen (CCY)','Gebühr (BTC)','Fälliger Betrag (CCY)','Gebühr (USD)','LTV %','Liq.preis USD/BTC','BTC Startpreis','Roll-Over Kette','Notiz','Nachschüsse'];
         var rows=loans.map(function(l){
           var lU=toU(l.amount,l.c);
-          var interest=l.amount*(l.rate/100)*(l.term/12);var feeBtcAmt=l.feeBtc||0;
+          var interest=intC(l);var feeBtcAmt=l.feeBtc||0;
           var ltvBase=ltvU(l);
           var liqP=l.col>0?ltvBase/(0.95*l.col):null;
           var ltv=ltvPct(l);
@@ -3769,7 +4205,12 @@
             q(l.start),q(endDate),q(l.col),q(l.status),q(l.closedDate||''),
             q(interest.toFixed(2)),q(feeBtcAmt.toFixed(8)),q((l.amount+interest).toFixed(2)),q(feeU(l).toFixed(2)),
             q(ltv?ltv.toFixed(1):''),q(liqP?Math.round(liqP):''),
-            q(l.btcStart||''),q(l.chainId||''),q(l.note||'')
+            q(l.btcStart||''),q(l.chainId||''),q(l.note||''),
+            /* Nachschüsse als «Datum:Betrag:ID», mit | getrennt. Der Gesamtbetrag
+               steht schon in «Collateral BTC» — diese Spalte sagt nur, woraus
+               er entstanden ist, und ging sonst beim CSV-Weg verloren. */
+            q((l.topups||[]).slice().sort(function(a,b){return pD(a.date)-pD(b.date);})
+               .map(function(t){return t.date+':'+t.btc.toFixed(8)+':'+t.id;}).join('|'))
           ].join(';');
         });
         var csv='\ufeff'+headers.map(function(h){return '"'+h+'"';}).join(';')+'\n'+rows.join('\n');
@@ -3857,7 +4298,8 @@
         ffdNotice((age===null
           ? 'Noch keine Sicherung vorhanden.'
           : 'Letzte Sicherung vor '+age+' Tagen.')+
-          ' Die Daten liegen nur in diesem Browser — bitte über «↓ JSON» exportieren.','warn');
+          ' Die Daten liegen nur in diesem Browser — bitte über «↓ JSON» exportieren.','warn',
+          {label:'Einstellungen',fn:function(){goTab('se');goHighlight('#se-backup-card');}});
       },
       openImport:function(fmt){
         fmt=fmt||'json';
@@ -3922,6 +4364,7 @@
             var iChain=col('roll-over kette');
             var iBtcStart=col('btc startpreis');
             var iClosed=col('rückzahlungsdatum','ruckzahlungsdatum');
+            var iTopups=col('nachschüsse','nachschusse');
             if(iId<0||iStart<0||iAmount<0)throw new Error('CSV-Format nicht erkannt. Bitte Firefish-Export oder einen Export dieses Dashboards verwenden.');
             /* Helper: parse dd.m.yyyy, dd.mm.yyyy or yyyy-mm-dd → yyyy-mm-dd */
             function parseDate(s){
@@ -4000,7 +4443,14 @@
                 btcStart:iBtcStart>=0?csvNum(row[iBtcStart])||null:null,
                 feeBtc:feeBtcVal,
                 chainId:iChain>=0?((row[iChain]||'').trim()||null):null,
-                note:note
+                note:note,
+                /* «Datum:Betrag:ID» — die ID darf selbst Doppelpunkte enthalten,
+                   ungültige Teile verwirft normLoan ohnehin. */
+                topups:iTopups>=0?(row[iTopups]||'').split('|').map(function(part){
+                  var kv=part.split(':');
+                  if(kv.length<2)return null;
+                  return {date:kv[0].trim(),btc:csvNum(kv[1],true),id:kv.slice(2).join(':').trim()};
+                }).filter(Boolean):[]
               });
               if(!rec){invalid++;continue;}
               /* Never create duplicate ids on merge */
@@ -4127,6 +4577,11 @@
             if(rejected)settingsNote+=' · '+rejected+' ungültige(r) Datensatz/Datensätze übersprungen.';
             settingsNote+=txNote;
             syncStatus();save();d.loans();d.extPopulate();d.checkAlarms();d.ov();d.updateHdrStats();
+            /* Die Einstellungsmaske neu füllen. Ohne das stehen dort weiterhin
+               die Werte von vor dem Import — und der nächste Klick auf einen
+               «Speichern»-Knopf in dieser Maske schreibt sie über die gerade
+               importierten zurück. */
+            d.se();
             msg.style.display='block';
             msg.style.background='var(--ok-bg)';msg.style.color='var(--ok)';msg.style.border='1px solid var(--ok-border)';
             msg.textContent='✓ '+imported+' Kredit(e) '+stratLabel+'.'+settingsNote;
@@ -4181,7 +4636,7 @@
       se2Fill:function(){
         var sel=g('se2-loan-sel');if(!sel||!sel.value)return;
         var l=loans[parseInt(sel.value)];if(!l)return;
-        var calcInterest=l.amount*(l.rate/100)*(l.term/12);
+        var calcInterest=intC(l);
         var dueUSD=toU(l.amount,l.c)+toU(calcInterest,l.c);
         var ccy=d.vorGetCcy();
         g('se2-due').value=parseFloat(frU(dueUSD,ccy).toFixed(ccy==='CZK'||ccy==='PLN'?0:2));
@@ -4217,7 +4672,7 @@
       nlpFill:function(){
         var sel=g('nlp-loan-sel');if(!sel||!sel.value)return;
         var l=loans[parseInt(sel.value)];if(!l)return;
-        var calcInterest=l.amount*(l.rate/100)*(l.term/12);
+        var calcInterest=intC(l);
         var dueUSD=toU(l.amount,l.c)+toU(calcInterest,l.c);
         var ccy=d.vorGetCcy();
         g('nlp-due').value=parseFloat(frU(dueUSD,ccy).toFixed(ccy==='CZK'||ccy==='PLN'?0:2));
@@ -4334,7 +4789,7 @@
         var byCcy={},order=[];
         act.forEach(function(l){
           if(order.indexOf(l.c)<0)order.push(l.c);
-          byCcy[l.c]=(byCcy[l.c]||0)+l.amount+l.amount*(l.rate/100)*(l.term/12);
+          byCcy[l.c]=(byCcy[l.c]||0)+l.amount+intC(l);
         });
         var wrap=g('abl-percy-wrap');
         if(order.length>1){
@@ -4401,7 +4856,7 @@
         var dl=dL(l.start,l.term);
         var fee=feeU(l),int_=intU(l);
         var h='<div class="tl-tip-hd">'+esc(l.name)+'</div>'+
-          '<div style="color:var(--text4);margin-bottom:2px">'+esc(l.id)+' · Roll-Over '+(idx+1)+' von '+total+
+          '<div style="color:var(--text4);margin-bottom:2px">'+esc(l.id)+(total>1?' · Roll-Over '+(idx+1)+' von '+total:'')+
           ' · <span style="color:'+(act?'var(--ok)':'var(--text4)')+'">'+(act?'Aktiv':'Abgeschlossen')+'</span></div><hr>'+
           row('Betrag',fmt(l.amount,l.c))+
           row('Zinssatz',l.rate+'% p.a.')+
@@ -4422,6 +4877,90 @@
           }
         }
         return h;
+      },
+      /* ── Aktionsmenü einer Kredit-Karte / -Zeile ──
+         Vier Symbolknöpfe pro Kredit haben den Kartenkopf gefüllt und ihre
+         Bedeutung nur im title-Attribut getragen — auf dem Handy also gar
+         nicht. Stattdessen ein Knopf, der die Aktionen mit Namen zeigt.
+         Das Menü hängt an #ffd-root, nicht an der Karte: in der Tabelle
+         läge es sonst im Scroll-Container «ovx» und würde abgeschnitten. */
+      actMenuEl:function(){
+        var root=document.getElementById('ffd-root');if(!root)return null;
+        var m=document.getElementById('ffd-act-menu');
+        if(!m){
+          m=document.createElement('div');
+          m.id='ffd-act-menu';m.className='act-menu';
+          root.appendChild(m);
+          /* Klick daneben und Escape schliessen das Menü. */
+          document.addEventListener('mousedown',function(ev){
+            if(m.style.display==='block'&&!m.contains(ev.target)&&
+               !(ev.target.closest&&ev.target.closest('.act-btn')))d.actMenuClose();
+          });
+          document.addEventListener('keydown',function(ev){
+            if(ev.key==='Escape')d.actMenuClose();
+          });
+          /* Beim Scrollen wird nachgeführt statt geschlossen. Schliessen wäre
+             falsch: der Knopf in der Tabelle steht in einem waagrecht
+             scrollbaren Container, und ihn anzuklicken scrollt ihn dort selbst
+             in den Blick — das Menü ginge im selben Moment wieder zu. */
+          window.addEventListener('scroll',function(){d.actMenuPos();},true);
+          window.addEventListener('resize',function(){d.actMenuPos();});
+        }
+        return m;
+      },
+      actMenuClose:function(){
+        var m=document.getElementById('ffd-act-menu');
+        if(m){m.style.display='none';m._src=null;}
+        var b=document.querySelector('#ffd-root .act-btn.on');
+        if(b)b.classList.remove('on');
+      },
+      /* Der Auslöser trägt den Index und die ID des Kredits, damit das Menü
+         dieselben Handler aufruft wie die früheren Einzelknöpfe. */
+      actMenuBtn:function(i,id){
+        return '<button class="sm act-btn" title="Aktionen" aria-haspopup="true" '+
+               'onclick="d.actMenu(event,'+i+',\''+escJs(id)+'\')">&#8942;</button>';
+      },
+      actMenu:function(ev,i,id){
+        ev.stopPropagation();
+        var m=d.actMenuEl();if(!m)return;
+        var btn=ev.currentTarget;
+        if(m.style.display==='block'&&m._src===btn){d.actMenuClose();return;}
+        d.actMenuClose();
+        function item(ic,txt,call,cls){
+          return '<button class="'+(cls||'')+'" onclick="d.actMenuClose();'+call+'">'+
+                 '<span class="act-ic">'+ic+'</span>'+txt+'</button>';
+        }
+        var arg=i+',\''+escJs(id)+'\'';
+        var l=loans.filter(function(x){return x.id===id;})[0];
+        var html=item('&#9998;','Bearbeiten','d.openEdit('+arg+')')+
+                 item('+&#8383;','Collateral nachlegen','d.openTopup('+arg+')')+
+                 item('&#10064;','Duplizieren','d.dupLoan('+arg+')');
+        /* Ein Roll-Over verlängert einen laufenden Kredit — bei einem
+           abgeschlossenen gibt es nichts mehr fortzuführen. */
+        if(l&&l.status==='active')
+          html+=item('&#128279;','Roll-Over erstellen','d.rollover('+arg+')');
+        html+='<hr>'+item('&#10005;','Löschen','d.openDel('+arg+')','act-del');
+        m.innerHTML=html;
+        m._src=btn;
+        btn.classList.add('on');
+        m.style.display='block';
+        d.actMenuPos();
+      },
+      /* Das Menü unter seinem Knopf halten. Erst eingeblendet messen — bei
+         display:none sind Breite und Höhe 0 und es kippt aus dem Bild. */
+      actMenuPos:function(){
+        var m=document.getElementById('ffd-act-menu');
+        if(!m||m.style.display!=='block'||!m._src)return;
+        var r=m._src.getBoundingClientRect();
+        /* Knopf aus dem Sichtfeld gescrollt — dann fehlt der Bezugspunkt */
+        if(r.bottom<0||r.top>window.innerHeight||r.right<0||r.left>window.innerWidth){
+          d.actMenuClose();return;
+        }
+        var w=m.offsetWidth,h=m.offsetHeight,pad=4;
+        var x=r.right-w,y=r.bottom+pad;
+        if(y+h>window.innerHeight-8)y=r.top-h-pad;
+        m.style.left=Math.max(8,Math.min(x,window.innerWidth-w-8))+'px';
+        m.style.top=Math.max(8,y)+'px';
       },
       /* Ein einziger schwebender Tooltip für alle Balken. Die Listener hängen
          am Container, nicht an den Balken — der Chart wird neu gezeichnet,
@@ -4494,7 +5033,7 @@
             return '<div style="flex:1;text-align:center;font-size:9px;padding:3px 1px;background:'+bg+';color:'+fc+';border-left:'+(isCur?'2px solid var(--accent)':'1px solid var(--bg)')+';white-space:nowrap">'+Math.round(ltv)+'%</div>';
           }).join('');
           return '<div style="display:flex;align-items:stretch;margin-bottom:2px">'+
-            '<div style="width:90px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text2);padding-right:6px;display:flex;align-items:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+esc(l.name)+'</div>'+
+            '<div style="width:90px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text2);padding-right:6px;display:flex;align-items:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+xrefLoan(l)+'</div>'+
             '<div style="flex:1;display:flex;border-radius:4px;overflow:hidden">'+cells+'</div>'+
           '</div>';
         }).join('');
@@ -4525,7 +5064,7 @@
         var h='<div class="ovx"><table><thead><tr>'+
           '<th style="min-width:90px">Szenario</th>';
         act.forEach(function(l){
-          h+='<th style="min-width:130px">'+esc(l.name)+
+          h+='<th style="min-width:130px">'+xrefLoan(l)+
             '<br><span style="font-weight:400;color:var(--text4);font-size:10px">'+esc(l.c)+' · '+l.col+' BTC</span>'+
           '</th>';
         });
@@ -4596,7 +5135,7 @@
         g('upcoming').innerHTML=up.length?up.map(function(l){
           var lU=toU(l.amount,l.c);
           return '<div class="card" style="padding:.75rem 1rem">'+
-            '<div class="fxsb"><span style="font-size:13px;font-weight:600;color:var(--text)">'+esc(l.name)+' <span style="font-weight:400;color:#9ca3af">'+esc(l.c)+'</span></span>'+
+            '<div class="fxsb"><span style="font-size:13px;font-weight:600;color:var(--text)">'+xrefLoan(l)+' <span style="font-weight:400;color:#9ca3af">'+esc(l.c)+'</span></span>'+
             '<span style="font-size:12px;color:'+(l.days<14?'#dc2626':l.days<30?'#d97706':'#6b7280')+';font-weight:600">'+(l.days<14?'⚠ ':'')+l.days+' Tage — '+l.end.toLocaleDateString('de-CH')+'</span></div>'+
             '<p class="note2 amt" style="margin-top:3px">'+fmt(l.amount,l.c)+' · '+l.rate+'% p.a. · '+l.col+' BTC</p>'+
             '<p class="note amt" style="margin-top:2px">= '+fmtU(lU)+' / '+fmt(frU(lU,'CHF'),'CHF')+' / '+fmt(frU(lU,'EUR'),'EUR')+'</p>'+
@@ -4851,10 +5390,10 @@
           var mcdC=mk('ch-mcd');
           if(mcdC&&act.length){
             var mcdData=act.map(function(l){
-              if(!l.col)return {name:l.name,val:0};
+              if(!l.col)return {name:l.name,id:l.id,val:0};
               var mc1Price=ltvU(l)/tW()/l.col;
               var dist=((R.BTC-mc1Price)/R.BTC*100);
-              return {name:l.name,val:parseFloat(Math.max(0,dist).toFixed(1))};
+              return {name:l.name,id:l.id,val:parseFloat(Math.max(0,dist).toFixed(1))};
             }).sort(function(a,b){return a.val-b.val;});
             var mcdVals=mcdData.map(function(d){return d.val;});
             var mcdLabels=mcdData.map(function(d){return d.name;});
@@ -4864,6 +5403,7 @@
               options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
                 tooltip:{callbacks:{label:function(x){return ' '+x.parsed.y+'% Puffer bis MC1';  }}}},
                 scales:{y:{min:0,ticks:{callback:function(v){return v+'%';}},grid:{color:chGridColor}},x:{grid:{display:false}}}}});
+            chartLoanNav(chMcd,mcdData.map(function(d){return d.id;}));
           }
 
           /* ── 3. Collateral-Konzentration (Pie) ── */
@@ -4908,6 +5448,7 @@
                 ctx2.fillText('Total',cx,cy+10);
                 ctx2.restore();
               }}]});
+            chartLoanNav(chCol,act.map(function(l){return l.id;}));
           }
 
           /* ── 4. Währungsverteilung (Doughnut) ── */
@@ -4995,6 +5536,7 @@
                   scales:{y:{suggestedMax:(function(){var vs=bepVals.concat(startVals,[R.BTC]).filter(function(v){return typeof v==='number'&&isFinite(v);});return vs.length?Math.max.apply(null,vs)*1.05:undefined;})(),ticks:{callback:function(v){return faxU(v);}},grid:{color:chGridColor}},x:{grid:{display:false}}}
                 },
                 plugins:[hLinePlugin(R.BTC,'#16a34a','Aktuell '+faxU(R.BTC))]});
+              chartLoanNav(chBep,all.map(function(l){return l.id;}));
             }
             if(!pending.length){renderBep();return;}
             pending.forEach(function(l){
@@ -5028,6 +5570,7 @@
               options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:11}}},
                 tooltip:{callbacks:{label:function(x){return ' '+x.dataset.label+': '+pU(x.parsed.y);}}}},
                 scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return faxU(v);}},grid:{color:chGridColor}}}}});
+            chartLoanNav(chInt2,act.map(function(l){return l.id;}));
           }
 
           /* ── 7b. Monatliche Zinslast über Zeit ── */
@@ -5048,7 +5591,7 @@
             var zlDatasets=act.map(function(l,i){
               var lStart=pD(l.start);
               var lEnd=aM(l.start,l.term);
-              var monthlyInt=toU(l.amount*(l.rate/100)/12,l.c);
+              var monthlyInt=l.term?intU(l)/l.term:0;
               var data=months.map(function(m){
                 var mEnd=new Date(m.getFullYear(),m.getMonth()+1,0);
                 /* Loan active this month? */
@@ -5119,6 +5662,7 @@
                 options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
                   tooltip:{callbacks:{label:function(x){return ' '+x.parsed.y+' BTC Gesamtkosten (Zins+Geb\xfchr)';}}}},
                   scales:{y:{ticks:{callback:function(v){return v+' \u20bf';}},grid:{color:chGridColor}},x:{grid:{display:false}}}}});
+              chartLoanNav(chBtcost,btcostLoans.map(function(l){return l.id;}));
             }
             if(!pending.length){renderBtcost();return;}
             var done=0;
@@ -5169,7 +5713,7 @@
                 var width=Math.max(((e-s)/total*100).toFixed(1),1);
                 var clr=l.status==='closed'?'#9ca3af':l.col>0&&(ltvU(l)/(l.col*R.BTC))>=tW()?'#ea580c':'#F97316';
                 return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">'+
-                  '<div style="width:90px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(l.name)+'</div>'+
+                  '<div style="width:90px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+xrefLoan(l)+'</div>'+
                   '<div style="flex:1;position:relative;height:22px;background:var(--bg3);border-radius:4px;overflow:hidden">'+
                     xTicks.lines+
                     '<div style="position:absolute;left:'+left+'%;width:'+width+'%;height:100%;background:'+clr+';border-radius:4px;opacity:'+(l.status==='closed'?.5:1)+';display:flex;align-items:center;padding:0 6px;overflow:hidden;z-index:1">'+
@@ -5464,16 +6008,16 @@
         var el=g('alarm-banner');if(!el)return;
         if(liqd.length){
           el.className='alarm-banner crit show';
-          _ffdSetBanner(el,'&#128308; LIQUIDIERT: '+liqd.map(function(l){var due=toU(l.amount,l.c)+intU(l);return esc(l.name)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Kredit wurde liquidiert!');
+          _ffdSetBanner(el,'&#128308; LIQUIDIERT: '+liqd.map(function(l){var due=toU(l.amount,l.c)+intU(l);return xrefLoan(l)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Kredit wurde liquidiert!');
         } else if(danger.length){
           el.className='alarm-banner crit show';
-          _ffdSetBanner(el,'&#128308; GEFAHR MC3: '+danger.map(function(l){var due=toU(l.amount,l.c)+intU(l);return esc(l.name)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Liquidationsgefahr!');
+          _ffdSetBanner(el,'&#128308; GEFAHR MC3: '+danger.map(function(l){var due=toU(l.amount,l.c)+intU(l);return xrefLoan(l)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Liquidationsgefahr!');
         } else if(crit.length){
           el.className='alarm-banner crit show';
-          _ffdSetBanner(el,'&#9888; KRITISCH MC2: '+crit.map(function(l){var due=toU(l.amount,l.c)+intU(l);return esc(l.name)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Margin Call!');
+          _ffdSetBanner(el,'&#9888; KRITISCH MC2: '+crit.map(function(l){var due=toU(l.amount,l.c)+intU(l);return xrefLoan(l)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — Margin Call!');
         } else if(warn.length){
           el.className='alarm-banner warn show';
-          _ffdSetBanner(el,'&#9888; Warnung MC1: '+warn.map(function(l){var due=toU(l.amount,l.c)+intU(l);return esc(l.name)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — LTV \u00fcber '+cfg.ltvWarn+'%');
+          _ffdSetBanner(el,'&#9888; Warnung MC1: '+warn.map(function(l){var due=toU(l.amount,l.c)+intU(l);return xrefLoan(l)+' LTV '+(due/(l.col*R.BTC)*100).toFixed(1)+'%';}).join(' · ')+' — LTV \u00fcber '+cfg.ltvWarn+'%');
         } else {
           el.className='alarm-banner';el.innerHTML='';
         }
@@ -5489,37 +6033,37 @@
         var liqd=act.filter(function(l){var ltv=l.col>0?(toU(l.amount,l.c)+intU(l))/(l.col*R.BTC):0;return ltv>=0.95;});
         if(liqd.length){
           var l=liqd[0];var ltv=((toU(l.amount,l.c)+intU(l))/(l.col*R.BTC)*100).toFixed(1);
-          el.innerHTML=d._naCard('🔴','Kredit liquidiert','Der Kredit wurde durch Firefish liquidiert','<b>'+esc(l.name)+'</b> hat LTV '+ltv+'% — Liquidation erfolgt!','#dc2626','rgba(220,38,38,.08)');return;
+          el.innerHTML=d._naCard('🔴','Kredit liquidiert','Der Kredit wurde durch Firefish liquidiert','<b>'+xrefLoan(l)+'</b> hat LTV '+ltv+'% — Liquidation erfolgt!','#dc2626','rgba(220,38,38,.08)');return;
         }
         /* Priority 2 — danger LTV */
         var danger=act.filter(function(l){var ltv=l.col>0?(toU(l.amount,l.c)+intU(l))/(l.col*R.BTC):0;return ltv>=(cfg.ltvDanger!=null?cfg.ltvDanger/100:0.86)&&ltv<0.95;});
         if(danger.length){
           var l=danger[0];var ltv=((toU(l.amount,l.c)+intU(l))/(l.col*R.BTC)*100).toFixed(1);
-          el.innerHTML=d._naCard('🔴','Sofortiger Handlungsbedarf','Collateral nachschiessen oder Kredit zurückzahlen','<b>'+esc(l.name)+'</b> hat LTV '+ltv+'% — Liquidationsgefahr!','#dc2626','rgba(220,38,38,.08)');return;
+          el.innerHTML=d._naCard('🔴','Sofortiger Handlungsbedarf','Collateral nachschiessen oder Kredit zurückzahlen','<b>'+xrefLoan(l)+'</b> hat LTV '+ltv+'% — Liquidationsgefahr!','#dc2626','rgba(220,38,38,.08)');return;
         }
         /* Priority 3 — crit LTV */
         var crit=act.filter(function(l){var ltv=l.col>0?(toU(l.amount,l.c)+intU(l))/(l.col*R.BTC):0;return ltv>=(cfg.ltvCrit/100)&&ltv<(cfg.ltvDanger!=null?cfg.ltvDanger/100:0.86);});
         if(crit.length){
           var l=crit[0];var ltv=((toU(l.amount,l.c)+intU(l))/(l.col*R.BTC)*100).toFixed(1);
-          el.innerHTML=d._naCard('🟠','Margin Call Warnung','LTV kritisch — Collateral prüfen','<b>'+esc(l.name)+'</b> hat LTV '+ltv+'% — MC2 erreicht','#ea580c','rgba(234,88,12,.07)');return;
+          el.innerHTML=d._naCard('🟠','Margin Call Warnung','LTV kritisch — Collateral prüfen','<b>'+xrefLoan(l)+'</b> hat LTV '+ltv+'% — MC2 erreicht','#ea580c','rgba(234,88,12,.07)');return;
         }
         /* Priority 3 — due within 7 days */
         var urgent=act.filter(function(l){var d2=dL(l.start,l.term);return d2>=0&&d2<=7;}).sort(function(a,b){return dL(a.start,a.term)-dL(b.start,b.term);});
         if(urgent.length){
           var l=urgent[0];var dl=dL(l.start,l.term);
-          el.innerHTML=d._naCard('⏰','Kredit läuft ab','Roll-Over vorbereiten oder zurückzahlen','<b>'+esc(l.name)+'</b> — fällig in <b>'+dl+' Tag'+(dl===1?'':'en')+'</b> ('+fmt(frU(dueU(l),l.c),l.c)+')','#d97706','rgba(217,119,6,.07)');return;
+          el.innerHTML=d._naCard('⏰','Kredit läuft ab','Roll-Over vorbereiten oder zurückzahlen','<b>'+xrefLoan(l)+'</b> — fällig in <b>'+dl+' Tag'+(dl===1?'':'en')+'</b> ('+fmt(frU(dueU(l),l.c),l.c)+')','#d97706','rgba(217,119,6,.07)');return;
         }
         /* Priority 4 — due within 30 days */
         var soon=act.filter(function(l){var d2=dL(l.start,l.term);return d2>=0&&d2<=30;}).sort(function(a,b){return dL(a.start,a.term)-dL(b.start,b.term);});
         if(soon.length){
           var l=soon[0];var dl=dL(l.start,l.term);
-          el.innerHTML=d._naCard('📅','Fälligkeit in Kürze','Roll-Over oder Rückzahlung planen','<b>'+esc(l.name)+'</b> — fällig in <b>'+dl+' Tagen</b> ('+aM(l.start,l.term).toLocaleDateString('de-CH',{day:'2-digit',month:'short',year:'numeric'})+')','#6366f1','rgba(99,102,241,.06)');return;
+          el.innerHTML=d._naCard('📅','Fälligkeit in Kürze','Roll-Over oder Rückzahlung planen','<b>'+xrefLoan(l)+'</b> — fällig in <b>'+dl+' Tagen</b> ('+aM(l.start,l.term).toLocaleDateString('de-CH',{day:'2-digit',month:'short',year:'numeric'})+')','#6366f1','rgba(99,102,241,.06)');return;
         }
         /* Priority 5 — warn LTV */
         var warn=act.filter(function(l){var ltv=l.col>0?(toU(l.amount,l.c)+intU(l))/(l.col*R.BTC):0;return ltv>=(cfg.ltvWarn/100)&&ltv<(cfg.ltvCrit/100);});
         if(warn.length){
           var l=warn[0];var ltv=((toU(l.amount,l.c)+intU(l))/(l.col*R.BTC)*100).toFixed(1);
-          el.innerHTML=d._naCard('🟡','LTV im Beobachtungsbereich','BTC-Preisentwicklung im Auge behalten','<b>'+esc(l.name)+'</b> hat LTV '+ltv+'% — über MC1-Schwelle','#d97706','rgba(217,119,6,.06)');return;
+          el.innerHTML=d._naCard('🟡','LTV im Beobachtungsbereich','BTC-Preisentwicklung im Auge behalten','<b>'+xrefLoan(l)+'</b> hat LTV '+ltv+'% — über MC1-Schwelle','#d97706','rgba(217,119,6,.06)');return;
         }
         /* All good */
         var next=act.slice().sort(function(a,b){return dL(a.start,a.term)-dL(b.start,b.term);})[0];
@@ -6701,15 +7245,16 @@
         var exts=[3,6,12,18,24];
         g('ext-grid').innerHTML=exts.map(function(mo){
           var base=frU(due,l.c);
-          var addInterest=base*(rate/100)*(mo/12);
-          var addUSD=toU(addInterest,l.c);
           var newEnd=aM(endDate,mo);
+          /* Nach Tagen, wie Firefish — Anfang und Ende der Verlängerung
+             stehen fest, die Monatslängen also auch. */
+          var addTage=Math.max(0,Math.round((newEnd-endDate)/864e5));
+          var addInterest=base*(rate/100)*(addTage/365);
+          var addUSD=toU(addInterest,l.c);
           /* Collateral für die verlängerte Laufzeit. Bemessen wird am
-             Endbetrag, denn die Schuld ist am Ende am höchsten — und an 50%
-             LTV, der doppelten Besicherung, mit der ein Kredit bei Firefish
-             beginnt. Nicht an den MC-Schwellen aus den Einstellungen: die
-             sagen, wann es eng wird, nicht, womit man startet. */
-          var EXT_LTV=0.5;
+             Endbetrag, denn die Schuld ist am Ende am höchsten — und am
+             Start-LTV, siehe START_LTV. */
+          var EXT_LTV=START_LTV;
           var endUSD=due+addUSD;
           var needCol=R.BTC>0?endUSD/(EXT_LTV*R.BTC):0;
           var deltaCol=needCol-(l.col||0);
@@ -6774,7 +7319,7 @@
             /* Header row */
             '<div style="display:flex;justify-content:space-between;align-items:center;padding:.6rem .85rem;border-bottom:1px solid var(--border)">'+
               '<div>'+
-                '<b style="font-size:13px;color:var(--text)">'+esc(l.name)+'</b>'+
+                '<b style="font-size:13px;color:var(--text)">'+xrefLoan(l)+'</b>'+
                 '<span style="font-size:11px;color:var(--text4);margin-left:6px">'+fmt(l.amount,l.c)+' · '+l.col+' BTC</span>'+
               '</div>'+
               '<div style="text-align:right">'+
@@ -6963,7 +7508,7 @@
             var lBep=(l.btcStart>0&&lLU>0)?(l.btcStart*((lLU+costUSD)/lLU)):null;
             html+='<tr>'+
               '<td style="color:var(--text4);font-size:11px">'+(mi+1)+'</td>'+
-              '<td class="tbl-name">'+esc(l.name)+'</td>'+
+              '<td class="tbl-name">'+xrefLoan(l)+'</td>'+
               '<td><span class="badge '+(isActive?'ba':'bc')+'">'+(isActive?'Aktiv':'Abg.')+'</span></td>'+
               '<td class="amt">'+fmt(l.amount,l.c)+'</td>'+
               '<td>'+l.rate+'%</td>'+
@@ -7006,7 +7551,7 @@
             '<span class="mc-lbl" style="margin-bottom:.4rem;display:block">'+standalone.length+' Kredit'+(standalone.length!==1?'e':'')+' ohne Roll-Over-Kette</span>'+
             '<div style="display:flex;flex-wrap:wrap;gap:.4rem">'+
             standalone.map(function(l){
-              return '<span style="font-size:12px;background:var(--bg3);border-radius:6px;padding:2px 8px;color:var(--text3)">'+esc(l.name)+'</span>';
+              return '<span style="font-size:12px;background:var(--bg3);border-radius:6px;padding:2px 8px;color:var(--text3)">'+xrefLoan(l)+'</span>';
             }).join('')+
             '</div>'+
           '</div>';
@@ -7091,7 +7636,7 @@
         var cheapest=byRate[0]||null;
         var priciest=byRate[byRate.length-1]||null;
         var allByRate=loans.slice().sort(function(a,b){return a.rate-b.rate;});
-        var monthlyPer100=aU>0?act.reduce(function(s,l){return s+toU(l.amount*(l.rate/100)/12,l.c);},0)/aU*100:0;
+        var monthlyPer100=aU>0?act.reduce(function(s,l){return s+(l.term?intU(l)/l.term:0);},0)/aU*100:0;
         var zinsBelastung=aU>0?totalInterestOut/aU*100:0;
         /* Effektiver Jahreszins: volumengewichtet, aktive Kredite */
         var effJahreszins=aU>0?act.reduce(function(s,l){
@@ -7117,13 +7662,12 @@
         /* Ø Kreditbetrag */
         var avgAmtAct=act.length?aU/act.length:0;
         var avgAmtClo=clo.length?cloVolume/clo.length:0;
-        /* Gesamte Zinsen effektiv (aufgelaufen) */
-        var totalInterestEver=clo.reduce(function(s,l){return s+intU(l);},0)+act.reduce(function(s,l){
-          var start=pD(l.start),end=aM(l.start,l.term),now5=new Date();
-          var elapsed=Math.max(0,Math.min(now5-start,end-start));
-          var total=Math.max(end-start,1);
-          return s+intU(l)*(elapsed/total);
-        },0);
+        /* Gesamte Zinsschuld aller Kredite. Nicht zeitanteilig: bei Firefish
+           ist der volle Zins ab dem ersten Tag geschuldet, eine vorzeitige
+           Rückzahlung senkt ihn nicht. Ein «bisher aufgelaufener» Betrag wäre
+           hier also kein Geldbetrag, sondern ein als Geld verkleideter
+           Fortschrittsbalken. */
+        var totalInterestEver=totalInterestPaid+totalInterestOut;
         /* Zinsen/Volumen alle */
         var zinsBelastungAll=tU>0?(totalInterestPaid+totalInterestOut)/tU*100:0;
         var zinsBelastungClo=cloVolume>0?totalInterestPaid/cloVolume*100:0;
@@ -7157,8 +7701,8 @@
         }
         /* Helpers to aggregate by currency */
         function volByCcy(arr,c){return arr.filter(function(l){return l.c===c;}).reduce(function(s,l){return s+l.amount;},0);}
-        function dueByCcyFn(arr,c){return arr.filter(function(l){return l.c===c;}).reduce(function(s,l){return s+l.amount+l.amount*(l.rate/100)*(l.term/12);},0);}
-        function intByCcy(arr,c){return arr.filter(function(l){return l.c===c;}).reduce(function(s,l){return s+l.amount*(l.rate/100)*(l.term/12);},0);}
+        function dueByCcyFn(arr,c){return arr.filter(function(l){return l.c===c;}).reduce(function(s,l){return s+l.amount+intC(l);},0);}
+        function intByCcy(arr,c){return arr.filter(function(l){return l.c===c;}).reduce(function(s,l){return s+intC(l);},0);}
         function avgAmtByCcy(arr,c){var ls=arr.filter(function(l){return l.c===c;});return ls.length?ls.reduce(function(s,l){return s+l.amount;},0)/ls.length:null;}
         function weightedRateByCcy(arr,c){
           var ls=arr.filter(function(l){return l.c===c;});
@@ -7211,7 +7755,7 @@
             function(c){var v=intByCcy(clo,c);return clo.length&&v?fmt(v,c):null;},
             function(c){var v=intByCcy(loans,c);return v?fmt(v,c):null;}
           )+'</div>';
-        html+=tile('Zinsen seit Beginn (effektiv)',fmtU(totalInterestEver),'aufgelaufene Zinsen bis heute');
+        html+=tile('Zinsen gesamt (verbindlich)',fmtU(totalInterestEver),'voller Zins aller Kredite — ab Tag 1 geschuldet');
         html+='<div class="mc"><span class="mc-lbl">Zinsen / Volumen</span><span class="mc-val">'+zinsBelastungAll.toFixed(1)+'%</span>'+
           sub3(zinsBelastung.toFixed(1)+'%',clo.length?zinsBelastungClo.toFixed(1)+'%':dash,zinsBelastungAll.toFixed(1)+'%')+'</div>';
         html+='<div class="mc"><span class="mc-lbl">Geb\u00fchren bezahlt (alle)</span><span class="mc-val">'+totalFeePaidBtc.toFixed(8)+' BTC</span><span class="mc-sub" style="font-size:10px;line-height:1.4">'+feePaidGrid+'</span></div>';
@@ -7380,7 +7924,7 @@
           if(res!==null){totGain+=gain;totCost+=cost;known++;if(res>0)won++;}
           var col=res===null?'var(--text4)':res>0?'var(--ok)':'var(--err)';
           return '<tr>'+
-            '<td><div class="tbl-name">'+esc(l.name)+'</div><div class="tbl-id">'+esc(l.id)+'</div></td>'+
+            '<td><div class="tbl-name">'+xrefLoan(l)+'</div><div class="tbl-id">'+esc(l.id)+'</div></td>'+
             '<td>'+pD(l.start).toLocaleDateString('de-CH')+'<br><span style="color:var(--text4);font-size:11px">'+
               (live?'heute':pD(iso).toLocaleDateString('de-CH'))+'</span></td>'+
             '<td class="amt">'+pU(l.btcStart)+'<br><span style="color:var(--text4);font-size:11px">'+(px?pU(px):'—')+'</span></td>'+
@@ -7468,7 +8012,11 @@
           document.querySelectorAll('#ccy-toggles input[type=checkbox]').forEach(function(cb){if(cb.checked)list.push(cb.dataset.c);});
         }
         if(!list.length)list=cfg.ccys.slice();
-        var cur=sel.value||mainC();
+        /* Beim Haken-Setzen soll die gerade getroffene Auswahl stehen bleiben,
+           auch wenn sie noch nicht gespeichert ist. Bei einem Neuaufbau aus den
+           Einstellungen heraus gilt dagegen cfg — sonst überlebt der alte Wert
+           im Feld einen Import und wird beim nächsten Speichern zurückgeschrieben. */
+        var cur=(fromCheckboxes&&sel.value)?sel.value:mainC();
         if(list.indexOf(cur)<0)cur=list.indexOf('USD')>=0?'USD':list[0];
         sel.innerHTML=list.map(function(c){
           return '<option value="'+esc(c)+'"'+(c===cur?' selected':'')+'>'+esc(c)+'</option>';
@@ -7672,7 +8220,7 @@
         var dueBTC=R.BTC>0?aDue/R.BTC:0;
         var netBTC=totalBTC-dueBTC;
         var stackLTV=totalBTCvalUSD>0?(aDue/totalBTCvalUSD*100):0;
-        var monthlyInt=act.reduce(function(s,l){return s+toU(l.amount*(l.rate/100)/12,l.c);},0);
+        var monthlyInt=act.reduce(function(s,l){return s+(l.term?intU(l)/l.term:0);},0);
         var CC2=(['EUR','CHF','USD','USDT','USDC','CZK','PLN','BTC']).filter(visC);
         var CC3=CC2.filter(function(c){return c!=='BTC';});
         var CC4=CC2.filter(function(c){return c!=='BTC';}); /* main currency is dropped by usdGridSub */
@@ -7741,7 +8289,7 @@
             /* Vermögen */
             tile('Gesamt-BTC',totalBTC.toFixed(8)+' \u20bf',usdGrid(CC3,totalBTCvalUSD))+
             tile('Cold Storage / Reserve',(btcReserve>0?btcReserve.toFixed(8)+' \u20bf':'—'),(btcReserve>0?usdGrid(CC3,btcReserve*R.BTC)+' ('+reserveShare.toFixed(1)+'% des Stacks)':'Bitcoin-Stack eingeben \u2193'))+
-            tile('Hinterlegtes Collateral',(aC>0?aC.toFixed(8)+' \u20bf':'—'),(aC>0?usdGrid(CC3,aC*R.BTC)+' ('+collateralShare.toFixed(1)+'%)':''))+
+            tile('<span class="xref" onclick="goTab(\'lo\')" title="Zu den Krediten">Hinterlegtes Collateral</span>',(aC>0?aC.toFixed(8)+' \u20bf':'—'),(aC>0?usdGrid(CC3,aC*R.BTC)+' ('+collateralShare.toFixed(1)+'%)':''))+
             /* Schulden & Kosten */
             /* Der Bitcoin-Betrag steht bewusst vor dem Währungsraster:
                usdGridSub() lässt BTC und SAT aus, und die Frage «wie viel
@@ -7836,13 +8384,14 @@
               return txs.slice().sort(function(a,b){return pD(b.date)-pD(a.date);}).map(function(t){
                 var signed=(t.type==='buy'||t.type==='transfer_in'||t.type==='mining')?t.btc:-t.btc;
                 runBal+=txDelta(t);
-                return '<tr>'+
+                var lref=t.loanId?loans.filter(function(x){return x.id===t.loanId;})[0]:null;
+                return '<tr'+(lref?' data-tx-loan="'+esc(t.loanId)+'"':'')+'>'+
                   '<td>'+esc(t.date)+'</td>'+
                   '<td style="color:'+(typeCol[t.type]||'var(--text)')+'">'+(typeLabel[t.type]||esc(t.type))+'</td>'+
                   '<td class="amt" style="color:'+(typeCol[t.type]||'var(--text)')+'">'+(signed>=0?'+':'\u2212')+t.btc.toFixed(8)+'</td>'+
                   '<td class="amt">'+(t.price?''+pU(Math.round(t.price)):'—')+'</td>'+
                   '<td class="amt">'+(t.type==='fee'?'<span style="color:var(--text4)" title="Der BTC-Betrag ist bereits die Geb\u00fchr">—</span>':(t.fee?t.fee.toFixed(8):'—'))+'</td>'+
-                  '<td style="font-size:11px;color:var(--text3)">'+esc(t.note)+'</td>'+
+                  '<td style="font-size:11px;color:var(--text3)">'+(lref?xrefLoan(lref,t.note||lref.name):esc(t.note))+'</td>'+
                   '<td style="white-space:nowrap">'+
                     '<button class="sm" style="padding:2px 7px;font-size:11px;margin-right:3px" data-txid="'+esc(t.id)+'" onclick="d.bkTxEdit(this.dataset.txid)">&#9998;</button>'+
                     '<button class="sm" style="padding:2px 7px;font-size:11px" data-txid="'+esc(t.id)+'" onclick="d.bkTxDel(this.dataset.txid)">×</button>'+
@@ -8170,20 +8719,88 @@
         var cur=dCcy;if(vis.indexOf(cur)<0){cur=vis.indexOf(mainC())>=0?mainC():vis[0];dCcy=cur;}
         csw.innerHTML=vis.map(function(c){return '<button class="cb'+(c===cur?' on':'')+'" onclick="d.ccy(\'' +c+ '\',this)">'+c+'</button>';}).join('');
       },
-      tl:function(){
-        if(!loans.length){
-          g('tl-list').innerHTML='<div class="empty" style="padding:2rem;text-align:center">Noch keine Kredite vorhanden. Die Timeline wird nach dem Erfassen von Krediten angezeigt.</div>';
-          return;
+      /* Gesamt-Timeline: die Fälligkeits-Timeline und die Roll-Over-Timeline in
+         einem Bild. Jede Zeile ist eine Kette oder ein einzelner Kredit; die
+         Glieder einer Kette liegen nebeneinander, weil sie sich zeitlich
+         ablösen und keine eigene Zeile brauchen. */
+      tlGantt:function(){
+        var el=g('tl-gantt');if(!el)return;
+        if(!loans.length){el.innerHTML='<p class="note2" style="text-align:center;padding:1.5rem">Noch keine Kredite vorhanden.</p>';return;}
+        /* Zeilen bilden: Ketten zusammenfassen, alles übrige einzeln */
+        var chains={},rows=[];
+        loans.forEach(function(l){if(l.chainId)(chains[l.chainId]=chains[l.chainId]||[]).push(l);});
+        Object.keys(chains).forEach(function(cid){
+          var m=chains[cid].slice().sort(function(a,b){return pD(a.start)-pD(b.start);});
+          rows.push({chain:true,id:cid,loans:m});
+        });
+        loans.forEach(function(l){if(!l.chainId)rows.push({chain:false,id:l.id,loans:[l]});});
+        rows.sort(function(a,b){return pD(a.loans[0].start)-pD(b.loans[0].start);});
+        /* Zeitachse über alle Kredite, nicht nur über die der Ketten */
+        var minD=new Date(Math.min.apply(null,loans.map(function(l){return pD(l.start);})));
+        var latest=new Date(Math.max.apply(null,loans.map(function(l){return aM(l.start,l.term);})));
+        var maxD=new Date(latest.getFullYear(),latest.getMonth()+2,1);
+        var total=maxD-minD||1;
+        var now=new Date();
+        var nowPct=Math.min(100,Math.max(0,((now-minD)/total*100))).toFixed(1);
+        var months=Math.round(total/(1000*60*60*24*30.44));
+        var step=months<=12?1:months<=24?2:months<=48?3:6;
+        var ticks='',lines='';
+        for(var cur=new Date(minD.getFullYear(),minD.getMonth(),1);cur<=new Date(maxD.getTime()+1);cur=new Date(cur.getFullYear(),cur.getMonth()+step,1)){
+          var pct=Math.max(0,Math.min(100,((cur-minD)/total*100))).toFixed(2);
+          ticks+='<div style="position:absolute;left:'+pct+'%;transform:translateX(-50%);font-size:9px;color:var(--text4);white-space:nowrap">'+cur.toLocaleDateString('de-CH',{month:'short',year:'2-digit'})+'</div>';
+          lines+='<div style="position:absolute;left:'+pct+'%;top:0;width:1px;height:100%;background:var(--border);opacity:.4;pointer-events:none"></div>';
         }
-        var sorted=loans.slice().sort(function(a,b){return aM(b.start,b.term)-aM(a.start,a.term);});
-        g('tl-list').innerHTML='<div class="tl">'+sorted.map(function(l){
-          var dl=dL(l.start,l.term),end=aM(l.start,l.term).toLocaleDateString('de-CH'),dot=l.status==='closed'?'done':dl<30?'soon':'',lU=toU(l.amount,l.c);
-          return '<div class="ti"><div class="dot '+dot+'"></div>'+
-            '<span class="tdate">'+pD(l.start).toLocaleDateString('de-CH')+' → '+end+'</span>'+
-            '<span class="tlabel">'+esc(l.name)+' <span class="badge '+(l.status==='active'?'ba':'bc')+'" style="margin-left:6px">'+(l.status==='active'?'Aktiv':'Abgeschlossen')+'</span></span>'+
-            '<span class="tsub amt">'+fmt(l.amount,l.c)+' · '+l.rate+'% · '+l.term+' Mo'+(l.status==='active'&&dl>0?' · noch <b>'+dl+' Tage</b>':'')+'</span>'+
-            '<span class="note" style="margin-top:2px">= '+fmtU(lU)+' / '+fmt(frU(lU,'CHF'),'CHF')+' / '+fmt(frU(lU,'EUR'),'EUR')+'</span></div>';
-        }).join('')+'</div>';
+        var CHAIN_COLORS=['#F97316','#3B82F6','#10B981','#8B5CF6','#EF4444','#F59E0B','#06B6D4','#EC4899'];
+        var ci=0;
+        var html=
+          '<div style="display:flex;align-items:flex-end;gap:8px;margin-bottom:3px;min-width:520px">'+
+            '<div style="width:110px;flex-shrink:0"></div>'+
+            '<div style="flex:1;position:relative;height:16px">'+ticks+'</div>'+
+            '<div style="width:78px;flex-shrink:0;font-size:10px;font-weight:600;color:var(--text4);text-align:right">Fälligkeit</div>'+
+          '</div><div style="padding:.25rem 0;min-width:520px">';
+        rows.forEach(function(row){
+          var ms=row.loans;
+          var chainClr=row.chain?CHAIN_COLORS[(ci++)%CHAIN_COLORS.length]:null;
+          var last=ms[ms.length-1];
+          var cost=ms.reduce(function(s,l){return s+intU(l)+feeU(l);},0);
+          var label=row.chain
+            ? '<span class="xref" onclick="goRo()" title="'+ms.length+' Kredite in dieser Kette" style="color:'+chainClr+';border-bottom-color:'+chainClr+'">🔗 '+esc(ms[0].name.replace(/v\d+$/,'').trim()||ms[0].name)+'</span>'
+            : xrefLoan(ms[0]);
+          html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">'+
+            '<div style="width:110px;flex-shrink:0;font-size:11px;font-weight:'+(row.chain?'700':'600')+';color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+label+'</div>'+
+            '<div style="flex:1;position:relative;height:24px;background:var(--bg3);border-radius:5px;overflow:hidden">'+lines;
+          ms.forEach(function(l,li){
+            var s=pD(l.start),e=aM(l.start,l.term);
+            var left=((s-minD)/total*100).toFixed(1);
+            var width=Math.max(((e-s)/total*100).toFixed(1),0.5);
+            /* Ketten behalten ihre Kettenfarbe, Einzelkredite die Farblogik der
+               früheren Fälligkeits-Timeline: grau abgeschlossen, orange laufend,
+               dunkler sobald die MC1-Schwelle überschritten ist. */
+            var clr=chainClr||(l.status==='closed'?'#9ca3af':(l.col>0&&(ltvU(l)/(l.col*R.BTC))>=tW())?'#ea580c':'#F97316');
+            var gap=li>0?2:0;
+            html+='<div data-tip="'+esc(d.roTlTip(l,li,ms.length))+'" style="position:absolute;left:calc('+left+'% + '+gap+'px);width:calc('+width+'% - '+gap+'px);height:100%;background:'+clr+
+              ';opacity:'+(l.status==='closed'?.45:1)+';border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden">'+
+              '<span style="font-size:9px;color:#fff;white-space:nowrap;overflow:hidden">'+esc(l.name)+'</span>'+
+            '</div>';
+          });
+          html+='<div style="position:absolute;left:'+nowPct+'%;top:0;width:2px;height:100%;background:#ef4444;z-index:2"></div>'+
+            '</div>'+
+            '<div style="width:78px;flex-shrink:0;text-align:right;line-height:1.3">'+
+              '<div style="font-size:10px;color:var(--text3)">'+aM(last.start,last.term).toLocaleDateString('de-CH',{month:'2-digit',year:'2-digit'})+'</div>'+
+              '<div style="font-size:9px;color:var(--text4)" class="amt">'+fmtU(cost)+'</div>'+
+            '</div>'+
+          '</div>';
+        });
+        html+='</div><div style="font-size:10px;color:var(--text4);margin-top:4px">■ Roter Strich = Heute &nbsp;·&nbsp; 🔗 = Roll-Over-Kette, Glieder nebeneinander &nbsp;·&nbsp; blass = abgeschlossen &nbsp;·&nbsp; rechts: Fälligkeit und Gesamtkosten</div>';
+        el.innerHTML=html;
+        d.roTlBindTips(el);
+      },
+      tl:function(){
+        d.tlGantt();
+        /* Die Liste «Kreditlaufzeiten» ist entfallen: die Gesamt-Timeline
+           oben zeigt denselben Zeitraum als Balken, und alles Übrige stand
+           ohnehin schon auf den Karten in «Meine Kredite». */
+        if(!loans.length)return;
         if(typeof Chart==='undefined'){console.warn('[tl] Chart.js not yet loaded — charts deferred to init()');return;}
         setTimeout(function(){
           d.debtChart(dCcy);
@@ -8197,6 +8814,7 @@
             data:{labels:act.map(function(l){return l.name;}),datasets:[{data:act.map(function(l){return Math.round(intU(l));}),backgroundColor:'#FDBA74',borderColor:'#F97316',borderWidth:1,borderRadius:4}]},
             options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:chTextColor,callback:function(v){return ''+pU(v);}},grid:{color:chGridColor}},x:{ticks:{color:chTextColor},grid:{display:false}}}}
           });
+          chartLoanNav(chI,act.map(function(l){return l.id;}));
         },120);
       }
     };
@@ -8304,7 +8922,12 @@
     /* Run immediately so alarm banner, pills and overview show on first paint regardless of Chart.js */
     try{syncStatus();pills();d.renderCsw();d.loans();d.checkAlarms();d.ov();}catch(e){console.error('[startup] Fehler beim initialen Render:', e);}
     try{d.updateHdrStats();}catch(e){console.error('[startup] Fehler in updateHdrStats:', e);}
-    try{if(cfg.navOrder)d.applyNavOrder();}catch(e){console.error('[startup] Fehler in applyNavOrder:', e);}
+    /* Immer anwenden, nicht nur bei gespeicherter Reihenfolge: sonst hängt die
+       Startreihenfolge davon ab, wie die Buttons zufällig im HTML stehen, und
+       ein Eintrag hinter dem Spacer bleibt unten kleben, bis einmal in den
+       Einstellungen gespeichert wurde. Ohne cfg.navOrder ist NAV_ITEMS die
+       Vorgabe — dieselbe Reihenfolge, die die Einstellungen anzeigen. */
+    try{d.applyNavOrder();}catch(e){console.error('[startup] Fehler in applyNavOrder:', e);}
     /* Activate tab from URL hash on load, fallback to cfg.defaultTab */
     (function(){
       var validTabs=['ov','lo','to','st','ca','tl','ch','sx','se','ro','bk'];
