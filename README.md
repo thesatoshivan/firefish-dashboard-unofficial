@@ -10,17 +10,18 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 
 ## Features
 
-- **Loan overview** — track all active and closed loans with full details (amount, rate, term, collateral, status), as cards or as a sortable table
+- **Loan overview** — track all active and closed loans with full details (amount, rate, term, collateral, status), as cards or as a sortable table, each with a menu for editing, topping up, duplicating, rolling over and deleting
+- **Cost preview** — both loan forms show the due amount, the fee, the collateral and the total bitcoin needed while you type, before anything is saved
 - **LTV monitoring** — real-time LTV per loan with configurable MC1/MC2/MC3/liquidation thresholds and colour-coded alerts
 - **Header stats bar** — active loans, next maturity, open debt in fiat and BTC, pledged collateral and its value, distance to the next margin call, portfolio break-even and the BTC 24 h change, each with a detailed tooltip
 - **Alarm banner** — a margin-call warning that stays visible on every tab and names the affected loans
 - **Collateral health** — portfolio-level collateral value, coverage ratio, margin call price and open debt in BTC
 - **Break-even analysis** — calculates the BTC price at which a loan becomes profitable, with automatic historical BTC price lookup and break-even average / weighted break-even statistics
 - **Upcoming maturities** — countdown to due dates with a configurable alert window, a cumulative debt card for eight time windows from 7 days to 2 years, and a warning when several loans fall due close together
-- **Calendar & timeline** — a month calendar of due dates and a Gantt-style timeline of loan runtimes and roll-over chains
+- **Calendar & timeline** — a month calendar of due dates, and a timeline in which every row is a roll-over chain or a single loan, with a chain's members side by side
 - **Multi-currency support** — USD, EUR, CHF, CZK, PLN, USDC and USDT, plus bitcoin and sats as display units. Live rates from CoinGecko; the three shown in the header can also be typed in by hand
 - **Main currency** — choose which of your enabled currencies is the primary one; every figure, chart axis and calculator then reads in that currency
-- **Roll-over chains** — link loans into roll-over chains, show chain badges on loan cards and analyse them in a dedicated Roll-Overs tab with effective annual rates
+- **Roll-over chains** — start a roll-over from the loan it continues with the figures already filled in, link loans into chains, and analyse them in a dedicated Roll-Overs tab with effective annual rates
 - **Built-in tools** — calculators for before, during and after a loan (maximum loan amount, required collateral, paying off every open loan at once, LTV and margin-call prices, break-even hold-vs-sell, collateral top-up, extension scenarios, profit/loss borrow-vs-sell), a Power Law price model, a Roll-Over Simulation and a Future Simulation
 - **Portfolio view** — track your entire Bitcoin stack (cold storage + collateral) with net worth, stack LTV, leverage factor, liquidity buffer, MC1 reserve, rebalancing hints, BTC price scenarios, an exit-strategy calculator and a chart of holding and value since your first transaction
 - **Transaction ledger** — record buys, sells, transfers, mining income and fees; the balance feeds the Portfolio view automatically or can be overridden by hand
@@ -56,7 +57,9 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 
 ### Adding a loan
 
-Click **+ Kredit hinzufügen** and fill in the loan details: amount, currency, interest rate, term, start date, collateral and an optional note. The dashboard calculates all derived values automatically. If you enter a start date, the form can suggest the historical BTC rate for that day, which you can accept with one click.
+Click **+ Kredit hinzufügen** and fill in the loan details: amount, currency, interest rate, term, start date, collateral and an optional note. If you enter a start date, the form can suggest the historical BTC rate for that day, which you can accept with one click.
+
+A preview beside the fields shows what the loan will cost before you save it — the **fälliger Betrag** with its interest share, the **Bearbeitungsgebühr** and the **Bitcoin-Sicherheit** separately, and the total bitcoin the two of them take. The collateral line also carries the LTV the loan would start at. It follows every keystroke, in this form and in the edit dialog alike.
 
 A checkbox at the bottom of the form — off by default — books the loan into the transaction ledger at the same time: the collateral as a transfer out of your freely held stack and the origination fee as a fee entry. A loan entered as already closed also gets its collateral booked back in on the maturity date.
 
@@ -66,7 +69,9 @@ A loan also has an optional **Rückzahlungsdatum**. The collateral return is oth
 
 ### Topping up collateral
 
-The **+₿** button on a loan raises its collateral. Enter the amount and the date, and the dialog shows the collateral, LTV and liquidation price both as they are and as they would be, along with how far the liquidation price drops. Each top-up is kept as its own event, so the ledger records the bitcoin leaving your stack on the day it actually did.
+**Collateral nachlegen** in the loan's menu raises its collateral. Enter the amount and the date, and the dialog shows the collateral, LTV and liquidation price both as they are and as they would be, along with how far the liquidation price drops. Each top-up is kept as its own event, so the ledger records the bitcoin leaving your stack on the day it actually did.
+
+In **Meine Kredite** a topped-up loan carries a badge on its collateral — in the cards and in the table alike — that opens into the breakdown: the amount at the start, every top-up with its date, and the total added.
 
 ### Main currency
 
@@ -90,7 +95,9 @@ The statistics close with **Rückblick — hat sich das Beleihen gelohnt?**: for
 
 ### Roll-overs
 
-You can link related loans into roll-over chains using a shared chain ID. The dashboard highlights linked loans with a roll-over badge and provides a dedicated **Roll-Overs** tab with chain summaries, detail tables and effective annual rate calculations.
+**Roll-Over erstellen** in a loan's menu opens the new-loan form already filled in: the due amount becomes the new principal, the predecessor's maturity the start date, and currency, rate and term carry over. The collateral needed is worked out from the 50 % LTV a Firefish loan starts at and keeps following the figures until you enter one yourself. Nothing is created until you save, and the old loan is left alone — it closes on its own due date.
+
+Loans linked this way share a chain ID, carry a roll-over badge and are analysed in a dedicated **Roll-Overs** tab with chain summaries, detail tables and effective annual rate calculations.
 
 ### Tools
 
@@ -105,7 +112,7 @@ The **Tools** tab is split into six areas:
 
 ### Calendar & timeline
 
-The **Kalender** tab marks every due date in a month grid and highlights the ones coming up. The **Timeline** tab draws each loan as a bar from start to maturity, with roll-over chains shown as connected segments.
+The **Kalender** tab marks every due date in a month grid and highlights the ones coming up. The **Timeline** tab draws one bar per loan from start to maturity; a roll-over chain occupies a single row with its members side by side, followed by the chain's last maturity and what it cost in interest and fees.
 
 ### Privacy
 
