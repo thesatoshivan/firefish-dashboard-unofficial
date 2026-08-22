@@ -4,6 +4,63 @@
 ---
 
 
+## v2.2.0 (22.08.2026)
+
+### New Features
+
+**Gesamt-Timeline (Timeline tab)**
+- One chart instead of two: every row is a roll-over chain or a single loan, and a chain's members lie side by side, because they follow one another rather than run in parallel
+- Chains keep their own colour, single loans stay grey when closed and orange while running. On the right of each row: the last maturity and what it cost in interest and fees
+- Bars carry the roll-over tooltip, labels link to the loan or to the Roll-Overs tab. The two original charts stay in **Diagramme**; the **Kreditlaufzeiten** list is gone, because the chart now says the same
+
+**Both loan forms show what the loan will cost before it is saved**
+- Laid out as Firefish states it: **Fälliger Betrag**, **Bearbeitungsgebühr** and **Bitcoin-Sicherheit** on separate lines, then the **benötigte Gesamtmenge an Bitcoin** — collateral plus fee, the amount that leaves your wallet
+- The due amount names its interest share, rate and term; the collateral line carries the resulting LTV in the usual colours. The fee is not added into the due amount, as it is paid in bitcoin at origination and does not fall due again
+- It recalculates as you type and sits in a column beside the fields, where it stays in view while you scroll
+
+**A roll-over can be started from the loan it continues**
+- **Roll-Over erstellen** opens «Neuer Kredit» filled in: the due amount as the new principal, the predecessor's maturity as the start date, currency, rate and term carried over, chain already set
+- The collateral comes from the 50% LTV a Firefish loan starts at, and follows amount, rate and term until you type one of your own
+- Nothing is created until you save, and the predecessor is left alone — it closes on its own due date. Closed loans do not offer the action
+
+**The loan actions moved into one menu**
+- Four icon buttons per loan named themselves only in a `title` attribute, which a phone never shows. One button now opens a menu that spells them out, with **Löschen** below a separator in red
+- A fully loaded card header drops from 80 to 50 px
+
+### Improvements
+
+**Wherever a loan is named, you can now click it**
+- The **alarm banner**, **Nächste Fälligkeiten**, **Bevorstehende Fälligkeiten**, the maturity clustering warning, the **Rückblick** and the statistics, the stress test, the roll-over table, the timeline and the LTV history all link their loans
+- So do the chip counting loans without a stored BTC start price, the backup reminder's **Einstellungen** button and the Portfolio's **Hinterlegtes Collateral** tile
+- The link opens the filter if it has to, then scrolls the target into view and outlines it for two seconds
+
+- **Clicking a chart bar opens the loan behind it.** Six charts draw one bar per loan; the cursor turns into a hand and a line under each chart says so. Loans whose break-even bar is empty work too
+- **A loan and its portfolio bookings link both ways** — a **₿ n** badge on the loan opens its rows in the ledger, and each booking links back
+- **Both loan forms are laid out in three columns, ordered by what belongs together.** The amount sat three rows above its currency, the generated ID came second, and the repayment date sat far from the status it depends on:
+  ```
+  Bezeichnung  │ Betrag            │ Währung
+  Zinssatz     │ Laufzeit          │ Startdatum
+  Collateral   │ Gebühr            │ BTC-Preis bei Aufnahme
+  Status       │ Rückzahlungsdatum │ ID
+  ```
+- **Start, Fällig and Laufzeit sit in one row on the loan cards, and the fee runs across the full width.** As the third of three values in a two-column grid, each had an empty cell beside it
+- **Hovering the collateral in «Meine Kredite» shows what it is worth today** — the amount, the BTC rate and the current value, in the cards and in the table alike. Left out when amounts are hidden
+- **A loan whose collateral was topped up is marked as such**, with a badge that opens into the breakdown. Otherwise an upgraded loan looked exactly like one secured that way from the beginning
+
+### Bug Fixes
+
+- **Interest is counted by days, not by months.** Firefish divides the actual day count by 365, where every figure here used months over 12. Terms landing on a whole year agree exactly, which is why this went unnoticed; an 18-month term does not — 20'000 USDC at 14,5% gives 24'353.97 against 24'350, and Firefish states 24'354. Checked against three real loans and one quote. Due amounts, LTV, liquidation prices, break-even and every chart move with it
+- **«Zinsen seit Beginn» counted interest as if it accrued over the term**, though the full interest is owed from the first day. It now sums the full interest of every loan and is named **Zinsen gesamt (verbindlich)**
+- **Importing a backup could hand your settings straight back to the old ones.** The settings screen kept the values from before the import, so anything saved there afterwards reverted what had just been restored
+- **The CSV export lost the collateral top-up history.** A «Nachschüsse» column now carries date, amount and id per top-up; older exports and the Firefish statement CSV still import unchanged
+- **«Portfolio» sat at the bottom of the navigation until the settings were saved once** — its button was placed after the spacer that pushes «Einstellungen» down
+- **Picking a predecessor in «Neuer Kredit» built a chain that did not contain it**, so the new loan showed no roll-over badge and never appeared in the Roll-Overs tab
+- **A stray Cloudflare script has been removed from the page** — `email-decode.min.js`, with no obfuscated address to decode and a 404 off Cloudflare
+
+
+---
+
+
 ## v2.1.0 (21.08.2026)
 
 ### New Features
