@@ -6,6 +6,109 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 
 **This project is not affiliated with or endorsed by Firefish.**
 
+<details>
+<summary><strong>&#128248; Screenshots</strong> — eleven views, click to expand</summary>
+<br>
+
+They follow your GitHub theme: switch GitHub to dark and they all turn dark with it. The two blocks at the end show either set on demand.
+
+<table>
+<tr>
+<td align="center" width="50%"><strong>Overview</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_uebersicht_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_uebersicht.png" width="100%"></picture></td>
+<td align="center" width="50%"><strong>My Loans</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_meine-kredite_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_meine-kredite.png" width="100%"></picture></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Portfolio</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_portfolio_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_portfolio.png" width="100%"></picture></td>
+<td align="center" width="50%"><strong>Charts</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_diagramme_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_diagramme.png" width="100%"></picture></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Statistics</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_statistiken_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_statistiken.png" width="100%"></picture></td>
+<td align="center" width="50%"><strong>Roll-Overs</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_roll-overs_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_roll-overs.png" width="100%"></picture></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Timeline</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_timeline_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_timeline.png" width="100%"></picture></td>
+<td align="center" width="50%"><strong>Stress Test</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_stress-test_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_stress-test.png" width="100%"></picture></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Tools</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_tools_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_tools.png" width="100%"></picture></td>
+<td align="center" width="50%"><strong>Calendar</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kalender_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kalender.png" width="100%"></picture></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Settings</strong><br><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_einstellungen_dark.png"><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_einstellungen.png" width="100%"></picture></td>
+<td></td>
+</tr>
+</table>
+
+<details>
+<summary>&#9728;&#65039; <strong>All screenshots in light mode</strong></summary>
+<br>
+
+<table>
+<tr>
+<td align="center" width="50%"><strong>Overview</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_uebersicht.png" width="100%"></td>
+<td align="center" width="50%"><strong>My Loans</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_meine-kredite.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Portfolio</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_portfolio.png" width="100%"></td>
+<td align="center" width="50%"><strong>Charts</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_diagramme.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Statistics</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_statistiken.png" width="100%"></td>
+<td align="center" width="50%"><strong>Roll-Overs</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_roll-overs.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Timeline</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_timeline.png" width="100%"></td>
+<td align="center" width="50%"><strong>Stress Test</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_stress-test.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Tools</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_tools.png" width="100%"></td>
+<td align="center" width="50%"><strong>Calendar</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kalender.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Settings</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_einstellungen.png" width="100%"></td>
+<td></td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>&#127769; <strong>All screenshots in dark mode</strong></summary>
+<br>
+
+<table>
+<tr>
+<td align="center" width="50%"><strong>Overview</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_uebersicht_dark.png" width="100%"></td>
+<td align="center" width="50%"><strong>My Loans</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_meine-kredite_dark.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Portfolio</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_portfolio_dark.png" width="100%"></td>
+<td align="center" width="50%"><strong>Charts</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_diagramme_dark.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Statistics</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_statistiken_dark.png" width="100%"></td>
+<td align="center" width="50%"><strong>Roll-Overs</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_roll-overs_dark.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Timeline</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_timeline_dark.png" width="100%"></td>
+<td align="center" width="50%"><strong>Stress Test</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_stress-test_dark.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Tools</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_tools_dark.png" width="100%"></td>
+<td align="center" width="50%"><strong>Calendar</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kalender_dark.png" width="100%"></td>
+</tr>
+<tr>
+<td align="center" width="50%"><strong>Settings</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_einstellungen_dark.png" width="100%"></td>
+<td></td>
+</tr>
+</table>
+
+</details>
+
+<sub>All loans shown in these screenshots are fictional and for demonstration purposes only.</sub>
+
+</details>
+
 ---
 
 ## Features
@@ -160,34 +263,6 @@ All settings are saved in `localStorage` and included in JSON exports:
 
 ---
 
-## Screenshots
-
-<table>
-<tr>
-<td align="center"><strong>Overview</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_uebersicht.png" width="100%"></td>
-<td align="center"><strong>My Loans</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_meine-kredite.png" width="100%"></td>
-</tr>
-<tr>
-<td align="center"><strong>Charts</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_diagramme.png" width="100%"></td>
-<td align="center"><strong>Statistics</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_statistiken.png" width="100%"></td>
-</tr>
-<tr>
-<td align="center"><strong>Stress Test</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_stress-test.png" width="100%"></td>
-<td align="center"><strong>Timeline</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_timeline.png" width="100%"></td>
-</tr>
-<tr>
-<td align="center"><strong>Tools</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_tools.png" width="100%"></td>
-<td align="center"><strong>Calendar</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kalender.png" width="100%"></td>
-</tr>
-<tr>
-<td align="center"><strong>Settings</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_einstellungen.png" width="100%"></td>
-<td></td>
-</tr>
-</table>
-
-<sub>All loans shown in these screenshots are fictional and for demonstration purposes only.</sub>
-
----
 
 ## Disclaimer
 
