@@ -4,6 +4,27 @@
 ---
 
 
+## v2.3.0 (22.08.2026)
+
+### New Features
+
+**Liquidationspreis in the loan preview**
+- Both loan forms now name the price at which the loan would be liquidated — the fixed Firefish threshold of 95% LTV, calculated as on the loan card
+- Underneath it: how far bitcoin may fall before it is reached, coloured green, amber or red by that distance, and the price in your main currency when that is a different figure
+
+**Roll-Overs show what has to move in bitcoin**
+- When a new loan continues an existing one, the preview adds two lines: what the predecessor releases, and whether that leaves you topping up or getting bitcoin back
+- The difference is the total needed (collateral plus fee) less the freed collateral, in bitcoin and in money, coloured by direction. It is a question of the price since origination, which is why it is worth seeing before saving
+- Only in **Neuer Kredit** — in the edit dialog the collateral is long since posted
+
+### Bug Fixes
+
+- The loan preview follows the bitcoin price again: entering a rate in the header bar left it showing the old LTV, liquidation price and amounts while the cards had already moved
+- No more "Kurs nicht gefunden" on a roll-over. The successor starts when the predecessor matures, so its start date lies ahead — the app still asked for a historical rate for that day and then warned, as though something had failed. A future date now says so plainly and asks for nothing
+- The suggested collateral on a roll-over follows the price too. It aims at 50% LTV, but stayed on the rate it was first calculated at — with a hint still naming that old price — so the collateral, the total and the difference against the predecessor were all wrong once the price moved
+
+---
+
 ## v2.2.0 (22.08.2026)
 
 ### New Features
