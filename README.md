@@ -16,24 +16,24 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 <td align="center" width="50%"><strong>My Loans</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_meine-kredite.png" width="100%"></td>
 </tr>
 <tr>
+<td align="center" width="50%"><strong>New Loan</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kredit-hinzufuegen.png" width="100%"></td>
 <td align="center" width="50%"><strong>Portfolio</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_portfolio.png" width="100%"></td>
+</tr>
+<tr>
 <td align="center" width="50%"><strong>Charts</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_diagramme.png" width="100%"></td>
-</tr>
-<tr>
 <td align="center" width="50%"><strong>Statistics</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_statistiken.png" width="100%"></td>
+</tr>
+<tr>
 <td align="center" width="50%"><strong>Roll-Overs</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_roll-overs.png" width="100%"></td>
-</tr>
-<tr>
 <td align="center" width="50%"><strong>Timeline</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_timeline.png" width="100%"></td>
+</tr>
+<tr>
 <td align="center" width="50%"><strong>Stress Test</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_stress-test.png" width="100%"></td>
-</tr>
-<tr>
 <td align="center" width="50%"><strong>Tools</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_tools.png" width="100%"></td>
-<td align="center" width="50%"><strong>Calendar</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kalender.png" width="100%"></td>
 </tr>
 <tr>
+<td align="center" width="50%"><strong>Calendar</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kalender.png" width="100%"></td>
 <td align="center" width="50%"><strong>Settings</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_einstellungen.png" width="100%"></td>
-<td></td>
 </tr>
 </table>
 
@@ -49,24 +49,24 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 <td align="center" width="50%"><strong>My Loans</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_meine-kredite_dark.png" width="100%"></td>
 </tr>
 <tr>
+<td align="center" width="50%"><strong>New Loan</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kredit-hinzufuegen_dark.png" width="100%"></td>
 <td align="center" width="50%"><strong>Portfolio</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_portfolio_dark.png" width="100%"></td>
+</tr>
+<tr>
 <td align="center" width="50%"><strong>Charts</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_diagramme_dark.png" width="100%"></td>
-</tr>
-<tr>
 <td align="center" width="50%"><strong>Statistics</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_statistiken_dark.png" width="100%"></td>
+</tr>
+<tr>
 <td align="center" width="50%"><strong>Roll-Overs</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_roll-overs_dark.png" width="100%"></td>
-</tr>
-<tr>
 <td align="center" width="50%"><strong>Timeline</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_timeline_dark.png" width="100%"></td>
+</tr>
+<tr>
 <td align="center" width="50%"><strong>Stress Test</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_stress-test_dark.png" width="100%"></td>
-</tr>
-<tr>
 <td align="center" width="50%"><strong>Tools</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_tools_dark.png" width="100%"></td>
-<td align="center" width="50%"><strong>Calendar</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kalender_dark.png" width="100%"></td>
 </tr>
 <tr>
+<td align="center" width="50%"><strong>Calendar</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_kalender_dark.png" width="100%"></td>
 <td align="center" width="50%"><strong>Settings</strong><br><img src="https://raw.githubusercontent.com/thesatoshivan/firefish-dashboard-unofficial/main/Screenshots/screenshot_einstellungen_dark.png" width="100%"></td>
-<td></td>
 </tr>
 </table>
 
