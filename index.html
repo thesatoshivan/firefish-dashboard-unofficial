@@ -815,7 +815,7 @@
         <span>Einstellungen</span>
       </button>
       <div class="sidebar-footer">
-        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v220-22082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.2.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
+        <span class="sidebar-footer-note">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v230-22082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.3.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank" style="text-decoration:none;color:var(--text3)">🔗 GitHub</a><br><a href="https://x.com/TheSatoshiVan" target="_blank" style="text-decoration:none;color:var(--text3)">𝕏 @TheSatoshiVan</a></span>
       </div>
     </div>
 
@@ -2179,7 +2179,7 @@
       </div>
     </div>
 
-    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v220-22082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.2.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
+    <div class="mobile-footer-end">Firefish Dashboard <a href="https://github.com/thesatoshivan/firefish-dashboard-unofficial/blob/main/changelog.md#v230-22082026" target="_blank" style="text-decoration:none;color:var(--text3)">v2.3.0</a><br>Inoffizielles Tool — nicht verbunden mit firefish.io<br><a href="https://github.com/thesatoshivan" target="_blank">🔗 GitHub</a> &nbsp;·&nbsp; <a href="https://x.com/TheSatoshiVan" target="_blank">𝕏 @TheSatoshiVan</a></div>
     </div><!-- #ffd-root -->
 
     <script>
@@ -2940,11 +2940,28 @@
        half-typed price (8 → 85 → 850 …) cannot flash a false liquidation alarm. */
     var _rateT=null;
     var manualRateAt=0;
+    /* Der Kurs steckt im LTV, im Liquidationspreis und in allen Geldbeträgen
+       der Kreditvorschau. Sie liegt ausserhalb der Tabs — renderActiveTab()
+       erfasst sie also nicht, und ohne diesen Anstoss blieb sie beim alten
+       Kurs stehen, während Karten und Kopfzeile schon den neuen zeigten. */
+    function previewRerender(){
+      /* Der Collateral-Vorschlag beim Roll-Over zielt auf 50% LTV zum
+         aktuellen Kurs — er muss mitwandern. Ohne Anstoss blieb er auf dem
+         Kurs von vorhin stehen, samt Hinweis, der einen Preis nannte, der
+         nicht mehr galt. rolloverCol() steigt von selbst aus, sobald ein
+         Wert von Hand eingetragen wurde. */
+      var panel=g('add-panel'),fb=g('fb');
+      if(panel&&panel.style.display==='block'&&fb&&fb._auto)d.rolloverCol(false);
+      ['f','ef'].forEach(function(px){
+        var e=g(px+'-prev');
+        if(e&&e.style.display==='block')d.loanPreview(px);
+      });
+    }
     function rateRerender(){
       if(_rateT)clearTimeout(_rateT);
       _rateT=setTimeout(function(){
         _rateT=null;
-        pills();d.checkAlarms();d.updateHdrStats();renderActiveTab();
+        pills();d.checkAlarms();d.updateHdrStats();renderActiveTab();previewRerender();
       },400);
     }
     window.d={
@@ -2973,7 +2990,7 @@
         });
         rateRerender();
       },
-      live:function(){if(liveBtc){R.BTC=liveBtc;R.SAT=liveBtc/1e8;pills();d.ov();}},
+      live:function(){if(liveBtc){R.BTC=liveBtc;R.SAT=liveBtc/1e8;pills();d.ov();previewRerender();}},
       updateHdrStats:function(){
         var act=loans.filter(function(l){return l.status==='active';});
         var dash='–';
@@ -4133,8 +4150,45 @@
                  ' · ≈ '+esc(pU(col*R.BTC));
         }
         h+=row('Bitcoin-Sicherheit',col>0?('≈ '+col.toFixed(8)+' BTC'):'–',ltvSub);
+        /* Liquidationspreis: 95% LTV ist bei Firefish fest. Gerechnet wie auf
+           der Kredit-Karte — fälliger Betrag durch 0.95 mal Collateral. Der
+           Abstand zum heutigen Kurs sagt mehr als die Zahl für sich, darum
+           steht er darunter. */
+        if(col>0&&R.BTC>0){
+          var liqU=toU(due,ccy)/(0.95*col);
+          var lqc=R.BTC<=liqU?'var(--err)':(R.BTC<liqU*1.1?'var(--warn)':'var(--ok)');
+          var fall=(R.BTC-liqU)/R.BTC*100;
+          /* Die Hauptwährung nur dann zusätzlich nennen, wenn dabei eine andere
+             Zahl herauskommt — USDC und USDT hängen am Dollar, da stünde sonst
+             zweimal derselbe Betrag. */
+          var mc=mainC(),doppelt=(mc===ccy)||(R[mc]!=null&&R[mc]===R[ccy]);
+          h+=row('Liquidationspreis','<span style="color:'+lqc+'">'+esc(fmt(frU(liqU,ccy),ccy))+'</span>',
+                 (fall>0?('BTC darf '+fall.toFixed(1)+'% fallen'):'Kurs liegt bereits darunter')+
+                 (doppelt?'':(' · '+esc(pU(liqU))))+' · bei 95% LTV');
+        }
         h+=row('Benötigte Gesamtmenge an Bitcoin','≈ '+(col+fee).toFixed(8)+' BTC',
                'Sicherheit plus Gebühr','lprev-tot');
+        /* Roll-Over: Das Collateral des Vorgängers wird bei seiner Ablösung
+           frei und deckt den neuen Kredit mit ab. Ob dabei etwas nachzulegen
+           ist oder etwas zurückkommt, hängt am Kurs seit der Aufnahme — darum
+           hier vorgerechnet. Nur im Formular «Neuer Kredit»: beim Bearbeiten
+           ist das Collateral längst hinterlegt, eine Differenz wäre dort
+           keine Entscheidung mehr, sondern nur verwirrend. */
+        if(pfx==='f'){
+          var chEl=g('fchain'),chV=chEl?chEl.value:'';
+          var pred=(chV&&chV!=='__new__')?loans.filter(function(x){return x.id===chV;})[0]:null;
+          if(pred&&pred.col>0){
+            var frei=pred.col;
+            var diff=parseFloat(((col+fee)-frei).toFixed(8));
+            h+=row('Frei aus dem Vorgänger','≈ '+frei.toFixed(8)+' BTC',
+                   esc(pred.name)+' · '+(pred.status==='closed'?'bereits zurückgeflossen':'kommt bei der Ablösung zurück'));
+            var nach=diff>5e-9,betrag=Math.abs(diff);
+            h+=row(nach?'Nachzulegen':(betrag<5e-9?'Nichts nachzulegen':'Kommt zurück'),
+                   '<span style="color:'+(nach?'var(--warn)':'var(--ok)')+'">≈ '+betrag.toFixed(8)+' BTC</span>',
+                   (R.BTC>0?('≈ '+esc(pU(betrag*R.BTC))+' · '):'')+
+                   'Gesamtmenge abzüglich der frei werdenden Sicherheit','lprev-tot');
+          }
+        }
         el.innerHTML=h;
         el.style.display='block';
       },
@@ -4144,7 +4198,7 @@
         var el=g(pfx+'-prev');
         if(!el||el._pvBound)return;
         el._pvBound=true;
-        ['a','r','fee','b','t','c','bp'].forEach(function(n){
+        ['a','r','fee','b','t','c','bp','chain'].forEach(function(n){
           var e=g(pfx==='f'?('f'+n):('ef-'+n));
           if(!e)return;
           e.addEventListener('input',function(){d.loanPreview(pfx);});
@@ -7096,6 +7150,16 @@
         if(!dateEl||!priceEl||!hintEl)return;
         var iso=dateEl.value;
         if(!iso){hintEl.style.display='none';return;}
+        /* Für ein Startdatum in der Zukunft gibt es keinen historischen Kurs.
+           Die Abfrage lief trotzdem und endete in einer Warnung — bei jedem
+           Roll-Over, denn dessen Kredit beginnt erst an der Fälligkeit des
+           Vorgängers. Das sah nach einem Fehler aus, wo keiner war. */
+        var heute=new Date();heute.setHours(0,0,0,0);
+        if(pD(iso)>heute){
+          hintEl.innerHTML='<span style="font-size:11px;color:var(--text4)">Startdatum liegt in der Zukunft — Kurs bei Aufnahme eintragen.</span>';
+          hintEl.style.display='block';
+          return;
+        }
         hintEl.innerHTML='<span style="font-size:11px;color:var(--text4)">⏳ Lade…</span>';
         hintEl.style.display='block';
         d.btcHistPrice(iso,function(usd,err){
@@ -8881,7 +8945,7 @@
         if(!liveBtc){showCgRateLimit();}else{hideCgRateLimit();}
         if(!d._prefetched){d._prefetched=true;setTimeout(function(){d.prefetchHistPrices();},3000);}
         pills();d.ov();d.checkAlarms();d.vorFillAll();d.nachPopulate();d.nlpPopulate();d.se2Populate();d.gvlPopulate();d.abl();d.updateHdrStats();
-        renderActiveTab();
+        renderActiveTab();previewRerender();
       } finally {
         /* Must run even if a re-render throws, or the button stays disabled */
         if(btn){btn.textContent='↻';btn.disabled=false;}
