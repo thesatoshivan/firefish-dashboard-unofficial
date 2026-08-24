@@ -86,7 +86,11 @@ Track your active and closed loans, monitor LTV ratios and collateral health, an
 - **Collateral health** — portfolio-level collateral value, coverage ratio, margin call price and open debt in BTC
 - **Break-even analysis** — calculates the BTC price at which a loan becomes profitable, with automatic historical BTC price lookup and break-even average / weighted break-even statistics
 - **Upcoming maturities** — countdown to due dates with a configurable alert window, a cumulative debt card for eight time windows from 7 days to 2 years, and a warning when several loans fall due close together
-- **Calendar & timeline** — a month calendar of due dates, and a timeline in which every row is a roll-over chain or a single loan, with a chain's members side by side
+- **Calendar & timeline** — a month calendar of due dates, and a timeline in which every row is a roll-over chain or a single loan, with a chain's members side by side; the timeline also charts what falls due per month over the next 25 months and marks where a loan taken out today would mature for each available term
+- **Tax overview** — interest and fees summed per calendar year, with a toggle between counting interest in its maturity year or spreading it pro rata over the term, a per-loan breakdown, optional per-year exchange rates, projected-vs-final marking and a CSV export per year
+- **Liquidity plan** — a forward schedule of every upcoming maturity set against your cold-storage reserve, with a running "reserve after" column and a warning at the first maturity the reserve can no longer cover
+- **Data check** — a read-only pass over every loan that flags problems by severity (duplicate IDs, LTV above the liquidation threshold, missing data, a loan past due but still active), each finding linking straight to the loan
+- **Bilingual interface** — the whole interface switches between German and English; the loan data, CSV columns and field names stay language-independent, so a file reads the same whatever language the screen is in
 - **Multi-currency support** — USD, EUR, CHF, CZK, PLN, USDC and USDT, plus bitcoin and sats as display units. Live rates from CoinGecko; the three shown in the header can also be typed in by hand
 - **Main currency** — choose which of your enabled currencies is the primary one; every figure, chart axis and calculator then reads in that currency
 - **Roll-over chains** — start a roll-over from the loan it continues with the figures already filled in, link loans into chains, and analyse them in a dedicated Roll-Overs tab with effective annual rates
@@ -213,6 +217,7 @@ All settings are saved in `localStorage` and included in JSON exports:
 |---|---|
 | Preferred currencies | Which currencies appear in conversion breakdowns |
 | Main currency | The primary currency for all displays, charts and calculators |
+| Language | Interface language, German or English |
 | Default tab | Which section opens on load |
 | Default loan view | Grid (cards) or list table |
 | Default loan currency | Pre-selected currency for new loans |
