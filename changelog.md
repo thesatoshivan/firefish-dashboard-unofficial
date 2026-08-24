@@ -4,6 +4,69 @@
 ---
 
 
+## v2.4.0 (24.08.2026)
+
+### New Features
+
+**A liquidity plan (new Liquidität tab)**
+- A forward schedule of every upcoming maturity — when each active loan comes due and how much is needed to repay it, in the loan's own currency and your main currency, with a running cumulative total
+- Set against your cold-storage reserve: a running "reserve after" column shows how far the reserve stretches and turns red where it no longer covers what is due, and a banner names the first maturity it can't cover
+- A per-month summary bars the cash needed each month, and the whole plan exports to CSV. A maturing loan can of course be rolled over instead of repaid — the plan shows the gross need either way
+
+**Sort loans by name**
+- The **Meine Kredite** tab gains a **Bezeichnung** sort, case-insensitive and with natural number order (Kredit 2 before Kredit 10). While translating it, the sort buttons' active labels now also switch language correctly
+
+**A data check (new Datencheck tab)**
+- Runs over every recorded loan and flags problems by severity: errors (duplicate IDs, LTV above the liquidation threshold), warnings (missing collateral, a start date in the future, an unusually high rate, a loan past due but still marked active) and notes (no BTC start price, a chain with a single link, a closed loan without a repayment date). Read-only — it changes nothing, and each finding links straight to the loan
+
+**A maturity chart in the Timeline tab**
+- A per-month chart over the next 25 months showing what falls due (principal + interest) in each single month — a longer-horizon companion to the 12-month cash-flow chart in Diagramme
+- Blue markers on that chart show where a loan taken out today would fall due for each available term (3/6/12/18/24 months), so you can see a cluster forming and pick a term that avoids it before opening a new loan
+
+**Distance to break-even in percent**
+- The loan card's break-even note now carries the percentage in both directions — how much the price still has to rise when break-even isn't reached (*$42'054 to break-even (+49.5%)*), and how far it is above once it is (*▲ $18'835 above break-even (+22.5%)*). The roll-over chain verdict shows it the same way
+
+**A tax overview per year (new Steuer tab)**
+- Interest and processing fees are summed per calendar year — the figures a tax return asks for. Grand totals for interest, fees and cost sit on top
+- A toggle switches how interest is assigned to years: **Fälligkeitsjahr** counts it in the year the loan matures and the interest is paid, **Anteilig** spreads it pro rata over the days of the term across the calendar years. The grand total is the same either way — only the distribution moves
+- Fees always count in the year the loan was taken out, valued at the bitcoin price paid then, not today's price
+- A second table breaks interest down by currency, exact and unconverted, so foreign-currency loans carry the figure the tax office actually wants; the main table's conversion to your main currency is at the current rate and only for orientation
+- A **Kredite im Detail** table lists every loan on its own row, per year, with its interest (in the loan's currency and yours) and its fee — so you can see exactly which loan lands in which year
+- **Als CSV exportieren** writes the whole thing out, itemised per loan and per year; alongside it a button per year exports just that year's loans
+- Rows whose interest hasn't been paid yet (the loan hasn't matured) are marked as a projection with an hourglass; past and closed years read as final, so you can tell an estimate from a settled figure
+- An optional per-year exchange-rate table converts foreign-currency interest into your main currency at a rate you set for that year — many tax offices expect the yearly average — instead of today's rate; left empty it falls back to the current rate as before. The rates travel with the JSON export
+- The fee's bitcoin amount is shown alongside its value, with a note that spending bitcoin on the fee can count as a disposal in some countries, and a short reminder that this is not tax advice
+
+**An English interface**
+- **Einstellungen → Sprache / Language** switches the whole interface between German and English, and back
+- The German text is the key: anything not yet translated stays German rather than going blank, so a partial translation is still usable
+- The loan data, the CSV and the field names stay language-independent — status remains `active`/`closed`, columns keep their keys — so a file reads the same whatever language the screen is in
+- The JSON export does carry your chosen language, and importing a file switches the interface to it; an older file without that field leaves the language untouched
+
+**A roll-over can be started from the Roll-Overs tab**
+- Every chain carries a **Roll-Over erstellen** button that continues its newest running link — the same action as on the loan itself, without going looking for that loan first
+- It appears only while a chain still has a running loan, since a closed one has nothing left to continue
+
+**Each roll-over chain says whether it has paid off**
+- A break-even banner on every chain compares the chain's overall break-even price (the total cost of every link against the first loan's principal) to the current bitcoin price — green when the whole roll-over has paid off, amber with the distance and percentage still to go when it hasn't
+
+**Chain tables read in the loan's own currency**
+- Interest, due amount, total cost and break-even in each chain's loan table now carry the currency the loan is in, instead of being converted into your main currency
+- The totals row carries one sum per currency the chain used, and beneath them the figure in your main currency whenever that is a different number. The chain's break-even reads in the currency of its first loan, whose principal is what defines it
+
+**The header bar follows you**
+- Kurse, Kennzahlen and the alarm banner stay pinned to the top of the window. Scrolling down slides them out of the way, scrolling back up brings them straight back
+
+### Bug Fixes
+
+- The English interface is now complete where it used to leak German at runtime: the Portfolio tiles and charts (total BTC, holdings, exit strategy, price and BTC-to-sell labels, the rebalancing and buffer texts), the stress-test and statistics buffers and LTV-threshold notes, the margin-call chart title, the validation dialogs, the CSV/JSON import messages, the calculator hints and ledger buttons — and the calendar now shows month and weekday names in the interface language. These strings are built as the page runs, so they slipped past the earlier translation pass
+- Three things stood half outside the screen on a phone and could not be reached: the rate pills (BTC/CHF and the per-currency prices), the **+ Kredit hinzufügen** button, and — whenever the CoinGecko notice appeared — the dark-mode and privacy buttons. All three now wrap instead of running off the edge
+- The header bar does not pin itself on phones. Wrapped, it measures a third of the screen there, which is more than it gives back
+- A wide table no longer stretches the whole layout past the window edge. On a narrow window the loan table pushed the page wider than the viewport instead of scrolling inside its own frame, and the last column — the actions menu — could not be reached at all
+- The Exit-Strategie no longer warns "Über aktuellem Kurs" when the exit price is exactly today's price. Entering the figure from **BTC nach Schuldentilgung** as the reserve is precisely that case, and a rounding remainder of 1e-11 was enough to trip the warning — making two consistent numbers look contradictory
+
+---
+
 ## v2.3.0 (22.08.2026)
 
 ### New Features
